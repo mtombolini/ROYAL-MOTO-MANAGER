@@ -5,4 +5,4 @@ def generate_password(password):
     return hash_password
 
 
-print(generate_password("HOLA"))
+print(generate_password("909932"))
