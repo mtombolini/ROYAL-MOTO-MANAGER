@@ -18,8 +18,18 @@ class DevelopmentConfig(Config):
     # MYSQL_DB_CARTS_CONNECTION = "royal_manager_carts"
     API_DATA_RESET_MODE = True
 
+class ProductionConfig(Config):
+    DEBUG = True
+    MYSQL_HOST = 'postgres://royal_manager_database_user:oj7rgKVymSqmgvMM7id8nw1pniPpcWIy@dpg-clangsug1b2c73a6vjt0-a/royal_manager_database'
+    MYSQL_USER = 'royal_manager_database_user'
+    MYSQL_PASSWORD = 'oj7rgKVymSqmgvMM7id8nw1pniPpcWIy'
+    #MYSQL_PASSWORD = 'postgres://royal_manager_database_user:oj7rgKVymSqmgvMM7id8nw1pniPpcWIy@dpg-clangsug1b2c73a6vjt0-a.oregon-postgres.render.com/royal_manager_database'
+    MYSQL_DB = 'royal_manager_database'
+    API_DATA_RESET_MODE = True
+
 
 config = {
-    'development': DevelopmentConfig
+    'development': DevelopmentConfig,
+    'production' : ProductionConfig
 }
 
