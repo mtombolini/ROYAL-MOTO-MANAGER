@@ -9,10 +9,12 @@ DATABASE_URL = "mysql+mysqldb://[USERNAME]:[PASSWORD]@[HOST]/[DB_NAME]"
 engine = create_engine(DATABASE_URL)
 
 # Define la base declarativa para tus modelos
-UserBase = declarative_base()
-ProductBase = declarative_base()
-DocumentBase = declarative_base()
-CartsBase = declarative_base()
+# UserBase = declarative_base()
+# ProductBase = declarative_base()
+# DocumentBase = declarative_base()
+# CartsBase = declarative_base()
+
+Base = declarative_base()
 
 # Crea una fábrica de sesiones para interactuar con la base de datos
 SessionLocal = sessionmaker(bind=engine)

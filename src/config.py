@@ -9,7 +9,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     MYSQL_HOST = 'localhost'
     MYSQL_USER = 'root'
-    MYSQL_PASSWORD = 'Orion2030$'
+    MYSQL_PASSWORD = 'MS.man2002'
     MYSQL_DB_USERS_CONNECTION = 'royal_manager_user'
     MYSQL_DB_PRODUCTS_CONNECTION = "royal_manager_products"
     MYSQL_DB_DOCUMENTS_CONNECTION = "royal_manager_documents"

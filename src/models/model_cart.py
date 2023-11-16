@@ -1,11 +1,11 @@
 from .cart import BuyCart, BuyCartDetail
-from databases.session import CartSession
+from databases.session import AppSession
 
 class ModelCart:
 
     @classmethod
     def get_all_carts(cls):
-        session = CartSession()
+        session = AppSession()
         try:
             carts = session.query(BuyCart).all()
             return carts
@@ -16,7 +16,7 @@ class ModelCart:
 
     @classmethod
     def delete_cart_by_id(cls, cart_id):
-        session = CartSession()
+        session = AppSession()
         try:
             cart_to_delete = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()
             if cart_to_delete:
@@ -32,7 +32,7 @@ class ModelCart:
 
     @classmethod
     def get_cart_detail_by_id(cls, cart_id):
-        session = CartSession()
+        session = AppSession()
         try:
             cart_detail = session.query(BuyCartDetail).filter(BuyCartDetail.cart_id == cart_id).all()
             cart_general = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()

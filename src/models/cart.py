@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from databases.base import CartsBase
+from databases.base import Base
 
-class BuyCart(CartsBase):
+class BuyCart(Base):
     __tablename__ = 'carros_compras'
 
     cart_id = Column(Integer, primary_key=True)
@@ -19,7 +19,7 @@ class BuyCart(CartsBase):
     details = relationship("BuyCartDetail", back_populates="cart")
 
 
-class BuyCartDetail(CartsBase):
+class BuyCartDetail(Base):
     __tablename__ = 'carros_compras_detalles'
 
     id = Column(Integer, primary_key=True)

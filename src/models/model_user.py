@@ -1,11 +1,11 @@
 from .user import User, Role
-from databases.session import UserSession
+from databases.session import AppSession
 
 class ModelUser:
 
     @classmethod
     def login(cls, username, password):
-        session = UserSession()
+        session = AppSession()
         try:
             user = session.query(User).join(Role).filter(User.username == username).one_or_none()
             if not user:
@@ -22,7 +22,7 @@ class ModelUser:
 
     @classmethod
     def get_by_id(cls, user_id):
-        session = UserSession()
+        session = AppSession()
         try:
             user = session.query(User).join(Role).filter(User.id == user_id).one_or_none()  
             return user
@@ -33,7 +33,7 @@ class ModelUser:
 
     @classmethod
     def get_all_sellers(cls):
-        session = UserSession()
+        session = AppSession()
         try:
             vendedores = session.query(User).filter(User.id_role == 2).all()
             return vendedores
