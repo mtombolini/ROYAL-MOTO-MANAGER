@@ -4,7 +4,7 @@ from flask_login import current_user
 from sqlalchemy.orm import joinedload
 
 # Importa la UserSession desde tu módulo session
-from databases.session import UserSession
+from databases.session import AppSession
 
 def requires_roles(*roles):
     def wrapper(f):
@@ -17,7 +17,7 @@ def requires_roles(*roles):
             from models.user import User
 
             # Iniciar una sesión
-            session = UserSession()
+            session = AppSession()
 
             try:
                 user_with_role = session.query(User).options(joinedload(User.role)).filter_by(id=current_user.id).one_or_none()
