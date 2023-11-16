@@ -1,0 +1,49 @@
+{% extends './layout.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 text-left">
+            <img class="mb-4" src="{{ url_for('static', filename='img/logo.png') }}" alt="" width="150" height="90">
+            <h1 class="h3 mb-3 fw-bold title">ROYAL <span class="text-danger">MOTO</span> MANAGER</h1>
+        </div>
+        <div class="col-md-6">
+            <div class="login-container">
+                <form class="form-signin" action="/login" method="POST">
+                    {{ form.hidden_tag() }}
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <br />
+                    {% for message in messages %}
+                    <div class="alert alert-primary alert-dismissible" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <div class="form-floating">
+                        {{ form.username(class='form-control', placeholder='Username') }}
+                        <label for="username">Nombre de Usuario</label>
+                    </div>
+                    <div class="form-floating mt-2">
+                        {{ form.password(class='form-control', placeholder='Password') }}
+                        <label for="password">Contraseña</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-danger" type="submit">Iniciar sesión</button>
+                    <!-- Link para recuperar contraseña, línea horizontal y botón de crear cuenta -->
+                    <a href="/forgot-password" class="d-block mt-3 text-decoration-none">¿Olvidaste tu contraseña?</a>
+                    <hr>
+                    <button class="w-100 btn btn-lg btn-secondary" type="button" onclick="window.location.href='/register'">Crear cuenta nueva</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

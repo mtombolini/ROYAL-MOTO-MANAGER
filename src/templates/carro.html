@@ -1,0 +1,143 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Carro de Compras{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<div class="container m-3">
+    <div class="row">
+        <!-- Div alineado al inicio (start) -->
+        <div class="col-md-5">
+            <div class="bg-secondary text-white p-1 rounded">
+                <h4>Detalle de la Compra</h4>
+            </div>
+
+            <ul class="list-group mt-1">
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>ID</strong>
+                    <span>{{ data_general.cart_id }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Descripción</strong>
+                    <span>{{ data_general.descripcion }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Proveedor</strong>
+                    <span>{{ data_general.proveedor }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Fecha Creacion</strong>
+                    <span>{{ data_general.fecha_creacion }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Estado</strong>
+                    <span>{{ data_general.estado }}</span>
+                </li>
+            </ul>
+            <!-- <div class="d-grid gap-2 my-3">
+                <button class="btn btn-success" type="button">Proceder al Pago</button>
+            </div> -->
+        </div>
+
+        <!-- Espacio vacío para separar los divs -->
+        <div class="col-md-3"></div>
+
+        <!-- Div alineado al final (end) -->
+        <div class="col-md-4">
+            <div class="bg-danger text-white p-1 rounded">
+                <h4>Resumen de la Compra</h4>
+            </div>
+            <ul class="list-group mt-1">
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    Cantidad de Items
+                    <span>{{ data_resume.cantidad_articulos }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    Subtotal
+                    <span>$ {{ data_resume.subtotal }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" syle="padding-top: 5px; padding-bottom: 5px;">
+                    Impuestos
+                    <span>$ {{ data_resume.impuestos }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    Total
+                    <strong>$ {{ data_resume.total }}</strong>
+                </li>
+            </ul>
+            <div class="d-grid my-2">
+                <button class="btn btn-success" type="button">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <hr style="height: 2px; background-color: black;">
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>SKU</th>
+                        <th>Costo Neto</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in data_detail %}
+                    <tr id="product-{{ product.id }}">
+                        <td>{{ product.descripcion_producto }}</td>
+                        <td>{{ product.sku_producto }}</td>
+                        <td>${{ product.costo_neto }}</td>
+                        <td>
+                            <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input">
+                        </td>
+                        <td>${{ product.subtotal }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info update-btn">Actualizar</button>
+                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Agrega un controlador de eventos a cada botón de actualizar
+        document.querySelectorAll('.update-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                var rowId = this.closest('tr').getAttribute('id');
+                var newQuantity = this.closest('tr').querySelector('.quantity-input').value;
+                console.log("Actualizar producto con ID: " + rowId + " a la cantidad: " + newQuantity);
+
+                // Aquí podrías agregar el código para realizar una llamada AJAX y actualizar la cantidad en el servidor.
+            });
+        });
+
+        // Agrega un controlador de eventos a cada botón de eliminar
+        document.querySelectorAll('.btn-danger').forEach(button => {
+            button.addEventListener('click', function () {
+                var rowId = this.closest('tr').getAttribute('id');
+                console.log("Eliminar producto con ID: " + rowId);
+
+                // Aquí podrías agregar el código para realizar una llamada AJAX y eliminar el producto del carro.
+                // Después de la eliminación exitosa, podrías eliminar visualmente la fila de la tabla:
+                // this.closest('tr').remove();
+            });
+        });
+    });
+</script>
+{% endblock %}
+

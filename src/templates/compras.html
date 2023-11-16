@@ -1,0 +1,118 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Compras{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripción</th>
+                        <th>Fecha Creación</th>
+                        <th>Proveedor</th>
+                        <th>Subtotal Neto</th>
+                        <th>Cantidad Productos</th>
+                        <th>Estado</th>
+                        <th>Rendimiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cart_item in data %}
+                    <tr id="cart-item-{{ cart_item.id }}">
+                        <td>{{ cart_item.cart_id }}</td>
+                        <td>{{ cart_item.descripcion }}</td>
+                        <td>{{ cart_item.fecha_creacion }}</td>
+                        <td>{{ cart_item.proveedor }}</td>
+                        <td>${{ cart_item.monto_neto }}</td>
+                        <td>{{ cart_item.cantidad_productos }}</td>
+                        <td>{{ cart_item.estado }}</td>
+                        <td>{{ cart_item.rendimiento }}</td>
+                        <td>
+                            {% if cart_item.estado == 'Creado' %}
+                            <button class="btn btn-sm btn-primary check-btn" data-id="{{ cart_item.cart_id }}">Revisar</button>
+                            {% elif cart_item.estado == 'Revisado' %}
+                            <button class="btn btn-sm btn-success action-btn" data-id="{{ cart_item.id }}">Emitir</button>
+                            {% elif cart_item.estado == 'Emitido' %}
+                            <button class="btn btn-sm btn-warning action-btn" data-id="{{ cart_item.id }}">Recepcionar</button>
+                            {% endif %}
+                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">No hay compras disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                                                                                                 
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Selecciona todas las filas de la tabla y agrega un controlador de eventos de clic
+    document.querySelectorAll('tr[id^="cart-item-"]').forEach(row => {
+        row.addEventListener('click', function(event) {
+            // Evita que el clic se propague si se hizo clic en un botón
+            if(event.target.tagName !== 'BUTTON') {
+                // Obtén el cartId de la primera celda de la fila
+                const cartId = this.cells[0].textContent.trim();
+                window.location.href = '/carro/' + cartId; // Redirige a la ruta de la función carro en Flask
+            }
+        });
+    });
+
+        // Controlador para botones de eliminar
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que el evento de clic se propague a la fila
+
+                const cartId = this.dataset.id;
+                console.log("ID", cartId);
+                const url = '/eliminar_carro/' + cartId;
+                console.log('Intentando eliminar el carro con ID:', cartId);
+                console.log('URL de la solicitud:', url);
+
+                if (confirm('¿Estás seguro de que deseas eliminar este carro?')) {
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }).then(response => {
+                        console.log('Respuesta del servidor:', response);
+                        if (response.ok) {
+                            const rowToDelete = document.getElementById('cart-item-' + cartId);
+                            if (rowToDelete) {
+                                rowToDelete.remove();
+                            }
+                        } else {
+                            alert('Error al eliminar el carro');
+                        }
+                    }).catch(error => {
+                        console.error('Error al realizar la solicitud:', error);
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

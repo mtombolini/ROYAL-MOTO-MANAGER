@@ -1,0 +1,81 @@
+html, body {
+    height: 100%;
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Fixed position */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1; /* Sit on top */
+
+    background: url('../img/login_wallpaper.jpeg') center center/cover no-repeat fixed; /* Path to your image */
+    opacity: 0.5; /* Add transparency */
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;  /* padding aumentado para más espacio interior */
+    margin-top: 0px;
+    width: 400px;  /* Ancho del contenedor aumentado */
+}
+
+.form-signin {
+    width: 100%;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Estilos para el título */
+.title {
+    font-size: 5em;  /* Tamaño de letra aumentado */
+    font-style: italic;  /* Texto en cursiva */
+    display: block;  /* Cada palabra en una nueva línea */
+}
+
+.title.text-danger {
+    color: red;
+}
+
+a {
+    color: #007BFF;  /* Color azul de Bootstrap para enlace */
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);  /* Línea horizontal gris claro */
+}
+
+.some-div {
+    z-index: 1;
+}
+
+

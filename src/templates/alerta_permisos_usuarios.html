@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <!-- Modal de alerta -->
+    <div class="modal fade show" id="alertaPermiso" tabindex="-1" aria-labelledby="alertaPermisoLabel" style="display: block;" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertaPermisoLabel">¡Acceso Denegado!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    No tienes permiso para acceder a esta sección. Por favor, contacta con el administrador si consideras que esto es un error.
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ url_for('home.home') }}" class="btn btn-primary">Entendido</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Script para activar modal automáticamente -->
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('alertaPermiso'), {})
+        myModal.show();
+    </script>
+{% endblock %}

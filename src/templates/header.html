@@ -1,0 +1,72 @@
+<!-- Enlazar el CSS del header -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+
+<!-- Header Superior -->
+<div class="header-top">
+    <!-- Logo de la organización -->
+    <a class="navbar-brand" href="#">
+        <img src="{{ url_for('static', filename='img/logo_invert.png') }}" alt="Logo" width="40" height="24">
+    </a>
+    <!-- Nombre de la aplicación -->
+    <!-- Nombre de la aplicación -->
+    <span class="app-name">ROYAL <span class="moto">MOTO</span> MANAGER</span>
+
+    
+    <!-- Usuario -->
+    <div class="user-dropdown dropdown">
+        <button class="btn dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <h12>{{ current_user.nombre }} {{ current_user.apellido }}</h12>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#">Perfil</a></li>
+            <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+
+        </ul>
+    </div>
+</div>
+
+<!-- Header Inferior -->
+<nav class="navbar navbar-expand-lg header-bottom">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+
+            <!-- Dropdown de Inicio -->
+            <li class="nav-item">
+                <a class="btn" href="{{ url_for('home.home') }}">Inicio</a>
+
+            </li>            
+            
+            <!-- Dropdown de Adquisiciones -->
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Adquisiciones
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('compras.compras') }}">Compras</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('compras.stock_critico') }}">Stock Crítico</a></li>
+                </ul>
+            </li>
+            
+            <!-- Dropdown de Reportería -->
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Reportes
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('reportes.reporte_desempeño') }}">Reporte de Desempeño</a></li>
+                </ul>
+            </li>
+            
+            <li class="nav-item">
+                <button class="btn">Opción 2</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Título de la página actual -->
+<div class="page-title-container">
+    <h1 class="display-4 font-weight-bold page-title">{{ page_title }}</h1>
+</div>
+
+<div class="page-title-line"></div>

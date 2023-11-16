@@ -1,0 +1,52 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Reporte de Desempeño{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<div class="container mt-4">
+    <form action="{{ url_for('reportes.descargar_pdf') }}" method="POST">
+        <div class="mb-3">
+            <label for="exampleSelect" class="form-label">Tipo de Reporte</label>
+            <select class="form-select" id="exampleSelect" name="tipo_reporte">
+                <option value="selecciones">Seleccione</option>
+                <option value="semanal_vendedor">Reporte Semanal | Vendedor</option>
+                <option value="semanal_general">Reporte Semanal | General</option>
+                <option value="mensual_vendedor">Reporte Mensual | Vendedor</option>
+                <option value="mensual_general">Reporte Mensual | General</option>
+            </select>
+        </div>
+
+        <!-- Contenedores para diferentes campos -->
+        <div id="semanal_vendedor_fields" style="display: none;">
+            <div class="mb-3">
+                <label for="vendedorSelect" class="form-label">Seleccione Vendedor</label>
+                <select class="form-select" id="vendedorSelect">
+                    {% for vendedor in vendedores %}
+                        <option value="{{ vendedor }}">{{ vendedor }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Otros campos específicos pueden ir aquí -->
+
+        <!-- Botones -->
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="reset" class="btn btn-secondary">Limpiar</button>
+    </form>
+</div>
+
+<script>
+    function updateFormFields() {
+        var selection = document.getElementById('exampleSelect').value;
+        
+        // Ocultar todos los campos
+        document.getElementById('semanal_vendedor_fields').style.display = 'none';
+        // Mostrar los campos correspondientes a la selección
+        document.getElementById(selection + '_fields').style.display = 'block';
+    }
+</script>
+
+{% endblock %}
