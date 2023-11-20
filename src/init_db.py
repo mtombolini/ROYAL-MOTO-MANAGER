@@ -1,26 +1,15 @@
-# from databases.base import UserBase, ProductBase, DocumentBase, CartsBase
 from databases.base import Base
 from databases.session import app_engine
-# from databases.session import user_engine
-# from databases.session import product_engine
-# from databases.session import document_engine
-# from databases.session import cart_engine
 
-# BD: royal_manager_user
 from models.user import User, Role
-
-# BD: royal_manager_products
-# from models.product import ProductDescription, ProductStock
-
-# # BD: royal_manager_documents
-# from models.receptions import Reception, ReceptionDetail
-
-# BD: royal_manager_carts
 from models.cart import BuyCart, BuyCartDetail
+from models.productos import Product, ProductStock
+from models.document import Document, DocumentDetail
+from models.reception import Reception, ReceptionDetail
+from models.consumption import Consumption, ConsumptionDetail
+from models.returns import Return
+from models.sales import Sale, SaleDocument
 
-# UserBase.metadata.create_all(user_engine)
-# ProductBase.metadata.create_all(product_engine)
-# DocumentBase.metadata.create_all(document_engine)
 Base.metadata.create_all(app_engine)
 
 

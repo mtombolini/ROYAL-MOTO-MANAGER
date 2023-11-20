@@ -1,6 +1,5 @@
 import threading
 import time
-import config
 
 from api.extractors.reception_extractor import ReceptionExtractor
 from api.extractors.product_extractor import ProductExtractor
@@ -13,8 +12,6 @@ from dataframe_main import DataFrameMain
 from databases.session import AppSession
 
 TOKEN = "7a9dc44e2b4e17845a8199844e30a055f6754a9c"
-
-current_config = config['development']
     
 time_start = time.time()
 
