@@ -7,6 +7,7 @@ from routes.auth import auth_blueprint
 from routes.home import home_blueprint
 from routes.compras import compras_blueprint
 from routes.reportes import reportes_blueprint
+from routes.api_routes import api_blueprint
 
 app = Flask(__name__)
 app.config.from_object(config['development'])
@@ -17,6 +18,7 @@ app.register_blueprint(auth_blueprint)
 app.register_blueprint(home_blueprint)
 app.register_blueprint(compras_blueprint)
 app.register_blueprint(reportes_blueprint)
+app.register_blueprint(api_blueprint)
 
 app.make_default_options_response
 
