@@ -1,4 +1,4 @@
-from parameters import PASSWORD
+from parameters import PASSWORD_MYSQL, PASSWORD_POSTGRES
 class Config:
     SECRET_KEY = '909932'
     BASE_URL = 'https://api.bsale.io/v1/'
@@ -6,17 +6,31 @@ class Config:
     STOCKS_DATABASE_NAME = 'royal_manager_stocks' 
 
 
-class DevelopmentConfig(Config):
+class DevelopmentConfigMySQL(Config):
     DEBUG = True
     MYSQL_HOST = 'localhost'
     MYSQL_USER = 'root'
-    MYSQL_PASSWORD = PASSWORD
+    MYSQL_PASSWORD = PASSWORD_MYSQL
     MYSQL_DB = 'royal_manager_database'
     # MYSQL_DB_USERS_CONNECTION = 'royal_manager_user'
     # MYSQL_DB_PRODUCTS_CONNECTION = "royal_manager_products"
     # MYSQL_DB_DOCUMENTS_CONNECTION = "royal_manager_documents"
     # MYSQL_DB_CARTS_CONNECTION = "royal_manager_carts"
     API_DATA_RESET_MODE = True
+
+class DevelopmentConfigPostgres(Config):
+    DEBUG = True
+    # Configuración de PostgreSQL
+    POSTGRES_HOST = 'localhost'  # El host de la base de datos
+    POSTGRES_USER = 'postgres'  # Superusuario de PostgreSQL
+    POSTGRES_PASSWORD = PASSWORD_POSTGRES  # Contraseña del superusuario
+    POSTGRES_DB = 'royal_manager_database'  # Nombre de la base de datos
+
+    # URL de conexión para SQLAlchemy
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+
+
+
 
 class ProductionConfig(Config):
     DEBUG = True
@@ -29,7 +43,8 @@ class ProductionConfig(Config):
 
 
 config = {
-    'development': DevelopmentConfig,
+    'development_mysql': DevelopmentConfigMySQL,
+    'development_postgres': DevelopmentConfigPostgres,
     'production' : ProductionConfig
 }
 
