@@ -29,9 +29,6 @@ class DevelopmentConfigPostgres(Config):
     # URL de conexión para SQLAlchemy
     SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
 
-
-
-
 class ProductionConfig(Config):
     DEBUG = True
     MYSQL_HOST = 'postgres://royal_manager_database_user:oj7rgKVymSqmgvMM7id8nw1pniPpcWIy@dpg-clangsug1b2c73a6vjt0-a/royal_manager_database'
