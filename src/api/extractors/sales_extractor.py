@@ -95,13 +95,6 @@ class SalesExtractor:
         # Eliminamos la columna 'Document ID' del dataframe original
         self.df_sales.drop('Document ID', axis=1, inplace=True)
 
-        # Podemos mostrar los primeros elementos de los dataframes como verificación
-        print("DataFrame de Relaciones:")
-        self.df_relations.head()
-
-        print("\nDataFrame de Ventas Actualizado:")
-        self.df_sales.head()
-
     def save_to_excel(self, file_name="sales_data.xlsx"):
         mode = 'a' if os.path.exists(file_name) else 'w'
         with pd.ExcelWriter(file_name, engine='openpyxl', mode=mode) as writer:
