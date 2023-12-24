@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from config import config
+from app.config import config
 
 DATABASE_CONFIG = config['development_postgres']
 APP_DB_URL = DATABASE_CONFIG.DATA_BASE_URL

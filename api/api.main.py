@@ -4,7 +4,7 @@ from loaders.api_product import fetch_and_save_products, fetch_and_save_stocks
 from loaders.api_receptions import fetch_and_save_receptions
 from api.extractors.bsale_products import BsaleAPIProductos
 from api.extractors.bsale_receptions import BsaleAPIReceptions
-from config import config
+from app.config import config
 
 # def delete_all_from_product_db(session: Session):
 #     session.query(ProductStock).delete()
