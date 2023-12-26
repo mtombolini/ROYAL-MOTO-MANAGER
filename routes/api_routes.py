@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app, redirect, url_for, flash
 import subprocess
 
-api_blueprint = Blueprint('api_call', __name__)
+api_blueprint = Blueprint('api_call', __name__, template_folder='../templates')
 
 @api_blueprint.route('/run_api_calls')
 def run_api_calls():

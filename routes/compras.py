@@ -8,7 +8,7 @@ from models.user import User
 from models.model_cart import ModelCart
 
 
-compras_blueprint = Blueprint('compras', __name__)
+compras_blueprint = Blueprint('compras', __name__, template_folder='../templates')
 
 @compras_blueprint.route('/stock_critico')
 @requires_roles('Desarrollador')

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from databases.session import DocumentSession
-from models.receptions import Reception, ReceptionDetail
+from databases.session import AppSession
+from models.reception import Reception, ReceptionDetail
 
 def save_receptions_to_db(df, session: Session):
     receptions = [
@@ -28,7 +28,7 @@ def save_reception_details_to_db(df, session: Session):
 
 async def fetch_and_save_receptions(api):
     recepciones_df, detalles_df = await api.obtener_recepciones()
-    with DocumentSession() as session:
+    with AppSession() as session:
         save_receptions_to_db(recepciones_df, session)
         save_reception_details_to_db(detalles_df, session)
     print(f"Recepciones y detalles guardados en la base de datos.")

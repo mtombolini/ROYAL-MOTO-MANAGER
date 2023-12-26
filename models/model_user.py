@@ -1,4 +1,4 @@
-from .user import User, Role
+from models.user import User, Role
 from databases.session import AppSession
 
 class ModelUser:

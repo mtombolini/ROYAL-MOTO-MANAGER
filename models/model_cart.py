@@ -1,4 +1,4 @@
-from .cart import BuyCart, BuyCartDetail
+from models.cart import BuyCart, BuyCartDetail
 from databases.session import AppSession
 
 class ModelCart:

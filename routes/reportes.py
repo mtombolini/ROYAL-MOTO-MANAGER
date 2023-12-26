@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, make_response
 import pdfkit
 
-reportes_blueprint = Blueprint('reportes', __name__)
+reportes_blueprint = Blueprint('reportes', __name__, template_folder='../templates')
 
 @reportes_blueprint.route('/descargar_pdf', methods=['POST'])
 def descargar_pdf():

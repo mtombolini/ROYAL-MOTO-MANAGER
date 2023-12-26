@@ -1,7 +1,7 @@
 import asyncio
 from sqlalchemy.orm import Session
-from loaders.api_product import fetch_and_save_products, fetch_and_save_stocks
-from loaders.api_receptions import fetch_and_save_receptions
+from api.loaders.api_product import fetch_and_save_products, fetch_and_save_stocks
+from api.loaders.api_receptions import fetch_and_save_receptions
 from api.extractors.bsale_products import BsaleAPIProductos
 from api.extractors.bsale_receptions import BsaleAPIReceptions
 from app.config import config
@@ -16,7 +16,7 @@ from app.config import config
 #     session.commit()
 
 if __name__ == "__main__":
-    current_config = config['development']
+    current_config = config['development_postgres']
     
     api_productos = BsaleAPIProductos("5ebe57568c598e5a9e2decd8f8ed2076a561e3a4")
     api_ingresos = BsaleAPIReceptions("5ebe57568c598e5a9e2decd8f8ed2076a561e3a4")
