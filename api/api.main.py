@@ -16,7 +16,7 @@ from app.config import config
 #     session.commit()
 
 if __name__ == "__main__":
-    current_config = config['development_postgres']
+    current_config = config['production']
     
     api_productos = BsaleAPIProductos("5ebe57568c598e5a9e2decd8f8ed2076a561e3a4")
     api_ingresos = BsaleAPIReceptions("5ebe57568c598e5a9e2decd8f8ed2076a561e3a4")
