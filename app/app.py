@@ -9,7 +9,7 @@ from routes.compras import compras_blueprint
 from routes.reportes import reportes_blueprint
 from routes.api_routes import api_blueprint
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, static_folder='../static', template_folder='../templates')
 app.config.from_object(config['development_postgres'])
 login_manager = LoginManager(app)
 

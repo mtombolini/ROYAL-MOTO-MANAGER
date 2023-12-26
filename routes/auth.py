@@ -9,7 +9,7 @@ from models.model_user import ModelUser
 from models.user import User
 import os
 
-auth_blueprint = Blueprint('auth', __name__, template_folder='../templates')
+auth_blueprint = Blueprint('auth', __name__)
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
