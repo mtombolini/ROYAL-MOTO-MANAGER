@@ -31,7 +31,7 @@ class ProductionConfig(Config):
     PASSWORD = 'ePqyvJvmJRe1hOiwLiW9qCqI2VPVp4rl'
     DB = 'royal_motor_database'
     API_DATA_RESET_MODE = True
-    DATA_BASE_URL = 'postgres://royal_motor_admin:ePqyvJvmJRe1hOiwLiW9qCqI2VPVp4rl@dpg-cm3tp1mn7f5s73brdhhg-a.oregon-postgres.render.com/royal_motor_database'
+    DATA_BASE_URL = 'postgresql://royal_motor_admin:ePqyvJvmJRe1hOiwLiW9qCqI2VPVp4rl@dpg-cm3tp1mn7f5s73brdhhg-a.oregon-postgres.render.com/royal_motor_database'
 
 config = {
     'development_mysql': DevelopmentConfigMySQL,
