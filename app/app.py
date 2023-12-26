@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, current_app
-from config import config
+from app.config import config
 from flask_login import LoginManager
 
 # Importa tus Blueprints y sesiones

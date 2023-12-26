@@ -7,7 +7,7 @@ from api.extractors.consumption_extractor import ConsumptionExtractor
 from api.extractors.sales_extractor import SalesExtractor
 from api.extractors.returns_extractor import ReturnsExtractor
 from api.extractors.document_extractor import DocumentExtractor
-from dataframe_main import DataFrameMain
+from app.dataframe_main import DataFrameMain
 
 from databases.session import AppSession
 
