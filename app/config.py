@@ -22,6 +22,7 @@ class DevelopmentConfigPostgres(Config):
     DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
     DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}/{DB}"
+    DEFAULT_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}/postgres"
 
 class ProductionConfig(Config):
     DEBUG = False
