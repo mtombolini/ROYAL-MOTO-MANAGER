@@ -71,6 +71,18 @@
             <li class="nav-item">
                 <a class="btn" href="{{ url_for('api_call.run_api_calls') }}">Ejecutar API Calls</a>
             </li>
+
+            <!-- Dropdown de Configuraciones -->
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Configuraciones
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.administracion_de_roles') }}">Administración de Roles</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.administracion_de_usuarios') }}">Administración de Usuarios</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('compras.stock_critico') }}">Administración de Proovedores</a></li>
+                </ul>
+            </li>
             
             <li class="nav-item">
                 <button class="btn">Opción 2</button>

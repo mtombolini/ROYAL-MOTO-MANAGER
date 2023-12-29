@@ -43,7 +43,6 @@ def resumen_compra(data_detail):
         'total': total
     }
 
-
     
 @compras_blueprint.route('/compras')
 @requires_roles('desarrollador')
@@ -54,6 +53,7 @@ def compras():
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
+    
     
 @compras_blueprint.route('/eliminar_carro/<int:cart_id>', methods=['POST'])
 @requires_roles('desarrollador')
