@@ -20,7 +20,6 @@
 <div class="container-fluid mt-3 ms-3">
     <div class="row">
         <div class="col-12 new-role-button">
-            <!-- Botón para abrir el modal -->
             <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#crearRolModal">Nuevo Rol</button>
         </div>
         <div class="col-12">
@@ -41,7 +40,7 @@
                         <td class="usernames-cell">{{ role.usernames | join(', ') }}</td>
                         <td>
                             <button class="btn btn-sm btn-primary edit-btn" onclick="toggleEditSave(this, {{ role.id_role }})">Editar</button>
-                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                            <a href="{{ url_for('configuraciones.delete_role', id_role=role.id_role) }}" class="btn btn-sm btn-danger">Eliminar</a>
                         </td>
                     </tr>
                     {% else %}
@@ -55,7 +54,6 @@
     </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="crearRolModal" tabindex="-1" aria-labelledby="crearRolModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -69,8 +67,6 @@
         </div>
     </div>
 </div>
-
-{% endblock %}
 
 {% block scripts %}
 <script>
@@ -86,8 +82,10 @@
         } else {
             editButton.innerText = 'Editar';
             descriptionCell.setAttribute('contenteditable', 'false');
-            // Aquí deberías agregar lógica para enviar los cambios al servidor
+            // Agregar lógica para enviar los cambios al servidor
         }
     }
 </script>
+{% endblock %}
+
 {% endblock %}

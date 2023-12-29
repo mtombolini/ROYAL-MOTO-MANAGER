@@ -77,6 +77,20 @@ class ModelUser:
             session.close()
 
     @classmethod
+    def get_all_users(cls):
+        session = AppSession()
+        try:
+            # Consulta los usuarios
+            users = session.query(User).all()
+            return users
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            session.close()
+
+    @classmethod
     def new_role(cls, description):
         session = AppSession()
         try:
@@ -93,3 +107,24 @@ class ModelUser:
         except Exception as ex:
             session.rollback()
             raise Exception(ex)
+        
+    @classmethod
+    def delete_role(cls, id_role):
+        session = AppSession()
+        try:
+            # Buscar el rol por su ID
+            role_to_delete = session.query(Role).filter(Role.id_role == id_role).one_or_none()
+
+            # Si el rol existe, eliminarlo
+            if role_to_delete:
+                session.delete(role_to_delete)
+                session.commit()
+                return True, session
+            else:
+                return False, session
+
+        except Exception as ex:
+            session.rollback()  # Revertir los cambios en caso de excepción
+            raise Exception(ex)
+        finally:
+            session.close()  # Cerrar la sesión en cualquier caso
