@@ -19,26 +19,112 @@ class ModelUser:
         finally:
             session.close()
 
+    @classmethod
+    def register(cls, username, password, correo, nombre, apellido, id_role):
+        session = AppSession()
+        try:
+            existing_user = session.query(User).filter(User.username == username).one_or_none()
+            if existing_user:
+                return None, session
+
+            new_user = User(username=username, password=password, correo=correo, nombre=nombre, apellido=apellido, id_role=id_role)
+            session.add(new_user)
+            session.commit()
+
+            return new_user, session
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
 
     @classmethod
     def get_by_id(cls, user_id):
         session = AppSession()
         try:
-            user = session.query(User).join(Role).filter(User.id == user_id).one_or_none()  
+            user = session.query(User).join(Role).filter(User.id == user_id).one_or_none()
             return user
         except Exception as ex:
             raise Exception(ex)
         finally:
             session.close()
 
+
     @classmethod
-    def get_all_sellers(cls):
+    def get_all_roles(cls):
         session = AppSession()
         try:
-            vendedores = session.query(User).filter(User.id_role == 2).all()
-            return vendedores
+            # Consulta los roles
+            roles = session.query(Role).all()
+            roles_with_users = []
+
+            for role in roles:
+                # Obtener los usuarios asociados a cada rol
+                users = session.query(User.username).filter(User.id_role == role.id_role).all()
+                usernames = [user.username for user in users]
+
+                role_info = {
+                    'id_role': role.id_role,
+                    'description': role.description,
+                    'usernames': usernames  # Lista de nombres de usuario asociados a este rol
+                }
+                roles_with_users.append(role_info)
+
+            return roles_with_users
+
         except Exception as ex:
             raise Exception(ex)
+
         finally:
             session.close()
 
+    @classmethod
+    def get_all_users(cls):
+        session = AppSession()
+        try:
+            # Consulta los usuarios
+            users = session.query(User).all()
+            return users
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            session.close()
+
+    @classmethod
+    def new_role(cls, description):
+        session = AppSession()
+        try:
+            existing_role = session.query(Role).filter(Role.description == description).one_or_none()
+            if existing_role:
+                return None, session
+
+            new_role = Role(description=description)
+            session.add(new_role)
+            session.commit()
+
+            return new_role, session
+        
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
+        
+    @classmethod
+    def delete_role(cls, id_role):
+        session = AppSession()
+        try:
+            # Buscar el rol por su ID
+            role_to_delete = session.query(Role).filter(Role.id_role == id_role).one_or_none()
+
+            # Si el rol existe, eliminarlo
+            if role_to_delete:
+                session.delete(role_to_delete)
+                session.commit()
+                return True, session
+            else:
+                return False, session
+
+        except Exception as ex:
+            session.rollback()  # Revertir los cambios en caso de excepción
+            raise Exception(ex)
+        finally:
+            session.close()  # Cerrar la sesión en cualquier caso

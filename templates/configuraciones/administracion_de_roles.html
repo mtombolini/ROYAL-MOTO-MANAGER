@@ -1,0 +1,91 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Administración de Roles{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .new-role-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-role-button">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#crearRolModal">Nuevo Rol</button>
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripción</th>
+                        <th>Usuarios</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in data %}
+                    <tr id="{{ role.id_role }}">
+                        <td>{{ role.id_role }}</td>
+                        <td class="description-cell">{{ role.description }}</td>
+                        <td class="usernames-cell">{{ role.usernames | join(', ') }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary edit-btn" onclick="toggleEditSave(this, {{ role.id_role }})">Editar</button>
+                            <a href="{{ url_for('configuraciones.delete_role', id_role=role.id_role) }}" class="btn btn-sm btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No hay roles disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                                                                                                 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="crearRolModal" tabindex="-1" aria-labelledby="crearRolModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearRolModalLabel">Crear Nuevo Rol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/creacion_rol.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    function toggleEditSave(button, roleId) {
+        var row = document.getElementById(roleId);
+        var editButton = row.querySelector('.edit-btn');
+        var descriptionCell = row.querySelector('.description-cell');
+
+        if (editButton.innerText.includes('Editar')) {
+            editButton.innerText = 'Guardar';
+            descriptionCell.setAttribute('contenteditable', 'true');
+            descriptionCell.focus();
+        } else {
+            editButton.innerText = 'Editar';
+            descriptionCell.setAttribute('contenteditable', 'false');
+            // Agregar lógica para enviar los cambios al servidor
+        }
+    }
+</script>
+{% endblock %}
+
+{% endblock %}

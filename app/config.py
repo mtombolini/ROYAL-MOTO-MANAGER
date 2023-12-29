@@ -17,8 +17,8 @@ class DevelopmentConfigMySQL(Config):
 class DevelopmentConfigPostgres(Config):
     DEBUG = True
     HOST = 'localhost'
-    USER = 'postgres'
-    PASSWORD = PASSWORD_POSTGRES
+    USER = 'maximilianotombolini'
+    PASSWORD = ''
     DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
     DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}/{DB}"

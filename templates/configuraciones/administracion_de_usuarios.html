@@ -1,0 +1,88 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Administración de Usuarios{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .new-user-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-user-button">
+            <!-- Botón para abrir un modal de creación de usuario (si es necesario) -->
+            <button class="btn btn-secondary">Nuevo Usuario</button>
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Correo</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>ID Role</th>
+                        <th>Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in data %}
+                    <tr id="{{ user.id }}">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.correo }}</td>
+                        <td>{{ user.nombre }}</td>
+                        <td>{{ user.apellido }}</td>
+                        <td>{{ user.id_role }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary edit-btn">Editar</button>
+                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No hay usuarios disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                                                                                                 
+        </div>
+    </div>
+</div>
+
+<!-- Aquí podrías incluir el modal para crear un nuevo usuario si es necesario -->
+
+{% endblock %}
+
+
+<!-- {% block scripts %}
+<script>
+    function toggleEditSave(button, roleId) {
+        var row = document.getElementById(roleId);
+        var editButton = row.querySelector('.edit-btn');
+        var descriptionCell = row.querySelector('.description-cell');
+
+        if (editButton.innerText.includes('Editar')) {
+            editButton.innerText = 'Guardar';
+            descriptionCell.setAttribute('contenteditable', 'true');
+            descriptionCell.focus();
+        } else {
+            editButton.innerText = 'Editar';
+            descriptionCell.setAttribute('contenteditable', 'false');
+            // Aquí deberías agregar lógica para enviar los cambios al servidor
+        }
+    }
+</script>
+{% endblock %} -->
