@@ -1,4 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, jsonify
+from flask import Blueprint, render_template, redirect, url_for, jsonify, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms.validators import DataRequired
 from flask_login import login_required
 from decorators.roles import requires_roles
 
@@ -9,12 +12,19 @@ from models.model_user import ModelUser
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
 # <----- Configuracion de Roles de Usuario -----> #
+class NewRoleForm(FlaskForm):
+    description = StringField('Descripcion', validators=[DataRequired()])
+
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
 def administracion_de_roles():
+    form = NewRoleForm()  # Crea una instancia de NewRoleForm
     try:
         data = ModelUser.get_all_roles()
-        return render_template('configuraciones/administracion_de_roles.html', page_title="Administración de Roles", data=data)
+        return render_template('configuraciones/administracion_de_roles.html', 
+                               page_title="Administración de Roles", 
+                               data=data, 
+                               form=form)  # Pasa el formulario a la plantilla
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
@@ -22,8 +32,21 @@ def administracion_de_roles():
 @configuraciones_blueprint.route('/crear_rol', methods=['POST'])
 @requires_roles('desarrollador')
 def crear_rol():
-    # Lógica para crear un nuevo rol
-    # Utiliza los datos enviados desde el formulario
+    form = NewRoleForm()
+    if form.validate_on_submit():
+        description = form.description.data
+        new_role, session = ModelUser.new_role(description)
+
+        if new_role is None:
+            flash('El rol ya existe o hubo un error en el registro.')
+            session.close()
+            return redirect(url_for('configuraciones.administracion_de_roles'))
+
+        session.close()
+        return redirect(url_for('configuraciones.administracion_de_roles'))
+
+    # Si el formulario no es válido o no se ha enviado aún, volver a la página de administración de roles
+    flash('Error al crear el rol.')
     return redirect(url_for('configuraciones.administracion_de_roles'))
 
 
@@ -31,7 +54,11 @@ def crear_rol():
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
 def administracion_de_usuarios():
-    return render_template('configuraciones/administracion_de_usuarios.html', page_title="Administración de Usuarios")
+    return render_template('configuraciones/administracion_de_usuarios.html', 
+                           page_title="Administración de Usuarios")
+
+
+
 
 # @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])
 # @requires_roles('desarrollador')

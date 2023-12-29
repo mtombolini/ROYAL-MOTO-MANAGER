@@ -75,3 +75,21 @@ class ModelUser:
 
         finally:
             session.close()
+
+    @classmethod
+    def new_role(cls, description):
+        session = AppSession()
+        try:
+            existing_role = session.query(Role).filter(Role.description == description).one_or_none()
+            if existing_role:
+                return None, session
+
+            new_role = Role(description=description)
+            session.add(new_role)
+            session.commit()
+
+            return new_role, session
+        
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
