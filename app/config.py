@@ -1,4 +1,4 @@
-from parameters import PASSWORD_MYSQL, PASSWORD_POSTGRES
+from parameters import PASSWORD_MYSQL, PASSWORD_POSTGRES, USER_MYSQL, USER_POSTGRES
 class Config:
     SECRET_KEY = '909932'
     BASE_URL = 'https://api.bsale.io/v1/'
@@ -8,7 +8,7 @@ class Config:
 class DevelopmentConfigMySQL(Config):
     DEBUG = True
     HOST = 'localhost'
-    USER = 'root'
+    USER = USER_MYSQL
     PASSWORD = PASSWORD_MYSQL
     DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
@@ -17,8 +17,8 @@ class DevelopmentConfigMySQL(Config):
 class DevelopmentConfigPostgres(Config):
     DEBUG = True
     HOST = 'localhost'
-    USER = 'maximilianotombolini'
-    PASSWORD = ''
+    USER = USER_POSTGRES
+    PASSWORD = PASSWORD_POSTGRES
     DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
     DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}/{DB}"
