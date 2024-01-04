@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -53,6 +53,24 @@ def delete_role(id_role):
         flash('Error al eliminar el rol.')
 
     return redirect(url_for('configuraciones.administracion_de_roles'))
+
+@configuraciones_blueprint.route('/editar_rol/<int:id_role>', methods=['POST'])
+@requires_roles('desarrollador')
+def editar_rol(id_role):
+    data = request.get_json()
+    new_description = data.get('description')
+    if new_description:
+        success, session = ModelUser.edit_role(id_role, new_description)
+        session.close()
+
+        if success:
+            return jsonify({'status': 'success', 'message': 'Rol actualizado con éxito.'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el rol.'}), 400
+
+    return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
+
+
 
 
 # <----- Configuracion de Usuarios -----> #

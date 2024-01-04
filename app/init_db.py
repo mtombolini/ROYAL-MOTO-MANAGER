@@ -10,28 +10,38 @@ from models.consumption import Consumption, ConsumptionDetail
 from models.returns import Return
 from models.sales import Sale, SaleDocument
 
+from sqlalchemy import func
+
 Base.metadata.create_all(app_engine)
 
 with AppSession() as session:
-    roles = [
-        Role(id_role=0, description="desarrollador"),
-        Role(id_role=1, description="administrador"),
-        Role(id_role=2, description="invitado")
-    ]
+    # Check if roles exist
+    roles_count = session.query(func.count(Role.id_role)).scalar()
+    if roles_count == 0:
+        roles = [
+            Role(description="superadministrador"),
+            Role(description="desarrollador"),
+            Role(description="administrador"),
+            Role(description="invitado")
+        ]
 
-    for role in roles:
-        session.merge(role)
+        for role in roles:
+            session.merge(role)
+            
+        superadmin_id = session.query(Role).filter_by(description="superadministrador").first().id_role
 
-    superadmin = User(
-        username="superadmin",
-        password="admin",
-        nombre="Super",
-        apellido="Admin",
-        correo="superadmin@example.com",
-        id_role=0
-    )
+        superadmin = User(
+            username="superadmin",
+            password="admin",
+            nombre="Super",
+            apellido="Admin",
+            correo="superadmin@example.com",
+            id_role=superadmin_id, # 1
+        )
 
-    session.merge(superadmin)
+        session.merge(superadmin)
 
-    session.commit()
+        session.commit()
 
+    else:
+        print("Roles ya inicializados.")

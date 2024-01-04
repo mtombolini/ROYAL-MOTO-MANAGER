@@ -5,10 +5,10 @@ from decorators.roles import requires_roles
 
 home_blueprint = Blueprint('home', __name__)
 
-# @requires_roles('desarrollador')
-# @home_blueprint.route('/')
-# def index():
-#     return redirect(url_for('auth.login'))
+
+@home_blueprint.route('/')
+def index():
+    return redirect(url_for('auth.login'))
 
 
 @home_blueprint.route('/home')

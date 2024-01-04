@@ -114,10 +114,34 @@ class ModelUser:
         try:
             # Buscar el rol por su ID
             role_to_delete = session.query(Role).filter(Role.id_role == id_role).one_or_none()
-
+            
+            if role_to_delete == 1:
+                return False, session
+                
             # Si el rol existe, eliminarlo
             if role_to_delete:
                 session.delete(role_to_delete)
+                session.commit()
+                return True, session
+            else:
+                return False, session
+
+        except Exception as ex:
+            session.rollback()  # Revertir los cambios en caso de excepción
+            raise Exception(ex)
+        finally:
+            session.close()  # Cerrar la sesión en cualquier caso
+            
+    @classmethod
+    def edit_role(cls, id_role, new_description):
+        session = AppSession()
+        try:
+            # Buscar el rol por su ID
+            role_to_edit = session.query(Role).filter(Role.id_role == id_role).one_or_none()
+
+            # Si el rol existe, actualizar su descripción
+            if role_to_edit:
+                role_to_edit.description = new_description
                 session.commit()
                 return True, session
             else:
