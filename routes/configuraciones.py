@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -55,6 +55,35 @@ def delete_role(id_role):
     return redirect(url_for('configuraciones.administracion_de_roles'))
 
 
+@configuraciones_blueprint.route('/editar_rol/<int:id_role>', methods=['POST'])
+@requires_roles('desarrollador')
+def editar_rol(id_role):
+    data = request.get_json()
+    new_description = data.get('description')
+
+    # Obtener la descripción actual del rol desde la base de datos
+    try:
+        current_role, _ = ModelUser.get_role_by_id(id_role)
+        if current_role.description.lower() == 'superadministrador':
+            return jsonify({'status': 'error', 'message': 'No es posible editar el rol "superadministrador".'}), 403
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    # Continuar con la edición si la descripción actual no es 'superadministrador'
+    if new_description:
+        success, session = ModelUser.edit_role(id_role, new_description)
+        session.close()
+
+        if success:
+            return jsonify({'status': 'success', 'message': 'Rol actualizado con éxito.'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el rol.'}), 400
+
+    return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
+
+
+
+
 # <----- Configuracion de Usuarios -----> #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
@@ -68,6 +97,33 @@ def administracion_de_usuarios():
         print(e)
         return render_template('error.html'), 500
     
+
+@configuraciones_blueprint.route('/editar_usuario/<int:user_id>', methods=['POST'])
+@requires_roles('desarrollador')
+def editar_usuario(user_id):
+    data = request.get_json()
+    username = data.get('username')
+    correo = data.get('correo')
+    nombre = data.get('nombre')
+    apellido = data.get('apellido')
+    id_role = data.get('id_role')
+
+    # Verifica si el nombre de usuario es 'superuser'
+    if username.lower() == 'superadmin':
+        return jsonify({'status': 'error', 'message': 'No es posible editar el usuario "superuser".'}), 403
+        
+
+    try:
+        success, session = ModelUser.edit_user(user_id, username, correo, nombre, apellido, id_role)
+        session.close()
+
+        if success:
+            return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.'}), 400
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 
     
 

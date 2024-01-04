@@ -34,26 +34,25 @@
                         <th>Apellido</th>
                         <th>ID Role</th>
                         <th>Acciones</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     {% for user in data %}
-                    <tr id="{{ user.id }}">
+                    <tr id="user-{{ user.id }}">
                         <td>{{ user.id }}</td>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.correo }}</td>
-                        <td>{{ user.nombre }}</td>
-                        <td>{{ user.apellido }}</td>
-                        <td>{{ user.id_role }}</td>
+                        <td class="editable username-cell">{{ user.username }}</td>
+                        <td class="editable correo-cell">{{ user.correo }}</td>
+                        <td class="editable nombre-cell">{{ user.nombre }}</td>
+                        <td class="editable apellido-cell">{{ user.apellido }}</td>
+                        <td class="editable id_role-cell">{{ user.id_role }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary edit-btn">Editar</button>
-                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                            <button class="btn btn-sm btn-primary edit-btn" onclick="toggleEditSave(this, '{{ user.id }}')">Editar</button>
+                            <button class="btn btn-sm btn-danger" onclick="">Eliminar</button>
                         </td>
                     </tr>
                     {% else %}
                         <tr>
-                            <td colspan="3">No hay usuarios disponibles.</td>
+                            <td colspan="8">No hay usuarios disponibles.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -66,23 +65,56 @@
 
 {% endblock %}
 
-
-<!-- {% block scripts %}
+{% block scripts %}
 <script>
-    function toggleEditSave(button, roleId) {
-        var row = document.getElementById(roleId);
-        var editButton = row.querySelector('.edit-btn');
-        var descriptionCell = row.querySelector('.description-cell');
+    function toggleEditSave(button, userId) {
+        var row = document.getElementById('user-' + userId);
+        var editables = row.querySelectorAll('.editable');
+        var isEditing = button.innerText.includes('Editar');
 
-        if (editButton.innerText.includes('Editar')) {
-            editButton.innerText = 'Guardar';
-            descriptionCell.setAttribute('contenteditable', 'true');
-            descriptionCell.focus();
+        if (isEditing) {
+            // Hacer celdas editables
+            editables.forEach(function(cell) {
+                cell.setAttribute('contenteditable', 'true');
+            });
+            button.innerText = 'Guardar';
         } else {
-            editButton.innerText = 'Editar';
-            descriptionCell.setAttribute('contenteditable', 'false');
-            // Aquí deberías agregar lógica para enviar los cambios al servidor
+            // Recopilar datos editados y enviarlos
+            var editedData = {
+                username: row.querySelector('.username-cell').innerText,
+                correo: row.querySelector('.correo-cell').innerText,
+                nombre: row.querySelector('.nombre-cell').innerText,
+                apellido: row.querySelector('.apellido-cell').innerText,
+                id_role: row.querySelector('.id_role-cell').innerText
+            };
+
+            fetch('/editar_usuario/' + userId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editedData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Usuario actualizado con éxito.');
+                } else {
+                    alert('Error al actualizar el usuario.');
+                }
+            });
+
+            // Hacer celdas no editables
+            editables.forEach(function(cell) {
+                cell.setAttribute('contenteditable', 'false');
+            });
+            button.innerText = 'Editar';
         }
     }
+
+    // Funcionalidad para deleteUser si es necesario
+    function deleteUser(button, id) {
+        // Lógica para eliminar usuario
+    }
 </script>
-{% endblock %} -->
+{% endblock %}

@@ -91,6 +91,26 @@ class ModelUser:
             session.close()
 
     @classmethod
+    def get_role_by_id(cls, id_role):
+        session = AppSession()
+        try:
+            role = session.query(Role).filter(Role.id_role == id_role).one_or_none()
+            if role:
+                # Crear y devolver un diccionario con la información del rol
+                role_info = {
+                    'id_role': role.id_role,
+                    'description': role.description
+                }
+                return role_info, session
+            else:
+                return None, session
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
+
+
+    @classmethod
     def new_role(cls, description):
         session = AppSession()
         try:
@@ -114,7 +134,10 @@ class ModelUser:
         try:
             # Buscar el rol por su ID
             role_to_delete = session.query(Role).filter(Role.id_role == id_role).one_or_none()
-
+            
+            if role_to_delete == 1:
+                return False, session
+                
             # Si el rol existe, eliminarlo
             if role_to_delete:
                 session.delete(role_to_delete)
@@ -128,3 +151,46 @@ class ModelUser:
             raise Exception(ex)
         finally:
             session.close()  # Cerrar la sesión en cualquier caso
+            
+    @classmethod
+    def edit_role(cls, id_role, new_description):
+        session = AppSession()
+        try:
+            # Buscar el rol por su ID
+            role_to_edit = session.query(Role).filter(Role.id_role == id_role).one_or_none()
+
+            # Si el rol existe, actualizar su descripción
+            if role_to_edit:
+                role_to_edit.description = new_description
+                session.commit()
+                return True, session
+            else:
+                return False, session
+
+        except Exception as ex:
+            session.rollback()  # Revertir los cambios en caso de excepción
+            raise Exception(ex)
+        finally:
+            session.close()  # Cerrar la sesión en cualquier caso
+
+    @classmethod
+    def edit_user(cls, user_id, username, correo, nombre, apellido, id_role):
+        session = AppSession()
+        try:
+            user_to_edit = session.query(User).filter(User.id == user_id).one_or_none()
+            if user_to_edit:
+                user_to_edit.username = username
+                user_to_edit.correo = correo
+                user_to_edit.nombre = nombre
+                user_to_edit.apellido = apellido
+                user_to_edit.id_role = id_role
+                session.commit()
+                return True, session
+            else:
+                return False, session
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
+        finally:
+            session.close()
+
