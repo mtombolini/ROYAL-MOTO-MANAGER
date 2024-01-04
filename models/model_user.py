@@ -91,6 +91,26 @@ class ModelUser:
             session.close()
 
     @classmethod
+    def get_role_by_id(cls, id_role):
+        session = AppSession()
+        try:
+            role = session.query(Role).filter(Role.id_role == id_role).one_or_none()
+            if role:
+                # Crear y devolver un diccionario con la información del rol
+                role_info = {
+                    'id_role': role.id_role,
+                    'description': role.description
+                }
+                return role_info, session
+            else:
+                return None, session
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
+
+
+    @classmethod
     def new_role(cls, description):
         session = AppSession()
         try:

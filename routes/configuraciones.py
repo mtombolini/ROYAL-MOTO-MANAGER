@@ -54,11 +54,22 @@ def delete_role(id_role):
 
     return redirect(url_for('configuraciones.administracion_de_roles'))
 
+
 @configuraciones_blueprint.route('/editar_rol/<int:id_role>', methods=['POST'])
 @requires_roles('desarrollador')
 def editar_rol(id_role):
     data = request.get_json()
     new_description = data.get('description')
+
+    # Obtener la descripción actual del rol desde la base de datos
+    try:
+        current_role, _ = ModelUser.get_role_by_id(id_role)
+        if current_role.description.lower() == 'superadministrador':
+            return jsonify({'status': 'error', 'message': 'No es posible editar el rol "superadministrador".'}), 403
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    # Continuar con la edición si la descripción actual no es 'superadministrador'
     if new_description:
         success, session = ModelUser.edit_role(id_role, new_description)
         session.close()
@@ -97,6 +108,11 @@ def editar_usuario(user_id):
     apellido = data.get('apellido')
     id_role = data.get('id_role')
 
+    # Verifica si el nombre de usuario es 'superuser'
+    if username.lower() == 'superadmin':
+        return jsonify({'status': 'error', 'message': 'No es posible editar el usuario "superuser".'}), 403
+        
+
     try:
         success, session = ModelUser.edit_user(user_id, username, correo, nombre, apellido, id_role)
         session.close()
@@ -108,7 +124,6 @@ def editar_usuario(user_id):
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
-    
 
     
 
