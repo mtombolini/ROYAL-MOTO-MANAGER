@@ -51,7 +51,7 @@ def register():
         correo = form.correo.data
         nombre = form.nombre.data
         apellido = form.apellido.data
-        id_role = 2  # Asumiendo que se asigna un rol predeterminado
+        id_role = 4  # Asumiendo que se asigna un rol predeterminado
 
         if password != confirm_password:
             flash('Las contraseñas no coinciden.')

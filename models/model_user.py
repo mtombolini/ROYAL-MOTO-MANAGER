@@ -152,3 +152,25 @@ class ModelUser:
             raise Exception(ex)
         finally:
             session.close()  # Cerrar la sesión en cualquier caso
+
+    @classmethod
+    def edit_user(cls, user_id, username, correo, nombre, apellido, id_role):
+        session = AppSession()
+        try:
+            user_to_edit = session.query(User).filter(User.id == user_id).one_or_none()
+            if user_to_edit:
+                user_to_edit.username = username
+                user_to_edit.correo = correo
+                user_to_edit.nombre = nombre
+                user_to_edit.apellido = apellido
+                user_to_edit.id_role = id_role
+                session.commit()
+                return True, session
+            else:
+                return False, session
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
+        finally:
+            session.close()
+

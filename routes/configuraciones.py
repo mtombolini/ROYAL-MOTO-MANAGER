@@ -87,6 +87,29 @@ def administracion_de_usuarios():
         return render_template('error.html'), 500
     
 
+@configuraciones_blueprint.route('/editar_usuario/<int:user_id>', methods=['POST'])
+@requires_roles('desarrollador')
+def editar_usuario(user_id):
+    data = request.get_json()
+    username = data.get('username')
+    correo = data.get('correo')
+    nombre = data.get('nombre')
+    apellido = data.get('apellido')
+    id_role = data.get('id_role')
+
+    try:
+        success, session = ModelUser.edit_user(user_id, username, correo, nombre, apellido, id_role)
+        session.close()
+
+        if success:
+            return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.'}), 400
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    
+
     
 
 
