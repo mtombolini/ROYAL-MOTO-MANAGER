@@ -1,0 +1,38 @@
+<form action="{{ url_for('configuraciones.editar_usuario') }}" method="post" id="editUserForm">
+    {{ form.csrf_token }}
+
+    <!-- Hidden Field for User ID -->
+    <input type="hidden" name="id_user" id="modalUserId">
+
+    <!-- Username Field -->
+    <div class="mb-3">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control", id="modalUsername") }}
+    </div>
+
+    <!-- Email Field -->
+    <div class="mb-3">
+        {{ form.correo.label(class="form-label") }}
+        {{ form.correo(class="form-control", id="modalEmail") }}
+    </div>
+
+    <!-- First Name Field -->
+    <div class="mb-3">
+        {{ form.nombre.label(class="form-label") }}
+        {{ form.nombre(class="form-control", id="modalFirstName") }}
+    </div>
+
+    <!-- Last Name Field -->
+    <div class="mb-3">
+        {{ form.apellido.label(class="form-label") }}
+        {{ form.apellido(class="form-control", id="modalLastName") }}
+    </div>
+
+    <!-- Role ID Field -->
+    <div class="mb-3">
+        {{ form.id_role.label(class="form-label") }}
+        {{ form.id_role(class="form-control", id="modalRoleId") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Editar Usuario</button>
+</form>

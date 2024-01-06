@@ -103,35 +103,3 @@
 {% endblock %}
 
 {% endblock %}
-function toggleEditSave(button, roleId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/get_superadmin_role_id", true);
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var response = JSON.parse(this.responseText);
-            var superadminRoleId = response.superadmin_role_id;
-
-            if (roleId === superadminRoleId) {
-                alert("Editing the superadministrador role is not allowed.");
-                return; // Stop the function if the role is superadministrador
-            }
-
-            // Continue with the rest of the function if the role is not superadministrador
-            var row = document.getElementById(roleId);
-            var editButton = row.querySelector('.edit-btn');
-            var descriptionCell = row.querySelector('.description-cell');
-
-            if (editButton.innerText.includes('Editar')) {
-                editButton.innerText = 'Guardar';
-                descriptionCell.setAttribute('contenteditable', 'true');
-                descriptionCell.focus();
-            } else {
-                var newDescription = descriptionCell.innerText;
-                editButton.innerText = 'Editar';
-                descriptionCell.setAttribute('contenteditable', 'false');
-                saveRole(roleId, newDescription);  // Llamar a saveRole para guardar los cambios
-            }
-        }
-    };
-    xhr.send();
-}

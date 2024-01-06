@@ -19,6 +19,7 @@ class ModelUser:
         finally:
             session.close()
 
+
     @classmethod
     def register(cls, username, password, correo, nombre, apellido, id_role):
         session = AppSession()
@@ -35,6 +36,7 @@ class ModelUser:
         except Exception as ex:
             session.rollback()
             raise Exception(ex)
+
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -76,6 +78,7 @@ class ModelUser:
         finally:
             session.close()
 
+
     @classmethod
     def get_all_users(cls):
         session = AppSession()
@@ -89,6 +92,7 @@ class ModelUser:
 
         finally:
             session.close()
+
 
     @classmethod
     def get_role_by_id(cls, id_role):
@@ -128,6 +132,7 @@ class ModelUser:
             session.rollback()
             raise Exception(ex)
         
+        
     @classmethod
     def delete_role(cls, id_role):
         session = AppSession()
@@ -152,6 +157,7 @@ class ModelUser:
         finally:
             session.close()  # Cerrar la sesión en cualquier caso
             
+            
     @classmethod
     def edit_role(cls, id_role, new_description):
         session = AppSession()
@@ -172,6 +178,29 @@ class ModelUser:
             raise Exception(ex)
         finally:
             session.close()  # Cerrar la sesión en cualquier caso
+            
+            
+    @classmethod
+    def delete_user(cls, id_user):
+        session = AppSession()
+        try:
+            # Buscar el user por su ID
+            user_to_delete = session.query(User).filter(User.id == id_user).one_or_none()
+                
+            # Si el rol existe, eliminarlo
+            if user_to_delete:
+                session.delete(user_to_delete)
+                session.commit()
+                return True, session
+            else:
+                return False, session
+
+        except Exception as ex:
+            session.rollback()  # Revertir los cambios en caso de excepción
+            raise Exception(ex)
+        finally:
+            session.close()  # Cerrar la sesión en cualquier caso
+
 
     @classmethod
     def edit_user(cls, user_id, username, correo, nombre, apellido, id_role):
@@ -193,4 +222,44 @@ class ModelUser:
             raise Exception(ex)
         finally:
             session.close()
+            
+    
+    @classmethod
+    def is_superadmin(cls, id_role):
+        session = AppSession()
+        try:
+            current_role, _ = cls.get_role_by_id(id_role)
+            return current_role.description.lower() == 'superadministrador', session
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
+        finally:
+            session.close()
+            
+            
+    @classmethod
+    def is_user_the_superadmin(cls, id_user):
+        session = AppSession()
+        try:
+            user_id_role = session.query(User.id_role).filter(User.id == id_user).one_or_none().id_role()
+            return cls.is_superadmin(user_id_role)
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
+        finally:
+            session.close()
+            
 
+    @classmethod
+    def role_has_associated_users(cls, id_role):
+        session = AppSession()
+        try:
+            roles_with_users = cls.get_all_roles()
+            for role in roles_with_users:
+                if role.id_role == id_role:
+                    return len(role.usernames) > 0, session
+        except Exception as ex:
+            session.rollback()
+            raise Exception(ex)
+        finally:
+            session.close()

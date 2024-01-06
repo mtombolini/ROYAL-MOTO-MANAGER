@@ -44,6 +44,15 @@ def crear_rol():
 @configuraciones_blueprint.route('/eliminar_rol/<int:id_role>')
 @requires_roles('desarrollador')
 def delete_role(id_role):
+    # Verificar que no estemos eliminando el superadmin
+    try:
+        if ModelUser.is_superadmin(id_role)[0]:
+            return jsonify({'status': 'error', 'message': 'No es posible eliminar el rol "superadministrador".'}), 403
+        elif ModelUser.role_has_associated_users(id_role)[0]:
+            return jsonify({'status': 'error', 'message': 'No es posible eliminar un rol con usuarios asociados.'}), 403
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
     success, session = ModelUser.delete_role(id_role)
     session.close()
 
@@ -63,8 +72,7 @@ def editar_rol(id_role):
 
     # Obtener la descripción actual del rol desde la base de datos
     try:
-        current_role, _ = ModelUser.get_role_by_id(id_role)
-        if current_role.description.lower() == 'superadministrador':
+        if ModelUser.is_superadmin(id_role)[0]:
             return jsonify({'status': 'error', 'message': 'No es posible editar el rol "superadministrador".'}), 403
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
@@ -83,7 +91,6 @@ def editar_rol(id_role):
 
 
 
-
 # <----- Configuracion de Usuarios -----> #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
@@ -98,6 +105,30 @@ def administracion_de_usuarios():
         return render_template('error.html'), 500
     
 
+@configuraciones_blueprint.route('/get_user/<int:user_id>', methods=['GET'])
+@requires_roles('desarrollador')  # Adjust the role requirement as needed
+def get_user(user_id):
+    try:
+        user = ModelUser.get_by_id(user_id)
+        if user:
+            # Convert the user object to a dictionary
+            user_data = {
+                'id': user.id,
+                'username': user.username,
+                'correo': user.correo,
+                'nombre': user.nombre,
+                'apellido': user.apellido,
+                'id_role': user.id_role
+                # Exclude password for security reasons
+            }
+            return jsonify(user_data)
+        else:
+            return jsonify({'status': 'error', 'message': 'Usuario no encontrado'}), 404
+    except Exception as e:
+        print(e)  # Consider using logging instead of print for production code
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
 @configuraciones_blueprint.route('/editar_usuario/<int:user_id>', methods=['POST'])
 @requires_roles('desarrollador')
 def editar_usuario(user_id):
@@ -111,8 +142,7 @@ def editar_usuario(user_id):
     # Verifica si el nombre de usuario es 'superuser'
     if username.lower() == 'superadmin':
         return jsonify({'status': 'error', 'message': 'No es posible editar el usuario "superuser".'}), 403
-        
-
+    
     try:
         success, session = ModelUser.edit_user(user_id, username, correo, nombre, apellido, id_role)
         session.close()
@@ -125,7 +155,25 @@ def editar_usuario(user_id):
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
+@configuraciones_blueprint.route('/eliminar_usuario/<int:id_user>')
+@requires_roles('desarrollador')
+def eliminar_usuario(id_user):
+    # Verificar que no estemos eliminando el superadmin
+    try:
+        if ModelUser.is_user_the_superadmin(id_user)[0]:
+            return jsonify({'status': 'error', 'message': 'No es posible eliminar usuario con el rol de "superadministrador".'}), 403
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
     
+    success, session = ModelUser.delete_user(id_user)
+    session.close()
+
+    if success:
+        flash('Rol eliminado con éxito.')
+    else:
+        flash('Error al eliminar el rol.')
+
+    return redirect(url_for('configuraciones.administracion_de_roles')) 
 
 
 
