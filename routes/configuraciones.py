@@ -42,9 +42,9 @@ def crear_rol():
         session.close()
 
         if new_role is None:
-            flash('El rol ya existe o hubo un error en el registro.')
+            flash('El rol ya existe o hubo un error en el registro.', 'error')
         else:
-            flash('Rol creado exitosamente.')
+            flash('Rol creado exitosamente.', 'success')
 
         return redirect(url_for('configuraciones.administracion_de_roles'))
 
@@ -67,9 +67,9 @@ def delete_role(id_role):
     session.close()
 
     if success:
-        flash('Rol eliminado con éxito.')
+        flash('Rol eliminado con éxito.', 'success')
     else:
-        flash('Error al eliminar el rol.')
+        flash('Error al eliminar el rol.', 'error')
 
     return redirect(url_for('configuraciones.administracion_de_roles'))
 
