@@ -28,13 +28,12 @@
 <!-- Mensajes Flash -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <div class="flash-messages">
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %}
-    </div>
+    {% for category, message in messages %}
+      <div class="hidden flash-message" data-type="{{ category }}" data-message="{{ message }}"></div>
+    {% endfor %}
   {% endif %}
 {% endwith %}
+
 
 <!-- Header Inferior -->
 <nav class="navbar navbar-expand-lg header-bottom">
