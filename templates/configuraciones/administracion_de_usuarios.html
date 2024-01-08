@@ -69,9 +69,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 {% include 'configuraciones/edicion_user.html' %}
@@ -88,32 +86,63 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function openEditModal(userId) {
-        // Example: Fetch user data using AJAX
-        // Adjust the URL and method according to your application's API
-        
         fetch(`/get_user/${userId}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(user => {
-                // Assuming your API returns user data in a 'user' object
-                // Populate the form fields in the modal
+                // Populate the modal form fields
                 document.getElementById('modalUserId').value = user.id;
                 document.getElementById('modalUsername').value = user.username;
                 document.getElementById('modalEmail').value = user.correo;
                 document.getElementById('modalFirstName').value = user.nombre;
                 document.getElementById('modalLastName').value = user.apellido;
                 document.getElementById('modalRoleId').value = user.id_role;
-
-                // Dynamically set the form action with the user ID
-                var formAction = "{{ url_for('configuraciones.editar_usuario', user_id=0) }}";
-                formAction = formAction.replace("0", userId);
-                document.getElementById('editUserForm').action = formAction;
-
+    
+                // Add event listener for form submission
+                $('#editUserForm').off('submit').on('submit', function(e) {
+                    e.preventDefault();  // Prevent default form submission
+    
+                    var updatedUserData = {
+                        username: document.getElementById('modalUsername').value,
+                        email: document.getElementById('modalEmail').value,
+                        first_name: document.getElementById('modalFirstName').value,
+                        last_name: document.getElementById('modalLastName').value,
+                        id_role: document.getElementById('modalRoleId').value,
+                    };
+    
+                    fetch(`/editar_usuario/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(updatedUserData)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+                        jQuery('#editUserModal').modal('hide');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                });
+    
                 // Show the modal
                 jQuery('#editUserModal').modal('show');
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);
             });
-    } 
+    }
+    
 </script>
 {% endblock %}

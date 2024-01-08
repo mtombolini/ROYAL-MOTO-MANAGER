@@ -269,8 +269,8 @@ class ModelUser:
         try:
             roles_with_users = cls.get_all_roles()
             for role in roles_with_users:
-                if role.id_role == id_role:
-                    return len(role.usernames) > 0, session
+                if role['id_role'] == id_role:
+                    return len(role['usernames']) > 0, session
         except Exception as ex:
             session.rollback()
             raise Exception(ex)

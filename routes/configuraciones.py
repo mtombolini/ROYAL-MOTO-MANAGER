@@ -147,10 +147,14 @@ def get_user(user_id):
 @requires_roles('desarrollador')
 def editar_usuario(user_id):
     data = request.get_json()
+    
+    print(data)
     username = data.get('username')
-    correo = data.get('correo')
-    nombre = data.get('nombre')
-    apellido = data.get('apellido')
+    print(username)
+    correo = data.get('email')
+    print(correo)
+    nombre = data.get('first_name')
+    apellido = data.get('last_name')
     id_role = data.get('id_role')
 
     # Verifica si el nombre de usuario es 'superuser'
