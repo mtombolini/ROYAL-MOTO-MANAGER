@@ -55,21 +55,18 @@ def crear_rol():
 @requires_roles('desarrollador')
 def delete_role(id_role):
     # Verificar que no estemos eliminando el superadmin
-    try:
-        if ModelUser.is_superadmin(id_role)[0]:
-            return jsonify({'status': 'error', 'message': 'No es posible eliminar el rol "superadministrador".'}), 403
-        elif ModelUser.role_has_associated_users(id_role)[0]:
-            return jsonify({'status': 'error', 'message': 'No es posible eliminar un rol con usuarios asociados.'}), 403
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-    
-    success, session = ModelUser.delete_role(id_role)
-    session.close()
-
-    if success:
-        flash('Rol eliminado con éxito.', 'success')
+    if ModelUser.is_superadmin(id_role)[0]:
+        flash('No es posible eliminar el rol superadministrador.', 'error')
+    elif ModelUser.role_has_associated_users(id_role)[0]:
+        flash('No es posible eliminar un rol con usuarios asociados.', 'error')
     else:
-        flash('Error al eliminar el rol.', 'error')
+        success, session = ModelUser.delete_role(id_role)
+        session.close()
+
+        if success:
+            flash('Rol eliminado con éxito.', 'success')
+        else:
+            flash('Error al eliminar el rol.', 'error')
 
     return redirect(url_for('configuraciones.administracion_de_roles'))
 
@@ -177,19 +174,18 @@ def editar_usuario(user_id):
 @requires_roles('desarrollador')
 def eliminar_usuario(id_user):
     # Verificar que no estemos eliminando el superadmin
-    try:
-        if ModelUser.is_user_the_superadmin(id_user)[0]:
-            return jsonify({'status': 'error', 'message': 'No es posible eliminar usuario con el rol de "superadministrador".'}), 403
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
     
-    success, session = ModelUser.delete_user(id_user)
-    session.close()
+    if ModelUser.is_user_the_superadmin(id_user)[0]:
+        flash('No es posible eliminar el usuario superadministrador.', 'error')
 
-    if success:
-        flash('Rol eliminado con éxito.')
     else:
-        flash('Error al eliminar el rol.')
+        success, session = ModelUser.delete_user(id_user)
+        session.close()
+
+        if success:
+            flash('Usuario eliminado con éxito.', 'success')
+        else:
+            flash('Error al eliminar el rol.', 'error')
 
     return redirect(url_for('configuraciones.administracion_de_usuarios')) 
 
