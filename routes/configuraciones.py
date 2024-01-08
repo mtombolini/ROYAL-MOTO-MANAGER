@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, IntegerField
+from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import DataRequired, Length, Email
 from flask_login import login_required
 from decorators.roles import requires_roles
@@ -18,7 +18,7 @@ class NewUserForm(FlaskForm):
     correo = StringField('Correo', validators=[DataRequired(), Email()])
     nombre = StringField('Nombre', validators=[DataRequired()])
     apellido = StringField('Apellido', validators=[DataRequired()])
-    id_role = IntegerField('ID Role', validators=[DataRequired()])
+    id_role = SelectField('Role', coerce=int, validators=[DataRequired()])
 
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
@@ -26,11 +26,20 @@ def administracion_de_roles():
     form = NewRoleForm()
     try:
         data = ModelUser.get_all_roles()
-        print(data)
         return render_template('configuraciones/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
+    
+@configuraciones_blueprint.route('/get_role/<int:role_id>')
+@requires_roles('desarrollador')
+def get_role(role_id):
+    role, _ = ModelUser.get_role_by_id(role_id)
+    if role:
+        return jsonify(role)
+    else:
+        return jsonify({'error': 'Role not found'}), 404
+
 
 @configuraciones_blueprint.route('/crear_rol', methods=['POST'])
 @requires_roles('desarrollador')
@@ -103,6 +112,9 @@ def editar_rol(id_role):
 @requires_roles('desarrollador')
 def administracion_de_usuarios():
     form = NewUserForm()
+    role_data = ModelUser.get_all_roles()  # Fetch roles from database
+    # Format role data for the SelectField
+    form.id_role.choices = [(role['id_role'], f"{role['id_role']} - {role['description'].capitalize()}") for role in role_data]
     try:
         data = ModelUser.get_all_users()
         print(data)
@@ -118,7 +130,6 @@ def administracion_de_usuarios():
 @configuraciones_blueprint.route('/get_user/<int:user_id>', methods=['GET'])
 @requires_roles('desarrollador')  # Adjust the role requirement as needed
 def get_user(user_id):
-    print("user_id", user_id)
     try:
         user = ModelUser.get_by_id(user_id)
         if user:
@@ -131,7 +142,6 @@ def get_user(user_id):
                 'apellido': user.apellido,
                 'id_role': user.id_role,
             }
-            print(jsonify(user_data))
             return jsonify(user_data)
         else:
             return jsonify({'status': 'error', 'message': 'Usuario no encontrado'}), 404

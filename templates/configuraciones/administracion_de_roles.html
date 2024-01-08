@@ -39,7 +39,7 @@
                         <td class="description-cell">{{ role.description }}</td>
                         <td class="usernames-cell">{{ role.usernames | join(', ') }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary edit-btn" onclick="toggleEditSave(this, {{ role.id_role }})">Editar</button>
+                            <button class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{role.id_role}})">Editar</button>
                             <a href="{{ url_for('configuraciones.delete_role', id_role=role.id_role) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este rol?')">Eliminar</a>
                         </td>
                     </tr>
@@ -54,6 +54,7 @@
     </div>
 </div>
 
+<!-- Bootstrap Modal to create roles -->
 <div class="modal fade" id="crearRolModal" tabindex="-1" aria-labelledby="crearRolModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -68,37 +69,76 @@
     </div>
 </div>
 
+<!-- Bootstrap Modal to edit roles -->
+<div class="modal fade" id="editRoleModal" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editRoleModalLabel">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/edicion_rol.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Agregar esta función para manejar la solicitud AJAX
-    function saveRole(roleId, newDescription) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", `/editar_rol/${roleId}`, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                // Lógica después de una actualización exitosa, como mostrar un mensaje
-            }
-        };
-        xhr.send(JSON.stringify({ description: newDescription }));
+    function openEditModal(roleId) {
+        fetch(`/get_role/${roleId}`)
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response)
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(role => {
+                // Populate the modal form fields
+                document.getElementById('modalRoleId').value = role.id_role;
+                document.getElementById('modalDescription').value = role.description;
+    
+                // Add event listener for form submission
+                $('#editRoleForm').off('submit').on('submit', function(e) {
+                    e.preventDefault();  // Prevent default form submission
+    
+                    var updatedRoleData = {
+                        description: document.getElementById('modalDescription').value,
+                    };
+    
+                    fetch(`/editar_rol/${roleId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(updatedRoleData)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+                        jQuery('#editRoleModal').modal('hide');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                });
+    
+                // Show the modal
+                jQuery('#editRoleModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error fetching role data:', error);
+            });
     }
-
-    function toggleEditSave(button, roleId) {
-        var row = document.getElementById(roleId);
-        var editButton = row.querySelector('.edit-btn');
-        var descriptionCell = row.querySelector('.description-cell');
-
-        if (editButton.innerText.includes('Editar')) {
-            editButton.innerText = 'Guardar';
-            descriptionCell.setAttribute('contenteditable', 'true');
-            descriptionCell.focus();
-        } else {
-            var newDescription = descriptionCell.innerText;
-            editButton.innerText = 'Editar';
-            descriptionCell.setAttribute('contenteditable', 'false');
-            saveRole(roleId, newDescription);  // Llamar a saveRole para guardar los cambios
-        }
-    }
+    
 </script>
 {% endblock %}
 

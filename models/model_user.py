@@ -177,7 +177,6 @@ class ModelUser:
         try:
             # Buscar el rol por su ID
             role_to_edit = session.query(Role).filter(Role.id_role == id_role).one_or_none()
-
             # Si el rol existe, actualizar su descripción
             if role_to_edit:
                 role_to_edit.description = new_description
