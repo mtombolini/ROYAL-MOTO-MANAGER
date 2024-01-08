@@ -85,7 +85,20 @@ class ModelUser:
         try:
             # Consulta los usuarios
             users = session.query(User).all()
-            return users
+            users_info = []
+            
+            for user in users:
+                user_info = {
+                    'id': user.id,
+                    'username': user.username,
+                    'password': user.password,
+                    'correo': user.correo,
+                    'nombre': user.nombre,
+                    'apellido': user.apellido,
+                    'id_role': user.id_role,
+                }
+                users_info.append(user_info)
+            return users_info
 
         except Exception as ex:
             raise Exception(ex)
@@ -229,7 +242,7 @@ class ModelUser:
         session = AppSession()
         try:
             current_role, _ = cls.get_role_by_id(id_role)
-            return current_role.description.lower() == 'superadministrador', session
+            return current_role['description'].lower() == 'superadministrador', session
         except Exception as ex:
             session.rollback()
             raise Exception(ex)
@@ -241,7 +254,7 @@ class ModelUser:
     def is_user_the_superadmin(cls, id_user):
         session = AppSession()
         try:
-            user_id_role = session.query(User.id_role).filter(User.id == id_user).one_or_none().id_role()
+            user_id_role = session.query(User.id_role).filter(User.id == id_user).one_or_none().id_role
             return cls.is_superadmin(user_id_role)
         except Exception as ex:
             session.rollback()

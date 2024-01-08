@@ -49,7 +49,7 @@
                         <td>{{ user.apellido }}</td>
                         <td>{{ user.id_role }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{ user.id }})">Editar</button>
+                            <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{user.id}})">Editar</button>
                             <a href="{{ url_for('configuraciones.eliminar_usuario', id_user=user.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este usuario?')">Eliminar</a>
                         </td>
                     </tr>
@@ -68,45 +68,56 @@
 <!-- Bootstrap Modal -->
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            {% with id_user=user.id %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 {% include 'configuraciones/edicion_user.html' %}
-            {% endwith %}
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+
   
 
 {% endblock %}
 
 {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function openEditModal(userId) {
         // Example: Fetch user data using AJAX
         // Adjust the URL and method according to your application's API
+        console.log(userId)
         fetch(`/get_user/${userId}`)
             .then(response => response.json())
             .then(user => {
                 // Assuming your API returns user data in a 'user' object
                 // Populate the form fields in the modal
+                console.log(user.id)
+                console.log(user.username)
+                console.log(user.correo)
+                console.log(user.nombre)
+                console.log(user.apellido)
+                console.log(user.id_role)
                 document.getElementById('modalUserId').value = user.id;
                 document.getElementById('modalUsername').value = user.username;
-                document.getElementById('modalPassword').value = user.password; // Note: Be cautious with password fields
                 document.getElementById('modalEmail').value = user.correo;
                 document.getElementById('modalFirstName').value = user.nombre;
                 document.getElementById('modalLastName').value = user.apellido;
                 document.getElementById('modalRoleId').value = user.id_role;
 
+                // Dynamically set the form action with the user ID
+                var formAction = "{{ url_for('configuraciones.editar_usuario', user_id=0) }}";
+                formAction = formAction.replace("0", userId);
+                document.getElementById('editUserForm').action = formAction;
+
                 // Show the modal
-                $('#editUserModal').modal('show');
+                jQuery('#editUserModal').modal('show');
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, IntegerField
+from wtforms.validators import DataRequired, Length, Email
 from flask_login import login_required
 from decorators.roles import requires_roles
 from models.model_user import ModelUser
@@ -10,6 +10,15 @@ configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
 class NewRoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
+    
+    
+class NewUserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    correo = StringField('Correo', validators=[DataRequired(), Email()])
+    nombre = StringField('Nombre', validators=[DataRequired()])
+    apellido = StringField('Apellido', validators=[DataRequired()])
+    id_role = IntegerField('ID Role', validators=[DataRequired()])
 
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
@@ -17,6 +26,7 @@ def administracion_de_roles():
     form = NewRoleForm()
     try:
         data = ModelUser.get_all_roles()
+        print(data)
         return render_template('configuraciones/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
     except Exception as e:
         print(e)
@@ -95,11 +105,14 @@ def editar_rol(id_role):
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
 def administracion_de_usuarios():
+    form = NewUserForm()
     try:
         data = ModelUser.get_all_users()
+        print(data)
         return render_template('configuraciones/administracion_de_usuarios.html', 
                                page_title="Administración de Usuarios", 
-                               data=data)  
+                               data=data,
+                               form=form)  
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
@@ -108,6 +121,7 @@ def administracion_de_usuarios():
 @configuraciones_blueprint.route('/get_user/<int:user_id>', methods=['GET'])
 @requires_roles('desarrollador')  # Adjust the role requirement as needed
 def get_user(user_id):
+    print("user_id", user_id)
     try:
         user = ModelUser.get_by_id(user_id)
         if user:
@@ -118,9 +132,9 @@ def get_user(user_id):
                 'correo': user.correo,
                 'nombre': user.nombre,
                 'apellido': user.apellido,
-                'id_role': user.id_role
-                # Exclude password for security reasons
+                'id_role': user.id_role,
             }
+            print(jsonify(user_data))
             return jsonify(user_data)
         else:
             return jsonify({'status': 'error', 'message': 'Usuario no encontrado'}), 404
@@ -173,7 +187,7 @@ def eliminar_usuario(id_user):
     else:
         flash('Error al eliminar el rol.')
 
-    return redirect(url_for('configuraciones.administracion_de_roles')) 
+    return redirect(url_for('configuraciones.administracion_de_usuarios')) 
 
 
 

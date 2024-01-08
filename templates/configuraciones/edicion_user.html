@@ -1,4 +1,4 @@
-<form action="{{ url_for('configuraciones.editar_usuario') }}" method="post" id="editUserForm">
+<form action="{{ url_for('configuraciones.editar_usuario', user_id=1) }}" method="post" id="editUserForm">
     {{ form.csrf_token }}
 
     <!-- Hidden Field for User ID -->
