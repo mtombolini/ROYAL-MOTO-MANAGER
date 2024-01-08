@@ -1,0 +1,36 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Carro de Compras{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<div class="text-center">
+    <!-- Spinner de Bootstrap y Mensaje -->
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Cargando...</span>
+    </div>
+    <p id="loadingMessage">Obteniendo estado de la solicitud...</p>
+    <p>Tiempo transcurrido: <span id="timer">0</span> segundos</p>
+
+    <!-- Botón para duplicar a inicio -->
+    <a href="{{ url_for('home.home') }}" target="_blank" class="btn btn-primary">Ir a Inicio</a>
+
+    <!-- Botón de Reinicio -->
+    <button onclick="restartProcess()" class="btn btn-secondary">Reiniciar Proceso</button>
+</div>
+
+<script>
+    var timeElapsed = 0;
+    var timerInterval = setInterval(function() {
+        timeElapsed++;
+        document.getElementById('timer').innerText = timeElapsed;
+    }, 1000);
+
+    function restartProcess() {
+        // Recargar la página o redirigir a la ruta que inicia el proceso
+        window.location.href = "{{ url_for('api_call.run_api_calls') }}";
+    }
+</script>
+
+{% endblock %}

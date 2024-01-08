@@ -14,6 +14,7 @@ from databases.session import AppSession
 TOKEN = "7a9dc44e2b4e17845a8199844e30a055f6754a9c"
     
 time_start = time.time()
+print("Inicializando")
 
 dataframe_main = DataFrameMain()
 
