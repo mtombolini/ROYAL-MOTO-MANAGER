@@ -26,7 +26,7 @@ def administracion_de_roles():
     form = NewRoleForm()
     try:
         data = ModelUser.get_all_roles()
-        return render_template('configuraciones/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
+        return render_template('configuraciones/administracion_de_roles/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
@@ -118,7 +118,7 @@ def administracion_de_usuarios():
     try:
         data = ModelUser.get_all_users()
         print(data)
-        return render_template('configuraciones/administracion_de_usuarios.html', 
+        return render_template('configuraciones/administracion_de_usuarios/administracion_de_usuarios.html', 
                                page_title="Administración de Usuarios", 
                                data=data,
                                form=form)  
