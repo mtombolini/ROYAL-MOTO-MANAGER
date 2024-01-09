@@ -7,6 +7,7 @@ from app.flags import stop, clear_stop_signal, stop_signal_is_set
 import json
 
 api_blueprint = Blueprint('api_call', __name__)
+api_actualizacion = Blueprint('api_actualizacion', __name__)
 active_threads = []
 
 def run_api_module(app):
@@ -32,7 +33,7 @@ def run_api_module(app):
                 time.sleep(1)  # Esperar un tiempo antes de volver a ejecutar
         except Exception as e:
             flash(f'Ocurrió un error inesperado: {str(e)}', 'error')
-            
+
 @api_blueprint.route('/run_api_calls')
 def run_api_calls():
     global active_threads
@@ -60,7 +61,7 @@ def run_api_calls():
     return render_template('api/espera.html', page_title="Solicitud de actualización manual API")
 
 
-@api_blueprint.route('/actualizar_estado')
+@api_actualizacion.route('/actualizar_estado')
 def actualizar_estado():
     estados = []
     try:
