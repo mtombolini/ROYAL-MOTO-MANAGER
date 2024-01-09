@@ -52,7 +52,7 @@
                         <td class="description-cell">{{ role.description }}</td>
                         <td class="usernames-cell">{{ role.usernames | join(', ') }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{role.id_role}})">Editar</button>
+                            <button class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{ role.id_role }})">Editar</button>
                             <a href="{{ url_for('configuraciones.delete_role', id_role=role.id_role) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este rol?')">Eliminar</a>
                         </td>
                     </tr>
@@ -170,7 +170,7 @@
         // Remove the message after a few seconds
         setTimeout(() => {
             flashMessage.remove();
-        }, 3000);
+        }, 5000);
     }
     
 </script>
