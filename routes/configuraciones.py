@@ -89,9 +89,13 @@ def editar_rol(id_role):
     # Obtener la descripción actual del rol desde la base de datos
     try:
         if ModelUser.is_superadmin(id_role)[0]:
-            return jsonify({'status': 'error', 'message': 'No es posible editar el rol "superadministrador".'}), 403
+            response = jsonify({'error': 'No es posible editar el rol "superadministrador".'})
+            response.status_code = 403  # Forbidden
+            return response
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        response = jsonify({'error': 'No se pudo verificar si el rol seleccionado corresponde al superadministrador.'})
+        response.status_code = 500 # Internal Server Error
+        return response
 
     # Continuar con la edición si la descripción actual no es 'superadministrador'
     if new_description:
