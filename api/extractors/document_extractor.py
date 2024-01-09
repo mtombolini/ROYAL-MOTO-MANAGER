@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import time
 import datetime
+import json
+from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class DocumentExtractor:
     def __init__(self, token):
@@ -42,11 +44,14 @@ class DocumentExtractor:
         return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
     
     def get_documents(self):
-        while True:
+        while not stop_signal_is_set():
             response = self.make_request(f"documents.json?limit={self.limit}&offset={self.offset}&expand=[details, document_type]")
             
             if response is None or len(response['items']) == 0:
                 break
+            
+            if stop_signal_is_set():
+                return
 
             for document in response['items']:
                 document_id = document['id']
@@ -111,6 +116,10 @@ class DocumentExtractor:
             self.offset += self.limit
             print(f"{self.offset} documentos obtenidos")
 
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "documentos", "mensaje": f"{self.offset} documentos obtenidos"})
+                log_file.write(message + "\n")
+
         self.df_documents = pd.DataFrame(self.documents).drop_duplicates(subset='Document ID', keep='first')
         self.df_documents_detailes = pd.DataFrame(self.documents_detailes).drop_duplicates(subset='Detail ID', keep='first')
 
@@ -126,9 +135,10 @@ class DocumentExtractor:
     def run(self, dataframe_main):
         print("Obteniendo documentos...")
         self.get_documents()
-
-        dataframe_main.df_documents = self.df_documents
-        dataframe_main.df_documents_details = self.df_documents_detailes
+        
+        if not stop_signal_is_set():
+            dataframe_main.df_documents = self.df_documents
+            dataframe_main.df_documents_details = self.df_documents_detailes
 
         # print("Guardando documentos en Excel...")
         # self.save_to_excel()

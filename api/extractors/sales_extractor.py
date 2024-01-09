@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import time
 import datetime
+import json
+from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class SalesExtractor:
     def __init__(self, token):
@@ -42,12 +44,16 @@ class SalesExtractor:
         return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
     
     def get_sales(self):
-        while True:
+        while not stop_signal_is_set():
             response = self.make_request(f"payments.json?limit={self.limit}&offset={self.offset}&expand=[payment_type]")
             if response is None or len(response['items']) == 0:
                 break
 
             for sale in response['items']:
+
+                if stop_signal_is_set():
+                    return
+
                 sale_id = sale['id']
                 sale_date = sale['createdAt']
                 sale_payment_type = sale['payment_type']['name']
@@ -68,6 +74,10 @@ class SalesExtractor:
 
             self.offset += self.limit
             print(f"{self.offset} ventas obtenidas")
+
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "ventas", "mensaje": f"{self.offset} ventas obtenidos"})
+                log_file.write(message + "\n")
         
         self.df_sales = pd.DataFrame(self.sales)
 
@@ -108,10 +118,10 @@ class SalesExtractor:
         print("Obteniendo ventas...")
         self.get_sales()
 
-        self.correction()
-
-        dataframe_main.df_sales = self.df_sales
-        dataframe_main.df_sales_documents = self.df_relations
+        if not stop_signal_is_set():        
+            self.correction()
+            dataframe_main.df_sales = self.df_sales
+            dataframe_main.df_sales_documents = self.df_relations
 
         # print("Guardando ventas en Excel...")
         # self.save_to_excel()
