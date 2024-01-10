@@ -84,6 +84,9 @@ class ReturnsExtractor:
         print("Obteniendo devoluciones...")
         self.get_returns()
         if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "devoluciones-listo", "mensaje": f"Devoluciones ✅"})
+                log_file.write(message + "\n")
             dataframe_main.df_returns = self.df_returns
 
         # print("Guardando devoluciones en Excel...")

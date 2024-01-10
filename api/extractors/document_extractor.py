@@ -137,6 +137,10 @@ class DocumentExtractor:
         self.get_documents()
         
         if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "documentos-listo", "mensaje": f"Documentos ✅"})
+                log_file.write(message + "\n")
+
             dataframe_main.df_documents = self.df_documents
             dataframe_main.df_documents_details = self.df_documents_detailes
 

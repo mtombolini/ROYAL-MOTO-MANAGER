@@ -130,6 +130,10 @@ class ReceptionExtractor:
         self.get_receptions()
 
         if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "recepciones-listo", "mensaje": f"Recepciones ✅"})
+                log_file.write(message + "\n")
+
             dataframe_main.df_receptions = self.df_receptions
             dataframe_main.df_receptions_details = self.df_receptions_details
 

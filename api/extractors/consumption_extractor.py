@@ -129,6 +129,10 @@ class ConsumptionExtractor:
         self.get_consumptions()
 
         if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "consumos-listo", "mensaje": f"Consumos ✅"})
+                log_file.write(message + "\n")
+
             dataframe_main.df_consumptions = self.df_consumptions
             dataframe_main.df_consumptions_details = self.df_consumptions_details
 
