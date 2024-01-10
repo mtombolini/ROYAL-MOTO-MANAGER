@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask_login import login_required
 from decorators.roles import requires_roles
 from models.model_user import ModelUser
-from models.supplier import Supplier
+from models.supplier import Supplier, CreditTerm
 from rut_chile import rut_chile
 
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
@@ -217,6 +217,24 @@ def eliminar_usuario(id_user):
 
     return redirect(url_for('configuraciones.administracion_de_usuarios')) 
 
+
+# <----- Suppliers' Configuration -----> #
+@configuraciones_blueprint.route('/suppliers_management')
+@requires_roles('desarrollador')
+def suppliers_management():
+    form = NewSupplierForm()
+    # Format role data for the SelectField
+    try:
+        data = Supplier.get_all()
+        form.credit_term.choices = [(term.key, term.value) for term in CreditTerm]
+        print(data)
+        return render_template('configuraciones/suppliers_management/suppliers_management.html', 
+                               page_title="Administración de Proveedores", 
+                               data=data,
+                               form=form)  
+    except Exception as e:
+        print(e)
+        return render_template('error.html'), 500
 
 
 # @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])

@@ -3,6 +3,13 @@ from sqlalchemy.types import Enum
 from databases.base import Base
 from databases.session import AppSession
 from typing import List, Dict
+import enum
+
+class CreditTerm(enum.Enum):
+    THIRTY_DAYS = '30 Días'
+    SIXTY_DAYS = '60 Días'
+    ONE_TWENTY_DAYS = '120 Días'
+    RETURN = 'Devolución'
 
 class Supplier(Base):
     __tablename__ = "suppliers"
@@ -11,7 +18,7 @@ class Supplier(Base):
     rut = Column(String(10))
     business_name = Column(String(255))
     trading_name = Column(String(255))
-    credit_term = Column(Enum('30 Días', '60 Días', '120 Días', 'Devolución'))
+    credit_term = Column(Enum(CreditTerm))
     delivery_period = Column(String(255))
     
     @classmethod
