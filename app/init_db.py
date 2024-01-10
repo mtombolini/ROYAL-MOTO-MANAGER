@@ -9,6 +9,7 @@ from models.reception import Reception, ReceptionDetail
 from models.consumption import Consumption, ConsumptionDetail
 from models.returns import Return
 from models.sales import Sale, SaleDocument
+from models.supplier import Supplier
 
 from sqlalchemy import func
 

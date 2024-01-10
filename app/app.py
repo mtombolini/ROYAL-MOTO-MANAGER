@@ -1,7 +1,8 @@
 from flask import Flask, redirect, url_for, current_app
 from app.config import config
 from flask_login import LoginManager
-
+from json import JSONEncoder
+from enum import Enum
 # Importa tus Blueprints y sesiones
 from routes.auth import auth_blueprint
 from routes.home import home_blueprint
@@ -10,8 +11,15 @@ from routes.reportes import reportes_blueprint
 from routes.api_routes import api_blueprint, api_actualizacion
 from routes.configuraciones import configuraciones_blueprint
 
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Enum):
+            return obj.value # or obj.value, depending on what you want to serialize
+        return super().default(self, obj)
+
 app = Flask(__name__, static_folder='../static', template_folder='../templates')
 app.config.from_object(config['development_postgres'])
+app.json_encoder = CustomJSONEncoder()
 login_manager = LoginManager(app)
 
 # Registra tus Blueprints

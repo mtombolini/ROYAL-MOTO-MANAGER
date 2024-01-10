@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, Response
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
@@ -6,13 +6,22 @@ from flask_login import login_required
 from decorators.roles import requires_roles
 from models.model_user import ModelUser
 from models.supplier import Supplier, CreditTerm
-from rut_chile import rut_chile
+from enum import Enum
+from typing import List, Dict
+import re
+
+# Regular expression for RUT validation (Chilean tax identification number)
+RUT_REGEX = r'^\d{1,2}\.\d{3}\.\d{3}-[0-9kK]$'
+
 
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
-def rut_validator(rut: str):
-    if not rut_chile.is_valid_rut(rut):
-        raise ValidationError('RUT no válido')
+def rut_validator(form: FlaskForm, field: StringField):
+    rut = field.data
+    if not re.match(RUT_REGEX, rut):
+        raise ValidationError('Invalid RUT format')
+
+
 
 class NewRoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
@@ -31,7 +40,9 @@ class NewSupplierForm(FlaskForm):
     rut = StringField('RUT', validators=[DataRequired(), rut_validator])
     business_name = StringField('Razón Social', validators=[DataRequired()])
     trading_name = StringField('Nombre de Fantasía', validators=[DataRequired()])
-    credit_term = SelectField('Plazo de pago', validators=[DataRequired()])
+    credit_term = SelectField('Plazo de pago', 
+                              choices=[(term.name, term.value) for term in CreditTerm], 
+                              validators=[DataRequired()])
     delivery_period = StringField('Tiempo de entrega', validators=[DataRequired()])
 
 @configuraciones_blueprint.route('/administracion_de_roles')
@@ -124,6 +135,7 @@ def editar_rol(id_role):
     return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
 
 
+
 # <----- Configuracion de Usuarios -----> #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
@@ -171,22 +183,21 @@ def get_user(user_id):
 @requires_roles('desarrollador')
 def editar_usuario(user_id):
     data = request.get_json()
-    id_user = user_id
+    
+    print(data)
     username = data.get('username')
+    print(username)
     correo = data.get('email')
+    print(correo)
     nombre = data.get('first_name')
     apellido = data.get('last_name')
     id_role = data.get('id_role')
+
+    # Verifica si el nombre de usuario es 'superuser'
+    if username.lower() == 'superadmin':
+        return jsonify({'status': 'error', 'message': 'No es posible editar el usuario "superuser".'}), 403
+    
     try:
-        if ModelUser.is_user_the_superadmin(id_user)[0]:
-            response = jsonify({'error': 'No es posible editar el usuario "superadmin".'})
-            response.status_code = 403  # Forbidden
-            return response
-    except Exception as e:
-        response = jsonify({'error': 'No se pudo verificar si el usuario seleccionado corresponde al superadmin.'})
-        response.status_code = 500 # Internal Server Error
-        return response
-    if username and correo and nombre and apellido and id_role:
         success, session = ModelUser.edit_user(user_id, username, correo, nombre, apellido, id_role)
         session.close()
 
@@ -194,8 +205,8 @@ def editar_usuario(user_id):
             return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.'})
         else:
             return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.'}), 400
-            
-    return jsonify({'status': 'error', 'message': str(e)}), 500
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
 @configuraciones_blueprint.route('/eliminar_usuario/<int:id_user>')
@@ -221,20 +232,115 @@ def eliminar_usuario(id_user):
 # <----- Suppliers' Configuration -----> #
 @configuraciones_blueprint.route('/suppliers_management')
 @requires_roles('desarrollador')
-def suppliers_management():
+def suppliers_management() -> str:
     form = NewSupplierForm()
-    # Format role data for the SelectField
     try:
-        data = Supplier.get_all()
-        form.credit_term.choices = [(term.key, term.value) for term in CreditTerm]
-        print(data)
+        # Format role data for the SelectField
+        data: List[Dict] = Supplier.get_all()
         return render_template('configuraciones/suppliers_management/suppliers_management.html', 
                                page_title="Administración de Proveedores", 
                                data=data,
                                form=form)  
     except Exception as e:
-        print(e)
         return render_template('error.html'), 500
+    
+    
+@configuraciones_blueprint.route('/get_supplier/<int:supplier_id>')
+@requires_roles('desarrollador')
+def get_supplier(supplier_id: int) -> Response:
+    try:
+        supplier_data: Dict = Supplier.get(supplier_id)
+        response = jsonify(supplier_data)
+        response.status_code = 200 # Successful
+        return response
+    except Exception as ex:
+        response = jsonify({'error': str(ex), 
+                            'message': 'An error ocurred while fetching supplier data'})
+        response.status_code = 500 # Internal Server Error
+        return response
+    
+    
+@configuraciones_blueprint.route('/create_supplier', methods=['POST'])
+@requires_roles('desarrollador')
+def create_supplier() -> Response:
+    form = NewSupplierForm()
+    if form.validate_on_submit():
+        try:
+            rut = form.rut.data
+            business_name = form.business_name.data
+            trading_name = form.trading_name.data
+            credit_term = CreditTerm[form.credit_term.data]
+            delivery_period = form.delivery_period.data
+            
+            new_supplier_data: Dict = Supplier.create(rut=rut, 
+                                                      business_name=business_name,
+                                                      trading_name=trading_name,
+                                                      credit_term=credit_term,
+                                                      delivery_period=delivery_period)
+            new_supplier_data['redirect'] = 'configuraciones.suppliers_management'
+            response = jsonify(new_supplier_data)
+            response.status_code = 200 # Successful
+            return redirect(url_for('configuraciones.suppliers_management'))
+        except Exception as ex:
+            response = jsonify({'error': str(ex), 
+                                'message': 'An error ocurred while creating new supplier',
+                                'redirect': 'configuraciones.suppliers_management'})
+            response.status_code = 500 # Internal Server Error
+            return response
+    else:
+        # Form validation failed
+        errors = {field.name: field.errors for field in form if field.errors}
+        response = jsonify({'error': 'Validation failed', 
+                            'message': 'Please check the form data',
+                            'field errors': errors,
+                            'redirect': 'configuraciones.suppliers_management'})
+        response.status_code = 400  # Bad Request (validation error)
+        return response
+    
+    
+@configuraciones_blueprint.route('/edit_supplier/<int:supplier_id>', methods=['POST'])
+@requires_roles('desarrollador')
+def edit_supplier(supplier_id: int) -> Response:
+    try:
+        data = request.get_json()
+        rut = data.get('rut')
+        business_name = data.get('business_name')
+        trading_name = data.get('trading_name')
+        credit_term = data.get('credit_term')
+        delivery_period = data.get('delivery_period')
+        
+        if None not in [rut, business_name, trading_name, credit_term, delivery_period]:
+            edited_supplier_data: Dict = Supplier.edit(supplier_id, 
+                                                       rut=rut, 
+                                                       business_name=business_name,
+                                                       trading_name=trading_name,
+                                                       credit_term=credit_term,
+                                                       delivery_period=delivery_period)
+            response = jsonify(edited_supplier_data)
+            response.status_code = 200 # Successful
+            print(response)
+            return response
+    except Exception as ex:
+        response = jsonify({'error': str(ex), 
+                            'message': 'An error ocurred while editing supplier data'})
+        response.status_code = 500 # Internal Server Error
+        return response
+    
+
+@configuraciones_blueprint.route('/delete_supplier/<int:supplier_id>')
+@requires_roles('desarrollador')
+def delete_supplier(supplier_id: int) -> Response:
+    try:
+        Supplier.delete(supplier_id)
+        response = jsonify({'status': 'success', 'message': 'Proveedor eliminado con éxito.'})
+        response.status_code = 200 # Successful
+        return redirect(url_for('configuraciones.suppliers_management'))
+    except Exception as ex:
+        response = jsonify({'error': str(ex), 
+                            'message': 'An error ocurred while deleting supplier'})
+        response.status_code = 500 # Internal Server Error
+        return response
+        
 
 
 # @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])

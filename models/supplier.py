@@ -5,6 +5,12 @@ from databases.session import AppSession
 from typing import List, Dict
 import enum
 
+class SupplierNotFoundError(ValueError):
+    """Exception raised when a supplier is not found."""
+    
+class SupplierAttributeNotFoundError(AttributeError):
+    """Exception raised when trying to access an inexistent supplier attribute."""
+
 class CreditTerm(enum.Enum):
     THIRTY_DAYS = '30 Días'
     SIXTY_DAYS = '60 Días'
@@ -15,7 +21,7 @@ class Supplier(Base):
     __tablename__ = "suppliers"
     
     id = Column(Integer, primary_key=True)
-    rut = Column(String(10))
+    rut = Column(String(12))
     business_name = Column(String(255))
     trading_name = Column(String(255))
     credit_term = Column(Enum(CreditTerm))
@@ -26,6 +32,7 @@ class Supplier(Base):
         session = AppSession()
         try:
             suppliers = session.query(cls).all()
+            print(suppliers)
             # Iterate through all attributes of each Supplier object
             suppliers_data = [
                 {
@@ -39,28 +46,28 @@ class Supplier(Base):
             return suppliers_data
         except Exception as ex:
             # Undo any changes made to session
-            raise Exception(ex)
+            raise
         finally:
             session.close()
             
             
     @classmethod
     def get(cls, supplier_id: int) -> Dict:
-        session = AppSession()
-        try:
-            supplier = session.query(cls).filter(cls.id == supplier_id).one_or_none()
-            supplier_data = {
-                key: value 
-                for key, value 
-                in supplier.__dict__.items() 
-                if not key.startswith('_')
-            }
-            return supplier_data
-        except Exception as ex:
-            # Undo any changes made to session
-            raise Exception(ex)
-        finally:
-            session.close()
+        with AppSession() as session:
+            try:
+                supplier = session.query(cls).filter(cls.id == supplier_id).one_or_none()
+                if supplier:
+                    supplier_data = {
+                        key: value 
+                        for key, value 
+                        in supplier.__dict__.items() 
+                        if not key.startswith('_')
+                    }
+                    return supplier_data
+                else:
+                    raise SupplierNotFoundError(f'Supplier with ID {supplier_id} not found.')
+            except Exception as ex:
+                raise
             
             
     @classmethod
@@ -74,6 +81,11 @@ class Supplier(Base):
                 for key, value in kwargs.items():
                     if hasattr(new_supplier, key):
                         setattr(new_supplier, key, value)
+                    else:
+                        # Raise an exception if we try to edit an inexistent attribute
+                        raise SupplierAttributeNotFoundError(
+                            f'Attribute {key} not found in Supplier'
+                        )
                 # Add the instance to the session
                 session.add(new_supplier)
                 # Commit the changes
@@ -87,7 +99,7 @@ class Supplier(Base):
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()
-                raise Exception(ex)
+                raise
             
             
     @classmethod
@@ -103,7 +115,9 @@ class Supplier(Base):
                         setattr(supplier_to_edit, key, value)
                     else:
                         # Raise an exception if we try to edit an inexistent attribute
-                        raise AttributeError(f'Attribute {key} not found in the model {cls.__name__}')
+                        raise SupplierAttributeNotFoundError(
+                            f'Attribute {key} not found in Supplier'
+                        )
                 # Commit the changes
                 session.commit()
                 edited_supplier_data = {
@@ -115,11 +129,11 @@ class Supplier(Base):
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()
-                raise Exception(ex)
+                raise
             
             
     @classmethod
-    def delete(cls, supplier_id: int) -> bool:
+    def delete(cls, supplier_id: int) -> None:
         with AppSession() as session:
             try:
                 # Find the Supplier object to delete
@@ -129,10 +143,9 @@ class Supplier(Base):
                 if supplier_to_delete:
                     session.delete(supplier_to_delete)
                     session.commit()
-                    return True
                 else:
-                    return False
+                    raise SupplierNotFoundError(f'Supplier with ID {supplier_id} not found.')
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()
-                raise Exception(ex)            
+                raise           
