@@ -118,7 +118,11 @@ class SalesExtractor:
         print("Obteniendo ventas...")
         self.get_sales()
 
-        if not stop_signal_is_set():        
+        if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "ventas-listo", "mensaje": f"Ventas ✅"})
+                log_file.write(message + "\n")
+
             self.correction()
             dataframe_main.df_sales = self.df_sales
             dataframe_main.df_sales_documents = self.df_relations

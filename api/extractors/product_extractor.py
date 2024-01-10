@@ -139,6 +139,14 @@ class ProductExtractor:
             asyncio.run(self.get_variants())
 
         if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "productos-listo", "mensaje": f"Productos ✅"})
+                log_file.write(message + "\n")
+
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "stocks-listo", "mensaje": f"Stocks ✅"})
+                log_file.write(message + "\n")
+
             dataframe_main.df_products = self.df_products_description
             dataframe_main.df_stocks = self.df_products_stock
 

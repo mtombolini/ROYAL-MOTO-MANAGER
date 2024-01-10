@@ -23,7 +23,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Productos</h5>
+                    <h5 class="card-title" id="productos-listo">Productos ❌</h5>
                     <p class="card-text">Estado: <span id="productos">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -31,7 +31,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Stocks</h5>
+                    <h5 class="card-title" id="stocks-listo">Stocks ❌</h5>
                     <p class="card-text">Estado: <span id="stocks">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Consumos</h5>
+                    <h5 class="card-title" id="consumos-listo">Consumos ❌</h5>
                     <p class="card-text">Estado: <span id="consumos">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Documentos</h5>
+                    <h5 class="card-title" id="documentos-listo">Documentos ❌</h5>
                     <p class="card-text">Estado: <span id="documentos">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -55,7 +55,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Recepciones</h5>
+                    <h5 class="card-title" id="recepciones-listo">Recepciones ❌</h5>
                     <p class="card-text">Estado: <span id="recepciones">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -63,7 +63,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Devoluciones</h5>
+                    <h5 class="card-title" id="devoluciones-listo">Devoluciones ❌</h5>
                     <p class="card-text">Estado: <span id="devoluciones">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -71,7 +71,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Ventas</h5>
+                    <h5 class="card-title" id="ventas-listo">Ventas ❌</h5>
                     <p class="card-text">Estado: <span id="ventas">Esperando a obtener...</span></p>
                 </div>
             </div>
@@ -105,13 +105,16 @@
                     if (estado.tipo && estado.mensaje) {
                         document.getElementById(estado.tipo).innerText = estado.mensaje;
                     }
+                    else if (estado.tipo.includes(listo) && estado.mensaje.includes('✅')) {
+                        document.getElementById(estado.tipo).innerText = estado.mensaje;
+                    }
                 });
             })
             .catch(error => console.error('Error al obtener actualizaciones:', error));
     }
 
     // Llamar a obtenerActualizaciones cada cierto tiempo
-    setInterval(obtenerActualizaciones, 1000); // 1000 milisegundos = 1 segundos
+    setInterval(obtenerActualizaciones, 3000); // 1000 milisegundos = 1 segundos
 
 </script>
 
