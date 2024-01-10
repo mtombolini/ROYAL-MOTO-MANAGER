@@ -124,7 +124,6 @@ def editar_rol(id_role):
     return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
 
 
-
 # <----- Configuracion de Usuarios -----> #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
@@ -172,21 +171,22 @@ def get_user(user_id):
 @requires_roles('desarrollador')
 def editar_usuario(user_id):
     data = request.get_json()
-    
-    print(data)
+    id_user = user_id
     username = data.get('username')
-    print(username)
     correo = data.get('email')
-    print(correo)
     nombre = data.get('first_name')
     apellido = data.get('last_name')
     id_role = data.get('id_role')
-
-    # Verifica si el nombre de usuario es 'superuser'
-    if username.lower() == 'superadmin':
-        return jsonify({'status': 'error', 'message': 'No es posible editar el usuario "superuser".'}), 403
-    
     try:
+        if ModelUser.is_user_the_superadmin(id_user)[0]:
+            response = jsonify({'error': 'No es posible editar el usuario "superadmin".'})
+            response.status_code = 403  # Forbidden
+            return response
+    except Exception as e:
+        response = jsonify({'error': 'No se pudo verificar si el usuario seleccionado corresponde al superadmin.'})
+        response.status_code = 500 # Internal Server Error
+        return response
+    if username and correo and nombre and apellido and id_role:
         success, session = ModelUser.edit_user(user_id, username, correo, nombre, apellido, id_role)
         session.close()
 
@@ -194,8 +194,8 @@ def editar_usuario(user_id):
             return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.'})
         else:
             return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.'}), 400
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+            
+    return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
 @configuraciones_blueprint.route('/eliminar_usuario/<int:id_user>')

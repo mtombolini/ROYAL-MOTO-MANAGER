@@ -5,22 +5,83 @@
 {% block body %}
 {% include 'header.html' %}
 
-<div class="text-center" style="margin-top: 20px;">
-    <!-- Spinner de Bootstrap y Mensaje -->
-    <p>
-        Obteniendo estado de la solicitud...
-        <span class="spinner-border text-light" role="status" aria-hidden="true" style="margin-left: 8px;">
-            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Spinner" width="40" height="24" class="centered-image">
-        </span>
-    </p>
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <!-- Spinner de Bootstrap y Mensaje -->
+        <p>
+            Obteniendo estado de la solicitud...
+            <span class="spinner-border text-light" role="status" aria-hidden="true" style="margin-left: 8px;">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Spinner" width="40" height="24" class="centered-image">
+            </span>
+        </p>
+    </div>
+
     <p>Tiempo transcurrido: <span id="timer">0</span> segundos</p>
-    
 
-    <!-- Botón para duplicar a inicio -->
-    <a href="{{ url_for('home.home') }}" target="_blank" class="btn btn-primary">Ir a Inicio</a>
+    <div id="actualizaciones" class="row">
+        <!-- Ejemplo de una tarjeta para productos -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Productos</h5>
+                    <p class="card-text">Estado: <span id="productos">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Stocks</h5>
+                    <p class="card-text">Estado: <span id="stocks">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Consumos</h5>
+                    <p class="card-text">Estado: <span id="consumos">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Documentos</h5>
+                    <p class="card-text">Estado: <span id="documentos">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recepciones</h5>
+                    <p class="card-text">Estado: <span id="recepciones">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Devoluciones</h5>
+                    <p class="card-text">Estado: <span id="devoluciones">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas</h5>
+                    <p class="card-text">Estado: <span id="ventas">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Botón de Reinicio -->
-    <button onclick="restartProcess()" class="btn btn-secondary">Reiniciar Proceso</button>
+    <div class="mt-4">
+        <a href="{{ url_for('home.home') }}" class="btn btn-primary">Ir a Inicio</a>
+        <button onclick="restartProcess()" class="btn btn-secondary">Reiniciar Proceso</button>
+    </div>
 </div>
 
 <script>
@@ -34,6 +95,24 @@
         // Recargar la página o redirigir a la ruta que inicia el proceso
         window.location.href = "{{ url_for('api_call.run_api_calls') }}";
     }
+
+    function obtenerActualizaciones() {
+        fetch("{{ url_for('api_actualizacion.actualizar_estado') }}")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(estado => {
+                    // Actualizar el contenido en la página según el tipo de estado
+                    if (estado.tipo && estado.mensaje) {
+                        document.getElementById(estado.tipo).innerText = estado.mensaje;
+                    }
+                });
+            })
+            .catch(error => console.error('Error al obtener actualizaciones:', error));
+    }
+
+    // Llamar a obtenerActualizaciones cada cierto tiempo
+    setInterval(obtenerActualizaciones, 1000); // 1000 milisegundos = 1 segundos
+
 </script>
 
 {% endblock %}

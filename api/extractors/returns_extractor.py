@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import time
 import datetime
+import json
+from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class ReturnsExtractor:
     def __init__(self, token):
@@ -39,12 +41,16 @@ class ReturnsExtractor:
         return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
 
     def get_returns(self):
-        while True:
+        while not stop_signal_is_set():
             response = self.make_request(f"returns.json?&limit={self.limit}&offset={self.offset}")
             if response is None or len(response['items']) == 0:
                 break
             
             for devoluciones in response['items']:
+
+                if stop_signal_is_set():
+                    return
+
                 return_id = devoluciones['id']
                 document_id = devoluciones['reference_document']['id']
 
@@ -61,6 +67,10 @@ class ReturnsExtractor:
 
             self.offset += self.limit
             print(f"{self.offset} devoluciones obtenidas")
+
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "devoluciones", "mensaje": f"{self.offset} devoluciones obtenidos"})
+                log_file.write(message + "\n")
         
         self.df_returns = pd.DataFrame(self.returns)
 
@@ -73,8 +83,8 @@ class ReturnsExtractor:
     def run(self, dataframe_main):
         print("Obteniendo devoluciones...")
         self.get_returns()
-
-        dataframe_main.df_returns = self.df_returns
+        if not stop_signal_is_set():
+            dataframe_main.df_returns = self.df_returns
 
         # print("Guardando devoluciones en Excel...")
         # self.save_to_excel()
