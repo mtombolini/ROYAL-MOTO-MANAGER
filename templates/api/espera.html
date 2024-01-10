@@ -105,7 +105,7 @@
                     if (estado.tipo && estado.mensaje) {
                         document.getElementById(estado.tipo).innerText = estado.mensaje;
                     }
-                    else if (estado.tipo.includes(listo) && estado.mensaje.includes('✅')) {
+                    else if (estado.tipo.includes('listo') && estado.mensaje.includes('✅')) {
                         document.getElementById(estado.tipo).innerText = estado.mensaje;
                     }
                 });
