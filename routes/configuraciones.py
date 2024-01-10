@@ -1,12 +1,18 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectField
-from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask_login import login_required
 from decorators.roles import requires_roles
 from models.model_user import ModelUser
+from models.supplier import Supplier
+from rut_chile import rut_chile
 
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
+
+def rut_validator(rut: str):
+    if not rut_chile.is_valid_rut(rut):
+        raise ValidationError('RUT no válido')
 
 class NewRoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
@@ -19,6 +25,14 @@ class NewUserForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired()])
     apellido = StringField('Apellido', validators=[DataRequired()])
     id_role = SelectField('Role', coerce=int, validators=[DataRequired()])
+    
+    
+class NewSupplierForm(FlaskForm):
+    rut = StringField('RUT', validators=[DataRequired(), rut_validator])
+    business_name = StringField('Razón Social', validators=[DataRequired()])
+    trading_name = StringField('Nombre de Fantasía', validators=[DataRequired()])
+    credit_term = SelectField('Plazo de pago', validators=[DataRequired()])
+    delivery_period = StringField('Tiempo de entrega', validators=[DataRequired()])
 
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
