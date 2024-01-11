@@ -21,6 +21,7 @@ class Product(Base):
     consumption_details = relationship("ConsumptionDetail", back_populates="product")
     reception_details = relationship("ReceptionDetail", back_populates="product")
     document_details = relationship("DocumentDetail", back_populates="product")
+    # price_list = relationship("PriceList", back_populates="product")
 
     @classmethod
     def get_all_products(cls):
@@ -107,30 +108,43 @@ class Product(Base):
                 data = []
                 for reception_detail in product.reception_details:
                     reception = reception_detail.reception
+                    if reception.document_type == "Sin Documento":
+                        num = reception_detail.reception_id
+                    else:
+                        num = reception.document_number
                     data.append({
                         "fecha": reception.date,
+                        "documento": reception.document_type + " " + str(num),
                         "tipo_de_documento": reception.document_type,
-                        #"numero_de_documento": reception.document_number,
+                        "numero_de_documento": num,
+                        "oficina": reception.office,
                         "nota": reception.note,
                         "cantidad": reception_detail.quantity,
                         "costo_neto": reception_detail.net_cost
                     })
 
                 df = pd.DataFrame(data)
-                reception_details_list = df.sort_values('fecha').to_dict('records')
+                if df.empty:
+                    reception_details_list = []
+                else:
+                    reception_details_list = df.sort_values('fecha').to_dict('records')
 
                 data_consumos = []
                 for consumption_detail in product.consumption_details:
                     consumption = consumption_detail.consumption
                     data_consumos.append({
                         "fecha": consumption.date,
+                        "oficina": consumption.office,
                         "nota": consumption.note,
                         "cantidad": consumption_detail.quantity,
                         "costo_neto": consumption_detail.net_cost
                     })
 
                 df_consumos = pd.DataFrame(data_consumos)
-                consumption_details_list = df_consumos.sort_values('fecha').to_dict('records')
+                if df_consumos.empty:
+                    consumption_details_list = []
+                else:
+                    consumption_details_list = df_consumos.sort_values('fecha').to_dict('records')
 
                 data_ventas = []
                 for document_detail in product.document_details:
@@ -141,15 +155,20 @@ class Product(Base):
                             sale_model = sale.sale
                             data_ventas.append({
                                 "fecha": document.date,
+                                "documento": document.document_type + " " + document.document_number,
                                 "tipo_de_documento": document.document_type,
-                                #"numero_de_documento": document.document_number,
+                                "numero_de_documento": document.document_number,
+                                "oficina": document.office,
                                 "cantidad": document_detail.quantity,
                                 "valor_unitario": document_detail.net_total_value,
                                 "valor_total": document_detail.net_total_value * document_detail.quantity
                             })
 
                 df_ventas = pd.DataFrame(data_ventas)
-                sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
+                if df_ventas.empty:
+                    sales_list = []
+                else:
+                    sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
                     
                 product_data = {
                     **product.__dict__,
@@ -166,7 +185,7 @@ class Product(Base):
                     "consumption_details_list": consumption_details_list,
                     "sales_list": sales_list
                 }
-
+                
                 return product_data  # Return the product's attributes directly
             except Exception as ex:
                 raise

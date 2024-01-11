@@ -9,8 +9,8 @@ class Document(Base):
 
     id = Column(Integer, primary_key=True)
     date = Column(DateTime)  # Usamos DateTime en lugar de String
-    # document_number = Column(String(255))
-    # office = Column(String(255))
+    document_number = Column(String(255))
+    office = Column(String(255))
     total_amount = Column(Float)
     net_amount = Column(Float)
     document_type = Column(String(255))

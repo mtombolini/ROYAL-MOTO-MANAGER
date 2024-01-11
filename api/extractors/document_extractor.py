@@ -56,7 +56,7 @@ class DocumentExtractor:
             for document in response['items']:
                 document_id = document['id']
                 document_date = document['generationDate']
-                document_number = document['documentNumber']
+                document_number = document['number']
                 document_total_amount = document['totalAmount']
                 document_net_amount = document['netAmount']
                 document_type = document['document_type']['name']

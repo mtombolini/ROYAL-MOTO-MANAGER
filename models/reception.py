@@ -9,8 +9,8 @@ class Reception(Base):
     id = Column(Integer, primary_key=True)
     date = Column(DateTime)  # Usamos DateTime en lugar de String
     document_type = Column(String(255))
-    # document_number = Column(String(255))
-    # office = Column(String(255))
+    document_number = Column(String(255))
+    office = Column(String(255))
     note = Column(String(255))
 
     details = relationship("ReceptionDetail", back_populates="reception")

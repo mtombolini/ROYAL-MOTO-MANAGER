@@ -44,7 +44,7 @@ class ReceptionExtractor:
 
     def get_receptions(self):
         while not stop_signal_is_set():
-            response = self.make_request(f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details]")
+            response = self.make_request(f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]")
             if response is None or len(response['items']) == 0:
                 break
             else:

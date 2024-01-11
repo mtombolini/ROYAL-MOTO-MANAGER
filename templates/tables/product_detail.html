@@ -79,8 +79,8 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Tipo de Documento</th>
-                        <!-- <th>Numero de Documento</th> -->
+                        <th>Documento</th>
+                        <th>Oficina</th>
                         <th>Nota</th>
                         <th>Cantidad</th>
                         <th>Costo Neto</th>
@@ -90,8 +90,8 @@
                     {% for reception_detail_list in product.reception_details_list %}
                     <tr>
                         <td>{{ reception_detail_list.fecha }}</td>
-                        <td>{{ reception_detail_list.tipo_de_documento }}</td>
-                        <!-- <td>{{ reception_detail_list.numero_de_documento }}</td> -->
+                        <td>{{ reception_detail_list.documento }}</td>
+                        <td>{{ reception_detail_list.oficina}}</td>
                         <td>{{ reception_detail_list.nota }}</td>
                         <td>{{ reception_detail_list.cantidad }}</td>
                         <td>{{ reception_detail_list.costo_neto }}</td>
@@ -105,6 +105,7 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
+                        <th>Oficina</th>
                         <th>Nota</th>
                         <th>Cantidad</th>
                         <th>Costo Neto</th>
@@ -114,6 +115,7 @@
                     {% for consumption_detail_list in product.consumption_details_list %}
                     <tr>
                         <td>{{ consumption_detail_list.fecha }}</td>
+                        <td>{{ consumption_detail_list.oficina}}</td>
                         <td>{{ consumption_detail_list.nota }}</td>
                         <td>{{ consumption_detail_list.cantidad }}</td>
                         <td>{{ consumption_detail_list.costo_neto }}</td>
@@ -127,8 +129,8 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Tipo de Documento</th>
-                        <!-- <th>Numero de Documento</th> -->
+                        <th>Documento</th>
+                        <th>Oficina</th>
                         <th>Cantidad</th>
                         <th>Valor Unitario</th>
                         <th>Valor Total</th>
@@ -138,8 +140,8 @@
                     {% for sale_list in product.sales_list %}
                     <tr>
                         <td>{{ sale_list.fecha }}</td>
-                        <td>{{ sale_list.tipo_de_documento }}</td>
-                        <!-- <td>{{ sale_list.numero_de_documento}}</td> -->
+                        <td>{{ sale_list.documento }}</td>
+                        <td>{{ sale_list.oficina }}</td>
                         <td>{{ sale_list.cantidad }}</td>
                         <td>{{ sale_list.valor_unitario }}</td>
                         <td>{{ sale_list.valor_total }}</td>
