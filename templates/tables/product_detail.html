@@ -74,6 +74,28 @@
                 </tbody>
             </table>
 
+            <h2>Ultimo Costo Neto</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Costo Neto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if product.last_net_cost %}
+                    <tr>
+                        <td>{{ product.last_net_cost.fecha }}</td>
+                        <td>{{ product.last_net_cost.costo_neto }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No se encontró ningún registro de costo.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
             <h2>Historial de Recepciones</h2>
             <table class="table table-bordered history-table">
                 <thead>

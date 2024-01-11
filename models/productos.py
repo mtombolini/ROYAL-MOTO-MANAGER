@@ -76,6 +76,29 @@ class Product(Base):
                 else:
                     reception_details_list = df.sort_values('fecha').to_dict('records')
 
+                if not df.empty:
+                    df = df.sort_values('fecha', ascending=False)
+                    factura_recente = df[df['tipo_de_documento'] == 'Factura']
+                    if not factura_recente.empty:
+                        selected_document = factura_recente.iloc[0]
+                    else:
+                        sin_documento_recente = df[df['tipo_de_documento'] == 'Sin Documento']
+                        if not sin_documento_recente.empty:
+                            selected_document = sin_documento_recente.iloc[0]
+                        else:
+                            selected_document = None
+
+                if selected_document is not None:
+                    last_net_cost = {
+                        "fecha": selected_document['fecha'],
+                        "costo_neto": selected_document['costo_neto']
+                    }
+                else:
+                    last_net_cost = {
+                        "fecha": None,
+                        "costo_neto": None
+                    }
+
                 data_consumos = []
                 for consumption_detail in product.consumption_details:
                     consumption = consumption_detail.consumption
@@ -116,13 +139,14 @@ class Product(Base):
                     sales_list = []
                 else:
                     sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
-                    
+
                 product_data = {
                     **product.__dict__,
                     "stock": stock,
                     "reception_details_list": reception_details_list,
                     "consumption_details_list": consumption_details_list,
-                    "sales_list": sales_list
+                    "sales_list": sales_list,
+                    "last_net_cost": last_net_cost
                 }
                 
                 return product_data  # Return the product's attributes directly
