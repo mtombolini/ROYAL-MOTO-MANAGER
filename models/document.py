@@ -2,11 +2,15 @@ from sqlalchemy import Column, Integer, Float, DateTime, ForeignKey, String
 from sqlalchemy.orm import relationship
 from databases.base import Base
 
+from models.sales import SaleDocument
+
 class Document(Base):
     __tablename__ = 'documentos'
 
     id = Column(Integer, primary_key=True)
     date = Column(DateTime)  # Usamos DateTime en lugar de String
+    # document_number = Column(String(255))
+    # office = Column(String(255))
     total_amount = Column(Float)
     net_amount = Column(Float)
     document_type = Column(String(255))

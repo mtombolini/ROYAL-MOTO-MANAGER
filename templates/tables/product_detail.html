@@ -1,0 +1,153 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Detalles del Producto{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+  .btn-sm {
+    min-width: 95px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .product-detail {
+    margin-bottom: 20px;
+  }
+  
+  table {
+    float: right;
+    margin-right: 16px;
+  }
+  
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="product-detail">Detalles del Producto</h1>
+    
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>SKU</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if product %}
+                    <tr>
+                        <td>{{ product.variant_id }}</td>
+                        <td>{{ product.type }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.sku }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No se encontró ningún producto con el SKU especificado.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <h2>Stock</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Stock Sob. Existencia</th>
+                        <th>Stock Lira</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if product.stock %}
+                    <tr>
+                        <td>{{ product.stock.stock_sobrexistencia }}</td>
+                        <td>{{ product.stock.stock_lira }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No se encontró ningún registro de stock.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <h2>Historial de Recepciones</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo de Documento</th>
+                        <!-- <th>Numero de Documento</th> -->
+                        <th>Nota</th>
+                        <th>Cantidad</th>
+                        <th>Costo Neto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reception_detail_list in product.reception_details_list %}
+                    <tr>
+                        <td>{{ reception_detail_list.fecha }}</td>
+                        <td>{{ reception_detail_list.tipo_de_documento }}</td>
+                        <!-- <td>{{ reception_detail_list.numero_de_documento }}</td> -->
+                        <td>{{ reception_detail_list.nota }}</td>
+                        <td>{{ reception_detail_list.cantidad }}</td>
+                        <td>{{ reception_detail_list.costo_neto }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Historial de Consumos</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nota</th>
+                        <th>Cantidad</th>
+                        <th>Costo Neto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consumption_detail_list in product.consumption_details_list %}
+                    <tr>
+                        <td>{{ consumption_detail_list.fecha }}</td>
+                        <td>{{ consumption_detail_list.nota }}</td>
+                        <td>{{ consumption_detail_list.cantidad }}</td>
+                        <td>{{ consumption_detail_list.costo_neto }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Historial de Ventas</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo de Documento</th>
+                        <!-- <th>Numero de Documento</th> -->
+                        <th>Cantidad</th>
+                        <th>Valor Unitario</th>
+                        <th>Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale_list in product.sales_list %}
+                    <tr>
+                        <td>{{ sale_list.fecha }}</td>
+                        <td>{{ sale_list.tipo_de_documento }}</td>
+                        <!-- <td>{{ sale_list.numero_de_documento}}</td> -->
+                        <td>{{ sale_list.cantidad }}</td>
+                        <td>{{ sale_list.valor_unitario }}</td>
+                        <td>{{ sale_list.valor_total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

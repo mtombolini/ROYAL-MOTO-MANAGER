@@ -55,6 +55,8 @@ class ReceptionExtractor:
                     reception_id = reception['id']
                     admission_date = reception['admissionDate']
                     document = reception['document']
+                    document_number = reception['documentNumber']
+                    office = reception['office']['name']
                     note = reception['note']
 
                     details = reception['details']
@@ -65,6 +67,8 @@ class ReceptionExtractor:
                         'ID': int(reception_id),
                         'Admission Date': self.convert_to_date(admission_date),
                         'Document': document,
+                        'Document Number': document_number,
+                        'Office': office,
                         'Note': note
                     })
 

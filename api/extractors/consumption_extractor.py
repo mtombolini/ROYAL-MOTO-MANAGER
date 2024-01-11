@@ -44,7 +44,7 @@ class ConsumptionExtractor:
 
     def get_consumptions(self):
         while not stop_signal_is_set():
-            response = self.make_request(f"stocks/consumptions.json?limit={self.limit}&offset={self.offset}&expand=[details]")
+            response = self.make_request(f"stocks/consumptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]")
             if response is None or len(response['items']) == 0:
                 break
             else:
@@ -55,6 +55,7 @@ class ConsumptionExtractor:
 
                     consumption_id = consumption['id']
                     consumption_date = consumption['consumptionDate']
+                    office = consumption['office']['name']
                     note = consumption['note']
                     details = consumption['details']
                     details_count = details['count']
@@ -63,6 +64,7 @@ class ConsumptionExtractor:
                     self.consumptions.append({
                         'ID': int(consumption_id),
                         'Consumption Date': self.convert_to_date(consumption_date),
+                        'Office': office,
                         'Note': note
                     })
 
