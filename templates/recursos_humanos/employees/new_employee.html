@@ -1,0 +1,36 @@
+<form method="POST" action="{{ url_for('recursos_humanos.employees_registration') }}">
+    {{ form.hidden_tag() }}
+    
+    <div class="mb-3">
+      {{ form.username.label(class="form-label") }}
+      {{ form.username(class="form-control") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.rut.label(class="form-label") }}
+      {{ form.rut(class="form-control") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.nombre.label(class="form-label") }}
+      {{ form.nombre(class="form-control") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.apellido.label(class="form-label") }}
+      {{ form.apellido(class="form-control") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.fecha_incorporacion.label(class="form-label") }}
+      {{ form.fecha_incorporacion(class="form-control") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.horario_colacion.label(class="form-label") }}
+      {{ form.horario_colacion(class="form-control") }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Registrar Empleado</button>
+  </form>
+  

@@ -9,6 +9,7 @@ from routes.compras import compras_blueprint
 from routes.reportes import reportes_blueprint
 from routes.api_routes import api_blueprint, api_actualizacion
 from routes.configuraciones import configuraciones_blueprint
+from routes.recursos_humanos import recursos_humanos_blueprint
 
 app = Flask(__name__, static_folder='../static', template_folder='../templates')
 app.config.from_object(config['development_postgres'])
@@ -22,6 +23,7 @@ app.register_blueprint(configuraciones_blueprint)
 app.register_blueprint(reportes_blueprint)
 app.register_blueprint(api_blueprint)
 app.register_blueprint(api_actualizacion)
+app.register_blueprint(recursos_humanos_blueprint)
 
 app.make_default_options_response
 
