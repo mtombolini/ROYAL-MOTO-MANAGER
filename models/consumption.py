@@ -7,6 +7,7 @@ class Consumption(Base):
 
     id = Column(Integer, primary_key=True)
     date = Column(DateTime)
+    office = Column(String(255))
     note = Column(String(255))
 
     details = relationship("ConsumptionDetail", back_populates="consumption")

@@ -10,6 +10,7 @@ from routes.compras import compras_blueprint
 from routes.reportes import reportes_blueprint
 from routes.api_routes import api_blueprint, api_actualizacion
 from routes.configuraciones import configuraciones_blueprint
+from routes.tables import tables_blueprint
 
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -30,6 +31,7 @@ app.register_blueprint(configuraciones_blueprint)
 app.register_blueprint(reportes_blueprint)
 app.register_blueprint(api_blueprint)
 app.register_blueprint(api_actualizacion)
+app.register_blueprint(tables_blueprint)
 
 app.make_default_options_response
 

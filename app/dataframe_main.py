@@ -74,6 +74,7 @@ class DataFrameMain():
             consumption = Consumption(
                 id=int(row['ID']),
                 date=row['Consumption Date'],
+                office=row['Office'],
                 note=row['Note']
             )
             session.add(consumption)
@@ -93,6 +94,8 @@ class DataFrameMain():
                 id=int(row['ID']),
                 date=row['Admission Date'],
                 document_type=row['Document'],
+                document_number=row['Document Number'],
+                office=row['Office'],
                 note=row['Note']
             )
             session.add(reception)
@@ -111,6 +114,8 @@ class DataFrameMain():
             document = Document(
                 id=int(row['Document ID']),
                 date=row['Document Date'],
+                document_number=row['Document Number'],
+                office=row['Office'],
                 total_amount=float(row['Total Amount']),
                 net_amount=float(row['Net Amount']),
                 document_type=row['Document Type']
