@@ -76,6 +76,7 @@ class Product(Base):
                 else:
                     reception_details_list = df.sort_values('fecha').to_dict('records')
 
+                selected_document = None
                 if not df.empty:
                     df = df.sort_values('fecha', ascending=False)
                     factura_recente = df[df['tipo_de_documento'] == 'Factura']
