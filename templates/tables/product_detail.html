@@ -86,13 +86,33 @@
                     {% if product.last_net_cost %}
                     <tr>
                         <td>{{ product.last_net_cost.fecha }}</td>
-                        <td>{{ product.last_net_cost.costo_neto }}</td>
+                        <td>{{ product.last_net_cost.costo_neto_formated }}</td>
                     </tr>
                     {% else %}
                     <tr>
                         <td colspan="2">No se encontró ningún registro de costo.</td>
                     </tr>
                     {% endif %}
+                </tbody>
+            </table>
+
+            <h2>Listas de Precios</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Factor Ponderador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for price in product.price_list %}
+                    <tr>
+                        <td>{{ price.name }}</td>
+                        <td>{{ price.valor_formated }}</td>
+                        <td>{{ price.factor_ponderador_formated }}</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
 
@@ -116,7 +136,7 @@
                         <td>{{ reception_detail_list.oficina }}</td>
                         <td>{{ reception_detail_list.nota }}</td>
                         <td>{{ reception_detail_list.cantidad }}</td>
-                        <td>{{ reception_detail_list.costo_neto }}</td>
+                        <td>{{ reception_detail_list.costo_neto_formated }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -140,7 +160,7 @@
                         <td>{{ consumption_detail_list.oficina }}</td>
                         <td>{{ consumption_detail_list.nota }}</td>
                         <td>{{ consumption_detail_list.cantidad }}</td>
-                        <td>{{ consumption_detail_list.costo_neto }}</td>
+                        <td>{{ consumption_detail_list.costo_neto_formated }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -165,8 +185,8 @@
                         <td>{{ sale_list.documento }}</td>
                         <td>{{ sale_list.oficina }}</td>
                         <td>{{ sale_list.cantidad }}</td>
-                        <td>{{ sale_list.valor_unitario }}</td>
-                        <td>{{ sale_list.valor_total }}</td>
+                        <td>{{ sale_list.valor_unitario_formated }}</td>
+                        <td>{{ sale_list.valor_total_formated }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

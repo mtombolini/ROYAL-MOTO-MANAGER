@@ -7,6 +7,9 @@ import pandas as pd
 def format_number(number):
     return "${:,.2f}".format(number).replace(",", "X").replace(".", ",").replace("X", ".")
 
+def format_decimal(number):
+    return "{:,.2f}".format(number).replace(",", "X").replace(".", ",").replace("X", ".")
+
 
 from models.consumption import ConsumptionDetail
 from models.reception import ReceptionDetail
@@ -68,7 +71,8 @@ class Product(Base):
                         "oficina": reception.office,
                         "nota": reception.note,
                         "cantidad": reception_detail.quantity,
-                        "costo_neto": format_number(reception_detail.net_cost)
+                        "costo_neto": reception_detail.net_cost,
+                        "costo_neto_formated": format_number(reception_detail.net_cost)
                     })
 
                 df = pd.DataFrame(data)
@@ -93,12 +97,14 @@ class Product(Base):
                 if selected_document is not None:
                     last_net_cost = {
                         "fecha": selected_document['fecha'],
-                        "costo_neto": selected_document['costo_neto']
+                        "costo_neto": selected_document['costo_neto'],
+                        "costo_neto_formated": selected_document['costo_neto_formated']
                     }
                 else:
                     last_net_cost = {
                         "fecha": None,
-                        "costo_neto": None
+                        "costo_neto": None,
+                        "costo_neto_formated": None
                     }
 
                 data_consumos = []
@@ -109,7 +115,8 @@ class Product(Base):
                         "oficina": consumption.office,
                         "nota": consumption.note,
                         "cantidad": consumption_detail.quantity,
-                        "costo_neto": format_number(consumption_detail.net_cost)
+                        "costo_neto": consumption_detail.net_cost,
+                        "costo_neto_formated": format_number(consumption_detail.net_cost)
                     })
 
                 df_consumos = pd.DataFrame(data_consumos)
@@ -132,8 +139,10 @@ class Product(Base):
                                 "numero_de_documento": document.document_number,
                                 "oficina": document.office,
                                 "cantidad": document_detail.quantity,
-                                "valor_unitario": format_number(document_detail.net_total_value),
-                                "valor_total": format_number(document_detail.net_total_value * document_detail.quantity)
+                                "valor_unitario": document_detail.net_unit_value,
+                                "valor_unitario_formated": format_number(document_detail.net_total_value),
+                                "valor_total": document_detail.net_total_value * document_detail.quantity,
+                                "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
                             })
 
                 df_ventas = pd.DataFrame(data_ventas)
@@ -142,13 +151,30 @@ class Product(Base):
                 else:
                     sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
 
+                data_precios = []
+                for price_list in product.price_list:
+                    data_precios.append({
+                        "name": price_list.name,
+                        "valor": price_list.value,
+                        "valor_formated": format_number(price_list.value),
+                        "factor_ponderador": price_list.value / last_net_cost['costo_neto'] if last_net_cost['costo_neto'] != None else "Indefinido",
+                        "factor_ponderador_formated": format_decimal(price_list.value / last_net_cost['costo_neto']) if last_net_cost['costo_neto'] != None else "Indefinido"
+                    })
+
+                df_precios = pd.DataFrame(data_precios)
+                if df_precios.empty:
+                    price_list = []
+                else:
+                    price_list = df_precios.to_dict('records')
+
                 product_data = {
                     **product.__dict__,
                     "stock": stock,
                     "reception_details_list": reception_details_list,
                     "consumption_details_list": consumption_details_list,
                     "sales_list": sales_list,
-                    "last_net_cost": last_net_cost
+                    "last_net_cost": last_net_cost,
+                    "price_list": price_list
                 }
                 
                 return product_data  # Return the product's attributes directly

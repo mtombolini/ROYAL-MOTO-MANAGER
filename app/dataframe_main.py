@@ -49,12 +49,18 @@ class DataFrameMain():
         self.df_receptions_details = self.df_receptions_details[
             self.df_receptions_details['Variant ID'].isin(self.df_products['Variant ID'])
         ]
+
+    def correct_price_list(self):
+        self.df_price_list = self.df_price_list[
+            self.df_price_list['Variant ID'].isin(self.df_products['Variant ID'])
+        ]
     
     def create_data_base(self, session):
         self.correct_documents()
         self.correct_returns()
         self.correct_consumos()
         self.correct_recetions()
+        self.correct_price_list()
 
         for index, row in self.df_products.iterrows():
             product = Product(

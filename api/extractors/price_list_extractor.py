@@ -68,11 +68,11 @@ class PriceListExtractor:
                     })
 
                 self.offset += self.limit
-            print(f"{self.offset} precios obtenidas")
+                print(f"{self.offset} precios obtenidas")
 
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "listas_precio", "mensaje": f"{NOMBRE[I]}: {self.offset} precios obtenidas"})
-                log_file.write(message + "\n")
+                with open("logs/api_status.log", "a") as log_file:
+                    message = json.dumps({"tipo": "listas_precio", "mensaje": f"{NOMBRE[I]}: {self.offset} precios obtenidas"})
+                    log_file.write(message + "\n")
             
         self.df_price_list = pd.DataFrame(self.price_list)
 
@@ -90,7 +90,7 @@ class PriceListExtractor:
             with open("logs/api_status.log", "a") as log_file:
                 message = json.dumps({"tipo": "lista_precios-listo", "mensaje": f"Lista de Precios ✅"})
                 log_file.write(message + "\n")
-
+                
             dataframe_main.df_price_list = self.df_price_list
 
         # print("Guardando consumos en Excel...")
