@@ -5,6 +5,10 @@ from models.document import Document, DocumentDetail
 from models.sales import Sale, SaleDocument
 from models.returns import Return
 from models.price_list import PriceList
+from models.supplier import Supplier, CreditTerm
+from api.extractors.supplier_extractor import df_suppliers
+
+from random import randint
 
 class DataFrameMain():
     def __init__(self):
@@ -26,6 +30,9 @@ class DataFrameMain():
         self.df_returns = None
 
         self.df_price_list = None
+
+        self.df_suppliers = df_suppliers
+        self.suppliers_id = []
 
     def correct_products(self):
         self.df_products = self.df_products.dropna()
@@ -62,12 +69,24 @@ class DataFrameMain():
         self.correct_recetions()
         self.correct_price_list()
 
+        for index, row in self.df_suppliers.iterrows():
+            supplier = Supplier(
+                id = int(row['id']),
+                rut = row['rut'],
+                business_name = row['business_name'],
+                trading_name = row['trading_name'],
+                credit_term = CreditTerm(row['credit_term']),
+                delivery_period = int(row['delivery_period'])
+            )
+            session.add(supplier)
+
         for index, row in self.df_products.iterrows():
             product = Product(
                 variant_id=int(row['Variant ID']),
                 type=row['Product Type'],
                 description=row['Product Description'],
-                sku=row['SKU']
+                sku=row['SKU'],
+                supplier_id=int(randint(1, 20))
             )
             session.add(product)
 

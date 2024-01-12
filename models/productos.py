@@ -23,6 +23,7 @@ class Product(Base):
     type = Column(String(255))
     description = Column(String(255))
     sku = Column(String(255))
+    supplier_id = Column(Integer, ForeignKey('suppliers.id'))
     
     # asegúrate de que 'stock' corresponda al nombre de la relación inversa en ProductStock
     stock = relationship("ProductStock", uselist=False, back_populates="product")
@@ -30,6 +31,7 @@ class Product(Base):
     reception_details = relationship("ReceptionDetail", back_populates="product")
     document_details = relationship("DocumentDetail", back_populates="product")
     price_list = relationship("PriceList", back_populates="product")
+    supplier = relationship("Supplier", back_populates="products")
 
     @classmethod
     def get_all_products(cls):
