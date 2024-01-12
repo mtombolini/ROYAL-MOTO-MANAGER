@@ -6,6 +6,7 @@ from api.extractors.consumption_extractor import ConsumptionExtractor
 from api.extractors.sales_extractor import SalesExtractor
 from api.extractors.returns_extractor import ReturnsExtractor
 from api.extractors.document_extractor import DocumentExtractor
+from api.extractors.price_list_extractor import PriceListExtractor
 from app.dataframe_main import DataFrameMain
 from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 from databases.session import AppSession
@@ -36,6 +37,7 @@ consumption_ext = ConsumptionExtractor(token=TOKEN)
 sales_ext = SalesExtractor(token=TOKEN)
 returns_ext = ReturnsExtractor(token=TOKEN)
 document_ext = DocumentExtractor(token=TOKEN)
+price_list_ext = PriceListExtractor(token=TOKEN)
 
 def main():
     dataframe_main = DataFrameMain()
@@ -47,7 +49,8 @@ def main():
             threading.Thread(target=consumption_ext.run, args=(dataframe_main,)),
             threading.Thread(target=sales_ext.run, args=(dataframe_main,)),
             threading.Thread(target=returns_ext.run, args=(dataframe_main,)),
-            threading.Thread(target=document_ext.run, args=(dataframe_main,))
+            threading.Thread(target=document_ext.run, args=(dataframe_main,)),
+            threading.Thread(target=price_list_ext.run, args=(dataframe_main,))
         ]
 
         while True:

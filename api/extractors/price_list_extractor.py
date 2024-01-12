@@ -4,7 +4,7 @@ import os
 import time
 import datetime
 import json
-# from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
+from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class PriceListExtractor:
     def __init__(self, token):
@@ -44,7 +44,7 @@ class PriceListExtractor:
         LISTA = [6, 9, 11]
         NOMBRE = ["Lista de Precios Base","Lista de Precios Mercado Libre","Lista de Precios Web"]
         I = 0
-        while I != 3 and True: #not stop_signal_is_set():
+        while I != 3 and not stop_signal_is_set():
             response = self.make_request(f"price_lists/{LISTA[I]}/details.json?limit={self.limit}&offset={self.offset}")
             
             if response is None or len(response['items']) == 0:
@@ -52,15 +52,15 @@ class PriceListExtractor:
                 I += 1
             else:
                 for price_list in response['items']:
-                    # if stop_signal_is_set():
-                    #     return
+                    if stop_signal_is_set():
+                        return
 
                     price_list_id = price_list['id']
                     value = price_list['variantValueWithTaxes']
                     variant_id = price_list['variant']['id']
 
                     self.price_list.append({
-                        'ID': int(LISTA[I]),
+                        'List ID': int(LISTA[I]),
                         'Name': NOMBRE[I],
                         'Detail ID': int(price_list_id),
                         'Value': float(value),
@@ -70,9 +70,9 @@ class PriceListExtractor:
                 self.offset += self.limit
             print(f"{self.offset} precios obtenidas")
 
-            # with open("logs/api_status.log", "a") as log_file:
-            #     message = json.dumps({"tipo": "listas_de_precio", "mensaje": f"{self.offset} precios obtenidas"})
-            #     log_file.write(message + "\n")
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "listas_precio", "mensaje": f"{NOMBRE[I]}: {self.offset} precios obtenidas"})
+                log_file.write(message + "\n")
             
         self.df_price_list = pd.DataFrame(self.price_list)
 
@@ -83,10 +83,10 @@ class PriceListExtractor:
                 self.df_price_list.to_excel(writer, sheet_name='Price List', index=False)
 
     def run(self, dataframe_main):
-        print("Obteniendo price list...")
+        print("Obteniendo lista de precios...")
         self.get_price_list()
 
-        if True: #not stop_signal_is_set():
+        if not stop_signal_is_set():
             with open("logs/api_status.log", "a") as log_file:
                 message = json.dumps({"tipo": "lista_precios-listo", "mensaje": f"Lista de Precios ✅"})
                 log_file.write(message + "\n")

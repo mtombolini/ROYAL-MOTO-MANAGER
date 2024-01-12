@@ -11,6 +11,7 @@ def format_number(number):
 from models.consumption import ConsumptionDetail
 from models.reception import ReceptionDetail
 from models.document import DocumentDetail
+from models.price_list import PriceList
 
 class Product(Base):
     __tablename__ = 'productos'
@@ -25,7 +26,7 @@ class Product(Base):
     consumption_details = relationship("ConsumptionDetail", back_populates="product")
     reception_details = relationship("ReceptionDetail", back_populates="product")
     document_details = relationship("DocumentDetail", back_populates="product")
-    # price_list = relationship("PriceList", back_populates="product")
+    price_list = relationship("PriceList", back_populates="product")
 
     @classmethod
     def get_all_products(cls):

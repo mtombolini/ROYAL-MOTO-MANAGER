@@ -4,6 +4,7 @@ from models.reception import Reception, ReceptionDetail
 from models.document import Document, DocumentDetail
 from models.sales import Sale, SaleDocument
 from models.returns import Return
+from models.price_list import PriceList
 
 class DataFrameMain():
     def __init__(self):
@@ -23,6 +24,8 @@ class DataFrameMain():
         self.df_receptions_details = None
 
         self.df_returns = None
+
+        self.df_price_list = None
 
     def correct_products(self):
         self.df_products = self.df_products.dropna()
@@ -166,5 +169,15 @@ class DataFrameMain():
                 credit_note_id=credit_note_id
             )
             session.add(return_)
+
+        for index, row in self.df_price_list.iterrows():
+            price_list = PriceList(
+                list_id=int(row['List ID']),
+                name=row['Name'],
+                detail_id=int(row['Detail ID']),
+                value=float(row['Value']),
+                variant_id=int(row['Variant ID'])
+            )
+            session.add(price_list)
 
         session.commit()
