@@ -45,7 +45,7 @@ class DocumentExtractor:
     
     def get_documents(self):
         while not stop_signal_is_set():
-            response = self.make_request(f"documents.json?limit={self.limit}&offset={self.offset}&expand=[details, document_type]")
+            response = self.make_request(f"documents.json?limit={self.limit}&offset={self.offset}&expand=[details, document_type, office]")
             
             if response is None or len(response['items']) == 0:
                 break
@@ -56,15 +56,19 @@ class DocumentExtractor:
             for document in response['items']:
                 document_id = document['id']
                 document_date = document['generationDate']
+                document_number = document['number']
                 document_total_amount = document['totalAmount']
                 document_net_amount = document['netAmount']
                 document_type = document['document_type']['name']
+                document_office = document['office']['name']
 
                 details = document['details']
 
                 self.documents.append({
                     'Document ID': int(document_id),
                     'Document Date': self.convert_to_date(document_date),
+                    'Document Number': document_number,
+                    'Office': document_office,
                     'Total Amount': float(document_total_amount),
                     'Net Amount': float(document_net_amount),
                     'Document Type': document_type

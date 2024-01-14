@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, String, Select
 from sqlalchemy.types import Enum
+from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
 from typing import List, Dict
+from models.productos import Product
 import enum
 
 class SupplierNotFoundError(ValueError):
@@ -25,8 +27,10 @@ class Supplier(Base):
     business_name = Column(String(255))
     trading_name = Column(String(255))
     credit_term = Column(Enum(CreditTerm))
-    delivery_period = Column(String(255))
-    
+    delivery_period = Column(Integer)
+
+    products = relationship("Product", back_populates="supplier")
+
     @classmethod
     def get_all(cls) -> List[Dict]:
         session = AppSession()

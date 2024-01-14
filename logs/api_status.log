@@ -1,214 +1,85 @@
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 50 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "50 ventas obtenidos"}
 {"tipo": "devoluciones", "mensaje": "50 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 100 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "100 ventas obtenidos"}
 {"tipo": "documentos", "mensaje": "50 documentos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "100 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 150 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "150 ventas obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 200 precios obtenidas"}
 {"tipo": "devoluciones", "mensaje": "150 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 250 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "200 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "100 documentos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "200 devoluciones obtenidos"}
+{"tipo": "documentos", "mensaje": "100 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 300 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "250 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "150 documentos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "250 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 350 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "300 ventas obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 400 precios obtenidas"}
 {"tipo": "productos", "mensaje": "50 productos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "300 devoluciones obtenidos"}
 {"tipo": "ventas", "mensaje": "350 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "200 documentos obtenidos"}
+{"tipo": "documentos", "mensaje": "150 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 450 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "400 ventas obtenidos"}
 {"tipo": "devoluciones", "mensaje": "350 devoluciones obtenidos"}
-{"tipo": "documentos", "mensaje": "250 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 500 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "450 ventas obtenidos"}
+{"tipo": "documentos", "mensaje": "200 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 550 precios obtenidas"}
 {"tipo": "devoluciones", "mensaje": "400 devoluciones obtenidos"}
-{"tipo": "productos", "mensaje": "100 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "300 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 600 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "500 ventas obtenidos"}
 {"tipo": "devoluciones", "mensaje": "450 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 650 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "550 ventas obtenidos"}
+{"tipo": "documentos", "mensaje": "250 documentos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "500 devoluciones obtenidos"}
-{"tipo": "documentos", "mensaje": "350 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 700 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "600 ventas obtenidos"}
 {"tipo": "devoluciones", "mensaje": "550 devoluciones obtenidos"}
-{"tipo": "documentos", "mensaje": "400 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 750 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "650 ventas obtenidos"}
+{"tipo": "productos", "mensaje": "100 productos obtenidos"}
+{"tipo": "documentos", "mensaje": "300 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 800 precios obtenidas"}
 {"tipo": "devoluciones", "mensaje": "600 devoluciones obtenidos"}
-{"tipo": "productos", "mensaje": "150 productos obtenidos"}
 {"tipo": "ventas", "mensaje": "700 ventas obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 850 precios obtenidas"}
 {"tipo": "devoluciones", "mensaje": "650 devoluciones obtenidos"}
-{"tipo": "documentos", "mensaje": "450 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "50 recepciones obtenidos"}
 {"tipo": "ventas", "mensaje": "750 ventas obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 900 precios obtenidas"}
+{"tipo": "documentos", "mensaje": "350 documentos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "700 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 950 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "800 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "500 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1000 precios obtenidas"}
 {"tipo": "devoluciones", "mensaje": "750 devoluciones obtenidos"}
 {"tipo": "ventas", "mensaje": "850 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "200 productos obtenidos"}
-{"tipo": "devoluciones", "mensaje": "800 devoluciones obtenidos"}
-{"tipo": "documentos", "mensaje": "550 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1050 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "900 ventas obtenidos"}
-{"tipo": "devoluciones", "mensaje": "850 devoluciones obtenidos"}
+{"tipo": "documentos", "mensaje": "400 documentos obtenidos"}
+{"tipo": "devoluciones", "mensaje": "800 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1100 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "950 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "600 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1150 precios obtenidas"}
+{"tipo": "devoluciones", "mensaje": "850 devoluciones obtenidos"}
+{"tipo": "productos", "mensaje": "150 productos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1200 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "1000 ventas obtenidos"}
+{"tipo": "documentos", "mensaje": "450 documentos obtenidos"}
 {"tipo": "devoluciones", "mensaje": "900 devoluciones obtenidos"}
-{"tipo": "documentos", "mensaje": "650 documentos obtenidos"}
-{"tipo": "devoluciones", "mensaje": "950 devoluciones obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1250 precios obtenidas"}
 {"tipo": "ventas", "mensaje": "1050 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "250 productos obtenidos"}
-{"tipo": "devoluciones-listo", "mensaje": "Devoluciones \u2705"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1300 precios obtenidas"}
+{"tipo": "devoluciones", "mensaje": "950 devoluciones obtenidos"}
 {"tipo": "ventas", "mensaje": "1100 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "700 documentos obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1350 precios obtenidas"}
+{"tipo": "devoluciones-listo", "mensaje": "Devoluciones \u2705"}
+{"tipo": "documentos", "mensaje": "500 documentos obtenidos"}
 {"tipo": "ventas", "mensaje": "1150 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "750 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1200 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "1250 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "300 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "800 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1300 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "1350 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "850 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1400 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "1450 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "900 documentos obtenidos"}
-{"tipo": "productos", "mensaje": "350 productos obtenidos"}
-{"tipo": "ventas", "mensaje": "1500 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "50 consumos obtenidos"}
-{"tipo": "documentos", "mensaje": "950 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1550 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "100 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "1600 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "150 consumos obtenidos"}
-{"tipo": "documentos", "mensaje": "1000 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1650 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "200 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "1700 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "400 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "1050 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1750 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1100 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1800 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "250 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "1850 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1150 documentos obtenidos"}
-{"tipo": "consumos", "mensaje": "300 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "1900 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "450 productos obtenidos"}
-{"tipo": "consumos", "mensaje": "350 consumos obtenidos"}
-{"tipo": "documentos", "mensaje": "1200 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "1950 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "400 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "2000 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "450 consumos obtenidos"}
-{"tipo": "documentos", "mensaje": "1250 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2050 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "500 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "2100 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "500 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "1300 documentos obtenidos"}
-{"tipo": "consumos", "mensaje": "550 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "2150 ventas obtenidos"}
-{"tipo": "consumos", "mensaje": "600 consumos obtenidos"}
-{"tipo": "ventas", "mensaje": "2200 ventas obtenidos"}
-{"tipo": "consumos-listo", "mensaje": "Consumos \u2705"}
-{"tipo": "documentos", "mensaje": "1350 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2250 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "2300 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1400 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2350 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "2400 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1450 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2450 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "550 productos obtenidos"}
-{"tipo": "ventas", "mensaje": "2500 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1500 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2550 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "2600 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1550 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2650 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "2700 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1600 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2750 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "2800 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "600 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "1650 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2850 ventas obtenidos"}
+{"tipo": "listas_precio", "mensaje": "Lista de Precios Base: 1400 precios obtenidas"}
 {"tipo": "recepciones", "mensaje": "50 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "2900 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "100 recepciones obtenidos"}
-{"tipo": "documentos", "mensaje": "1700 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "2950 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "150 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3000 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "200 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3050 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1750 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "250 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3100 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "300 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3150 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "650 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "1800 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "350 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3200 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "400 recepciones obtenidos"}
-{"tipo": "documentos", "mensaje": "1850 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "3250 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "450 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3300 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1900 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "3350 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "700 productos obtenidos"}
-{"tipo": "ventas", "mensaje": "3400 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "1950 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "500 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3450 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2000 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "550 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3500 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "600 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3550 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2050 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "650 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3600 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "750 productos obtenidos"}
-{"tipo": "recepciones", "mensaje": "700 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3650 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2100 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "750 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3700 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2150 documentos obtenidos"}
-{"tipo": "recepciones", "mensaje": "800 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3750 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "850 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "3800 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2200 documentos obtenidos"}
-{"tipo": "productos", "mensaje": "800 productos obtenidos"}
-{"tipo": "ventas", "mensaje": "3850 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "3900 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2250 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "3950 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4000 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4050 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "850 productos obtenidos"}
-{"tipo": "recepciones", "mensaje": "900 recepciones obtenidos"}
-{"tipo": "ventas", "mensaje": "4100 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2300 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "4150 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4200 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4250 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "900 productos obtenidos"}
-{"tipo": "ventas", "mensaje": "4300 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2350 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "4350 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4400 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4450 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4500 ventas obtenidos"}
-{"tipo": "productos", "mensaje": "950 productos obtenidos"}
-{"tipo": "documentos", "mensaje": "2400 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "4550 ventas obtenidos"}
-{"tipo": "ventas", "mensaje": "4600 ventas obtenidos"}
-{"tipo": "documentos", "mensaje": "2450 documentos obtenidos"}
-{"tipo": "ventas", "mensaje": "4650 ventas obtenidos"}
-{"tipo": "recepciones", "mensaje": "950 recepciones obtenidos"}

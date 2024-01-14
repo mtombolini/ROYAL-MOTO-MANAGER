@@ -44,7 +44,7 @@ class ReceptionExtractor:
 
     def get_receptions(self):
         while not stop_signal_is_set():
-            response = self.make_request(f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details]")
+            response = self.make_request(f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]")
             if response is None or len(response['items']) == 0:
                 break
             else:
@@ -55,6 +55,8 @@ class ReceptionExtractor:
                     reception_id = reception['id']
                     admission_date = reception['admissionDate']
                     document = reception['document']
+                    document_number = reception['documentNumber']
+                    office = reception['office']['name']
                     note = reception['note']
 
                     details = reception['details']
@@ -65,6 +67,8 @@ class ReceptionExtractor:
                         'ID': int(reception_id),
                         'Admission Date': self.convert_to_date(admission_date),
                         'Document': document,
+                        'Document Number': document_number,
+                        'Office': office,
                         'Note': note
                     })
 
