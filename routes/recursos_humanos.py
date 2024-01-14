@@ -31,7 +31,7 @@ opciones_horario_colacion = [
     # Agrega más opciones según tus necesidades
 ]
 
-class NewEmployeeForm(FlaskForm)
+class NewEmployeeForm(FlaskForm):
     rut = StringField('Rut (ej: 21261098-4)', validators=[DataRequired(), Length(min=10, max=10)])
     nombre = StringField('Nombre', validators=[DataRequired()])
     apellido = StringField('Apellido', validators=[DataRequired()])
