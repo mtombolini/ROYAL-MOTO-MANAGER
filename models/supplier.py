@@ -36,7 +36,7 @@ class Supplier(Base):
         session = AppSession()
         try:
             suppliers = session.query(cls).all()
-            print(suppliers)
+            
             # Iterate through all attributes of each Supplier object
             suppliers_data = [
                 {

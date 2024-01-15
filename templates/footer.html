@@ -1,0 +1,51 @@
+<!-- footer.html -->
+<style>
+    .custom-footer {
+        background-color:  #dc3545; /* Color de fondo */
+        color: white; /* Color del texto */
+        font-size: 0.9em; /* Tamaño de fuente más pequeño, ajusta según sea necesario */
+        display: flex;
+        justify-content: space-between; /* Alinea los elementos a los extremos */
+        align-items: center;
+    }
+
+    .info-button {
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: white;
+        font-size: 1.2em;
+    }
+</style>
+
+<div class="custom-footer">
+    By Maximiliano Tombolini, Franco Anfossi & Diego Navarro
+    <button class="info-button" onclick="showInfoPopup()">
+        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+    </button>
+</div>
+
+<!-- Pop-up de información -->
+<script>
+    function showInfoPopup() {
+        Swal.fire({
+            title: 'Información Detallada',
+            html: `
+                <div style="display: flex; flex-direction: column;">
+                    <div>Información parte 1</div>
+                    <div>Información parte 2</div>
+                    <div>Información parte 3</div>
+                    <!-- Más divs según sea necesario -->
+                </div>
+            `,
+            icon: 'info',
+            width: '800px', // Ajusta este valor según tus necesidades
+            customClass: {
+                popup: 'custom-popup-class' // Si necesitas clases adicionales
+            }
+        });
+    }
+</script>
+
+<!-- FontAwesome para el ícono (Asegúrate de incluir FontAwesome si aún no lo has hecho) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

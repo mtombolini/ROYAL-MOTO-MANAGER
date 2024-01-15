@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from databases.base import Base
+from .tablas.employee import Employee
 
 class User(Base, UserMixin):
     __tablename__ = 'usuarios'
@@ -15,6 +16,7 @@ class User(Base, UserMixin):
     correo = Column(String(255))
     id_role = Column(Integer, ForeignKey('roles.id_role'))
     role = relationship('Role', back_populates='users')
+    empleados = relationship(Employee, back_populates='user')
 
     def __init__(self, username="", password="", nombre="", apellido="", correo="", id_role=None):
         self.username = username
