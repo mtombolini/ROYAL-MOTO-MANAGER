@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import time
 import datetime
+import json
+from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class ConsumptionExtractor:
     def __init__(self, token):
@@ -41,14 +43,19 @@ class ConsumptionExtractor:
         return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
 
     def get_consumptions(self):
-        while True:
-            response = self.make_request(f"stocks/consumptions.json?limit={self.limit}&offset={self.offset}&expand=[details]")
+        while not stop_signal_is_set():
+            response = self.make_request(f"stocks/consumptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]")
             if response is None or len(response['items']) == 0:
                 break
             else:
                 for consumption in response['items']:
+
+                    if stop_signal_is_set():
+                        return
+
                     consumption_id = consumption['id']
                     consumption_date = consumption['consumptionDate']
+                    office = consumption['office']['name']
                     note = consumption['note']
                     details = consumption['details']
                     details_count = details['count']
@@ -57,6 +64,7 @@ class ConsumptionExtractor:
                     self.consumptions.append({
                         'ID': int(consumption_id),
                         'Consumption Date': self.convert_to_date(consumption_date),
+                        'Office': office,
                         'Note': note
                     })
 
@@ -101,6 +109,10 @@ class ConsumptionExtractor:
 
             self.offset += self.limit
             print(f"{self.offset} cosumos obtenidas")
+
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "consumos", "mensaje": f"{self.offset} consumos obtenidos"})
+                log_file.write(message + "\n")
             
         self.df_consumptions = pd.DataFrame(self.consumptions)
         self.df_consumptions_details = pd.DataFrame(self.consumptions_details)
@@ -118,8 +130,13 @@ class ConsumptionExtractor:
         print("Obteniendo consumptions...")
         self.get_consumptions()
 
-        dataframe_main.df_consumptions = self.df_consumptions
-        dataframe_main.df_consumptions_details = self.df_consumptions_details
+        if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "consumos-listo", "mensaje": f"Consumos ✅"})
+                log_file.write(message + "\n")
+
+            dataframe_main.df_consumptions = self.df_consumptions
+            dataframe_main.df_consumptions_details = self.df_consumptions_details
 
         # print("Guardando consumos en Excel...")
         # self.save_to_excel()

@@ -1,0 +1,13 @@
+<form action="{{ url_for('configuraciones.editar_rol', id_role=1) }}" method="post" id="editRoleForm">
+    {{ form.csrf_token }}
+
+    <!-- Hidden Field for User ID -->
+    <input type="hidden" name="id_role" id="modalRoleId">
+
+    <div class="mb-3">
+        {{ form.description.label(class="form-label") }}
+        {{ form.description(class="form-control", id="modalDescription") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Editar Rol</button>
+</form>

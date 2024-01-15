@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import time
 import datetime
+import json
+from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class ReceptionExtractor:
     def __init__(self, token):
@@ -41,15 +43,20 @@ class ReceptionExtractor:
         return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
 
     def get_receptions(self):
-        while True:
-            response = self.make_request(f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details]")
+        while not stop_signal_is_set():
+            response = self.make_request(f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]")
             if response is None or len(response['items']) == 0:
                 break
             else:
+                if stop_signal_is_set():
+                    return
+
                 for reception in response['items']:
                     reception_id = reception['id']
                     admission_date = reception['admissionDate']
                     document = reception['document']
+                    document_number = reception['documentNumber']
+                    office = reception['office']['name']
                     note = reception['note']
 
                     details = reception['details']
@@ -60,6 +67,8 @@ class ReceptionExtractor:
                         'ID': int(reception_id),
                         'Admission Date': self.convert_to_date(admission_date),
                         'Document': document,
+                        'Document Number': document_number,
+                        'Office': office,
                         'Note': note
                     })
 
@@ -103,6 +112,10 @@ class ReceptionExtractor:
 
             self.offset += self.limit
             print(f"{self.offset} recepciones obtenidas")
+
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "recepciones", "mensaje": f"{self.offset} recepciones obtenidos"})
+                log_file.write(message + "\n")
             
         self.df_receptions = pd.DataFrame(self.receptions)
         self.df_receptions_details = pd.DataFrame(self.receptions_details)
@@ -120,8 +133,13 @@ class ReceptionExtractor:
         print("Obteniendo recepciones...")
         self.get_receptions()
 
-        dataframe_main.df_receptions = self.df_receptions
-        dataframe_main.df_receptions_details = self.df_receptions_details
+        if not stop_signal_is_set():
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "recepciones-listo", "mensaje": f"Recepciones ✅"})
+                log_file.write(message + "\n")
+
+            dataframe_main.df_receptions = self.df_receptions
+            dataframe_main.df_receptions_details = self.df_receptions_details
 
         # print("Guardando recepciones en Excel...")
         # self.save_to_excel()

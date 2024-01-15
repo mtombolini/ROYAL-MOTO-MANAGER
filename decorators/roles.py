@@ -13,16 +13,16 @@ def requires_roles(*roles):
             if not current_user.is_authenticated:
                 return redirect(url_for('auth.login'))
 
-            # Importación local de User
-            from models.user import User
+            # Importación local de User y Role
+            from models.user import User, Role
 
             # Iniciar una sesión
             session = AppSession()
 
             try:
                 user_with_role = session.query(User).options(joinedload(User.role)).filter_by(id=current_user.id).one_or_none()
-
-                if not user_with_role or user_with_role.role.description not in roles:
+                superadmin_id = session.query(Role).filter_by(description="superadministrador").first().id_role
+                if not user_with_role or user_with_role.role.description not in roles and user_with_role.id_role != superadmin_id:
                     return render_template('alerta_permisos_usuarios.html')
 
                 return f(*args, **kwargs)

@@ -1,0 +1,59 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Empleados{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .new-role-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .employee-card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-role-button">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#crearEmpleadoModal">Crear Nuevo Empleado</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para el formulario de empleado -->
+<div class="modal fade" id="crearEmpleadoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Nuevo Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'recursos_humanos/employees/new_employee.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mostrar cuadros de empleados -->
+<div class="container mt-3">
+    <div class="row">
+        {% for employee in data %}
+            <div class="col-md-4">
+                <div class="employee-card">
+                    <h4>{{ employee.nombre }} {{ employee.apellido }}</h4>
+                    <p>Username: {{ employee.username }}</p>
+                    <p>Rut: {{ employee.rut }}</p>
+                    <!-- Agrega más información del empleado según tus necesidades -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

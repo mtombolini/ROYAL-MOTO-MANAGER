@@ -1,0 +1,183 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Administración de Usuarios{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .new-user-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    
+    .flash-message {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f8f8f8;
+        z-index: 1000;
+    }
+    .flash-message.error {
+        border-color: red;
+        background-color: #ffd6d6;
+    }
+    
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-user-button">
+            <!-- Botón para abrir un modal de creación de usuario (si es necesario) -->
+            <button class="btn btn-secondary">Nuevo Usuario</button>
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Correo</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>ID Role</th>
+                        <th>Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in data %}
+                    <tr id="{{ user.id }}">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.correo }}</td>
+                        <td>{{ user.nombre }}</td>
+                        <td>{{ user.apellido }}</td>
+                        <td>{{ user.id_role }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{user.id}})">Editar</button>
+                            <a href="{{ url_for('configuraciones.eliminar_usuario', id_user=user.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este usuario?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No hay usuarios disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                                                                                                 
+        </div>
+    </div>
+</div>
+
+<!-- Aquí podrías incluir el modal para crear un nuevo usuario si es necesario -->
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/administracion_de_usuarios/edicion_user.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function openEditModal(userId) {
+        fetch(`/get_user/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(user => {
+                // Populate the modal form fields
+                document.getElementById('modalUserId').value = user.id;
+                document.getElementById('modalUsername').value = user.username;
+                document.getElementById('modalEmail').value = user.correo;
+                document.getElementById('modalFirstName').value = user.nombre;
+                document.getElementById('modalLastName').value = user.apellido;
+                document.getElementById('modalRoleId').value = user.id_role;
+    
+                // Add event listener for form submission
+                $('#editUserForm').off('submit').on('submit', function(e) {
+                    e.preventDefault();  // Prevent default form submission
+    
+                    var updatedUserData = {
+                        username: document.getElementById('modalUsername').value,
+                        email: document.getElementById('modalEmail').value,
+                        first_name: document.getElementById('modalFirstName').value,
+                        last_name: document.getElementById('modalLastName').value,
+                        id_role: document.getElementById('modalRoleId').value,
+                    };
+    
+                    fetch(`/editar_usuario/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(updatedUserData)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json();
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            // Display error message without needing a page refresh
+                            displayFlashMessage(data.error, "error");
+                            jQuery('#editUserModal').modal('hide');
+                        } else {
+                            // Handle success, close modal, etc.
+                            displayFlashMessage(data.message, "success")
+                            jQuery('#editUserModal').modal('hide');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                });
+    
+                // Show the modal
+                jQuery('#editUserModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+            });
+    }
+    
+    function displayFlashMessage(message, type) {
+        // Create and display a flash message on the page
+        // You can customize this function to fit your UI design
+        let flashMessage = document.createElement("div");
+        flashMessage.className = `flash-message ${type}`;
+        flashMessage.textContent = message;
+        document.body.appendChild(flashMessage);
+    
+        // Remove the message after a few seconds
+        setTimeout(() => {
+            flashMessage.remove();
+        }, 5000);
+    }
+</script>
+{% endblock %}

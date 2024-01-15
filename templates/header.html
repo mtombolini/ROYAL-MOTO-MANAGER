@@ -28,13 +28,12 @@
 <!-- Mensajes Flash -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <div class="flash-messages">
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %}
-    </div>
+    {% for category, message in messages %}
+      <div class="hidden flash-message" data-type="{{ category }}" data-message="{{ message }}"></div>
+    {% endfor %}
   {% endif %}
 {% endwith %}
+
 
 <!-- Header Inferior -->
 <nav class="navbar navbar-expand-lg header-bottom">
@@ -67,13 +66,37 @@
                 </ul>
             </li>
 
-            <!-- Botón para ejecutar api_main.py -->
-            <li class="nav-item">
-                <a class="btn" href="{{ url_for('api_call.run_api_calls') }}">Ejecutar API Calls</a>
+
+            <!-- Dropdown de RRHH -->
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    RRHH
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('recursos_humanos.employees_administration') }}">Administración de Empleados</a></li>
+                </ul>
             </li>
-            
-            <li class="nav-item">
-                <button class="btn">Opción 2</button>
+
+            <!-- Dropdown de Configuraciones -->
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Configuraciones
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.administracion_de_roles') }}">Administración de Roles</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.administracion_de_usuarios') }}">Administración de Usuarios</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.suppliers_management') }}">Administración de Proveedores</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('api_call.run_api_calls') }}">Actualizar datos API</a></li>
+                </ul>
+            </li>
+
+            <!-- Dropdown de Tablas -->
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tablas</a>
+
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('tables.get_products') }}">Productos</a></li>
+                </ul>
             </li>
         </ul>
     </div>

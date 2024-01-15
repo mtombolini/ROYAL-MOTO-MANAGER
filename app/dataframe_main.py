@@ -4,6 +4,11 @@ from models.reception import Reception, ReceptionDetail
 from models.document import Document, DocumentDetail
 from models.sales import Sale, SaleDocument
 from models.returns import Return
+from models.price_list import PriceList
+from models.supplier import Supplier, CreditTerm
+from api.extractors.supplier_extractor import df_suppliers
+
+from random import randint
 
 class DataFrameMain():
     def __init__(self):
@@ -23,6 +28,11 @@ class DataFrameMain():
         self.df_receptions_details = None
 
         self.df_returns = None
+
+        self.df_price_list = None
+
+        self.df_suppliers = df_suppliers
+        self.suppliers_id = []
 
     def correct_products(self):
         self.df_products = self.df_products.dropna()
@@ -46,19 +56,37 @@ class DataFrameMain():
         self.df_receptions_details = self.df_receptions_details[
             self.df_receptions_details['Variant ID'].isin(self.df_products['Variant ID'])
         ]
+
+    def correct_price_list(self):
+        self.df_price_list = self.df_price_list[
+            self.df_price_list['Variant ID'].isin(self.df_products['Variant ID'])
+        ]
     
     def create_data_base(self, session):
         self.correct_documents()
         self.correct_returns()
         self.correct_consumos()
         self.correct_recetions()
+        self.correct_price_list()
+
+        for index, row in self.df_suppliers.iterrows():
+            supplier = Supplier(
+                id = int(row['id']),
+                rut = row['rut'],
+                business_name = row['business_name'],
+                trading_name = row['trading_name'],
+                credit_term = CreditTerm(row['credit_term']),
+                delivery_period = int(row['delivery_period'])
+            )
+            session.add(supplier)
 
         for index, row in self.df_products.iterrows():
             product = Product(
                 variant_id=int(row['Variant ID']),
                 type=row['Product Type'],
                 description=row['Product Description'],
-                sku=row['SKU']
+                sku=row['SKU'],
+                supplier_id=int(randint(1, 20))
             )
             session.add(product)
 
@@ -74,6 +102,7 @@ class DataFrameMain():
             consumption = Consumption(
                 id=int(row['ID']),
                 date=row['Consumption Date'],
+                office=row['Office'],
                 note=row['Note']
             )
             session.add(consumption)
@@ -93,6 +122,8 @@ class DataFrameMain():
                 id=int(row['ID']),
                 date=row['Admission Date'],
                 document_type=row['Document'],
+                document_number=row['Document Number'],
+                office=row['Office'],
                 note=row['Note']
             )
             session.add(reception)
@@ -111,6 +142,8 @@ class DataFrameMain():
             document = Document(
                 id=int(row['Document ID']),
                 date=row['Document Date'],
+                document_number=row['Document Number'],
+                office=row['Office'],
                 total_amount=float(row['Total Amount']),
                 net_amount=float(row['Net Amount']),
                 document_type=row['Document Type']
@@ -161,5 +194,15 @@ class DataFrameMain():
                 credit_note_id=credit_note_id
             )
             session.add(return_)
+
+        for index, row in self.df_price_list.iterrows():
+            price_list = PriceList(
+                list_id=int(row['List ID']),
+                name=row['Name'],
+                detail_id=int(row['Detail ID']),
+                value=float(row['Value']),
+                variant_id=int(row['Variant ID'])
+            )
+            session.add(price_list)
 
         session.commit()

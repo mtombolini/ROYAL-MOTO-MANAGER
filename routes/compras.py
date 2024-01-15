@@ -11,12 +11,12 @@ from models.model_cart import ModelCart
 compras_blueprint = Blueprint('compras', __name__)
 
 @compras_blueprint.route('/stock_critico')
-@requires_roles('Desarrollador')
+@requires_roles('desarrollador')
 def stock_critico():
     return render_template('home.html', page_title="Stock Crítico")
 
 @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])
-@requires_roles('Desarrollador')
+@requires_roles('desarrollador')
 def carro(cart_id):
     try:
         
@@ -43,10 +43,9 @@ def resumen_compra(data_detail):
         'total': total
     }
 
-
     
 @compras_blueprint.route('/compras')
-@requires_roles('Desarrollador')
+@requires_roles('desarrollador')
 def compras():
     try:
         data = ModelCart.get_all_carts()
@@ -55,8 +54,9 @@ def compras():
         print(e)
         return render_template('error.html'), 500
     
+    
 @compras_blueprint.route('/eliminar_carro/<int:cart_id>', methods=['POST'])
-@requires_roles('Desarrollador')
+@requires_roles('desarrollador')
 def eliminar_carro(cart_id):
     try:
         if ModelCart.delete_cart_by_id(cart_id):

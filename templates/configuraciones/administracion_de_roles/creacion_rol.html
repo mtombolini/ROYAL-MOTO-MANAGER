@@ -1,0 +1,8 @@
+<form action="{{ url_for('configuraciones.crear_rol') }}" method="post">
+    {{ form.csrf_token }}
+    <div class="mb-3">
+        {{ form.description.label(class="form-label") }}
+        {{ form.description(class="form-control", id="descripcionRol") }}
+    </div>
+    <button type="submit" class="btn btn-primary">Crear Rol</button>
+</form>

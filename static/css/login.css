@@ -30,6 +30,13 @@ body::before {
     width: 400px;  /* Ancho del contenedor aumentado */
 }
 
+.register-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;  /* padding aumentado para más espacio interior */
+    margin-top: 0px;
+    width: 600px;  /* Ancho del contenedor aumentado */
+}
 .form-signin {
     width: 100%;
     padding: 15px;

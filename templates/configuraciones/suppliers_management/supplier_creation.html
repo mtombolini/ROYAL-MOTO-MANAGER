@@ -1,0 +1,35 @@
+<form action="{{ url_for('configuraciones.create_supplier') }}" method="post">
+    {{ form.csrf_token }}
+
+    <!-- Field for Supplier RUT -->
+    <div class="mb-3">
+        {{ form.rut.label(class="form-label") }}
+        {{ form.rut(class="form-control", id="modalRut") }}
+    </div>
+
+    <!-- Field for Supplier Business Name -->
+    <div class="mb-3">
+        {{ form.business_name.label(class="form-label") }}
+        {{ form.business_name(class="form-control", id="modalBusinessName") }}
+    </div>
+
+    <!-- Field for Supplier Trading Name -->
+    <div class="mb-3">
+        {{ form.trading_name.label(class="form-label") }}
+        {{ form.trading_name(class="form-control", id="modalTradingName") }}
+    </div>
+
+    <!-- Field for Supplier Credit Term -->
+    <div class="mb-3">
+        {{ form.credit_term.label(class="form-label") }}
+        {{ form.credit_term(class="form-control", id="modalCreditTerm") }}
+    </div>
+
+    <!-- Field for Supplier Delivery Period -->
+    <div class="mb-3">
+        {{ form.delivery_period.label(class="form-label") }}
+        {{ form.delivery_period(class="form-control", id="modalDeliveryPeriod") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear Proveedor</button>
+</form>

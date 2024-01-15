@@ -1,0 +1,186 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Administración de Proveedores{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .new-user-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-user-button">
+            <!-- Button to open a new supplier modal, if necessary -->
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createSupplierModal">Nuevo Proveedor</button>
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>RUT</th>
+                        <th>Razón Social</th>
+                        <th>Nombre de Fantasía</th>
+                        <th>Plazo de Pago</th>
+                        <th>Tiempo de Entrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in data %}
+                    <tr id="{{ supplier.id }}">
+                        <td>{{ supplier.id }}</td>
+                        <td>{{ supplier.rut }}</td>
+                        <td>{{ supplier.business_name }}</td>
+                        <td>{{ supplier.trading_name }}</td>
+                        <td>{{ supplier.credit_term.value }}</td>
+                        <td>{{ supplier.delivery_period }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{supplier.id}})">Editar</button>
+                            <a href="{{ url_for('configuraciones.delete_supplier', supplier_id=supplier.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este proveedor?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No hay proveedores disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                                                                                                 
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Modal to create suppliers -->
+<div class="modal fade" id="createSupplierModal" tabindex="-1" aria-labelledby="createSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createSupplierModalLabel">Crear Nuevo Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/suppliers_management/supplier_creation.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Modal to edit suppliers -->
+<div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog" aria-labelledby="editSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSupplierModalLabel">Editar Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/suppliers_management/supplier_edition.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function openEditModal(supplierId) {
+        fetch(`/get_supplier/${supplierId}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json();
+                }
+                return response.json();
+            })
+            .then(supplier => {
+                if (supplier.error) {
+                    // Display error message without needing a page refresh
+                    displayFlashMessage(supplier.error, "error");
+                    jQuery('#editSupplierModal').modal('hide');
+                } else {
+                    // Populate the modal form fields
+                    document.getElementById('modalSupplierId').value = supplier.id;
+                    document.getElementById('modalRut').value = supplier.rut;
+                    document.getElementById('modalBusinessName').value = supplier.business_name;
+                    document.getElementById('modalTradingName').value = supplier.trading_name;
+                    document.getElementById('modalCreditTerm').value = supplier.credit_term;
+                    document.getElementById('modalDeliveryPeriod').value = supplier.delivery_period;
+        
+                    // Add event listener for form submission
+                    $('#editSupplierForm').off('submit').on('submit', function(e) {
+                        e.preventDefault();  // Prevent default form submission
+        
+                        var updatedSupplierData = {
+                            rut: document.getElementById('modalRut').value,
+                            business_name: document.getElementById('modalBusinessName').value,
+                            trading_name: document.getElementById('modalTradingName').value,
+                            credit_term: document.getElementById('modalCreditTerm').value,
+                            delivery_period: document.getElementById('modalDeliveryPeriod').value,
+                        };
+        
+                        fetch(`/edit_supplier/${supplierId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(updatedSupplierData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json();
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.error) {
+                                // Display error message without needing a page refresh
+                                displayFlashMessage(data.error, "error");
+                                jQuery('#editSupplierModal').modal('hide');
+                            } else {
+                                // Handle success, close modal, etc.
+                                displayFlashMessage(data.message, "success")
+                                jQuery('#editSupplierModal').modal('hide');
+                            }
+                            window.location.href('/suppliers_management')
+                        })
+                        .catch((error) => {
+                            console.error('Error editing supplier data:', error);
+                        });
+                    });
+                    // Show the modal
+                    jQuery('#editSupplierModal').modal('show');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching supplier data:', error);
+            });
+    }    
+
+    function displayFlashMessage(message, type) {
+        // Create and display a flash message on the page
+        // You can customize this function to fit your UI design
+        let flashMessage = document.createElement("div");
+        flashMessage.className = `flash-message ${type}`;
+        flashMessage.textContent = message;
+        document.body.appendChild(flashMessage);
+    
+        // Remove the message after a few seconds
+        setTimeout(() => {
+            flashMessage.remove();
+        }, 5000);
+    }
+    
+</script>
+{% endblock %}
+
+{% endblock %}

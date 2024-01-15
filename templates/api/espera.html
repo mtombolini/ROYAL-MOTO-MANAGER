@@ -1,0 +1,129 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Carro de Compras{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <!-- Spinner de Bootstrap y Mensaje -->
+        <p>
+            Obteniendo estado de la solicitud...
+            <span class="spinner-border text-light" role="status" aria-hidden="true" style="margin-left: 8px;">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Spinner" width="40" height="24" class="centered-image">
+            </span>
+        </p>
+    </div>
+
+    <p>Tiempo transcurrido: <span id="timer">0</span> segundos</p>
+
+    <div id="actualizaciones" class="row">
+        <!-- Ejemplo de una tarjeta para productos -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="productos-listo">Productos ❌</h5>
+                    <p class="card-text">Estado: <span id="productos">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="stocks-listo">Stocks ❌</h5>
+                    <p class="card-text">Estado: <span id="stocks">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="consumos-listo">Consumos ❌</h5>
+                    <p class="card-text">Estado: <span id="consumos">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="documentos-listo">Documentos ❌</h5>
+                    <p class="card-text">Estado: <span id="documentos">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="recepciones-listo">Recepciones ❌</h5>
+                    <p class="card-text">Estado: <span id="recepciones">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="devoluciones-listo">Devoluciones ❌</h5>
+                    <p class="card-text">Estado: <span id="devoluciones">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="ventas-listo">Ventas ❌</h5>
+                    <p class="card-text">Estado: <span id="ventas">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="lista_precios-listo">Listas de Precios ❌</h5>
+                    <p class="card-text">Estado: <span id="listas_precio">Esperando a obtener...</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('home.home') }}" class="btn btn-primary">Ir a Inicio</a>
+        <button onclick="restartProcess()" class="btn btn-secondary">Reiniciar Proceso</button>
+    </div>
+</div>
+
+<script>
+    var timeElapsed = 0;
+    var timerInterval = setInterval(function() {
+        timeElapsed++;
+        document.getElementById('timer').innerText = timeElapsed;
+    }, 1000);
+
+    function restartProcess() {
+        // Recargar la página o redirigir a la ruta que inicia el proceso
+        window.location.href = "{{ url_for('api_call.run_api_calls') }}";
+    }
+
+    function obtenerActualizaciones() {
+        fetch("{{ url_for('api_actualizacion.actualizar_estado') }}")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(estado => {
+                    // Actualizar el contenido en la página según el tipo de estado
+                    if (estado.tipo && estado.mensaje) {
+                        document.getElementById(estado.tipo).innerText = estado.mensaje;
+                    }
+                    else if (estado.tipo.includes('listo') && estado.mensaje.includes('✅')) {
+                        document.getElementById(estado.tipo).innerText = estado.mensaje;
+                    }
+                });
+            })
+            .catch(error => console.error('Error al obtener actualizaciones:', error));
+    }
+
+    // Llamar a obtenerActualizaciones cada cierto tiempo
+    setInterval(obtenerActualizaciones, 3000); // 1000 milisegundos = 1 segundos
+
+</script>
+
+{% endblock %}

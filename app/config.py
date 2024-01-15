@@ -7,21 +7,24 @@ class Config:
 
 class DevelopmentConfigMySQL(Config):
     DEBUG = True
-    HOST = 'localhost'
-    USER = 'root'
-    #PASSWORD = PASSWORD_MYSQL
+    HOST = '127.0.0.1'
+    PORT = 5432
+    # USER = USER_MYSQL
+    # PASSWORD = PASSWORD_MYSQL
     DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
-    #DATA_BASE_URL = f"mysql+mysqldb://{USER}:{PASSWORD}@{HOST}/{DB}"
+    # DATA_BASE_URL = f"mysql+mysqldb://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
 
 class DevelopmentConfigPostgres(Config):
     DEBUG = True
-    HOST = 'localhost'
-    USER = 'postgres'
-    #PASSWORD = PASSWORD_POSTGRES
+    HOST = '127.0.0.1'
+    PORT = 5432
+    # USER = USER_POSTGRES
+    # PASSWORD = PASSWORD_POSTGRES
     DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
-    #DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}/{DB}"
+    # DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+    # DEFAULT_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/postgres"
 
 class ProductionConfig(Config):
     DEBUG = False
