@@ -4,7 +4,7 @@ from sqlalchemy_utils import create_database, drop_database, database_exists
 from sqlalchemy.exc import ProgrammingError
 from app.config import config
 
-DATABASE_CONFIG = config['development_postgres']
+DATABASE_CONFIG = config['production']
 APP_DB_URL = DATABASE_CONFIG.DATA_BASE_URL
 DEFAULT_DB_URL = DATABASE_CONFIG.DEFAULT_DATABASE_URL
 
