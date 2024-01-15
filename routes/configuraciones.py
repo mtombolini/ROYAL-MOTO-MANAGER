@@ -318,7 +318,7 @@ def edit_supplier(supplier_id: int) -> Response:
                                                        delivery_period=delivery_period)
             response = jsonify(edited_supplier_data)
             response.status_code = 200 # Successful
-            print(response)
+            
             return response
     except Exception as ex:
         response = jsonify({'error': str(ex), 

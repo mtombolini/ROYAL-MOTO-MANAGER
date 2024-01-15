@@ -42,7 +42,7 @@
                         <td>{{ supplier.rut }}</td>
                         <td>{{ supplier.business_name }}</td>
                         <td>{{ supplier.trading_name }}</td>
-                        <td>{{ supplier.credit_term }}</td>
+                        <td>{{ supplier.credit_term.value }}</td>
                         <td>{{ supplier.delivery_period }}</td>
                         <td>
                             <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{supplier.id}})">Editar</button>
