@@ -6,6 +6,7 @@ from models.sales import Sale, SaleDocument
 from models.returns import Return
 from models.price_list import PriceList
 from models.supplier import Supplier, CreditTerm
+from models.shipping import Shipping
 from api.extractors.supplier_extractor import df_suppliers
 
 from random import randint
@@ -33,6 +34,8 @@ class DataFrameMain():
 
         self.df_suppliers = df_suppliers
         self.suppliers_id = []
+
+        self.df_shippings = None
 
     def correct_products(self):
         self.df_products = self.df_products.dropna()
@@ -68,6 +71,16 @@ class DataFrameMain():
         self.correct_consumos()
         self.correct_recetions()
         self.correct_price_list()
+
+        for index, row in self.df_shippings.iterrows():
+            shipping = Shipping(
+                id = int(row['ID']),
+                shipping_date = row['Shipping Date'],
+                shipping_number = row['Shipping Number'],
+                shipping_type = row['Shipping Type'],
+                document_type = row['Document Type']
+            )
+            session.add(shipping)
 
         for index, row in self.df_suppliers.iterrows():
             supplier = Supplier(

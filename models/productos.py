@@ -61,10 +61,13 @@ class Product(Base):
                 data = []
                 for reception_detail in product.reception_details:
                     reception = reception_detail.reception
+
                     if reception.document_type == "Sin Documento":
                         num = reception_detail.reception_id
                     else:
                         num = reception.document_number
+                        
+
                     data.append({
                         "fecha": reception.date,
                         "documento": reception.document_type + " " + str(num),

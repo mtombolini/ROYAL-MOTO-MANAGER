@@ -11,6 +11,7 @@ from models.returns import Return
 from models.sales import Sale, SaleDocument
 from models.price_list import PriceList
 from models.supplier import Supplier
+from models.shipping import Shipping
 
 from sqlalchemy import func
 
