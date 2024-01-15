@@ -32,7 +32,7 @@ def should_buy(product_data: pd.DataFrame,
                                        loc=mean*days_of_anticipation, 
                                        scale=std*days_of_anticipation)
     
-    return prob_of_running_out > certainty
+    return prob_of_running_out > certainty or product_data.iloc[-1]["Close"] == 0
 
 
 def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
