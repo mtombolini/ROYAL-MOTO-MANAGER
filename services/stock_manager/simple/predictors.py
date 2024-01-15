@@ -38,7 +38,7 @@ def should_buy(product_data: pd.DataFrame,
 def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
-    mean, std = get_sales_current_distribution(product_data)
+    mean, _ = get_sales_current_distribution(product_data)
 
     return mean*days_to_last
 
