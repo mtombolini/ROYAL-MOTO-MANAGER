@@ -39,7 +39,8 @@ def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
     mean, _ = get_sales_current_distribution(product_data)
-
+    print(product_data.index[-1], mean)
+    product_data.to_csv("data.csv")
     return mean*days_to_last
 
 

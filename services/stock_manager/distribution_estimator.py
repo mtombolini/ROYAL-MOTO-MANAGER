@@ -14,6 +14,7 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     """
     # Determine the number of days to consider (up to 30 or the number of available days)
     days_to_consider = min(len(data), 30)
+    print(days_to_consider)
 
     # Extract the last 'days_to_consider' days
     last_30_days = data[-days_to_consider:]

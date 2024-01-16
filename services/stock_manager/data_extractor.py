@@ -10,6 +10,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 def data_extractor(kardex):
     df = kardex
 
+    df['fecha'] = pd.to_datetime(df['fecha'], format='%Y/%m/%d %H:%M:%S')
+
+    # Cambiar el formato de la fecha a 'día/mes/año'
+    df['fecha'] = df['fecha'].dt.normalize()
+
     ohlc_data = df.groupby('fecha').agg({
         'stock_actual': 'last',   # First stock value of the day as 'Open'
         'entrada': 'sum',   # Sum of 'Entrada' for the day
@@ -17,7 +22,7 @@ def data_extractor(kardex):
     }).rename(columns={'stock_actual': 'Close',
                     'entrada': 'Purchases',
                     'salida': 'Sales'})
-
+    ohlc_data.to_csv("data.csv")
     ohlc_data['Open'] = ohlc_data['Close'] - ohlc_data['Purchases'] + ohlc_data['Sales']
 
     ohlc_data['High'] = ohlc_data['Open'] + ohlc_data['Purchases']
@@ -46,7 +51,7 @@ def data_extractor(kardex):
 
     fill_data(ohlc_data)
 
-    ohlc_data.to_csv('ohlc_data.csv')
+    ohlc_data.to_csv("data.csv")
     
     return ohlc_data
 

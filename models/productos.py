@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
 from models.shipping import Shipping
-# from services.stock_manager.simple.test import predict
+from services.stock_manager.simple.test import predict
 import pandas as pd
 
 
@@ -207,12 +207,7 @@ class Product(Base):
                 else:
                     df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
 
-                df_entradas['fecha'] = pd.to_datetime(df_entradas['fecha'], dayfirst=True).dt.strftime('%d/%m/%Y')
-                df_salidas['fecha'] = pd.to_datetime(df_salidas['fecha'], dayfirst=True).dt.strftime('%d/%m/%Y')
-
                 df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
-
-                df_unificado['fecha'] = pd.to_datetime(df_unificado['fecha'], dayfirst=True).dt.strftime('%d/%m/%Y')
 
                 df_unificado = df_unificado.sort_values('fecha')
                 df_unificado['stock_actual'] = df_unificado['entrada'] - df_unificado['salida']
@@ -225,7 +220,7 @@ class Product(Base):
                 df_kardex['stock_actual'] = df_kardex['stock_actual'].astype(int)
                 kardex = df_kardex.to_dict('records')
 
-                # prediction = predict(df_kardex)
+                prediction = predict(df_kardex)
 
                 product_data = {
                     **product.__dict__,
