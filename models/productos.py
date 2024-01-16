@@ -193,11 +193,22 @@ class Product(Base):
                 if not df_ventas.empty:
                     df_ventas = df_ventas.drop_duplicates()
 
-                df_entradas = df[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
-                df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
+                def create_empty_dataframe(columns):
+                    return pd.DataFrame(columns=columns)
+
+                # Comprobar si los DataFrames están vacíos y crear DataFrames vacíos si es necesario
+                if df.empty:
+                    df_entradas = create_empty_dataframe(['fecha', 'entrada'])
+                else:
+                    df_entradas = df[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
+
+                if df_consumos.empty and df_ventas.empty:
+                    df_salidas = create_empty_dataframe(['fecha', 'salida'])
+                else:
+                    df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
+
                 df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
 
-                # Calcular el stock actual
                 df_unificado = df_unificado.sort_values('fecha')
                 df_unificado['stock_actual'] = df_unificado['entrada'] - df_unificado['salida']
                 df_unificado['stock_actual'] = df_unificado['stock_actual'].cumsum()
