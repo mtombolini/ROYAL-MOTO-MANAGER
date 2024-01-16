@@ -76,7 +76,7 @@ class DataFrameMain():
             shipping = Shipping(
                 id = int(row['ID']),
                 shipping_date = row['Shipping Date'],
-                shipping_number = row['Shipping Number'],
+                shipping_number = str(row['Shipping Number']),
                 shipping_type = row['Shipping Type'],
                 document_type = row['Document Type']
             )

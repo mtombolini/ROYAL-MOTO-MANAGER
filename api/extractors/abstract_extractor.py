@@ -6,7 +6,7 @@ import datetime
 import json
 # from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
-class ReturnsExtractor:
+class ReceptionExtractor:
     def __init__(self, token):
         self.headers = {
             'Content-Type': 'application/json',
@@ -14,13 +14,15 @@ class ReturnsExtractor:
         }
 
         self.token = token
-        self.df_returns = None
+        self.df_receptions_details = None
+        self.df_receptions = None
         self.base_url = "https://api.bsale.io/v1/"
 
         self.limit = 50
         self.offset = 0
 
-        self.returns = []
+        self.receptions = []
+        self.receptions_details = []
 
 # ------  FUNCIONES PARA HACER LLAMADOS Y OBTENER EL PRIMER PRODUCTO Y STOCK  ------
 
@@ -40,59 +42,108 @@ class ReturnsExtractor:
     def convert_to_date(self, timestamp_unix):
         return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
 
-    def get_returns(self):
+    def get_receptions(self):
         while True:
-            response = self.make_request(f"variants.json?&limit={1}&offset={self.offset}")
-
+            response = self.make_request(f"stocks/receptions/14.json?limit={self.limit}&offset={self.offset}&expand=[details, office]")
             print(response)
             break
             if response is None or len(response['items']) == 0:
                 break
-            
-            for devoluciones in response['items']:
-
+            else:
                 if stop_signal_is_set():
                     return
 
-                return_id = devoluciones['id']
-                document_id = devoluciones['reference_document']['id']
+                for reception in response['items']:
+                    reception_id = reception['id']
+                    admission_date = reception['admissionDate']
+                    document = reception['document']
+                    document_number = reception['documentNumber']
+                    office = reception['office']['name']
+                    note = reception['note']
 
-                if 'credit_note' in devoluciones:
-                    credit_note_id = devoluciones['credit_note']['id']
-                else:
-                    credit_note_id = None
+                    details = reception['details']
+                    details_count = details['count']
+                    details_link = details['href'][24:]
 
-                self.returns.append({
-                    'Return ID': int(return_id),
-                    'Document ID': int(document_id),
-                    'Credit Note ID': credit_note_id
-                })
+                    self.receptions.append({
+                        'ID': int(reception_id),
+                        'Admission Date': self.convert_to_date(admission_date),
+                        'Document': document,
+                        'Document Number': document_number,
+                        'Office': office,
+                        'Note': note
+                    })
+
+                    if details_count <= self.limit:
+                        for detail in details['items']:
+                            detail_id = int(detail['id'])
+                            variant_id = int(detail['variant']['id'])
+                            quantity = int(detail['quantity'])
+                            cost = float(detail['cost'])
+                            
+                            self.receptions_details.append({
+                                'Detail ID': detail_id,
+                                'Reception ID': int(reception_id),
+                                'Variant ID': variant_id,
+                                'Quantity': quantity,
+                                'Net Cost': cost
+                            })
+
+                    else:
+                        details_limit = 50
+                        details_offset = 0
+                        while True:
+                            details = self.make_request(f"{details_link}?limit={details_limit}&offset={details_offset}")
+                            if details is None or len(details['items']) == 0:
+                                break
+                            else:
+                                for detail in details['items']:
+                                    detail_id = int(detail['id'])
+                                    variant_id = int(detail['variant']['id'])
+                                    quantity = int(detail['quantity'])
+                                    cost = float(detail['cost'])
+                                    self.receptions_details.append({
+                                        'Detail ID': detail_id,
+                                        'Reception ID': int(reception_id),
+                                        'Variant ID': variant_id,
+                                        'Quantity': quantity,
+                                        'Net Cost': cost
+                                    })
+
+                            details_offset += details_limit
 
             self.offset += self.limit
-            print(f"{self.offset} devoluciones obtenidas")
+            print(f"{self.offset} recepciones obtenidas")
 
             with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "devoluciones", "mensaje": f"{self.offset} devoluciones obtenidos"})
+                message = json.dumps({"tipo": "recepciones", "mensaje": f"{self.offset} recepciones obtenidos"})
                 log_file.write(message + "\n")
-        
-        self.df_returns = pd.DataFrame(self.returns)
+            
+        self.df_receptions = pd.DataFrame(self.receptions)
+        self.df_receptions_details = pd.DataFrame(self.receptions_details)
 
-    def save_to_excel(self, file_name="returns_data.xlsx"):
+    def save_to_excel(self, file_name="reception_data.xlsx"):
         mode = 'a' if os.path.exists(file_name) else 'w'
         with pd.ExcelWriter(file_name, engine='openpyxl', mode=mode) as writer:
-            if self.df_returns is not None:
-                self.df_returns.to_excel(writer, sheet_name='Returns', index=False)
+            if self.df_receptions is not None:
+                self.df_receptions.to_excel(writer, sheet_name='Receptions', index=False)
+
+            if self.df_receptions_details is not None:
+                self.df_receptions_details.to_excel(writer, sheet_name='Reception Details', index=False)
 
     def run(self, dataframe_main):
-        print("Obteniendo devoluciones...")
-        self.get_returns()
+        print("Obteniendo recepciones...")
+        self.get_receptions()
+
         if True:
             with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "devoluciones-listo", "mensaje": f"Devoluciones ✅"})
+                message = json.dumps({"tipo": "recepciones-listo", "mensaje": f"Recepciones ✅"})
                 log_file.write(message + "\n")
-            dataframe_main.df_returns = self.df_returns
 
-        # print("Guardando devoluciones en Excel...")
+            dataframe_main.df_receptions = self.df_receptions
+            dataframe_main.df_receptions_details = self.df_receptions_details
+
+        # print("Guardando recepciones en Excel...")
         # self.save_to_excel()
 
 if __name__ == "__main__":
@@ -100,12 +151,12 @@ if __name__ == "__main__":
     TOKEN = "7a9dc44e2b4e17845a8199844e30a055f6754a9c"
 
     # Crea una instancia de ProductExtractor
-    extractor = ReturnsExtractor(token=TOKEN)
+    extractor = ReceptionExtractor(token=TOKEN)
     time_start = time.time()
 
     # Obtener los variantes
-    print("Obteniendo devoluciones...")
-    extractor.get_returns()
+    print("Obteniendo recepciones...")
+    extractor.get_receptions()
 
     # Guarda los datos en un archivo Excel
     print("Guardando datos en Excel...")

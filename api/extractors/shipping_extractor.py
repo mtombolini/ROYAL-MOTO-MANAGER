@@ -58,6 +58,9 @@ class ShippingExtractor:
                     document_type = shipping.get('guide', {}).get('document_type', {}).get('name')
                     shipping_type = shipping['shipping_type']['name']
 
+                    # if shipping_number != {}:
+                    #     shipping_number = str(int(shipping_number))
+
                     self.shippings.append({
                         'ID': int(shipping_id),
                         'Shipping Date': shipping_date,

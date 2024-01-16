@@ -74,6 +74,34 @@
                 </tbody>
             </table>
 
+            <h2>Kardex</h2>
+            <table class="table table-bordered history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if product.kardex %}
+                        {% for kardex in product.kardex %}
+                            <tr>
+                                <td>{{ kardex.fecha }}</td>
+                                <td>{{ kardex.entrada }}</td>
+                                <td>{{ kardex.salida }}</td>
+                                <td>{{ kardex.stock_actual }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No se encontró ningún registro de stock.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
             <h2>Ultimo Costo Neto</h2>
             <table class="table table-bordered history-table">
                 <thead>

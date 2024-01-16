@@ -67,6 +67,7 @@ def main():
             
             print("Todos los threads han terminado. Reiniciando ciclo.")
             time.sleep(10)  # Espera antes de reiniciar los threads si es necesario
+            break
 
     except KeyboardInterrupt:
         print("Interrupción detectada, enviando señal de detención a los threads...")
