@@ -10,7 +10,7 @@ from routes.compras import compras_blueprint
 from routes.reportes import reportes_blueprint
 from routes.api_routes import api_blueprint, api_actualizacion
 from routes.configuraciones import configuraciones_blueprint
-from routes.recursos_humanos import recursos_humanos_blueprint
+from routes.human_resources import recursos_humanos_blueprint
 from routes.tables import tables_blueprint
 
 class CustomJSONEncoder(JSONEncoder):
