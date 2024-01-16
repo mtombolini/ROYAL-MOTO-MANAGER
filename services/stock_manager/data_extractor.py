@@ -4,8 +4,53 @@ import pandas as pd
 import os
 import sys
 
-# Add the parent directory of `data_extractor` to sys.path
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+def data_extractor(kardex):
+    df = kardex
+
+    ohlc_data = df.groupby('fecha').agg({
+        'stock_actual': 'last',   # First stock value of the day as 'Open'
+        'entrada': 'sum',   # Sum of 'Entrada' for the day
+        'salida': 'sum',    # Sum of 'Salida' for the day
+    }).rename(columns={'stock_actual': 'Close',
+                    'entrada': 'Purchases',
+                    'salida': 'Sales'})
+
+    ohlc_data['Open'] = ohlc_data['Close'] - ohlc_data['Purchases'] + ohlc_data['Sales']
+
+    ohlc_data['High'] = ohlc_data['Open'] + ohlc_data['Purchases']
+    ohlc_data['Low'] = ohlc_data['Open'] - ohlc_data['Sales']
+
+    all_dates = pd.date_range(start=ohlc_data.index.min(), end=ohlc_data.index.max(), freq='D')
+
+    ohlc_data = ohlc_data.reindex(all_dates)
+
+    ohlc_data['Purchases'].fillna(0, inplace=True)
+    ohlc_data['Sales'].fillna(0, inplace=True)
+
+    ohlc_data['Close'].fillna(method='ffill', inplace=True)
+    ohlc_data['Open'].fillna(ohlc_data['Close'], inplace=True)
+
+    ohlc_data['High'].fillna(ohlc_data['Open'], inplace=True)
+    ohlc_data['Low'].fillna(ohlc_data['Close'], inplace=True)
+
+    ohlc_data.fillna(0, inplace=True)
+
+    ohlc_data.index = pd.to_datetime(ohlc_data.index)
+
+    ohlc_data['Close'].fillna(0, inplace=True)  # Fill NaN with 0 (or any other value you prefer)
+
+    ohlc_data.index = pd.to_datetime(ohlc_data.index)
+
+    fill_data(ohlc_data)
+
+    ohlc_data.to_csv('ohlc_data.csv')
+    
+    return ohlc_data
+
+
 
 def extract_data(product_filepath: str) -> pd.DataFrame:
     # Read the HTML content from the .xls file
@@ -16,7 +61,7 @@ def extract_data(product_filepath: str) -> pd.DataFrame:
     html_buffer = StringIO(html_content)
 
     df = pd.read_html(html_buffer, header=8)[0]
-
+    
     # Assuming 'df' is your original DataFrame with columns 'date' and 'sales'
     # Convert 'date' to a DateTime object and sort
     df['Fecha'] = df['Fecha'].str.replace('="', '').str.replace('"', '')

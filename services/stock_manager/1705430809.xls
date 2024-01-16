@@ -1,0 +1,11567 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <thead>
+    
+      <tr>
+        <td colspan="2">Tipo de Producto</td>
+        <td colspan="7">LUBRICANTES Y ADITIVOS</td>
+      </tr>
+    
+    <tr>
+      <td colspan="2">Producto</td>
+      <td colspan="7">ACEITE MOTOR ''LIQUI MOLY'' 20W/50 (STREET) [OF] </td>
+    </tr>
+    <tr>
+      <td colspan="2">Código Barras</td>
+      <td colspan="7">="1500"</td>
+    </tr>
+    <tr>
+      <td colspan="2">SKU</td>
+      <td colspan="7">="1500"</td>
+    </tr>
+    <tr>
+      <td colspan="2">Sucursal</td>
+      <td colspan="7">LIRA 823</td>
+    </tr>
+    <tr>
+      <td colspan="2">Stock Inicial</td>
+      <td colspan="7"> 0</td>
+    </tr>
+    <tr>
+      <td colspan="2">Stock Final</td>
+      <td colspan="7"> 61</td>
+    </tr>
+    <tr>
+      <td colspan="9"></td>
+    </tr>
+    <tr>
+      <td><b>Fecha</b></td>
+      <td><b>Usuario</b></td>
+      <td><b>Entrada</b></td>
+      <td><b>Salida</b></td>
+      <td><b>Stock</b></td>
+      
+        <td><b>Costo Neto Unitario</b></td>
+      
+      
+      <td><b>Movimiento de Entrada</b></td>
+      <td><b>Movimiento de Salida</b></td>
+
+      <td><b>Tipo de Despacho</b></td>
+      <td><b>Sucursal Destino</b></td>
+      <td><b>Recepcionada Destino</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr>
+        <td>="12/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 15</td>
+        <td> 0</td>
+        <td> 15</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/09/2022"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 4</td>
+        <td> 11</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 5521
+          
+        </td>
+        
+          <td>Traslados internos (no constituye venta)</td>
+          <td>SOBREXISTENCIA</td>
+          <td>Si</td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/09/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 10</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 68831
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 9</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 68899
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 8</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 68900
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 6</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 68940
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 4</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 68945
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 3</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 68964
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 2</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 69001
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/09/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 1</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 69002
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/09/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 0</td>
+        
+          <td> 6.378,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Sin Documento Nº 14
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 69043
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/11/2022"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 36</td>
+        <td> 0</td>
+        <td> 36</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/11/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71346
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/11/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71361
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 32</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71416
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 31</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71444
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 30</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71456
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 29</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71479
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 28</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71524
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/12/2022"</td>
+        <td>ARGEDYS AGUILERA</td>
+        <td> 0</td>
+        <td> 5</td>
+        <td> 23</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 5823
+          
+        </td>
+        
+          <td>Traslados internos (no constituye venta)</td>
+          <td>SOBREXISTENCIA</td>
+          <td>Si</td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 22</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71575
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 20</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71654
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 19</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71663
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 17</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71711
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 15</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71825
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 14</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71889
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 4</td>
+        <td> 10</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71941
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 9</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71959
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 8</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71968
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 7</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 71986
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 6</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72109
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 5</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72205
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 3</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72242
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 2</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72279
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 1</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72284
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/12/2022"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 0</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 454157
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72291
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/01/2023"</td>
+        <td>ARGEDYS AGUILERA</td>
+        <td> 1</td>
+        <td> 0</td>
+        <td> 1</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 5878
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 0</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 5878
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72557
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/01/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 60</td>
+        <td> 0</td>
+        <td> 60</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 59</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 72862
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 58</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73059
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 57</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73074
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 56</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73108
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 55</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73126
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 54</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73150
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 53</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6221
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 52</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73186
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 51</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73195
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 50</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73200
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 48</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73247
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 47</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73321
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/01/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 46</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73417
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 44</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73643
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 43</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73672
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 42</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73705
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 41</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6300
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 40</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73914
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 39</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73936
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 38</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73944
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 37</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73953
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 73980
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74031
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74060
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 33</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74154
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 32</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74197
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 31</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74206
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 30</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74273
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 29</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74276
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 28</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74296
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 27</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74318
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 26</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74339
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 25</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74404
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 24</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6365
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 23</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74448
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 22</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74460
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/02/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 21</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74466
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 19</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74544
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 18</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6384
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 17</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6385
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 15</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74576
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/03/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 14</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 5988
+          
+        </td>
+        
+          <td>Operación constituye venta</td>
+          <td></td>
+          <td></td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 13</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74668
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 11</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74741
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 10</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74778
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 9</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74781
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 8</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74788
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 7</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74830
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 6</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74874
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 5</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74959
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 4</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 74960
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 3</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75007
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 2</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75009
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 0</td>
+        
+          <td> 7.016,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 455817
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75052
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/03/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 48</td>
+        <td> 0</td>
+        <td> 48</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 47</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75411
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 46</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75418
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 45</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75470
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 44</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75492
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 43</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75504
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="25/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 42</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75569
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="25/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 41</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75590
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 40</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75593
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 39</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75602
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 38</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75625
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 37</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75648
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75661
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 34</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75751
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 33</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6513
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 32</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75794
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/03/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 3</td>
+        <td> 29</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75799
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 28</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75800
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 27</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75827
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 25</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75850
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 24</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75882
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 23</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75958
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 22</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75959
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 21</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75965
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 20</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 75976
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 19</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76060
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 18</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76173
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 17</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76183
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 16</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76193
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 15</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76241
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 14</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76253
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 13</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76264
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 12</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76267
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 10</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76268
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 8</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76283
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 6</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76298
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 5</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76299
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 4</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76347
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 3</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76436
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 2</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76437
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 1</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76439
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 0</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 459621
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76440
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/04/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 24</td>
+        <td> 0</td>
+        <td> 24</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/04/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 6</td>
+        <td> 0</td>
+        <td> 30</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/04/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 24</td>
+        <td> 0</td>
+        <td> 54</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/04/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 6</td>
+        <td> 0</td>
+        <td> 60</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 59</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76717
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/04/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 58</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76739
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 56</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76832
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 54</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76847
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 53</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76863
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 52</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76885
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 51</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76921
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 50</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76924
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 49</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76970
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 48</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76985
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 47</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 76994
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 46</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77022
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 45</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77026
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 43</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77030
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 42</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77040
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 40</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77066
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/05/2023"</td>
+        <td>ALGELYS GARCÍA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 39</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77110
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 38</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77171
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 37</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77217
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77271
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77300
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77315
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 33</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77332
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 6</td>
+        <td> 27</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77338
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 26</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77420
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 25</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77453
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 23</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77485
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 21</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77486
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 20</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77493
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 19</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77514
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 17</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77522
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 2</td>
+        <td> 0</td>
+        <td> 19</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            NOTA DE CRÉDITO ELECTRÓNICA T Nº 4366
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 17</td>
+        
+          <td> 4.385,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6704
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 16</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77542
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 15</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77552
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 14</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77716
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 12</td>
+        
+          <td> 1,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77735
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/05/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 11</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77740
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 10</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77781
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 9</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77816
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/05/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 8</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77825
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 7</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77978
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 5</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 77980
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 4</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78037
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 3</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78060
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 2</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 461283
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78070
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/06/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 60</td>
+        <td> 0</td>
+        <td> 62</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 61</td>
+        
+          <td> 8.770,00</td>
+        
+        
+        <td>
+          
+            
+            
+            NOTA DE CRÉDITO ELECTRÓNICA T Nº 4366
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78295
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 59</td>
+        
+          <td> 7.893,10</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626,NOTA DE CRÉDITO ELECTRÓNICA T Nº 4366
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78313
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 58</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78397
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 57</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78408
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 56</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78412
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 55</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78422
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 54</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78439
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 53</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78453
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 52</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78457
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 50</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78494
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 49</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78504
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 48</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78539
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 47</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78545
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 46</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78603
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/06/2023"</td>
+        <td>ARGEDYS AGUILERA</td>
+        <td> 0</td>
+        <td> 4</td>
+        <td> 42</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 6317
+          
+        </td>
+        
+          <td>Traslados internos (no constituye venta)</td>
+          <td>CHACABUCO 234</td>
+          <td>Si</td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 41</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78625
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 39</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78751
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 37</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78752
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78788
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78888
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78900
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/06/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 32</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 78974
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 31</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79030
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 30</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79142
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 29</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79197
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 28</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79252
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 27</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79302
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 26</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79314
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 25</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79328
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 24</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79341
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 23</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79352
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 22</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79379
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 21</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79481
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 20</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79568
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/07/2023"</td>
+        <td>ARGEDYS AGUILERA</td>
+        <td> 0</td>
+        <td> 5</td>
+        <td> 15</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            GUÍA DE DESPACHO ELECTRÓNICA T Nº 6423
+          
+        </td>
+        
+          <td>Traslados internos (no constituye venta)</td>
+          <td>CHACABUCO 234</td>
+          <td>Si</td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 14</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79588
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 12</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79666
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 11</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79744
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 10</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79788
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 9</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79825
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 8</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79845
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 7</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79894
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 5</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79904
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="25/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 4</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 79977
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 2</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80030
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/07/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 60</td>
+        <td> 0</td>
+        <td> 62</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 61</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80192
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 60</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 463626
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80201
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/07/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 59</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80250
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 58</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80268
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 57</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80305
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 56</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80322
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 55</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            FACTURA ELECTRÓNICA  Nº 6963
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 54</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80414
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 53</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80422
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 52</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80452
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 51</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80591
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 50</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80595
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 49</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80612
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 48</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80672
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 47</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80674
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 46</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80714
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 45</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80716
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 44</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80774
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 43</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80797
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 41</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80807
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 40</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80857
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 39</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80858
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 38</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80891
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 37</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80893
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="17/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80896
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80958
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 80973
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 33</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81030
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 32</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81049
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 31</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81060
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 30</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81128
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 28</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81205
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 27</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81252
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 26</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81265
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 25</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81296
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 24</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81348
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 23</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81372
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/08/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 22</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81406
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="01/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 21</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81454
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 4</td>
+        <td> 17</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81504
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/09/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 16</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81572
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/09/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 15</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81586
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/09/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 14</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81591
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/09/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 13</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81605
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/09/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 12</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81630
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 11</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81683
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 9</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81718
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 8</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81764
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 7</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81781
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 6</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81858
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/09/2023"</td>
+        <td>MATÍAS GONZÁLEZ</td>
+        <td> 120</td>
+        <td> 0</td>
+        <td> 126</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 125</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81910
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 124</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81953
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 123</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 81985
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 122</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82013
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 121</td>
+        
+          <td> 7.016,20</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82015
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 119</td>
+        
+          <td> 6.796,85</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 465979,Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82069
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 118</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82105
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 117</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82114
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 116</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82157
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 115</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82175
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 114</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82208
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 113</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82220
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="26/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 112</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82290
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 110</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82340
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 109</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82401
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 108</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82423
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 107</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82479
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 106</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82491
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/09/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 104</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82547
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 3</td>
+        <td> 101</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82580
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 99</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82639
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 98</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82679
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 97</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82684
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 96</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82705
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 95</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82710
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 94</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82732
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="07/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 2</td>
+        <td> 0</td>
+        <td> 96</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            NOTA DE CRÉDITO ELECTRÓNICA T Nº 4634
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 95</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82854
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 93</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82886
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 92</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82967
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 91</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82974
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 90</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 82976
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 88</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83008
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 87</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83033
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 86</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83035
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 85</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83049
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/10/2023"</td>
+        <td>ENRIQUE SAAVEDRA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 84</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83087
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 83</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83199
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 82</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83204
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 81</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83213
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 80</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83219
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 79</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83233
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 78</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83246
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 77</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83251
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 76</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83253
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 75</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83293
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 74</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83312
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 73</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83336
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="21/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 72</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83377
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 71</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83448
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="25/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 70</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83511
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 69</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83584
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 68</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83601
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="31/10/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 67</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83723
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 66</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83776
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 65</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83814
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 64</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 83849
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 63</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84003
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 62</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84040
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 61</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84048
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 60</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84073
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 58</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84109
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 57</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84113
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 55</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84163
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 54</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84166
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 53</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84230
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 52</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84236
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 51</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84246
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="20/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 50</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84392
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="24/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 49</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84575
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="25/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 48</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84609
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 46</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84615
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 45</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84629
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 44</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84669
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 43</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84675
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 42</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84693
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 41</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84694
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 40</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84742
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 39</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84745
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/11/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 38</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84748
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="02/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 37</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84827
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84877
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84878
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84911
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 33</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84924
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 32</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84986
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 31</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 84988
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 30</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85004
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 29</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85113
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="12/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 28</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85192
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 27</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85202
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/12/2023"</td>
+        <td>MICHAEL DROGUETT</td>
+        <td> 12</td>
+        <td> 0</td>
+        <td> 39</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 38</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85246
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="14/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 37</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85263
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="15/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 36</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85291
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 35</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85321
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 34</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85365
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="18/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 33</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85406
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="19/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 32</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85423
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="22/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 31</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85528
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="23/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 30</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85593
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="27/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 29</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85663
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 28</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85713
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 27</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85714
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/12/2023"</td>
+        <td>MICHAEL DROGUETT</td>
+        <td> 66</td>
+        <td> 0</td>
+        <td> 93</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 474342
+          
+        </td>
+        <td>
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="28/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 92</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85725
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 3</td>
+        <td> 89</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85782
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 88</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85790
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="29/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 87</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85803
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="30/12/2023"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 85</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85833
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="03/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 83</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85917
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 82</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85964
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 80</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 468835
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85968
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="04/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 79</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            NOTA DE CRÉDITO ELECTRÓNICA T Nº 4634
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85975
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 78</td>
+        
+          <td> 6.577,50</td>
+        
+        
+        <td>
+          
+            
+            
+            NOTA DE CRÉDITO ELECTRÓNICA T Nº 4634
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85998
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 77</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 85999
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="05/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 76</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86001
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 75</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86050
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="06/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 73</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86087
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 72</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86132
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="08/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 71</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86136
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 2</td>
+        <td> 69</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86148
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 68</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86170
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 67</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86176
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="09/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 66</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 473610
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86186
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="10/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 65</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 474342
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86215
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="11/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 64</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 474342
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86272
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="13/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 63</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 474342
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86342
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 62</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 474342
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86402
+          
+        </td>
+        
+      </tr>
+    
+      <tr>
+        <td>="16/01/2024"</td>
+        <td>IGNACIO ESPINOZA</td>
+        <td> 0</td>
+        <td> 1</td>
+        <td> 61</td>
+        
+          <td> 6.139,00</td>
+        
+        
+        <td>
+          
+            
+            
+            Factura Nº 474342
+          
+        </td>
+        <td>
+          
+            
+            
+            
+            BOLETA ELECTRÓNICA T Nº 86433
+          
+        </td>
+        
+      </tr>
+    
+  </tbody>
+</table>
+
+  </body>
+</html>

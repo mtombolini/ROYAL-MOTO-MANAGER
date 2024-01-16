@@ -1,6 +1,7 @@
-from services.stock_manager.parameters import DOWN_COLOR, UP_COLOR
+from services.stock_manager.parameters_service import DOWN_COLOR, UP_COLOR
 from typing import List
 import plotly.graph_objects as go
+import plotly.io as pio
 import pandas as pd
 
 def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[int]) -> None:
@@ -33,6 +34,6 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[int]
 
     # Update the figure layout
     fig.update_layout(title='Japanese Candlestick Chart with Buy Recommendations', yaxis_title='Cantidad')
-
-    # Show the chart
     fig.show()
+    # Show the chart
+    return pio.to_json(fig)

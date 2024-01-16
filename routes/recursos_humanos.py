@@ -5,7 +5,7 @@ from wtforms_components import DateField
 from wtforms.validators import DataRequired, Length
 from decorators.roles import requires_roles
 from datetime import datetime
-from models.model_employe import ModelEmployee
+from models.employee import Employee
 from models.model_user import ModelUser
 
 recursos_humanos_blueprint = Blueprint('recursos_humanos', __name__)
@@ -46,7 +46,7 @@ def employees_administration():
     users_info = ModelUser.get_all_users()
     form.user_id.choices = [(user['id'], user['username']) for user in users_info]
     try:
-        data = ModelEmployee.get_all_employees()
+        data = Employee.get_all_employees()
         return render_template('recursos_humanos/employees/view_employees.html', form=form, page_title="Administración de Empleados", data=data)
     except Exception as e:
         print(e)
@@ -68,7 +68,7 @@ def create_employee():
         horario_colacion = form.horario_colacion.data
 
         try:
-            new_employee = ModelEmployee.create(user_id, rut, nombre, apellido, fecha_incorporacion, horario_colacion)
+            new_employee = Employee.create(user_id, rut, nombre, apellido, fecha_incorporacion, horario_colacion)
             flash('Empleado registrado con éxito', 'success')
         except Exception as e:
             flash(f'Error al crear empleado: {e}', 'error')

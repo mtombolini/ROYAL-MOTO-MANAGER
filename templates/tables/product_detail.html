@@ -52,6 +52,8 @@
                 </tbody>
             </table>
 
+            <!-- <div id="grafico-velas" style="width:100%;max-width:900px;height:500px;"></div> -->
+
             <h2>Stock</h2>
             <table class="table table-bordered history-table">
                 <thead>
@@ -223,3 +225,10 @@
     </div>
 </div>
 {% endblock %}
+<!-- 
+{% block scripts %}
+<script>
+    var plotData = {{ product.prediction|tojson|safe }};
+    Plotly.newPlot('grafico-velas', plotData);
+</script>
+{% endblock %} -->

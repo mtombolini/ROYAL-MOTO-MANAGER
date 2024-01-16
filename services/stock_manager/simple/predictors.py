@@ -1,4 +1,4 @@
-from services.stock_manager.parameters import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST
+from services.stock_manager.parameters_service import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST
 from services.stock_manager.distribution_estimator import get_sales_current_distribution
 from scipy.stats import norm
 import pandas as pd
