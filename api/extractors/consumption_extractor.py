@@ -68,7 +68,7 @@ class ConsumptionExtractor:
                         'Note': note
                     })
 
-                    if details_count <= self.limit:
+                    if details_count <= 25:
                         for detail in details['items']:
                             detail_id = int(detail['id'])
                             variant_id = int(detail['variant']['id'])

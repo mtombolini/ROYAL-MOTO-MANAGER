@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
+from models.shipping import Shipping
 import pandas as pd
 
 def format_number(number):
@@ -61,21 +62,39 @@ class Product(Base):
                 data = []
                 for reception_detail in product.reception_details:
                     reception = reception_detail.reception
+
                     if reception.document_type == "Sin Documento":
                         num = reception_detail.reception_id
                     else:
                         num = reception.document_number
-                    data.append({
-                        "fecha": reception.date,
-                        "documento": reception.document_type + " " + str(num),
-                        "tipo_de_documento": reception.document_type,
-                        "numero_de_documento": num,
-                        "oficina": reception.office,
-                        "nota": reception.note,
-                        "cantidad": reception_detail.quantity,
-                        "costo_neto": reception_detail.net_cost,
-                        "costo_neto_formated": format_number(reception_detail.net_cost)
-                    })
+
+                    if "GUÍA" in reception.document_type:
+                        shipping = Shipping.seach_shipping_guide_by_number(f"{num}.0")
+                        if shipping is not None and shipping["shipping_type"] != "Traslados internos (no constituye venta)":
+                            data.append({
+                            "fecha": reception.date,
+                            "documento": reception.document_type + " " + str(num),
+                            "tipo_de_documento": reception.document_type,
+                            "numero_de_documento": num,
+                            "oficina": reception.office,
+                            "nota": reception.note,
+                            "cantidad": reception_detail.quantity,
+                            "costo_neto": reception_detail.net_cost,
+                            "costo_neto_formated": format_number(reception_detail.net_cost)
+                        })
+                            
+                    else:
+                        data.append({
+                            "fecha": reception.date,
+                            "documento": reception.document_type + " " + str(num),
+                            "tipo_de_documento": reception.document_type,
+                            "numero_de_documento": num,
+                            "oficina": reception.office,
+                            "nota": reception.note,
+                            "cantidad": reception_detail.quantity,
+                            "costo_neto": reception_detail.net_cost,
+                            "costo_neto_formated": format_number(reception_detail.net_cost)
+                        })
 
                 df = pd.DataFrame(data)
                 if df.empty:
@@ -133,6 +152,8 @@ class Product(Base):
                     sales = document.sales
                     if sales != []:
                         for sale in sales:
+                            if sale.sale_id == 5765:
+                                print("sale_id: ", sale.sale_id)
                             sale_model = sale.sale
                             data_ventas.append({
                                 "fecha": document.date,
@@ -169,6 +190,36 @@ class Product(Base):
                 else:
                     price_list = df_precios.to_dict('records')
 
+                if not df_ventas.empty:
+                    df_ventas = df_ventas.drop_duplicates()
+
+                def create_empty_dataframe(columns):
+                    return pd.DataFrame(columns=columns)
+
+                # Comprobar si los DataFrames están vacíos y crear DataFrames vacíos si es necesario
+                if df.empty:
+                    df_entradas = create_empty_dataframe(['fecha', 'entrada'])
+                else:
+                    df_entradas = df[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
+
+                if df_consumos.empty and df_ventas.empty:
+                    df_salidas = create_empty_dataframe(['fecha', 'salida'])
+                else:
+                    df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
+
+                df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
+
+                df_unificado = df_unificado.sort_values('fecha')
+                df_unificado['stock_actual'] = df_unificado['entrada'] - df_unificado['salida']
+                df_unificado['stock_actual'] = df_unificado['stock_actual'].cumsum()
+
+                # Crear el DataFrame del Kardex
+                df_kardex = df_unificado[['fecha', 'entrada', 'salida', 'stock_actual']]
+                df_kardex['entrada'] = df_kardex['entrada'].astype(int)
+                df_kardex['salida'] = df_kardex['salida'].astype(int)
+                df_kardex['stock_actual'] = df_kardex['stock_actual'].astype(int)
+                kardex = df_kardex.to_dict('records')
+
                 product_data = {
                     **product.__dict__,
                     "stock": stock,
@@ -176,7 +227,8 @@ class Product(Base):
                     "consumption_details_list": consumption_details_list,
                     "sales_list": sales_list,
                     "last_net_cost": last_net_cost,
-                    "price_list": price_list
+                    "price_list": price_list,
+                    "kardex": kardex
                 }
                 
                 return product_data  # Return the product's attributes directly

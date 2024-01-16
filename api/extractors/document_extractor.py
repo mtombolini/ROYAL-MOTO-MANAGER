@@ -74,7 +74,7 @@ class DocumentExtractor:
                     'Document Type': document_type
                 })
 
-                if details['count'] <= self.limit:
+                if details['count'] <= 25:
                     for detail in details['items']:
                         detail_id = int(detail['id'])
                         detail_variant_id = int(detail['variant']['id'])

@@ -7,6 +7,7 @@ from api.extractors.sales_extractor import SalesExtractor
 from api.extractors.returns_extractor import ReturnsExtractor
 from api.extractors.document_extractor import DocumentExtractor
 from api.extractors.price_list_extractor import PriceListExtractor
+from api.extractors.shipping_extractor import ShippingExtractor
 from app.dataframe_main import DataFrameMain
 from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 from databases.session import AppSession
@@ -38,6 +39,7 @@ sales_ext = SalesExtractor(token=TOKEN)
 returns_ext = ReturnsExtractor(token=TOKEN)
 document_ext = DocumentExtractor(token=TOKEN)
 price_list_ext = PriceListExtractor(token=TOKEN)
+shipping_ext = ShippingExtractor(token=TOKEN)
 
 def main():
     dataframe_main = DataFrameMain()
@@ -50,7 +52,8 @@ def main():
             threading.Thread(target=sales_ext.run, args=(dataframe_main,)),
             threading.Thread(target=returns_ext.run, args=(dataframe_main,)),
             threading.Thread(target=document_ext.run, args=(dataframe_main,)),
-            threading.Thread(target=price_list_ext.run, args=(dataframe_main,))
+            threading.Thread(target=price_list_ext.run, args=(dataframe_main,)),
+            threading.Thread(target=shipping_ext.run, args=(dataframe_main,))
         ]
 
         while True:
@@ -64,6 +67,7 @@ def main():
             
             print("Todos los threads han terminado. Reiniciando ciclo.")
             time.sleep(10)  # Espera antes de reiniciar los threads si es necesario
+            break
 
     except KeyboardInterrupt:
         print("Interrupción detectada, enviando señal de detención a los threads...")
