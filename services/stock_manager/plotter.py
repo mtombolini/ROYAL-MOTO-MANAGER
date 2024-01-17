@@ -1,20 +1,18 @@
-from services.stock_manager.parameters_service import DOWN_COLOR, UP_COLOR
-from typing import List
-import plotly.graph_objects as go
-import plotly.io as pio
 import pandas as pd
+import plotly.io as pio
+import plotly.graph_objects as go
+
+from typing import List
+from services.stock_manager.parameters_service import DOWN_COLOR, UP_COLOR
 
 def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[int]) -> None:
-    # Create a figure for the candlestick chart
     fig = go.Figure()
 
-    # Analyze each day and add buying recommendations
     i = 0
     for date, row in data.iloc[1:].iterrows():
         recommendation = recommendations[i]
 
         if recommendation != 0:
-            # Add a marker for buying recommendation
             fig.add_trace(
                 go.Scatter(
                     x=[date], y=[row['Close']], mode='markers', marker_symbol='triangle-up', 
@@ -23,7 +21,6 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[int]
 
         i += 1
 
-    # Add the candlestick trace
     fig.add_trace(
         go.Candlestick(
             x=data.index, open=data['Open'], high=data['High'], low=data['Low'], 

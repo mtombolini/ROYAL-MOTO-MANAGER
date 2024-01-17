@@ -3,7 +3,8 @@ class Config:
     SECRET_KEY = '909932'
     BASE_URL = 'https://api.bsale.io/v1/'
     TOKEN_PATH = 'Api/token.txt'
-    STOCKS_DATABASE_NAME = 'royal_manager_stocks' 
+    STOCKS_DATABASE_NAME = 'royal_manager_stocks'
+    TOKEN = '7a9dc44e2b4e17845a8199844e30a055f6754a9c'
 
 class DevelopmentConfigMySQL(Config):
     DEBUG = True
@@ -21,7 +22,7 @@ class DevelopmentConfigPostgres(Config):
     PORT = 5432
     USER = USER_POSTGRES
     PASSWORD = PASSWORD_POSTGRES
-    DB = 'royal_manager_database'
+    DB = 'nueva_database'
     API_DATA_RESET_MODE = True
     DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
     DEFAULT_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/postgres"

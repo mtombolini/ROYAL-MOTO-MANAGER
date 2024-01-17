@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 def fill_data(data: pd.DataFrame) -> pd.DataFrame:
     days_without_stock = data['Sales'] == 0

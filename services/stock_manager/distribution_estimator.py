@@ -1,5 +1,6 @@
-from typing import Tuple
 import pandas as pd
+
+from typing import Tuple
 
 def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     """

@@ -13,7 +13,6 @@ import re
 # Regular expression for RUT validation (Chilean tax identification number)
 RUT_REGEX = r'^\d{1,2}\.\d{3}\.\d{3}-[0-9kK]$'
 
-
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
 def rut_validator(form: FlaskForm, field: StringField):
@@ -21,11 +20,8 @@ def rut_validator(form: FlaskForm, field: StringField):
     if not re.match(RUT_REGEX, rut):
         raise ValidationError('Invalid RUT format')
 
-
-
 class NewRoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
-    
     
 class NewUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
@@ -35,14 +31,15 @@ class NewUserForm(FlaskForm):
     apellido = StringField('Apellido', validators=[DataRequired()])
     id_role = SelectField('Role', coerce=int, validators=[DataRequired()])
     
-    
 class NewSupplierForm(FlaskForm):
     rut = StringField('RUT', validators=[DataRequired(), rut_validator])
     business_name = StringField('Razón Social', validators=[DataRequired()])
     trading_name = StringField('Nombre de Fantasía', validators=[DataRequired()])
-    credit_term = SelectField('Plazo de pago', 
-                              choices=[(term.name, term.value) for term in CreditTerm], 
-                              validators=[DataRequired()])
+    credit_term = SelectField(
+        'Plazo de pago', 
+        choices=[(term.name, term.value) for term in CreditTerm], 
+        validators=[DataRequired()]
+    )
     delivery_period = StringField('Tiempo de entrega', validators=[DataRequired()])
 
 @configuraciones_blueprint.route('/administracion_de_roles')
@@ -51,11 +48,14 @@ def administracion_de_roles():
     form = NewRoleForm()
     try:
         data = ModelUser.get_all_roles()
-        return render_template('configuraciones/administracion_de_roles/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
+        return render_template(
+            'configuraciones/administracion_de_roles/administracion_de_roles.html', form=form, 
+            page_title="Administración de Roles", data=data
+        )
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
-    
+
 @configuraciones_blueprint.route('/get_role/<int:role_id>')
 @requires_roles('desarrollador')
 def get_role(role_id):
@@ -88,7 +88,6 @@ def crear_rol():
 @configuraciones_blueprint.route('/eliminar_rol/<int:id_role>')
 @requires_roles('desarrollador')
 def delete_role(id_role):
-    # Verificar que no estemos eliminando el superadmin
     if ModelUser.is_superadmin(id_role)[0]:
         flash('No es posible eliminar el rol superadministrador.', 'error')
     elif ModelUser.role_has_associated_users(id_role)[0]:
@@ -111,14 +110,18 @@ def editar_rol(id_role):
     data = request.get_json()
     new_description = data.get('description')
 
-    # Obtener la descripción actual del rol desde la base de datos
     try:
         if ModelUser.is_superadmin(id_role)[0]:
             response = jsonify({'error': 'No es posible editar el rol "superadministrador".'})
-            response.status_code = 403  # Forbidden
+            response.status_code = 403
             return response
     except Exception as e:
-        response = jsonify({'error': 'No se pudo verificar si el rol seleccionado corresponde al superadministrador.'})
+        response = jsonify(
+            {
+                'error': 
+                'No se pudo verificar si el rol seleccionado corresponde al superadministrador.'
+            }
+        )
         response.status_code = 500 # Internal Server Error
         return response
 
@@ -142,22 +145,27 @@ def editar_rol(id_role):
 def administracion_de_usuarios():
     form = NewUserForm()
     role_data = ModelUser.get_all_roles()  # Fetch roles from database
-    # Format role data for the SelectField
-    form.id_role.choices = [(role['id_role'], f"{role['id_role']} - {role['description'].capitalize()}") for role in role_data]
+    form.id_role.choices = [
+        (
+            role['id_role'], f"{role['id_role']} - {role['description'].capitalize()}"
+        ) for role in role_data
+    ]
     try:
         data = ModelUser.get_all_users()
         print(data)
-        return render_template('configuraciones/administracion_de_usuarios/administracion_de_usuarios.html', 
-                               page_title="Administración de Usuarios", 
-                               data=data,
-                               form=form)  
+        return render_template(
+            'configuraciones/administracion_de_usuarios/administracion_de_usuarios.html',
+            page_title="Administración de Usuarios", 
+            data=data,
+            form=form
+        )
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
     
 
 @configuraciones_blueprint.route('/get_user/<int:user_id>', methods=['GET'])
-@requires_roles('desarrollador')  # Adjust the role requirement as needed
+@requires_roles('desarrollador')
 def get_user(user_id):
     try:
         user = ModelUser.get_by_id(user_id)
@@ -272,11 +280,15 @@ def create_supplier() -> Response:
             credit_term = CreditTerm[form.credit_term.data]
             delivery_period = form.delivery_period.data
             
-            new_supplier_data: Dict = Supplier.create(rut=rut, 
-                                                      business_name=business_name,
-                                                      trading_name=trading_name,
-                                                      credit_term=credit_term,
-                                                      delivery_period=delivery_period)
+            new_supplier_data: Dict = \
+                Supplier.create(
+                    rut=rut, 
+                    business_name=business_name,
+                    trading_name=trading_name,
+                    credit_term=credit_term,
+                    delivery_period=delivery_period
+                )
+            
             new_supplier_data['redirect'] = 'configuraciones.suppliers_management'
             response = jsonify(new_supplier_data)
             response.status_code = 200 # Successful
@@ -310,12 +322,15 @@ def edit_supplier(supplier_id: int) -> Response:
         delivery_period = data.get('delivery_period')
         
         if None not in [rut, business_name, trading_name, credit_term, delivery_period]:
-            edited_supplier_data: Dict = Supplier.edit(supplier_id, 
-                                                       rut=rut, 
-                                                       business_name=business_name,
-                                                       trading_name=trading_name,
-                                                       credit_term=credit_term,
-                                                       delivery_period=delivery_period)
+            edited_supplier_data: Dict = \
+                Supplier.edit(
+                    supplier_id, 
+                    rut=rut, 
+                    business_name=business_name,
+                    trading_name=trading_name,
+                    credit_term=credit_term,
+                    delivery_period=delivery_period
+                )
             response = jsonify(edited_supplier_data)
             response.status_code = 200 # Successful
             
@@ -341,8 +356,6 @@ def delete_supplier(supplier_id: int) -> Response:
         response.status_code = 500 # Internal Server Error
         return response
         
-
-
 # @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])
 # @requires_roles('desarrollador')
 # def carro(cart_id):

@@ -1,12 +1,13 @@
-from models.productos import Product, ProductStock
-from models.consumption import Consumption, ConsumptionDetail
-from models.reception import Reception, ReceptionDetail
-from models.document import Document, DocumentDetail
-from models.sales import Sale, SaleDocument
 from models.returns import Return
-from models.price_list import PriceList
-from models.supplier import Supplier, CreditTerm
 from models.shipping import Shipping
+from models.price_list import PriceList
+from models.sales import Sale, SaleDocument
+from models.supplier import Supplier, CreditTerm
+from models.productos import Product, ProductStock
+from models.document import Document, DocumentDetail
+from models.reception import Reception, ReceptionDetail
+from models.consumption import Consumption, ConsumptionDetail
+
 from api.extractors.supplier_extractor import df_suppliers
 
 from random import randint
@@ -64,14 +65,8 @@ class DataFrameMain():
         self.df_price_list = self.df_price_list[
             self.df_price_list['Variant ID'].isin(self.df_products['Variant ID'])
         ]
-    
-    def create_data_base(self, session):
-        self.correct_documents()
-        self.correct_returns()
-        self.correct_consumos()
-        self.correct_recetions()
-        self.correct_price_list()
 
+    def create_shippings(self, session):
         for index, row in self.df_shippings.iterrows():
             shipping = Shipping(
                 id = int(row['ID']),
@@ -82,6 +77,7 @@ class DataFrameMain():
             )
             session.add(shipping)
 
+    def create_suppliers(self, session):
         for index, row in self.df_suppliers.iterrows():
             supplier = Supplier(
                 id = int(row['id']),
@@ -93,6 +89,7 @@ class DataFrameMain():
             )
             session.add(supplier)
 
+    def create_products(self, session):
         for index, row in self.df_products.iterrows():
             product = Product(
                 variant_id=int(row['Variant ID']),
@@ -103,6 +100,7 @@ class DataFrameMain():
             )
             session.add(product)
 
+    def create_stocks(self, session):
         for index, row in self.df_stocks.iterrows():
             product_stock = ProductStock(
                 variant_id=int(row['Variant ID']),
@@ -111,6 +109,7 @@ class DataFrameMain():
             )
             session.add(product_stock)
 
+    def create_consumptions(self, session):
         for index, row in self.df_consumptions.iterrows():
             consumption = Consumption(
                 id=int(row['ID']),
@@ -120,6 +119,7 @@ class DataFrameMain():
             )
             session.add(consumption)
 
+    def create_consumptions_details(self, session):
         for index, row in self.df_consumptions_details.iterrows():
             consumption_detail = ConsumptionDetail(
                 id=int(row['Detail ID']),
@@ -130,6 +130,7 @@ class DataFrameMain():
             )
             session.add(consumption_detail)
 
+    def create_receptions(self, session):
         for index, row in self.df_receptions.iterrows():
             reception = Reception(
                 id=int(row['ID']),
@@ -141,6 +142,7 @@ class DataFrameMain():
             )
             session.add(reception)
 
+    def create_receptions_details(self, session):
         for index, row in self.df_receptions_details.iterrows():
             reception_detail = ReceptionDetail(
                 id=int(row['Detail ID']),
@@ -151,6 +153,7 @@ class DataFrameMain():
             )
             session.add(reception_detail)
 
+    def create_documents(self, session):
         for index, row in self.df_documents.iterrows():
             document = Document(
                 id=int(row['Document ID']),
@@ -163,6 +166,7 @@ class DataFrameMain():
             )
             session.add(document)
 
+    def create_documents_details(self, session):
         for index, row in self.df_documents_details.iterrows():
             document_detail = DocumentDetail(
                 id=int(row['Detail ID']),
@@ -174,6 +178,7 @@ class DataFrameMain():
             )
             session.add(document_detail)
 
+    def create_sales(self, session):
         for index, row in self.df_sales.iterrows():
             sale = Sale(
                 id=int(row['Sales ID']),
@@ -182,6 +187,7 @@ class DataFrameMain():
             )
             session.add(sale)
 
+    def create_sales_documents(self, session):
         for index, row in self.df_sales_documents.iterrows():
             if row['Document ID'] is not None:
                 document_id = int(row['Document ID'])
@@ -195,6 +201,7 @@ class DataFrameMain():
             )
             session.add(sale_document)
 
+    def create_returns(self, session):
         for index, row in self.df_returns.iterrows():
             if row['Credit Note ID'] is not None:
                 credit_note_id = int(row['Credit Note ID'])
@@ -208,6 +215,7 @@ class DataFrameMain():
             )
             session.add(return_)
 
+    def create_price_list(self, session):
         for index, row in self.df_price_list.iterrows():
             price_list = PriceList(
                 list_id=int(row['List ID']),
@@ -217,5 +225,27 @@ class DataFrameMain():
                 variant_id=int(row['Variant ID'])
             )
             session.add(price_list)
+    
+    def create_data_base(self, session):
+        self.correct_documents()
+        self.correct_returns()
+        self.correct_consumos()
+        self.correct_recetions()
+        self.correct_price_list()
+
+        self.create_shippings(session)
+        self.create_suppliers(session)
+        self.create_products(session)
+        self.create_stocks(session)
+        self.create_consumptions(session)
+        self.create_consumptions_details(session)
+        self.create_receptions(session)
+        self.create_receptions_details(session)
+        self.create_documents(session)
+        self.create_documents_details(session)
+        self.create_sales(session)
+        self.create_sales_documents(session)
+        self.create_returns(session)
+        self.create_price_list(session)
 
         session.commit()
