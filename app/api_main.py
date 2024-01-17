@@ -43,7 +43,7 @@ def run_threads(dataframe_main, analyser , threads):
     session = AppSession()
     try:
         dataframe_main.create_data_base(session)
-        # analyser.main(session)
+        analyser.main(session)
     finally:
         session.close()
 
