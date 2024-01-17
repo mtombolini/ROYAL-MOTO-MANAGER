@@ -3,7 +3,7 @@ from services.stock_manager.simple.predictors import predict_units_to_buy
 from services.stock_manager.plotter import plot_data_and_recommendations
 import pandas as pd
 
-product_filepath = "1705430809.xls"
+# product_filepath = "1705430809.xls"
 
 # product_data: pd.DataFrame = extract_data(product_filepath)
 # recommendations = []
@@ -21,4 +21,5 @@ def predict(kardex):
         recommendations.append(recommendation)
 
     plot_data = plot_data_and_recommendations(product_data, recommendations)
+    
     return plot_data

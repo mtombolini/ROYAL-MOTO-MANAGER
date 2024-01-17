@@ -231,7 +231,7 @@ class Product(Base):
                     "last_net_cost": last_net_cost,
                     "price_list": price_list,
                     "kardex": kardex,
-                    # "prediction": prediction
+                    "prediction": prediction
                 }
                 
                 return product_data  # Return the product's attributes directly

@@ -15,25 +15,25 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[int]
 
         if recommendation != 0:
             # Add a marker for buying recommendation
-            fig.add_trace(go.Scatter(x=[date], y=[row['High']],
-                                     mode='markers', marker_symbol='triangle-up',
-                                     text=f"Buy {recommendation} units",
-                                     marker_color='blue', marker_size=10,
-                                     name='Buy Recommendation'))
-            
+            fig.add_trace(
+                go.Scatter(
+                    x=[date], y=[row['High']], mode='markers', marker_symbol='triangle-up', 
+                    text=f"Buy {int(recommendation)} units", marker_color='blue', marker_size=5, 
+                    name='Buy Recommendation'))
+
         i += 1
 
     # Add the candlestick trace
-    fig.add_trace(go.Candlestick(x=data.index,
-                                 open=data['Open'],
-                                 high=data['High'],
-                                 low=data['Low'],
-                                 close=data['Close'],
-                                 increasing_line_color=UP_COLOR,
-                                 decreasing_line_color=DOWN_COLOR))
+    fig.add_trace(
+        go.Candlestick(
+            x=data.index, open=data['Open'], high=data['High'], low=data['Low'], 
+            close=data['Close'], increasing_line_color=UP_COLOR, decreasing_line_color=DOWN_COLOR, 
+            name=''))
 
-    # Update the figure layout
-    fig.update_layout(title='Japanese Candlestick Chart with Buy Recommendations', yaxis_title='Cantidad')
-    fig.show()
-    # Show the chart
+    fig.update_layout(
+        showlegend=False,
+        margin=dict(l=20, r=20, t=20, b=20),
+        yaxis_title='Cantidad'
+    )
+    
     return pio.to_json(fig)

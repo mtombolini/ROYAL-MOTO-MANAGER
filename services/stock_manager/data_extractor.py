@@ -4,7 +4,6 @@ import pandas as pd
 import os
 import sys
 
-
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 def data_extractor(kardex):
@@ -22,14 +21,12 @@ def data_extractor(kardex):
     }).rename(columns={'stock_actual': 'Close',
                     'entrada': 'Purchases',
                     'salida': 'Sales'})
-    ohlc_data.to_csv("data.csv")
+    
     ohlc_data['Open'] = ohlc_data['Close'] - ohlc_data['Purchases'] + ohlc_data['Sales']
-
     ohlc_data['High'] = ohlc_data['Open'] + ohlc_data['Purchases']
     ohlc_data['Low'] = ohlc_data['Open'] - ohlc_data['Sales']
 
     all_dates = pd.date_range(start=ohlc_data.index.min(), end=ohlc_data.index.max(), freq='D')
-
     ohlc_data = ohlc_data.reindex(all_dates)
 
     ohlc_data['Purchases'].fillna(0, inplace=True)
@@ -40,7 +37,6 @@ def data_extractor(kardex):
 
     ohlc_data['High'].fillna(ohlc_data['Open'], inplace=True)
     ohlc_data['Low'].fillna(ohlc_data['Close'], inplace=True)
-
     ohlc_data.fillna(0, inplace=True)
 
     ohlc_data.index = pd.to_datetime(ohlc_data.index)
@@ -50,8 +46,6 @@ def data_extractor(kardex):
     ohlc_data.index = pd.to_datetime(ohlc_data.index)
 
     fill_data(ohlc_data)
-
-    ohlc_data.to_csv("data.csv")
     
     return ohlc_data
 

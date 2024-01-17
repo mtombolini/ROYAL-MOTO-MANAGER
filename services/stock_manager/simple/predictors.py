@@ -3,9 +3,7 @@ from services.stock_manager.distribution_estimator import get_sales_current_dist
 from scipy.stats import norm
 import pandas as pd
 
-def should_buy(product_data: pd.DataFrame, 
-               days_of_anticipation: int, 
-               certainty: float) -> bool:
+def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty: float) -> bool:
     """
     This function returns a bool telling whether you should buy more units
     of a product or not, based on its sales' historical recent data and
@@ -28,8 +26,7 @@ def should_buy(product_data: pd.DataFrame,
     mean, std = get_sales_current_distribution(product_data)
 
     stock_left: int = product_data["Close"].iloc[-1]
-    prob_of_running_out = 1 - norm.cdf(stock_left, 
-                                       loc=mean*days_of_anticipation, 
+    prob_of_running_out = 1 - norm.cdf(stock_left, loc=mean*days_of_anticipation, 
                                        scale=std*days_of_anticipation)
     
     return prob_of_running_out > certainty or product_data.iloc[-1]["Close"] == 0
@@ -39,13 +36,13 @@ def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
     mean, _ = get_sales_current_distribution(product_data)
-    print(product_data.index[-1], mean)
-    product_data.to_csv("data.csv")
+    
     return mean*days_to_last
 
 
 def predict_units_to_buy(product_data):
-    to_buy = (should_buy(product_data, days_of_anticipation=DAYS_OF_ANTICIPATION, certainty=CERTAINTY)
+    to_buy = \
+        (should_buy(product_data, days_of_anticipation=DAYS_OF_ANTICIPATION, certainty=CERTAINTY)
               * units_to_buy(product_data, days_to_last=DAYS_TO_LAST))
     
     return to_buy

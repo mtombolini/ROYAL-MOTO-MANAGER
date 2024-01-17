@@ -52,7 +52,9 @@
                 </tbody>
             </table>
 
-            <!-- <div id="grafico-velas" style="width:100%;max-width:900px;height:500px;"></div> -->
+            <div id="myPlot" 
+                style="width:95%;height:400px;margin-left:25px;margin-top:120px;margin-right:10px">
+            </div>
 
             <h2>Stock</h2>
             <table class="table table-bordered history-table">
@@ -224,4 +226,14 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var plotData = JSON.parse('{{ product.prediction | safe }}');
+        Plotly.newPlot('myPlot', plotData);
+        console.log(plotData);
+    });
+</script>
+
 {% endblock %}
