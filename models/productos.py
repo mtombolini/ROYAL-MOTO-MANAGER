@@ -55,7 +55,7 @@ class Product(Base):
                 raise
 
     @classmethod
-    def filter_product(cls, variant_id):
+    def filter_product(cls, variant_id, analsis=False):
         with AppSession() as session:
             try:
                 product = session.query(cls).filter(cls.variant_id == variant_id).first()  # Retrieve a single product
@@ -220,7 +220,8 @@ class Product(Base):
                 df_kardex['stock_actual'] = df_kardex['stock_actual'].astype(int)
                 kardex = df_kardex.to_dict('records')
 
-                prediction = predict(df_kardex)
+                if not analsis:
+                    prediction = predict(df_kardex)
 
                 product_data = {
                     **product.__dict__,

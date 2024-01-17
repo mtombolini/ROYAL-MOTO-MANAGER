@@ -3,6 +3,7 @@ from services.stock_manager.filler import fill_data
 import pandas as pd
 import os
 import sys
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
@@ -26,7 +27,13 @@ def data_extractor(kardex):
     ohlc_data['High'] = ohlc_data['Open'] + ohlc_data['Purchases']
     ohlc_data['Low'] = ohlc_data['Open'] - ohlc_data['Sales']
 
-    all_dates = pd.date_range(start=ohlc_data.index.min(), end=ohlc_data.index.max(), freq='D')
+    today = [time.strftime("%Y-%m-%d %H:%M:%S")]
+    today_df = pd.DataFrame(today, columns=['fecha'])
+    today_df['fecha'] = pd.to_datetime(today_df['fecha'], format='%Y-%m-%d %H:%M:%S')
+    today_df['fecha'] = today_df['fecha'].dt.normalize()
+
+    
+    all_dates = pd.date_range(start=ohlc_data.index.min(), end=today_df['fecha'].iloc[0], freq='D')
     ohlc_data = ohlc_data.reindex(all_dates)
 
     ohlc_data['Purchases'].fillna(0, inplace=True)
@@ -44,8 +51,6 @@ def data_extractor(kardex):
     ohlc_data['Close'].fillna(0, inplace=True)  # Fill NaN with 0 (or any other value you prefer)
 
     ohlc_data.index = pd.to_datetime(ohlc_data.index)
-
-    fill_data(ohlc_data)
     
     return ohlc_data
 

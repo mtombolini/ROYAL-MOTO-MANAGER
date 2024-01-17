@@ -17,8 +17,8 @@ class StockVerifier:
     
     def verify(self):
         for id in self.ids:
-            product_data = Product.filter_product(id)
-            print(product_data['sku'])
+            product_data = Product.filter_product(id, True)
+
             if len(product_data['kardex']) == 0:
                 self.sin_kardex.append(product_data['sku'])
             elif product_data['stock']['stock_lira'] + product_data['stock']['stock_sobrexistencia'] != product_data['kardex'][-1]['stock_actual']:

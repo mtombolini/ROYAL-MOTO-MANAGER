@@ -17,7 +17,7 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[int]
             # Add a marker for buying recommendation
             fig.add_trace(
                 go.Scatter(
-                    x=[date], y=[row['High']], mode='markers', marker_symbol='triangle-up', 
+                    x=[date], y=[row['Close']], mode='markers', marker_symbol='triangle-up', 
                     text=f"Buy {int(recommendation)} units", marker_color='blue', marker_size=5, 
                     name='Buy Recommendation'))
 

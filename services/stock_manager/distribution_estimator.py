@@ -17,9 +17,13 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
 
     # Extract the last 'days_to_consider' days
     last_30_days = data[-days_to_consider:]
-    
+    all_days = data
+
     # Calculate mean and standard deviation
     mean_sales = last_30_days['Sales'].mean()
     std_sales = last_30_days['Sales'].std()
+
+    historic_mean = all_days['Sales'].mean()
+    historic_std = all_days['Sales'].std()
     
-    return mean_sales, std_sales
+    return mean_sales, std_sales, historic_mean, historic_std
