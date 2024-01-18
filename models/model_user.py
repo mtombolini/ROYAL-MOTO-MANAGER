@@ -1,5 +1,6 @@
 from models.user import User, Role
 from databases.session import AppSession
+from models.productos import Product
 
 class ModelUser:
 
