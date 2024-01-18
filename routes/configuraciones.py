@@ -16,12 +16,6 @@ RUT_REGEX = r'^\d{1,2}\.\d{3}\.\d{3}-[0-9kK]$'
 
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
-def rut_validator(form: FlaskForm, field: StringField):
-    rut = field.data
-    if not re.match(RUT_REGEX, rut):
-        raise ValidationError('Invalid RUT format')
-
-
 
 class RoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
@@ -37,7 +31,7 @@ class UserForm(FlaskForm):
     
     
 class SupplierForm(FlaskForm):
-    rut = StringField('RUT', validators=[DataRequired(), rut_validator])
+    rut = StringField('RUT', validators=[DataRequired()])
     business_name = StringField('Razón Social', validators=[DataRequired()])
     trading_name = StringField('Nombre de Fantasía', validators=[DataRequired()])
     credit_term = SelectField('Plazo de pago', 
