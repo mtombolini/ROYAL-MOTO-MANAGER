@@ -4,7 +4,7 @@ import time
 import asyncio
 import aiohttp
 import json
-from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
+# from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 class ProductExtractor:
     def __init__(self, token):
@@ -43,13 +43,11 @@ class ProductExtractor:
 
     async def get_variants(self):
         count = 0
-        max_variant_id = 10000
+        max_variant_id = 10500
         initial_variant_id = 3177
 
         async with aiohttp.ClientSession() as session:
             while initial_variant_id <= max_variant_id:
-                if stop_signal_is_set():
-                    break
 
                 product_response = await self.make_request(session, f"variants/{initial_variant_id}.json?expand=[product,product_type]")
 
@@ -57,13 +55,15 @@ class ProductExtractor:
                     variant_id = product_response['id']
                     sku = product_response['code']
                     product_name = product_response['product']['name']
+                    estado = product_response['state']
                     product_type_name = product_response['product']['product_type']['name']
 
                     self.products.append({
                         'Variant ID': int(variant_id),
                         'Product Type': product_type_name,
                         'Product Description': product_name,
-                        'SKU': sku
+                        'SKU': sku,
+                        'State': estado
                     })
 
                     count += 1
@@ -71,58 +71,54 @@ class ProductExtractor:
                     if count % 50 == 0:
                         print(f"{count} variantes obtenidos")
 
-                        with open("logs/api_status.log", "a") as log_file:
-                            message = json.dumps({"tipo": "productos", "mensaje": f"{count} productos obtenidos"})
-                            log_file.write(message + "\n")
+                        # with open("logs/api_status.log", "a") as log_file:
+                        #     message = json.dumps({"tipo": "productos", "mensaje": f"{count} productos obtenidos"})
+                        #     log_file.write(message + "\n")
 
                 initial_variant_id += 1
 
-            if stop_flag.is_set():
-                return
 
-        index = 0
-        while len(self.products) != index:
-            if self.products[index]['Product Description'] == '':
-                self.products.pop(index)
-            else:
-                index += 1
+        # index = 0
+        # while len(self.products) != index:
+        #     if self.products[index]['Product Description'] == '':
+        #         self.products.pop(index)
+        #     else:
+        #         index += 1
 
         print("All products saved")
         self.df_products_description = pd.DataFrame(self.products).drop_duplicates(subset='Variant ID', keep='first')
 
-        count = 0
-        async with aiohttp.ClientSession() as session:
-            for variant_id in self.df_products_description['Variant ID']:
-                if stop_signal_is_set():
-                    return
-                stock_response = await self.make_request(session, f"stocks.json?variantid={variant_id}")
-                stock_items = stock_response['items']
+        # count = 0
+        # async with aiohttp.ClientSession() as session:
+        #     for variant_id in self.df_products_description['Variant ID']:
+        #         stock_response = await self.make_request(session, f"stocks.json?variantid={variant_id}")
+        #         stock_items = stock_response['items']
                 
-                for stock_item in stock_items:
-                    office_id = stock_item['office']['id']
-                    quantity = stock_item['quantity']
-                    if office_id == "1":
-                        stock_lira = quantity
-                    elif office_id == "2":
-                        stock_sobrexistencia = quantity
+        #         for stock_item in stock_items:
+        #             office_id = stock_item['office']['id']
+        #             quantity = stock_item['quantity']
+        #             if office_id == "1":
+        #                 stock_lira = quantity
+        #             elif office_id == "2":
+        #                 stock_sobrexistencia = quantity
 
-                self.stocks.append({
-                    'Variant ID': int(variant_id),
-                    'Stock Lira': int(stock_lira),
-                    'Stock Sobrexistencia': int(stock_sobrexistencia)
-                })
+        #         self.stocks.append({
+        #             'Variant ID': int(variant_id),
+        #             'Stock Lira': int(stock_lira),
+        #             'Stock Sobrexistencia': int(stock_sobrexistencia)
+        #         })
 
-                count += 1
+        #         count += 1
 
-                if count % 50 == 0:
-                    print(f"{count} stocks obtenidos")
+        #         if count % 50 == 0:
+        #             print(f"{count} stocks obtenidos")
 
-                    with open("logs/api_status.log", "a") as log_file:
-                        message = json.dumps({"tipo": "stocks", "mensaje": f"{count} stocks obtenidos"})
-                        log_file.write(message + "\n")
+                    # with open("logs/api_status.log", "a") as log_file:
+                    #     message = json.dumps({"tipo": "stocks", "mensaje": f"{count} stocks obtenidos"})
+                    #     log_file.write(message + "\n")
 
-        print("All stocks saved")
-        self.df_products_stock = pd.DataFrame(self.stocks).drop_duplicates(subset='Variant ID', keep='first')
+        # print("All stocks saved")
+        # self.df_products_stock = pd.DataFrame(self.stocks).drop_duplicates(subset='Variant ID', keep='first')
     
     def save_to_excel(self, file_name="products_data.xlsx"):
         mode = 'a' if os.path.exists(file_name) else 'w'
@@ -130,15 +126,14 @@ class ProductExtractor:
             if self.df_products_description is not None:
                 self.df_products_description.to_excel(writer, sheet_name='Product Descriptions', index=False)
 
-            if self.df_products_stock is not None:
-                self.df_products_stock.to_excel(writer, sheet_name='Product Stocks', index=False)
+            # if self.df_products_stock is not None:
+            #     self.df_products_stock.to_excel(writer, sheet_name='Product Stocks', index=False)
 
     def run(self, dataframe_main):
         print("Obteniendo productos...")
-        if not stop_signal_is_set():
-            asyncio.run(self.get_variants())
+        asyncio.run(self.get_variants())
 
-        if not stop_signal_is_set():
+        if not True:
             with open("logs/api_status.log", "a") as log_file:
                 message = json.dumps({"tipo": "productos-listo", "mensaje": f"Productos ✅"})
                 log_file.write(message + "\n")
