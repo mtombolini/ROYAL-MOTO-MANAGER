@@ -1,4 +1,4 @@
-<form method="POST" action="{{ url_for('recursos_humanos.create_employee') }}">
+<form method="POST" action="{{ url_for('human_resources.create_employee') }}">
 
   {{ form.hidden_tag() }}
 
@@ -13,23 +13,23 @@
   </div>
   
   <div class="mb-3">
-    {{ form.nombre.label(class="form-label") }}
-    {{ form.nombre(class="form-control") }}
+    {{ form.first_name.label(class="form-label") }}
+    {{ form.first_name(class="form-control") }}
   </div>
   
   <div class="mb-3">
-    {{ form.apellido.label(class="form-label") }}
-    {{ form.apellido(class="form-control") }}
+    {{ form.last_name.label(class="form-label") }}
+    {{ form.last_name(class="form-control") }}
   </div>
   
   <div class="mb-3">
-    {{ form.fecha_incorporacion.label(class="form-label") }}
-    {{ form.fecha_incorporacion(class="form-control") }}
+    {{ form.joined_in.label(class="form-label") }}
+    {{ form.joined_in(class="form-control") }}
   </div>
   
   <div class="mb-3">
-    {{ form.horario_colacion.label(class="form-label") }}
-    {{ form.horario_colacion(class="form-control") }}
+    {{ form.lunch_break.label(class="form-label") }}
+    {{ form.lunch_break(class="form-control") }}
   </div>
   
   <button type="submit" class="btn btn-primary">Registrar Empleado</button>

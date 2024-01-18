@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Time
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
@@ -21,8 +21,8 @@ class Employee(Base):
     rut = Column(String(255))
     first_name = Column(String(255))
     last_name = Column(String(255))
-    joined_in = Column(String(255))
-    lunch_break = Column(String(255))  # Nombre de variable ajustado
+    joined_in = Column(Date())
+    lunch_break = Column(Time())  # Nombre de variable ajustado
 
     @classmethod
     def get_all(cls) -> List[Dict]:
