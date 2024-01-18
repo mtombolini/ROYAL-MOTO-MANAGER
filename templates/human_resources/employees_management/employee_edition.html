@@ -1,0 +1,40 @@
+<form method="POST" action="{{ url_for('human_resources.edit_employee', employee_id=1) }}">
+
+    {{ form.csrf_token }}
+
+    <!-- Hidden Field for Supplier ID -->
+    <input type="hidden" name="supplier_id" id="modalId">
+
+    <div class="mb-3">
+        {{ form.user_id.label(class="form-label") }}
+        {{ form.user_id(class="form-control", id="modalUserId") }}
+    </div>
+  
+    <div class="mb-3">
+      {{ form.rut.label(class="form-label") }}
+      {{ form.rut(class="form-control", id="modalRUT") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.first_name.label(class="form-label") }}
+      {{ form.first_name(class="form-control", id="modalFirstName") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.last_name.label(class="form-label") }}
+      {{ form.last_name(class="form-control", id="modalLastName") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.joined_in.label(class="form-label") }}
+      {{ form.joined_in(class="form-control", id="modalJoinedIn") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.lunch_break.label(class="form-label") }}
+      {{ form.lunch_break(class="form-control", id="modalLunchBreak") }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+  </form>
+  

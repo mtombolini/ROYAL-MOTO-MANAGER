@@ -23,11 +23,11 @@ def rut_validator(form: FlaskForm, field: StringField):
 
 
 
-class NewRoleForm(FlaskForm):
+class RoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
     
     
-class NewUserForm(FlaskForm):
+class UserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     correo = StringField('Correo', validators=[DataRequired(), Email()])
@@ -36,7 +36,7 @@ class NewUserForm(FlaskForm):
     id_role = SelectField('Role', coerce=int, validators=[DataRequired()])
     
     
-class NewSupplierForm(FlaskForm):
+class SupplierForm(FlaskForm):
     rut = StringField('RUT', validators=[DataRequired(), rut_validator])
     business_name = StringField('Razón Social', validators=[DataRequired()])
     trading_name = StringField('Nombre de Fantasía', validators=[DataRequired()])
@@ -48,7 +48,7 @@ class NewSupplierForm(FlaskForm):
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
 def administracion_de_roles():
-    form = NewRoleForm()
+    form = RoleForm()
     try:
         data = ModelUser.get_all_roles()
         return render_template('configuraciones/administracion_de_roles/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
@@ -69,7 +69,7 @@ def get_role(role_id):
 @configuraciones_blueprint.route('/crear_rol', methods=['POST'])
 @requires_roles('desarrollador')
 def crear_rol():
-    form = NewRoleForm()
+    form = RoleForm()
     if form.validate_on_submit():
         description = form.description.data
         new_role, session = ModelUser.new_role(description)
@@ -140,7 +140,7 @@ def editar_rol(id_role):
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
 def administracion_de_usuarios():
-    form = NewUserForm()
+    form = UserForm()
     role_data = ModelUser.get_all_roles()  # Fetch roles from database
     # Format role data for the SelectField
     form.id_role.choices = [(role['id_role'], f"{role['id_role']} - {role['description'].capitalize()}") for role in role_data]
@@ -233,7 +233,7 @@ def eliminar_usuario(id_user):
 @configuraciones_blueprint.route('/suppliers_management')
 @requires_roles('desarrollador')
 def suppliers_management() -> str:
-    form = NewSupplierForm()
+    form = SupplierForm()
     try:
         # Format role data for the SelectField
         data: List[Dict] = Supplier.get_all()
@@ -263,7 +263,7 @@ def get_supplier(supplier_id: int) -> Response:
 @configuraciones_blueprint.route('/create_supplier', methods=['POST'])
 @requires_roles('desarrollador')
 def create_supplier() -> Response:
-    form = NewSupplierForm()
+    form = SupplierForm()
     if form.validate_on_submit():
         try:
             rut = form.rut.data

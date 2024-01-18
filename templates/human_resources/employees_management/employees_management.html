@@ -1,0 +1,99 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Empleados{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .new-role-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .employee-card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<!-- Mostrar cuadros de empleados -->
+<div class="container mt-3">
+    <div class="row">
+        {% for employee in data %}
+            <div class="col-md-4">
+                <div class="employee-card">
+                    <h4>{{ employee.first_name }} {{ employee.last_name }}</h4>
+                    <p>Username: {{ employee.username }}</p>
+                    <p>Rut: {{ employee.rut }}</p>
+                    <p>Fecha de incorporación: {{ employee.joined_in }}</p>
+                    <p>Horario de colación: {{ employee.lunch_break }}</p>
+                    <!-- Agrega más información del empleado según tus necesidades -->
+                    <button type="button" class="btn btn-sm btn-primary edit-btn" 
+                    onclick="openEditModal({{ employee }})">Editar</button>
+                    <a href="{{ url_for('human_resources.delete_employee', employee_id=employee.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este empleado?')">Eliminar</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-role-button">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">Crear Nuevo Empleado</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para el formulario de empleado -->
+<div class="modal fade" id="createEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Nuevo Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'human_resources/employees_management/employee_creation.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for editing an employee -->
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'human_resources/employees_management/employee_edition.html' %}
+                <!-- This file should contain the form for editing an employee -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function openEditModal(employee) {
+        // Populate the modal fields
+        document.getElementById('modalFirstName').value = employee.first_name;
+        document.getElementById('modalLastName').value = employee.last_name;
+        document.getElementById('modalUserId').value = employee.user_id;
+        document.getElementById('modalRUT').value = employee.rut;
+        document.getElementById('modalJoinedIn').value = employee.joined_in;
+        document.getElementById('modalLunchBreak').value = employee.lunch_break;
+        
+        // Open the modal
+        jQuery('#editEmployeeModal').modal('show');
+    }
+</script>
+{% endblock %}
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Time
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
@@ -19,10 +19,10 @@ class Employee(Base):
     # Crear la relación con el modelo User, utilizando 'user' como el nombre de la relación
     user = relationship('User', back_populates='empleados')
     rut = Column(String(255))
-    nombre = Column(String(255))
-    apellido = Column(String(255))
-    fecha_incorporacion = Column(String(255))
-    horario_colacion = Column(String(255))  # Nombre de variable ajustado
+    first_name = Column(String(255))
+    last_name = Column(String(255))
+    joined_in = Column(Date())
+    lunch_break = Column(Time())  # Nombre de variable ajustado
 
     @classmethod
     def get_all(cls) -> List[Dict]:
