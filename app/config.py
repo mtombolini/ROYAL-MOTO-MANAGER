@@ -22,7 +22,7 @@ class DevelopmentConfigPostgres(Config):
     PORT = 5432
     USER = USER_POSTGRES
     PASSWORD = PASSWORD_POSTGRES
-    DB = 'nueva_database'
+    DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
     DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
     DEFAULT_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/postgres"
