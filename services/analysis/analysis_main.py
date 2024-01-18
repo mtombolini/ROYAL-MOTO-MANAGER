@@ -4,7 +4,6 @@ from models.productos import Product
 from models.day_recommendation import DayRecommendation
 from services.stock_manager.simple.test import predict_no_plot
 
-
 class Analyser:
     def __init__(self):
         self.ids = []
@@ -17,10 +16,12 @@ class Analyser:
         return Product.get_all_products()
     
     def get_ids(self):
+        print('Obteniendo ids...')
         for product in self.products:
             self.ids.append(product['variant_id'])
 
     def get_kardexs(self):
+        print('Obteniendo kardexs...')
         for id in self.ids:
             product_data = Product.filter_product(id, False)
             if not product_data['df_kardex'].empty:
@@ -29,9 +30,9 @@ class Analyser:
                 self.bad_ids.append(id)
 
     def analyse(self):
+        print('Analizando...')
         good_ids = [id for id in self.ids if id not in self.bad_ids]
         for id in good_ids:
-            print(id)
             recommendation, date = predict_no_plot(self.kardexs[id])
             self.analysed[id] = {
                 'recommendation': recommendation,

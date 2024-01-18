@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from databases.base import Base
+from databases.session import AppSession
 
 class DayRecommendation(Base):
     __tablename__ = 'recomendaciones_del_dia'
@@ -10,3 +11,7 @@ class DayRecommendation(Base):
     date = Column(DateTime)
 
     product = relationship("Product", back_populates="day_recommendation")
+
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()
