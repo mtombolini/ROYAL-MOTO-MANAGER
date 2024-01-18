@@ -14,4 +14,6 @@ def index():
 @login_required
 def home():
     day_recommendations = DayRecommendation.get_all()
-    return render_template('home.html', recommendations=day_recommendations, page_title="Inicio")
+    if not day_recommendations:
+        return render_template('home.html', recommendations=day_recommendations, page_title="Inicio")
+    return render_template('home.html', recommendations=day_recommendations, page_title="Inicio & Recomendaciones")

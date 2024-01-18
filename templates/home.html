@@ -5,29 +5,52 @@
 {% block body %}
 {% include 'header.html' %}
 
+<style>
+    .fecha-estilizada {
+        padding: 10px;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    
+    .fecha-texto {
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+
 {% if recommendations %}
 <div class="container-fluid mt-3 ms-3">
     <div class="row">
+        <div class="fecha-estilizada">
+            Fecha: <span class="fecha-texto">{{ recommendations[0].date.strftime('%Y-%m-%d') }}</span>
+        </div>
         <div class="col-12">
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th></th>
+                        <th>Proveedor</th>
                         <th>ID</th>
                         <th>SKU</th>
                         <th>Descripción</th>
                         <th>Recomendacion</th>
-                        <th>Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for recommendation in recommendations %}
                     {% if recommendation.recommendation != 0 %}
                     <tr id="recomendacion-{{ recommendation.variant_id }}">
+                        <td><input type="checkbox" name="selected"></td>
+                        <td>{{ recommendation.proveedor }}</td>
                         <td>{{ recommendation.variant_id }}</td>
                         <td>{{ recommendation.sku }}</td>
                         <td>{{ recommendation.description }}</td>
                         <td>{{ recommendation.recommendation }}</td>
-                        <td>{{ recommendation.date }}</td>
+                        <td>
+                            <a href="{{ url_for('tables.product_detail', variant_id=recommendation.variant_id) }}" class="btn btn-sm btn-primary">Ver</a>
+                        </td>
                     </tr>
                     {% endif %}
                     {% endfor %}

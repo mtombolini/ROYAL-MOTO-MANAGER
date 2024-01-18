@@ -229,6 +229,7 @@ class Product(Base):
 
                 product_data = {
                     **product.__dict__,
+                    "supplier": product.supplier.__dict__,
                     "stock": stock,
                     "reception_details_list": reception_details_list,
                     "consumption_details_list": consumption_details_list,

@@ -34,6 +34,7 @@
                         <th>Tipo</th>
                         <th>Descripción</th>
                         <th>SKU</th>
+                        <th>Proveedor</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                         <td>{{ product.type }}</td>
                         <td>{{ product.description }}</td>
                         <td>{{ product.sku }}</td>
+                        <td>{{ product.supplier.trading_name }}</td>
                     </tr>
                     {% else %}
                     <tr>

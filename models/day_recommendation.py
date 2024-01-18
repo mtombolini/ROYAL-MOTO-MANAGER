@@ -23,12 +23,13 @@ class DayRecommendation(Base):
                     recomendation_data.append({
                         'variant_id': recomendation.variant_id,
                         'sku': recomendation.product.sku,
+                        'proveedor': recomendation.product.supplier.trading_name,
                         'description': recomendation.product.description,
                         'recommendation': recomendation.recommendation,
                         'date': recomendation.date
                     })
 
-                sorted_data = sorted(recomendation_data, key=lambda x: x['recommendation'], reverse=True)
+                sorted_data = sorted(recomendation_data, key=lambda x: (x['proveedor'], -x['recommendation']))
                 
                 return sorted_data
             except Exception as ex:
