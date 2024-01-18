@@ -14,4 +14,22 @@ class DayRecommendation(Base):
 
     @classmethod
     def get_all(cls):
-        return cls.query.all()
+        with AppSession() as session:
+            try:
+                recomendations = session.query(cls).all()
+
+                recomendation_data = []
+                for recomendation in recomendations:
+                    recomendation_data.append({
+                        'variant_id': recomendation.variant_id,
+                        'sku': recomendation.product.sku,
+                        'description': recomendation.product.description,
+                        'recommendation': recomendation.recommendation,
+                        'date': recomendation.date
+                    })
+
+                sorted_data = sorted(recomendation_data, key=lambda x: x['recommendation'], reverse=True)
+                
+                return sorted_data
+            except Exception as ex:
+                raise

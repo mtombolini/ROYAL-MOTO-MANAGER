@@ -1,7 +1,43 @@
 {% extends './layout.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Royal Moto Manager{% endblock %}
 
 {% block body %}
 {% include 'header.html' %}
+
+{% if recommendations %}
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>SKU</th>
+                        <th>Descripción</th>
+                        <th>Recomendacion</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recommendation in recommendations %}
+                    {% if recommendation.recommendation != 0 %}
+                    <tr id="recomendacion-{{ recommendation.variant_id }}">
+                        <td>{{ recommendation.variant_id }}</td>
+                        <td>{{ recommendation.sku }}</td>
+                        <td>{{ recommendation.description }}</td>
+                        <td>{{ recommendation.recommendation }}</td>
+                        <td>{{ recommendation.date }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+    <p>No hay recomendaciones.</p>
+{% endif %}
+
 {% endblock %}
