@@ -51,10 +51,12 @@
                     {% endif %}
                 </tbody>
             </table>
-
+            
+            {% if product.prediction %}
             <div id="myPlot" 
                 style="width:95%;height:400px;margin-left:25px;margin-top:120px;margin-right:10px">
             </div>
+            {% endif %}
 
             <h2>Stock</h2>
             <table class="table table-bordered history-table">
@@ -227,6 +229,7 @@
     </div>
 </div>
 
+{% if product.prediction %}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -235,5 +238,6 @@
         console.log(plotData);
     });
 </script>
+{% endif %}
 
 {% endblock %}
