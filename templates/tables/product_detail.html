@@ -6,24 +6,31 @@
 {% include 'header.html' %}
 
 <style>
-  .btn-sm {
-    min-width: 95px;
-    text-align: center;
-    font-size: 13px;
-  }
-  .product-detail {
-    margin-bottom: 20px;
-  }
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .add-product-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .product-detail {
+        margin-bottom: 20px;
+    }
   
-  table {
-    float: right;
-    margin-right: 16px;
-  }
-  
+    table {
+        float: right;
+        margin-right: 16px;
+    }
 </style>
 
 <div class="container-fluid mt-3 ms-3">
     <div class="row">
+        <div class="col-12 add-product-button">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#agregarCompraModal">Agregar a Compra</button>
+        </div>
         <div class="col-12">
             <h1 class="product-detail">Detalles del Producto</h1>
     
@@ -231,14 +238,76 @@
     </div>
 </div>
 
+<div class="modal fade" id="agregarCompraModal" tabindex="-1" role="dialog" aria-labelledby="agregarCompraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarCompraModalLabel">Agregar a Compra</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="d-flex align-items-center">
+                    <div class="form-group flex-grow-1 me-2">
+                        <input type="number" class="form-control" id="numero-input" placeholder="Cantidad" min="1">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="agregarAlCarro()">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function agregarAlCarro() {
+        var cantidad = document.getElementById('numero-input').value;
+    
+        var product = {
+            variant_id: "{{ product.variant_id }}",
+            description: "{{ product.description }}",
+            sku: "{{ product.sku }}",
+            supplier: "{{ product.supplier.trading_name }}",
+            last_net_cost: "{{ product.last_net_cost.costo_neto }}"
+        };
+
+        var data = {
+            product: product,
+            cantidad: cantidad
+        };
+        console.log(data);
+
+        fetch("{{ url_for('compras.agregar_producto') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
 {% if product.prediction %}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var plotData = JSON.parse('{{ product.prediction | safe }}');
+    try {
+        var plotData = JSON.parse('{{ prediction | safe }}');
         Plotly.newPlot('myPlot', plotData);
-        console.log(plotData);
-    });
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
 </script>
 {% endif %}
 
