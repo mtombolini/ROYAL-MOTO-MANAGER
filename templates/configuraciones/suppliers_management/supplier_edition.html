@@ -2,36 +2,36 @@
     {{ form.csrf_token }}
 
     <!-- Hidden Field for Supplier ID -->
-    <input type="hidden" name="supplier_id" id="modalSupplierId">
+    <input type="hidden" name="supplier_id" id="editSupplierModalId">
 
     <!-- Field for Supplier RUT -->
     <div class="mb-3">
         {{ form.rut.label(class="form-label") }}
-        {{ form.rut(class="form-control", id="modalRut") }}
+        {{ form.rut(class="form-control", id="editSupplierModalRut") }}
     </div>
 
     <!-- Field for Supplier Business Name -->
     <div class="mb-3">
         {{ form.business_name.label(class="form-label") }}
-        {{ form.business_name(class="form-control", id="modalBusinessName") }}
+        {{ form.business_name(class="form-control", id="editSupplierModalBusinessName") }}
     </div>
 
     <!-- Field for Supplier Trading Name -->
     <div class="mb-3">
         {{ form.trading_name.label(class="form-label") }}
-        {{ form.trading_name(class="form-control", id="modalTradingName") }}
+        {{ form.trading_name(class="form-control", id="editSupplierModalTradingName") }}
     </div>
 
     <!-- Field for Supplier Credit Term -->
     <div class="mb-3">
         {{ form.credit_term.label(class="form-label") }}
-        {{ form.credit_term(class="form-control", id="modalCreditTerm") }}
+        {{ form.credit_term(class="form-control", id="editSupplierModalCreditTerm") }}
     </div>
 
     <!-- Field for Supplier Delivery Period -->
     <div class="mb-3">
         {{ form.delivery_period.label(class="form-label") }}
-        {{ form.delivery_period(class="form-control", id="modalDeliveryPeriod") }}
+        {{ form.delivery_period(class="form-control", id="editSupplierModalDeliveryPeriod") }}
     </div>
 
     <button type="submit" class="btn btn-primary">Editar Proveedor</button>

@@ -3,36 +3,36 @@
     {{ form.csrf_token }}
 
     <!-- Hidden Field for Supplier ID -->
-    <input type="hidden" name="supplier_id" id="modalId">
+    <input type="hidden" name="employee_id" id="editEmployeeModalId">
 
     <div class="mb-3">
         {{ form.user_id.label(class="form-label") }}
-        {{ form.user_id(class="form-control", id="modalUserId") }}
+        {{ form.user_id(class="form-control", id="editEmployeeModalUserId") }}
     </div>
   
     <div class="mb-3">
-      {{ form.rut.label(class="form-label") }}
-      {{ form.rut(class="form-control", id="modalRUT") }}
+      {{ form.run.label(class="form-label") }}
+      {{ form.run(class="form-control", id="editEmployeeModalRUN") }}
     </div>
     
     <div class="mb-3">
       {{ form.first_name.label(class="form-label") }}
-      {{ form.first_name(class="form-control", id="modalFirstName") }}
+      {{ form.first_name(class="form-control", id="editEmployeeModalFirstName") }}
     </div>
     
     <div class="mb-3">
       {{ form.last_name.label(class="form-label") }}
-      {{ form.last_name(class="form-control", id="modalLastName") }}
+      {{ form.last_name(class="form-control", id="editEmployeeModalLastName") }}
     </div>
     
     <div class="mb-3">
       {{ form.joined_in.label(class="form-label") }}
-      {{ form.joined_in(class="form-control", id="modalJoinedIn") }}
+      {{ form.joined_in(class="form-control", id="editEmployeeModalJoinedIn") }}
     </div>
     
     <div class="mb-3">
       {{ form.lunch_break.label(class="form-label") }}
-      {{ form.lunch_break(class="form-control", id="modalLunchBreak") }}
+      {{ form.lunch_break(class="form-control", id="editEmployeeModalLunchBreak") }}
     </div>
     
     <button type="submit" class="btn btn-primary">Guardar cambios</button>

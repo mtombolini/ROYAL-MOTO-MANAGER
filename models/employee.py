@@ -18,7 +18,7 @@ class Employee(Base):
     user_id = Column(Integer, ForeignKey('usuarios.id'))
     # Crear la relación con el modelo User, utilizando 'user' como el nombre de la relación
     user = relationship('User', back_populates='empleados')
-    rut = Column(String(255))
+    run = Column(String(255))
     first_name = Column(String(255))
     last_name = Column(String(255))
     joined_in = Column(Date())
@@ -66,7 +66,7 @@ class Employee(Base):
             
             
     @classmethod
-    def create(cls, **kwargs) -> Dict:
+    def create(cls, **kwargs) -> None:
         # Start a new session
         with AppSession() as session:
             try:
@@ -85,12 +85,6 @@ class Employee(Base):
                 session.add(new_employee)
                 # Commit the changes
                 session.commit()
-                new_employee_data = {
-                    key: value 
-                    for key, value 
-                    in kwargs.items()
-                }
-                return new_employee_data
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()
@@ -98,7 +92,7 @@ class Employee(Base):
             
             
     @classmethod
-    def edit(cls, employee_id, **kwargs) -> Dict:
+    def edit(cls, employee_id, **kwargs) -> None:
         # Start a new session
         with AppSession() as session:
             try:
@@ -115,12 +109,6 @@ class Employee(Base):
                         )
                 # Commit the changes
                 session.commit()
-                edited_employee_data = {
-                    key: value 
-                    for key, value 
-                    in kwargs.items()
-                }
-                return edited_employee_data
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()

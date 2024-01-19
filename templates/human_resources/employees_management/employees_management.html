@@ -26,12 +26,12 @@
                 <div class="employee-card">
                     <h4>{{ employee.first_name }} {{ employee.last_name }}</h4>
                     <p>Username: {{ employee.username }}</p>
-                    <p>Rut: {{ employee.rut }}</p>
+                    <p>RUN: {{ employee.run }}</p>
                     <p>Fecha de incorporación: {{ employee.joined_in }}</p>
                     <p>Horario de colación: {{ employee.lunch_break }}</p>
                     <!-- Agrega más información del empleado según tus necesidades -->
                     <button type="button" class="btn btn-sm btn-primary edit-btn" 
-                    onclick="openEditModal({{ employee }})">Editar</button>
+                    onclick="openEditEmployeeModal({{ employee }})">Editar</button>
                     <a href="{{ url_for('human_resources.delete_employee', employee_id=employee.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este empleado?')">Eliminar</a>
                 </div>
             </div>
@@ -81,14 +81,20 @@
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function openEditModal(employee) {
+    function openEditEmployeeModal(employee) {
         // Populate the modal fields
-        document.getElementById('modalFirstName').value = employee.first_name;
-        document.getElementById('modalLastName').value = employee.last_name;
-        document.getElementById('modalUserId').value = employee.user_id;
-        document.getElementById('modalRUT').value = employee.rut;
-        document.getElementById('modalJoinedIn').value = employee.joined_in;
-        document.getElementById('modalLunchBreak').value = employee.lunch_break;
+        document.getElementById('editEmployeeModalFirstName').value = employee.first_name;
+        document.getElementById('editEmployeeModalLastName').value = employee.last_name;
+        document.getElementById('editEmployeeModalUserId').value = employee.user_id;
+        document.getElementById('editEmployeeModalRUN').value = employee.run;
+        document.getElementById('editEmployeeModalJoinedIn').value = employee.joined_in;
+        document.getElementById('editEmployeeModalLunchBreak').value = employee.lunch_break;
+        document.getElementById('editEmployeeModalId').value = employee.id;  // Set the hidden ID field
+
+        // Update the form action
+        var form = document.querySelector('#editEmployeeModal form');
+        var baseUrl = "{{ url_for('human_resources.edit_employee', employee_id=0) }}";  // Get a base URL
+        form.action = baseUrl.replace('/0', '/' + employee.id);  // Replace the '0' with the actual employee ID
         
         // Open the modal
         jQuery('#editEmployeeModal').modal('show');
