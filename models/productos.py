@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 
 from sqlalchemy.orm import relationship
@@ -241,8 +242,8 @@ class Product(Base):
                     "df_kardex": df_kardex,
                     "prediction": prediction
                 }
-                
-                return product_data  # Return the product's attributes directly
+
+                return product_data, prediction  # Return the product's attributes directly
             except Exception as ex:
                 raise
 
