@@ -4,6 +4,7 @@ import json
 import subprocess
 
 from threading import Thread
+from decorators.roles import requires_roles
 from app.flags import stop, clear_stop_signal, stop_signal_is_set
 from flask import Blueprint, current_app, flash, render_template, jsonify
 
@@ -34,6 +35,7 @@ def run_api_module(app):
             flash(f'Ocurrió un error inesperado: {str(e)}', 'error')
 
 @api_blueprint.route('/run_api_calls')
+@requires_roles()
 def run_api_calls():
     global active_threads
 

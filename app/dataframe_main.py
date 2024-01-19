@@ -104,7 +104,7 @@ class DataFrameMain():
         for index, row in self.df_stocks.iterrows():
             product_stock = ProductStock(
                 variant_id=int(row['Variant ID']),
-                stock_lira=int(row['Stock Lira']),
+                stock_lira=int(row['Stock Lira 823']),
                 stock_sobrexistencia=int(row['Stock Sobrexistencia'])
             )
             session.add(product_stock)

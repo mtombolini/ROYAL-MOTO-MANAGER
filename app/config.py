@@ -41,3 +41,6 @@ config = {
     'development_postgres': DevelopmentConfigPostgres,
     'production' : ProductionConfig
 }
+
+CONFIG = config['development_postgres']
+TOKEN = CONFIG.TOKEN

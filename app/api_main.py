@@ -3,7 +3,7 @@ import threading
 
 from databases.session import AppSession
 
-from app.config import config
+from app.config import TOKEN
 from app.dataframe_main import DataFrameMain
 from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
@@ -15,8 +15,6 @@ from api.extractors.shipping_extractor import ShippingExtractor
 from api.extractors.reception_extractor import ReceptionExtractor
 from api.extractors.price_list_extractor import PriceListExtractor
 from api.extractors.consumption_extractor import ConsumptionExtractor
-
-TOKEN = config['development_postgres'].TOKEN
 
 product_ext = ProductExtractor(token=TOKEN)
 reception_ext = ReceptionExtractor(token=TOKEN)
@@ -79,5 +77,8 @@ class ApiMain:
         print("Limpieza y salida del programa.")
 
 if __name__ == "__main__":
+    inicial = time.time()
     api_main = ApiMain()
     api_main.main()
+    final = time.time()
+    print(f"Tiempo total: {final - inicial} segundos.")

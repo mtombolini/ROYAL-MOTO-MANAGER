@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, current_app
-from app.config import config
+from app.config import CONFIG, TOKEN
 from flask_login import LoginManager
 from json import JSONEncoder
 from enum import Enum
@@ -22,7 +22,7 @@ class CustomJSONEncoder(JSONEncoder):
         return super().default(self, obj)
 
 app = Flask(__name__, static_folder='../static', template_folder='../templates')
-app.config.from_object(config['development_postgres'])
+app.config.from_object(CONFIG)
 app.json_encoder = CustomJSONEncoder()
 login_manager = LoginManager(app)
 

@@ -33,6 +33,7 @@ class Analyser:
         print('Analizando...')
         good_ids = [id for id in self.ids if id not in self.bad_ids]
         for id in good_ids:
+            print(id)
             recommendation, date = predict_no_plot(self.kardexs[id])
             self.analysed[id] = {
                 'recommendation': recommendation,
