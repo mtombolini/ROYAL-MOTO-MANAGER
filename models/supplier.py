@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
 from typing import List, Dict
-from models.productos import Product
 import enum
 
 class SupplierNotFoundError(ValueError):

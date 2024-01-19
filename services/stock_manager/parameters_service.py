@@ -1,4 +1,4 @@
-CERTAINTY: float = .8
+CERTAINTY: float = .5
 DAYS_OF_ANTICIPATION: int = 20
 DAYS_TO_LAST: int = 30
 DOWN_COLOR: str = 'red'

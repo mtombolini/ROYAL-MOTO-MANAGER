@@ -12,7 +12,6 @@ from typing import List, Dict, Tuple
 import re
 
 
-
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
 def format_rut(rut: str) -> str:        
@@ -61,9 +60,11 @@ class SupplierForm(FlaskForm):
     rut = StringField('RUT', validators=[DataRequired(), NoRUTDuplicateValidator()])
     business_name = StringField('Razón Social', validators=[DataRequired()])
     trading_name = StringField('Nombre de Fantasía', validators=[DataRequired()])
-    credit_term = SelectField('Plazo de pago', 
-                              choices=[(term.name, term.value) for term in CreditTerm], 
-                              validators=[DataRequired()])
+    credit_term = SelectField(
+        'Plazo de pago', 
+        choices=[(term.name, term.value) for term in CreditTerm], 
+        validators=[DataRequired()]
+    )
     delivery_period = StringField('Tiempo de entrega', validators=[DataRequired()])
 
 @configuraciones_blueprint.route('/administracion_de_roles')
@@ -72,11 +73,14 @@ def administracion_de_roles():
     form = RoleForm()
     try:
         data = ModelUser.get_all_roles()
-        return render_template('configuraciones/administracion_de_roles/administracion_de_roles.html', form=form, page_title="Administración de Roles", data=data)
+        return render_template(
+            'configuraciones/administracion_de_roles/administracion_de_roles.html', form=form, 
+            page_title="Administración de Roles", data=data
+        )
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
-    
+
 @configuraciones_blueprint.route('/get_role/<int:role_id>')
 @requires_roles('desarrollador')
 def get_role(role_id):
@@ -109,7 +113,6 @@ def crear_rol():
 @configuraciones_blueprint.route('/eliminar_rol/<int:id_role>')
 @requires_roles('desarrollador')
 def delete_role(id_role):
-    # Verificar que no estemos eliminando el superadmin
     if ModelUser.is_superadmin(id_role)[0]:
         flash('No es posible eliminar el rol superadministrador.', 'error')
     elif ModelUser.role_has_associated_users(id_role)[0]:
@@ -132,14 +135,18 @@ def editar_rol(id_role):
     data = request.get_json()
     new_description = data.get('description')
 
-    # Obtener la descripción actual del rol desde la base de datos
     try:
         if ModelUser.is_superadmin(id_role)[0]:
             response = jsonify({'error': 'No es posible editar el rol "superadministrador".'})
-            response.status_code = 403  # Forbidden
+            response.status_code = 403
             return response
     except Exception as e:
-        response = jsonify({'error': 'No se pudo verificar si el rol seleccionado corresponde al superadministrador.'})
+        response = jsonify(
+            {
+                'error': 
+                'No se pudo verificar si el rol seleccionado corresponde al superadministrador.'
+            }
+        )
         response.status_code = 500 # Internal Server Error
         return response
 
@@ -163,22 +170,27 @@ def editar_rol(id_role):
 def administracion_de_usuarios():
     form = UserForm()
     role_data = ModelUser.get_all_roles()  # Fetch roles from database
-    # Format role data for the SelectField
-    form.id_role.choices = [(role['id_role'], f"{role['id_role']} - {role['description'].capitalize()}") for role in role_data]
+    form.id_role.choices = [
+        (
+            role['id_role'], f"{role['id_role']} - {role['description'].capitalize()}"
+        ) for role in role_data
+    ]
     try:
         data = ModelUser.get_all_users()
         print(data)
-        return render_template('configuraciones/administracion_de_usuarios/administracion_de_usuarios.html', 
-                               page_title="Administración de Usuarios", 
-                               data=data,
-                               form=form)  
+        return render_template(
+            'configuraciones/administracion_de_usuarios/administracion_de_usuarios.html',
+            page_title="Administración de Usuarios", 
+            data=data,
+            form=form
+        )
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
     
 
 @configuraciones_blueprint.route('/get_user/<int:user_id>', methods=['GET'])
-@requires_roles('desarrollador')  # Adjust the role requirement as needed
+@requires_roles('desarrollador')
 def get_user(user_id):
     try:
         user = ModelUser.get_by_id(user_id)

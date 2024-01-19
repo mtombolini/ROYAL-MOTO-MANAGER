@@ -1,10 +1,8 @@
 from functools import wraps
-from flask import render_template, redirect, url_for
 from flask_login import current_user
 from sqlalchemy.orm import joinedload
-
-# Importa la UserSession desde tu módulo session
 from databases.session import AppSession
+from flask import render_template, redirect, url_for
 
 def requires_roles(*roles):
     def wrapper(f):
@@ -13,10 +11,7 @@ def requires_roles(*roles):
             if not current_user.is_authenticated:
                 return redirect(url_for('auth.login'))
 
-            # Importación local de User y Role
             from models.user import User, Role
-
-            # Iniciar una sesión
             session = AppSession()
 
             try:
@@ -27,6 +22,6 @@ def requires_roles(*roles):
 
                 return f(*args, **kwargs)
             finally:
-                session.close()  # Cierra la sesión después de utilizarla
+                session.close()
         return wrapped
     return wrapper

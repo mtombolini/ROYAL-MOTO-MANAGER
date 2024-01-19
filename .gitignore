@@ -3,3 +3,4 @@
 parameters.py
 __pycache__
 DS_Store
+.env

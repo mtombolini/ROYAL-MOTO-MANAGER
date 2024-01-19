@@ -8,4 +8,3 @@ def get_superadmin_id_role(session):
     return jsonify(
         superadmin_role_id=session.query(Role).filter_by(description="superadministrador").first().id_role,
     )
-    

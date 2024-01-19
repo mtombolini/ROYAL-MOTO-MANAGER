@@ -1,10 +1,7 @@
 import os
 from threading import Event
 
-# Este es el path al archivo de señal que usaremos para detener los threads
 STOP_SIGNAL_FILE = 'logs/stop_signal_file.txt'
-
-# Evento para detener los threads
 stop_flag = Event()
 
 def stop():
