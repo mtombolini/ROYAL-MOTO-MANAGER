@@ -222,7 +222,8 @@ class Product(Base):
                 df_kardex['stock_actual'] = df_kardex['stock_actual'].astype(int)
                 kardex = df_kardex.to_dict('records')
 
-                if analysis and not df_kardex.empty and product.type != "SERVICIO DE TALLER":
+                services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
+                if analysis and not df_kardex.empty and product.type not in services:
                     prediction = predict(df_kardex)
                 else:
                     prediction = None

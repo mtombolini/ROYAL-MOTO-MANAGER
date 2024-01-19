@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 
 class DayRecommendation(Base):
     __tablename__ = 'recomendaciones_del_dia'

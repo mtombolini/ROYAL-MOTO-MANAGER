@@ -1,5 +1,6 @@
 import pandas as pd
 
+# from databases.session import AppSession
 from models.productos import Product
 from models.day_recommendation import DayRecommendation
 from services.stock_manager.simple.test import predict_no_plot
@@ -24,7 +25,8 @@ class Analyser:
         print('Obteniendo kardexs...')
         for id in self.ids:
             product_data = Product.filter_product(id, False)
-            if not product_data['df_kardex'].empty:
+            services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
+            if not product_data['df_kardex'].empty and product_data['type'] not in services:
                 self.kardexs[id] = product_data['df_kardex']
             else:
                 self.bad_ids.append(id)
@@ -65,4 +67,6 @@ if __name__ == '__main__':
     analyser.get_ids()
     analyser.get_kardexs()
     analyser.analyse()
-    print(analyser.analysed)
+    # session = AppSession()
+    # analyser.create_model(session)
+    # session.close()
