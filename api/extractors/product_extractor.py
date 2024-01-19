@@ -171,3 +171,4 @@ if __name__ == "__main__":
 
     print("¡Proceso finalizado!")
     print(f"Tiempo total: {time.time() - time_start} segundos")
+    
