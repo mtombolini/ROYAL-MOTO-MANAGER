@@ -5,22 +5,22 @@ from databases.session import AppSession
 from models.employee import EmployeeNotFoundError, EmployeeAttributeNotFoundError
 from typing import List, Dict
 
-class OvertimeHoursRecordNotFoundError(ValueError):
+class OvertimeRecordRecordNotFoundError(ValueError):
     """Exception raised when the overtime hours record of an employee 
     in a certain month is not found.""" 
     
-class OvertimeHoursRecordAttributeNotFoundError(AttributeError):
+class OvertimeRecordRecordAttributeNotFoundError(AttributeError):
     """Exception raised when trying to access an inexistent record attribute.""" 
     
-class OvertimeHoursKeyError(KeyError):
+class OvertimeRecordKeyError(KeyError):
     """Exception raised when the necessary keys/identifiers for a new record
     are not provided."""  
 
-class OvertimeHours(Base):
+class OvertimeRecord(Base):
     __tablename__ = 'horas extra'
 
     employee_id = Column(Integer, ForeignKey('empleados.id'), primary_key=True)
-    employee = relationship('Employee', back_populates='horas extra')
+    employee = relationship('Employee', back_populates='overtime_hours')
     month = Column(Date(), primary_key=True)
     overtime_hours = Column(Integer)
 
@@ -61,7 +61,7 @@ class OvertimeHours(Base):
                     }
                     return record_data
                 else:
-                    raise OvertimeHoursRecordNotFoundError(
+                    raise OvertimeRecordRecordNotFoundError(
                         f'Overtime record of employee with ID {employee_id} on {month} not found.'
                     )
             except Exception as ex:
@@ -87,7 +87,7 @@ class OvertimeHours(Base):
                     if hasattr(new_record, key):
                         setattr(new_record, key, value)
                     else:
-                        raise OvertimeHoursRecordAttributeNotFoundError(
+                        raise OvertimeRecordRecordAttributeNotFoundError(
                             f'Attribute {key} not found in overtime hours record'
                         )
                 # Add the instance to the session
@@ -111,7 +111,7 @@ class OvertimeHours(Base):
                     if hasattr(record_to_edit, key):
                         setattr(record_to_edit, key, value)
                     else:
-                        raise OvertimeHoursRecordAttributeNotFoundError(
+                        raise OvertimeRecordRecordAttributeNotFoundError(
                             f'Attribute {key} not found in overtime hours record'
                         )
                 # Commit the changes
@@ -135,7 +135,7 @@ class OvertimeHours(Base):
                     session.delete(record_to_delete)
                     session.commit()
                 else:
-                    raise OvertimeHoursRecordNotFoundError(
+                    raise OvertimeRecordRecordNotFoundError(
                         f'Overtime record of employee with ID {employee_id} on {month} not found.'
                     )
             except Exception as ex:
