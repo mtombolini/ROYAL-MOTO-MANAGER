@@ -24,7 +24,7 @@ class Analyser:
     def get_kardexs(self):
         print('Obteniendo kardexs...')
         for id in self.ids:
-            product_data = Product.filter_product(id, False)
+            product_data, _ = Product.filter_product(id, False)
             services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
             if not product_data['df_kardex'].empty and product_data['type'] not in services:
                 self.kardexs[id] = product_data['df_kardex']

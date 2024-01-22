@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists
 
-APP_DB_URL = CONFIG.DATA_BASE_URL
+APP_DB_URL = CONFIG.DATABASE_URL
 DEFAULT_DB_URL = CONFIG.DEFAULT_DATABASE_URL
 
 def create_db(db_url, default_db_url):
