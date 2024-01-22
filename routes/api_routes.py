@@ -15,7 +15,7 @@ active_threads = []
 def run_api_module(app):
     with app.app_context():
         project_root = os.path.dirname(current_app.root_path)
-        module_path = 'app.api_main'
+        module_path = 'app.extraction_main'
         python_executable = os.path.join(project_root, 'venv', 'Scripts', 'python.exe')
         if not os.path.exists(python_executable):
             python_executable = 'python'
