@@ -1,0 +1,118 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Administración de Proveedores{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .new-user-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-fluid mt-3 ms-3">
+    <div class="row">
+        <div class="col-12 new-user-button">
+            <!-- Button to open a new supplier modal, if necessary -->
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createSupplierModal">Nuevo Proveedor</button>
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>RUT</th>
+                        <th>Razón Social</th>
+                        <th>Nombre de Fantasía</th>
+                        <th>Plazo de Pago</th>
+                        <th>Tiempo de Entrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in data %}
+                    <tr id="{{ supplier.id }}">
+                        <td>{{ supplier.id }}</td>
+                        <td>{{ supplier.rut }}</td>
+                        <td>{{ supplier.business_name }}</td>
+                        <td>{{ supplier.trading_name }}</td>
+                        <td>{{ supplier.credit_term}}</td>
+                        <td>{{ supplier.delivery_period }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditSupplierModal({{ supplier }})">Editar</button>
+                            <a href="{{ url_for('configuraciones.delete_supplier', supplier_id=supplier.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este proveedor?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No hay proveedores disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                                                                                                 
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Modal to create suppliers -->
+<div class="modal fade" id="createSupplierModal" tabindex="-1" aria-labelledby="createSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createSupplierModalLabel">Crear Nuevo Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/suppliers_management/supplier_creation.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Modal to edit suppliers -->
+<div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog" aria-labelledby="editSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSupplierModalLabel">Editar Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'configuraciones/suppliers_management/supplier_edition.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function openEditSupplierModal(supplier) {
+        console.log(supplier)
+        // Populate the modal fields
+        document.getElementById('editSupplierModalId').value = supplier.id;
+        document.getElementById('editSupplierModalRut').value = supplier.rut;
+        document.getElementById('editSupplierModalBusinessName').value = supplier.business_name;
+        document.getElementById('editSupplierModalTradingName').value = supplier.trading_name;
+        document.getElementById('editSupplierModalCreditTerm').value = supplier.credit_term;
+        document.getElementById('editSupplierModalDeliveryPeriod').value = supplier.delivery_period;
+
+        // Update the form action
+        var form = document.querySelector('#editSupplierModal form');
+        var baseUrl = "{{ url_for('configuraciones.edit_supplier', supplier_id=0) }}";  // Get a base URL
+        form.action = baseUrl.replace('/0', '/' + supplier.id);  // Replace the '0' with the actual supplier ID
+        
+        // Open the modal
+        jQuery('#editSupplierModal').modal('show');
+    }  
+</script>
+{% endblock %}
+
+{% endblock %}
