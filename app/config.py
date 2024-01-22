@@ -8,6 +8,7 @@ class Config:
     TOKEN = os.environ.get('SECRET_TOKEN')
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DATABASE_URL = os.environ.get('DATABASE_URL')
+    CONFIG_TYPE = os.environ.get('CONFIG_TYPE', 'development')
     DEBUG = (os.environ.get('DEBUG', 'False').lower() == 'true')
     DEFAULT_DATABASE_URL = os.environ.get('DEFAULT_DATABASE_URL')
 
