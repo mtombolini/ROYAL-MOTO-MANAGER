@@ -16,7 +16,7 @@ class User(Base, UserMixin):
     correo = Column(String(255))
     id_role = Column(Integer, ForeignKey('roles.id_role'))
     role = relationship('Role', back_populates='users')
-    employee = relationship(Employee, back_populates='user')
+    empleados = relationship(Employee, back_populates='user')
 
     def __init__(self, username="", password="", nombre="", apellido="", correo="", id_role=None):
         self.username = username
