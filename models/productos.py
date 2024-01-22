@@ -1,20 +1,26 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+import json
+import pandas as pd
+
 from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey
+
 from databases.base import Base
 from databases.session import AppSession
-import pandas as pd
+from services.stock_manager.simple.test import predict
+
+from models.supplier import Supplier
+from models.shipping import Shipping
+from models.price_list import PriceList
+from models.document import DocumentDetail
+from models.reception import ReceptionDetail
+from models.consumption import ConsumptionDetail
+from models.day_recommendation import DayRecommendation
 
 def format_number(number):
     return "${:,.2f}".format(number).replace(",", "X").replace(".", ",").replace("X", ".")
 
 def format_decimal(number):
     return "{:,.2f}".format(number).replace(",", "X").replace(".", ",").replace("X", ".")
-
-
-from models.consumption import ConsumptionDetail
-from models.reception import ReceptionDetail
-from models.document import DocumentDetail
-from models.price_list import PriceList
 
 class Product(Base):
     __tablename__ = 'productos'
@@ -25,13 +31,13 @@ class Product(Base):
     sku = Column(String(255))
     supplier_id = Column(Integer, ForeignKey('suppliers.id'))
     
-    # asegúrate de que 'stock' corresponda al nombre de la relación inversa en ProductStock
     stock = relationship("ProductStock", uselist=False, back_populates="product")
     consumption_details = relationship("ConsumptionDetail", back_populates="product")
     reception_details = relationship("ReceptionDetail", back_populates="product")
     document_details = relationship("DocumentDetail", back_populates="product")
     price_list = relationship("PriceList", back_populates="product")
     supplier = relationship("Supplier", back_populates="products")
+    day_recommendation = relationship("DayRecommendation", back_populates="product")
 
     @classmethod
     def get_all_products(cls):
@@ -43,7 +49,7 @@ class Product(Base):
                         key: value 
                         for key, value in product.__dict__.items() 
                         if not key.startswith('_')
-                    } 
+                    }
                 for product in products
                 ]
 
@@ -52,7 +58,7 @@ class Product(Base):
                 raise
 
     @classmethod
-    def filter_product(cls, variant_id):
+    def filter_product(cls, variant_id, analysis=True):
         with AppSession() as session:
             try:
                 product = session.query(cls).filter(cls.variant_id == variant_id).first()  # Retrieve a single product
@@ -61,21 +67,39 @@ class Product(Base):
                 data = []
                 for reception_detail in product.reception_details:
                     reception = reception_detail.reception
+
                     if reception.document_type == "Sin Documento":
                         num = reception_detail.reception_id
                     else:
                         num = reception.document_number
-                    data.append({
-                        "fecha": reception.date,
-                        "documento": reception.document_type + " " + str(num),
-                        "tipo_de_documento": reception.document_type,
-                        "numero_de_documento": num,
-                        "oficina": reception.office,
-                        "nota": reception.note,
-                        "cantidad": reception_detail.quantity,
-                        "costo_neto": reception_detail.net_cost,
-                        "costo_neto_formated": format_number(reception_detail.net_cost)
-                    })
+
+                    if "GUÍA" in reception.document_type:
+                        shipping = Shipping.seach_shipping_guide_by_number(f"{num}.0")
+                        if shipping is not None and shipping["shipping_type"] != "Traslados internos (no constituye venta)":
+                            data.append({
+                            "fecha": reception.date,
+                            "documento": reception.document_type + " " + str(num),
+                            "tipo_de_documento": reception.document_type,
+                            "numero_de_documento": num,
+                            "oficina": reception.office,
+                            "nota": reception.note,
+                            "cantidad": reception_detail.quantity,
+                            "costo_neto": reception_detail.net_cost,
+                            "costo_neto_formated": format_number(reception_detail.net_cost)
+                        })
+                            
+                    else:
+                        data.append({
+                            "fecha": reception.date,
+                            "documento": reception.document_type + " " + str(num),
+                            "tipo_de_documento": reception.document_type,
+                            "numero_de_documento": num,
+                            "oficina": reception.office,
+                            "nota": reception.note,
+                            "cantidad": reception_detail.quantity,
+                            "costo_neto": reception_detail.net_cost,
+                            "costo_neto_formated": format_number(reception_detail.net_cost)
+                        })
 
                 df = pd.DataFrame(data)
                 if df.empty:
@@ -159,8 +183,8 @@ class Product(Base):
                         "name": price_list.name,
                         "valor": price_list.value,
                         "valor_formated": format_number(price_list.value),
-                        "factor_ponderador": price_list.value / last_net_cost['costo_neto'] if last_net_cost['costo_neto'] != None else "Indefinido",
-                        "factor_ponderador_formated": format_decimal(price_list.value / last_net_cost['costo_neto']) if last_net_cost['costo_neto'] != None else "Indefinido"
+                        "factor_ponderador": (price_list.value / last_net_cost['costo_neto']) if (last_net_cost['costo_neto'] != None) and (last_net_cost['costo_neto'] != 0) else "Indefinido",
+                        "factor_ponderador_formated": format_decimal(price_list.value / last_net_cost['costo_neto']) if (last_net_cost['costo_neto'] != None) and (last_net_cost['costo_neto'] != 0) else "Indefinido"
                     })
 
                 df_precios = pd.DataFrame(data_precios)
@@ -169,17 +193,57 @@ class Product(Base):
                 else:
                     price_list = df_precios.to_dict('records')
 
+                if not df_ventas.empty:
+                    df_ventas = df_ventas.drop_duplicates()
+
+                def create_empty_dataframe(columns):
+                    return pd.DataFrame(columns=columns)
+
+                # Comprobar si los DataFrames están vacíos y crear DataFrames vacíos si es necesario
+                if df.empty:
+                    df_entradas = create_empty_dataframe(['fecha', 'entrada'])
+                else:
+                    df_entradas = df[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
+
+                if df_consumos.empty and df_ventas.empty:
+                    df_salidas = create_empty_dataframe(['fecha', 'salida'])
+                else:
+                    df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
+
+                df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
+
+                df_unificado = df_unificado.sort_values('fecha')
+                df_unificado['stock_actual'] = df_unificado['entrada'] - df_unificado['salida']
+                df_unificado['stock_actual'] = df_unificado['stock_actual'].cumsum()
+
+                # Crear el DataFrame del Kardex
+                df_kardex = df_unificado[['fecha', 'entrada', 'salida', 'stock_actual']]
+                df_kardex['entrada'] = df_kardex['entrada'].astype(int)
+                df_kardex['salida'] = df_kardex['salida'].astype(int)
+                df_kardex['stock_actual'] = df_kardex['stock_actual'].astype(int)
+                kardex = df_kardex.to_dict('records')
+
+                services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
+                if analysis and not df_kardex.empty and product.type not in services:
+                    prediction = predict(df_kardex)
+                else:
+                    prediction = None
+
                 product_data = {
                     **product.__dict__,
+                    "supplier": product.supplier.__dict__,
                     "stock": stock,
                     "reception_details_list": reception_details_list,
                     "consumption_details_list": consumption_details_list,
                     "sales_list": sales_list,
                     "last_net_cost": last_net_cost,
-                    "price_list": price_list
+                    "price_list": price_list,
+                    "kardex": kardex,
+                    "df_kardex": df_kardex,
+                    "prediction": prediction
                 }
-                
-                return product_data  # Return the product's attributes directly
+
+                return product_data, prediction  # Return the product's attributes directly
             except Exception as ex:
                 raise
 

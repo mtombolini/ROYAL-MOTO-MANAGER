@@ -1,11 +1,19 @@
-from flask import Blueprint, render_template, redirect, url_for, jsonify
+from datetime import datetime
+from html import unescape
+
+from flask import Blueprint, render_template, redirect, url_for, jsonify, request
 from flask_login import login_required
 from decorators.roles import requires_roles
 
-# Modelos y entidades
-from models.cart import BuyCart
+from models.cart import BuyCart, BuyCartDetail
 from models.user import User
 from models.model_cart import ModelCart
+
+def unformat_number(formatted_number):
+    if formatted_number == None:
+        return 999999
+    unformatted_number = formatted_number.replace(".", "").replace(",", ".").replace("$", "")
+    return float(unformatted_number)
 
 
 compras_blueprint = Blueprint('compras', __name__)
@@ -19,20 +27,18 @@ def stock_critico():
 @requires_roles('desarrollador')
 def carro(cart_id):
     try:
-        
         data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
         data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
-        data_resume = resumen_compra(data_detail)
-        print(data_resume['total'])
+        data_resume = resumen_compra(data_general)
 
         return render_template('carro.html', page_title=f"Carro de Compras", data_detail=data_detail, data_general=data_general, data_resume=data_resume)
     except Exception as e:
         print(e)
         return render_template('error.html'), 500
     
-def resumen_compra(data_detail):
-    cantidad_articulos = len(data_detail)
-    subtotal = sum(item.costo_neto for item in data_detail)
+def resumen_compra(data_general):
+    cantidad_articulos = data_general.cantidad_productos
+    subtotal = data_general.monto_neto
     impuestos = subtotal * 0.19  # Asumiendo un 19% de impuesto
     total = subtotal + impuestos
 
@@ -65,4 +71,56 @@ def eliminar_carro(cart_id):
             return jsonify({'error': 'Carro no encontrado'}), 404
     except Exception as e:
         print(e)
+        return jsonify({'error': str(e)}), 500
+    
+@compras_blueprint.route('/compras', methods=['POST'])
+@requires_roles('desarrollador')
+def agregar_producto():
+    try:
+        data = request.json
+        product = data['product']
+        cantidad = int(data['cantidad'])
+
+        product['description'] = unescape(product['description'])
+        product['last_net_cost'] = float(product['last_net_cost'])
+
+        carts = ModelCart.get_all_carts()
+        existing_cart = next((cart for cart in carts if cart.proveedor == product['supplier']), None)
+
+        if existing_cart:
+            cart = existing_cart
+        else:
+            cart_data = {
+                'descripcion': "Descripción Pendiente",
+                'fecha_creacion': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'proveedor': product['supplier'],
+                'monto_neto': 0,
+                'cantidad_productos': 0,
+                'estado': "Creado",
+                'revision': "Pendiente",
+                'rendimiento': "Pendiente"
+            }
+
+            cart = ModelCart.create_cart(cart_data)
+
+        detail_data = {
+            'cart_id': cart.cart_id,
+            'variant_id': product['variant_id'],
+            'descripcion_producto': product['description'],
+            'sku_producto': product['sku'],
+            'costo_neto': product['last_net_cost'],
+            'cantidad': cantidad
+        }
+
+        ModelCart.create_cart_detail(detail_data)
+
+        suma_monto = product['last_net_cost'] * cantidad
+        suma_cantidad = cantidad
+
+        ModelCart.update_cart(cart.cart_id, int(suma_monto), suma_cantidad)
+
+        carts = ModelCart.get_all_carts()
+        return jsonify({'redirect': url_for('compras.compras')})
+
+    except Exception as e:
         return jsonify({'error': str(e)}), 500

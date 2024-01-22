@@ -1,11 +1,15 @@
-from services.stock_manager.parameters import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST
-from services.stock_manager.distribution_estimator import get_sales_current_distribution
-from scipy.stats import norm
+import warnings
 import pandas as pd
 
-def should_buy(product_data: pd.DataFrame, 
-               days_of_anticipation: int, 
-               certainty: float) -> bool:
+from math import ceil
+from scipy.stats import norm
+
+from services.stock_manager.parameters_service import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST
+from services.stock_manager.distribution_estimator import get_sales_current_distribution
+
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty: float) -> bool:
     """
     This function returns a bool telling whether you should buy more units
     of a product or not, based on its sales' historical recent data and
@@ -25,26 +29,35 @@ def should_buy(product_data: pd.DataFrame,
     """
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
-    mean, std = get_sales_current_distribution(product_data)
+    mean, std, historic_mean, _ = get_sales_current_distribution(product_data)
 
     stock_left: int = product_data["Close"].iloc[-1]
-    prob_of_running_out = 1 - norm.cdf(stock_left, 
-                                       loc=mean*days_of_anticipation, 
-                                       scale=std*days_of_anticipation)
-    
-    return prob_of_running_out > certainty or product_data.iloc[-1]["Close"] == 0
+    prob_of_running_out = 1 - norm.cdf(stock_left, loc=mean * days_of_anticipation, 
+                                       scale=std * days_of_anticipation)
+
+    return prob_of_running_out > certainty or int(stock_left) <= ceil(historic_mean)
 
 
 def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
-    mean, std = get_sales_current_distribution(product_data)
+    mean, std, historic_mean, _= get_sales_current_distribution(product_data)
 
-    return mean*days_to_last
+    if mean * std == 0:
+        return historic_mean * days_to_last - product_data.iloc[-1]["Close"]
+
+    return max(0, mean * days_to_last - product_data.iloc[-1]["Close"])
 
 
 def predict_units_to_buy(product_data):
-    to_buy = (should_buy(product_data, days_of_anticipation=DAYS_OF_ANTICIPATION, certainty=CERTAINTY)
-              * units_to_buy(product_data, days_to_last=DAYS_TO_LAST))
+    to_buy = ceil(
+        (
+            should_buy(
+                product_data, 
+                days_of_anticipation=DAYS_OF_ANTICIPATION, 
+                certainty=CERTAINTY
+            ) * units_to_buy(product_data, days_to_last=DAYS_TO_LAST)
+        )
+    )
     
     return to_buy

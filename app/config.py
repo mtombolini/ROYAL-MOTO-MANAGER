@@ -1,43 +1,15 @@
-#from parameters import PASSWORD_MYSQL, PASSWORD_POSTGRES
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Config:
-    SECRET_KEY = '909932'
-    BASE_URL = 'https://api.bsale.io/v1/'
-    TOKEN_PATH = 'Api/token.txt'
-    STOCKS_DATABASE_NAME = 'royal_manager_stocks' 
-
-class DevelopmentConfigMySQL(Config):
-    DEBUG = True
-    HOST = '127.0.0.1'
-    PORT = 5432
-    # USER = USER_MYSQL
-    # PASSWORD = PASSWORD_MYSQL
-    DB = 'royal_manager_database'
     API_DATA_RESET_MODE = True
-    # DATA_BASE_URL = f"mysql+mysqldb://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+    TOKEN = os.environ.get('SECRET_TOKEN')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    DEBUG = (os.environ.get('DEBUG', 'False').lower() == 'true')
+    DEFAULT_DATABASE_URL = os.environ.get('DEFAULT_DATABASE_URL')
 
-class DevelopmentConfigPostgres(Config):
-    DEBUG = True
-    HOST = '127.0.0.1'
-    PORT = 5432
-    # USER = USER_POSTGRES
-    # PASSWORD = PASSWORD_POSTGRES
-    DB = 'royal_manager_database'
-    API_DATA_RESET_MODE = True
-    # DATA_BASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB}"
-    # DEFAULT_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/postgres"
-
-class ProductionConfig(Config):
-    DEBUG = False
-    HOST = 'dpg-cm3tp1mn7f5s73brdhhg-a'
-    USER = 'royal_motor_admin'
-    PASSWORD = 'ePqyvJvmJRe1hOiwLiW9qCqI2VPVp4rl'
-    DB = 'royal_motor_database'
-    API_DATA_RESET_MODE = True
-    DATA_BASE_URL = 'postgresql://royal_motor_admin:ePqyvJvmJRe1hOiwLiW9qCqI2VPVp4rl@dpg-cm3tp1mn7f5s73brdhhg-a.oregon-postgres.render.com/royal_motor_database'
-    DEFAULT_DATABASE_URL = 'postgresql://royal_motor_admin:ePqyvJvmJRe1hOiwLiW9qCqI2VPVp4rl@dpg-cm3tp1mn7f5s73brdhhg-a.oregon-postgres.render.com/royal_motor_database'
-
-config = {
-    'development_mysql': DevelopmentConfigMySQL,
-    'development_postgres': DevelopmentConfigPostgres,
-    'production' : ProductionConfig
-}
+CONFIG = Config()
+TOKEN = CONFIG.TOKEN
