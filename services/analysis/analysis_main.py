@@ -26,8 +26,15 @@ class Analyser:
         for id in self.ids:
             product_data, _ = Product.filter_product(id, False)
             services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
-            if not product_data['df_kardex'].empty and product_data['type'] not in services:
-                self.kardexs[id] = product_data['df_kardex']
+            if product_data['type'] not in services:
+                df_kardex = product_data['df_kardex']
+                df_kardex['fecha'] = pd.to_datetime(df_kardex['fecha']).dt.date
+                unique_dates = df_kardex['fecha'].nunique()
+
+                if unique_dates > 1:
+                    self.kardexs[id] = df_kardex
+                else:
+                    self.bad_ids.append(id)
             else:
                 self.bad_ids.append(id)
 

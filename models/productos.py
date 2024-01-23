@@ -2,7 +2,7 @@ import json
 import pandas as pd
 
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, or_, cast
 
 from databases.base import Base
 from databases.session import AppSession
@@ -30,7 +30,7 @@ class Product(Base):
     description = Column(String(255))
     sku = Column(String(255))
     supplier_id = Column(Integer, ForeignKey('suppliers.id'))
-    
+
     stock = relationship("ProductStock", uselist=False, back_populates="product")
     consumption_details = relationship("ConsumptionDetail", back_populates="product")
     reception_details = relationship("ReceptionDetail", back_populates="product")
@@ -52,6 +52,48 @@ class Product(Base):
                     }
                 for product in products
                 ]
+
+                for product_data, product in zip(products_data, products):
+                    supplier = product.supplier
+                    if supplier:
+                        product_data['supplier_trading_name'] = supplier.trading_name
+                    else:
+                        product_data['supplier_trading_name'] = None
+
+                return products_data
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def filter_products(cls, search_query):
+        with AppSession() as session:
+            try:
+                search_query = f"%{search_query.lower()}%"
+                products = session.query(cls).filter(
+                    or_(
+                        cast(Product.variant_id, String).ilike(search_query),
+                        Product.type.ilike(search_query),
+                        Product.sku.ilike(search_query),
+                        Product.description.ilike(search_query),
+                        Product.supplier.has(Supplier.trading_name.ilike(search_query))
+                    )
+                ).all()
+
+                products_data = [
+                    {
+                        key: value
+                        for key, value in product.__dict__.items()
+                        if not key.startswith('_')
+                    }
+                for product in products
+                ]
+
+                for product_data, product in zip(products_data, products):
+                    supplier = product.supplier
+                    if supplier:
+                        product_data['supplier_trading_name'] = supplier.trading_name
+                    else:
+                        product_data['supplier_trading_name'] = None
 
                 return products_data
             except Exception as ex:
@@ -224,7 +266,7 @@ class Product(Base):
                 kardex = df_kardex.to_dict('records')
 
                 services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
-                if analysis and not df_kardex.empty and product.type not in services:
+                if analysis and product.type not in services and len(df_kardex) > 1:
                     prediction = predict(df_kardex)
                 else:
                     prediction = None

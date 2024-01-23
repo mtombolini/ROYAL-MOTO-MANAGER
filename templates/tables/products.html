@@ -6,30 +6,81 @@
 {% include 'header.html' %}
 
 <style>
-    .btn-sm {
-        min-width: 95px;
-        text-align: center;
-        font-size: 13px;
-    }
     .new-product-button {
         text-align: left;
+        margin-left: 0;
+        margin-right: 0;
         margin-bottom: 10px;
+        padding: 0 0 0 0;
     }
+
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+    
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .ver_btn:hover {
+        border-color: #dc3545;
+    }
+
+    .custom_col {
+        padding: 0 0 0 0;
+    }
+
+    .container-fluid {
+        max-width: 90%;
+    }
+
+    .pagination .page-item.active .page-link {
+        color: white;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .pagination .page-link {
+        color: #dc3545;
+    }
+    
+    .pagination .page-link:hover {
+        color: white;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+    }
+
 </style>
 
-<div class="container-fluid mt-3 ms-3">
+<div class="container-fluid mt-3">
     <div class="row">
-        <div class="col-12 new-product-button">
-            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Nuevo Producto</button>
+        <div class="col-12 new-product-button d-flex justify-content-between">
+            <button class="btn btn-warning m-0 border-2 custom_btn" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Nuevo Producto</button>
+
+            <div class="d-flex">
+                <form action="{{ url_for('tables.get_products') }}" method="get" class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Buscar..." value="{{ search_query }}">
+                    <button type="submit" class="btn btn-warning m-0 border-2 custom_btn">Buscar</button>
+                </form>
+            </div>
         </div>
-        <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+        <div class="col-12 custom_col">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>ID</th>
                         <th>Tipo</th>
-                        <th>Descripción</th>
                         <th>SKU</th>
+                        <th>Descripción</th>
+                        <th>Proveedor</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,10 +88,11 @@
                     <tr id="product-{{ product.variant_id }}">
                         <td>{{ product.variant_id }}</td>
                         <td>{{ product.type }}</td>
-                        <td>{{ product.description }}</td>
                         <td>{{ product.sku }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.supplier_trading_name }}</td>
                         <td>
-                            <a href="{{ url_for('tables.product_detail', variant_id=product.variant_id) }}" class="btn btn-sm btn-primary">Ver</a>
+                            <a href="{{ url_for('tables.product_detail', variant_id=product.variant_id) }}" class="btn btn-sm btn-secondary ver_btn">Ver</a>
                         </td>
                     </tr>
                     {% else %}
@@ -50,6 +102,41 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('tables.get_products', page=1, search=search_query) }}">Primera</a>
+                    </li>
+            
+                    {% set max_pages_shown = 5 %}
+                    {% set half_range_shown = (max_pages_shown // 2) %}
+                    {% set start_page = current_page - half_range_shown %}
+                    {% set end_page = current_page + half_range_shown %}
+            
+                    {% if start_page < 1 %}
+                        {% set start_page = 1 %}
+                        {% set end_page = max_pages_shown %}
+                    {% endif %}
+            
+                    {% if end_page > total_pages %}
+                        {% set start_page = total_pages - max_pages_shown + 1 %}
+                        {% set end_page = total_pages %}
+                        {% if start_page < 1 %}
+                            {% set start_page = 1 %}
+                        {% endif %}
+                    {% endif %}
+            
+                    {% for i in range(start_page, end_page + 1) %}
+                        <li class="page-item {% if i == current_page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('tables.get_products', page=i, search=search_query) }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+            
+                    <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('tables.get_products', page=total_pages, search=search_query) }}">Última</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
