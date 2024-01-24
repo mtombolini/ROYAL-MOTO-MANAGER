@@ -1,3 +1,16 @@
+<style>
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+  
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+</style>
+
 <form action="{{ url_for('configuraciones.editar_usuario', user_id=1) }}" method="post" id="editUserForm">
     {{ form.csrf_token }}
 
@@ -34,5 +47,5 @@
         {{ form.id_role(class="form-control", id="modalRoleId") }}
     </div>
 
-    <button type="submit" class="btn btn-primary">Editar Usuario</button>
+    <button type="submit" class="btn btn-warning custom_btn">Editar Usuario</button>
 </form>

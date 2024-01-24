@@ -5,12 +5,30 @@
 {% block body %}
 {% include 'header.html' %}
 
-<div class="container m-3">
+
+<style>
+    .container-fluid {
+        max-width: 90%;
+    }
+    
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+    
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+</style>
+
+
+<div class="container-fluid mt-3">
     <div class="row">
-        <!-- Div alineado al inicio (start) -->
         <div class="col-md-5">
-            <div class="bg-secondary text-white p-1 rounded">
-                <h4>Detalle de la Compra</h4>
+            <div class="bg-warning text-dark p-1 rounded mt-2">
+                <h4 class="mb-1">Detalle de la Compra</h4>
             </div>
 
             <ul class="list-group mt-1">
@@ -35,49 +53,46 @@
                     <span>{{ data_general.estado }}</span>
                 </li>
             </ul>
-            <!-- <div class="d-grid gap-2 my-3">
-                <button class="btn btn-success" type="button">Proceder al Pago</button>
-            </div> -->
         </div>
 
-        <!-- Espacio vacío para separar los divs -->
         <div class="col-md-3"></div>
 
-        <!-- Div alineado al final (end) -->
         <div class="col-md-4">
-            <div class="bg-danger text-white p-1 rounded">
-                <h4>Resumen de la Compra</h4>
+            <div class="bg-danger text-white p-1 rounded mt-2">
+                <h4 class="mb-1">Resumen de la Compra</h4>
             </div>
             <ul class="list-group mt-1">
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
-                    Cantidad de Items
-                    <strong>{{ data_resume.cantidad_articulos }}</strong>
+                    <strong>Cantidad de Items</strong>
+                    <span>{{ data_resume.cantidad_articulos }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
-                    Subtotal
+                    <strong>Subtotal</strong>
                     <span>$ {{ data_resume.subtotal }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" syle="padding-top: 5px; padding-bottom: 5px;">
-                    Impuestos
+                    <strong>Impuestos</strong>
                     <span>$ {{ data_resume.impuestos }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
-                    Total
+                    <strong>Total</strong>
                     <span>$ {{ data_resume.total }}</span>
                 </li>
             </ul>
             <div class="d-grid my-2">
-                <button class="btn btn-success" type="button">Proceder al Pago</button>
+                <button class="btn btn-success m-0" type="button">Proceder al Pago</button>
             </div>
         </div>
     </div>
 </div>
-    <hr style="height: 2px; background-color: black;">
 
+<hr style="height: 2px; background-color: black;">
+
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Producto</th>
                         <th>SKU</th>
@@ -96,9 +111,9 @@
                         <td>
                             <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input">
                         </td>
-                        <td>${{ product.subtotal }}</td>
+                        <td>${{ product.cantidad * product.costo_neto }}</td>
                         <td>
-                            <button class="btn btn-sm btn-info update-btn">Actualizar</button>
+                            <button class="btn btn-sm btn-warning custom_btn update-btn">Actualizar</button>
                             <button class="btn btn-sm btn-danger">Eliminar</button>
                         </td>
                     </tr>
@@ -107,7 +122,6 @@
             </table>
         </div>
     </div>
-
 </div>
 
 {% endblock %}

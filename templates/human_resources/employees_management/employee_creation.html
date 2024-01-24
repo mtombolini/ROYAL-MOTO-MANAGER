@@ -1,3 +1,16 @@
+<style>
+  .custom_btn {
+    margin: 0 0 0 0;
+    border-color: #ffc107;
+    color: black;
+  }
+
+  .custom_btn:hover {
+      border-color: #dc3545;
+      color: white;
+  }
+</style>
+
 <form method="POST" action="{{ url_for('human_resources.create_employee') }}">
 
   {{ form.hidden_tag() }}
@@ -32,5 +45,5 @@
     {{ form.lunch_break(class="form-control", id="createEmployeeModalId") }}
   </div>
   
-  <button type="submit" class="btn btn-primary">Registrar Empleado</button>
+  <button type="submit" class="btn btn-warning custom_btn">Registrar Empleado</button>
 </form>

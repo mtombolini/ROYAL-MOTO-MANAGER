@@ -6,29 +6,34 @@
 {% include 'header.html' %}
 
 <style>
-    .fecha-estilizada {
-        padding: 10px;
+    .fecha-custom {
         background-color: #f2f2f2;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        text-align: left;
     }
     
     .fecha-texto {
         font-weight: bold;
         color: #333;
     }
+
+    .container-fluid {
+        max-width: 90%;
+    }
+
+    .ver_btn:hover {
+        border-color: #dc3545;
+    }
+
 </style>
 
 {% if recommendations %}
-<div class="container-fluid mt-3 ms-3">
+<div class="container-fluid mt-3">
     <div class="row">
-        <div class="fecha-estilizada">
-            Fecha: <span class="fecha-texto">{{ recommendations[0].date.strftime('%Y-%m-%d') }}</span>
+        <div class="p-2 fecha-custom rounded-2 mb-2 text-start">
+            Fecha: <span class="text-dark fw-bold">{{ recommendations[0].date.strftime('%Y-%m-%d') }}</span>
         </div>
-        <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+        <div class="col-12 p-0">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th></th>
                         <th>Proveedor</th>
@@ -36,6 +41,7 @@
                         <th>SKU</th>
                         <th>Descripción</th>
                         <th>Recomendacion</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +55,7 @@
                         <td>{{ recommendation.description }}</td>
                         <td>{{ recommendation.recommendation }}</td>
                         <td>
-                            <a href="{{ url_for('tables.product_detail', variant_id=recommendation.variant_id) }}" class="btn btn-sm btn-primary">Ver</a>
+                            <a href="{{ url_for('tables.product_detail', variant_id=recommendation.variant_id) }}" class="btn btn-sm btn-secondary ver_btn">Ver</a>
                         </td>
                     </tr>
                     {% endif %}

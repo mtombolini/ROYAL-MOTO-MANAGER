@@ -58,12 +58,12 @@
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 new-product-button d-flex justify-content-between">
-            <button class="btn btn-warning m-0 border-2 custom_btn" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Nuevo Producto</button>
+            <button class="btn btn-warning m-0 border-2 custom_btn shadow" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Nuevo Producto</button>
 
             <div class="d-flex">
                 <form action="{{ url_for('tables.get_products') }}" method="get" class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Buscar..." value="{{ search_query }}">
-                    <button type="submit" class="btn btn-warning m-0 border-2 custom_btn">Buscar</button>
+                    <input type="text" name="search" class="form-control shadow" placeholder="Buscar..." value="{{ search_query }}">
+                    <button type="submit" class="btn btn-warning m-0 border-2 custom_btn shadow">Buscar</button>
                 </form>
             </div>
         </div>

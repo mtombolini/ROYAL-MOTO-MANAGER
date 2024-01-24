@@ -8,7 +8,10 @@
 <style>
     .new-role-button {
         text-align: left;
+        margin-left: 0;
+        margin-right: 0;
         margin-bottom: 10px;
+        padding: 0 0 0 0;
     }
 
     .employee-card {
@@ -16,21 +19,52 @@
         padding: 10px;
         margin-bottom: 10px;
     }
+
+    .container-fluid {
+        max-width: 90%;
+    }
+
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
 </style>
 
 <!-- Mostrar cuadros de empleados -->
-<div class="container mt-3">
+<div class="container-fluid mt-3">
     <div class="row">
+        <div class="col-12 new-role-button mb-4">
+            <button class="btn btn-warning m-0 border-2 custom_btn shadow" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">Crear Nuevo Empleado</button>
+        </div>
         {% for employee in data %}
             <div class="col-md-4">
-                <div class="employee-card">
-                    <h4>{{ employee.first_name }} {{ employee.last_name }}</h4>
-                    <p>Username: {{ employee.username }}</p>
-                    <p>RUN: {{ employee.run }}</p>
-                    <p>Fecha de incorporación: {{ employee.joined_in }}</p>
-                    <p>Horario de colación: {{ employee.lunch_break }}</p>
+                <div class="employee-card rounded-4">
+                    <h4 class="m-0">{{ employee.first_name }} {{ employee.last_name }}</h4>
+                    <hr style="height: 2px; background-color: black;">
+                    <div class="d-flex justify-content-between">
+                        <p class="ms-3 fw-bold">Username:</p>
+                        <p class="me-3">{{ employee.username }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="ms-3 fw-bold">RUN:</p>
+                        <p class="me-3">{{ employee.run }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="ms-3 fw-bold">Fecha de incorporación:</p>
+                        <p class="me-3">{{ employee.joined_in }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="ms-3 fw-bold">Horario de colación:</p>
+                        <p class="me-3">{{ employee.lunch_break }}</p>
+                    </div>
                     <!-- Agrega más información del empleado según tus necesidades -->
-                    <button type="button" class="btn btn-sm btn-primary edit-btn" 
+                    <button type="button" class="btn btn-sm btn-warning custom_btn me-1 ms-3 edit-btn" 
                     onclick="openEditEmployeeModal({{ employee }})">Editar</button>
                     <a href="{{ url_for('human_resources.delete_employee', employee_id=employee.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este empleado?')">Eliminar</a>
                 </div>
@@ -39,15 +73,6 @@
     </div>
 </div>
 
-<div class="container-fluid mt-3 ms-3">
-    <div class="row">
-        <div class="col-12 new-role-button">
-            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">Crear Nuevo Empleado</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para el formulario de empleado -->
 <div class="modal fade" id="createEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -72,7 +97,6 @@
             </div>
             <div class="modal-body">
                 {% include 'human_resources/employees_management/employee_edition.html' %}
-                <!-- This file should contain the form for editing an employee -->
             </div>
         </div>
     </div>

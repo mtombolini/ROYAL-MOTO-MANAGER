@@ -51,8 +51,8 @@
                     Adquisiciones
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('compras.compras') }}">Compras</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('compras.stock_critico') }}">Stock Crítico</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('compras.compras') }}">Compras</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('compras.stock_critico') }}">Stock Crítico</a></li>
                 </ul>
             </li>
             
@@ -62,7 +62,7 @@
                     Reportes
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('reportes.reporte_desempeño') }}">Reporte de Desempeño</a></li>
+                    <li><a class="dropdown-item  m-0" href="{{ url_for('reportes.reporte_desempeño') }}">Reporte de Desempeño</a></li>
                 </ul>
             </li>
 
@@ -73,7 +73,7 @@
                     RRHH
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('human_resources.employees_management') }}">Administración de Empleados</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('human_resources.employees_management') }}">Administración de Empleados</a></li>
                 </ul>
             </li>
 
@@ -83,20 +83,16 @@
                     Configuraciones
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.administracion_de_roles') }}">Administración de Roles</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.administracion_de_usuarios') }}">Administración de Usuarios</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('configuraciones.suppliers_management') }}">Administración de Proveedores</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('api_call.run_api_calls') }}">Actualizar datos API</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('configuraciones.administracion_de_roles') }}">Administración de Roles</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('configuraciones.administracion_de_usuarios') }}">Administración de Usuarios</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('configuraciones.suppliers_management') }}">Administración de Proveedores</a></li>
+                    <li><a class="dropdown-item m-0" href="{{ url_for('api_call.run_api_calls') }}">Actualizar datos API</a></li>
                 </ul>
             </li>
 
             <!-- Dropdown de Tablas -->
-            <li class="nav-item dropdown">
-                <a class="btn dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tablas</a>
-
-                <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('tables.get_products') }}">Productos</a></li>
-                </ul>
+            <li class="nav-item">
+                <a class="btn" href="{{ url_for('tables.get_products') }}">Productos</a>
             </li>
         </ul>
     </div>
