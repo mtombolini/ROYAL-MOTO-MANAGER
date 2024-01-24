@@ -6,36 +6,46 @@
 {% include 'header.html' %}
 
 <style>
-    .btn-sm {
-        min-width: 95px;
-        text-align: center;
-        font-size: 13px;
-    }
     .add-product-button {
         text-align: left;
+        margin-left: 0;
+        margin-right: 0;
         margin-bottom: 10px;
+        padding: 0 0 0 0;
     }
 
-    .product-detail {
-        margin-bottom: 20px;
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
     }
-  
-    table {
-        float: right;
-        margin-right: 16px;
+
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
     }
+
+    .container-fluid {
+        max-width: 90%;
+    }
+
+    .myPlot {
+        max-width: 100%;
+    }
+
+    
 </style>
 
-<div class="container-fluid mt-3 ms-3">
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 add-product-button">
-            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#agregarCompraModal">Agregar a Compra</button>
+            <button class="btn btn-warning m-0 border-2 custom_btn" data-bs-toggle="modal" data-bs-target="#agregarCompraModal">Agregar a Compra</button>
         </div>
-        <div class="col-12">
-            <h1 class="product-detail">Detalles del Producto</h1>
+        <div class="col-12 p-0">
+            <h1 class="mb-3">Detalles del Producto</h1>
     
-            <table class="table table-bordered">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>ID</th>
                         <th>Tipo</th>
@@ -60,16 +70,10 @@
                     {% endif %}
                 </tbody>
             </table>
-            
-            {% if product.prediction %}
-            <div id="myPlot" 
-                style="width:95%;height:400px;margin-left:25px;margin-top:120px;margin-right:10px">
-            </div>
-            {% endif %}
 
             <h2>Stock</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Stock Sob. Existencia</th>
                         <th>Stock Lira</th>
@@ -88,10 +92,16 @@
                     {% endif %}
                 </tbody>
             </table>
+            
+            <h2>Predicción de Ventas</h2>
+            {% if product.prediction %}
+            <div id="myPlot">
+            </div>
+            {% endif %}
 
             <h2>Kardex</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Fecha</th>
                         <th>Entrada</th>
@@ -118,8 +128,8 @@
             </table>
 
             <h2>Ultimo Costo Neto</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Fecha</th>
                         <th>Costo Neto</th>
@@ -140,8 +150,8 @@
             </table>
 
             <h2>Listas de Precios</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Nombre</th>
                         <th>Precio</th>
@@ -160,8 +170,8 @@
             </table>
 
             <h2>Historial de Recepciones</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Fecha</th>
                         <th>Documento</th>
@@ -186,8 +196,8 @@
             </table>
 
             <h2>Historial de Consumos</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Fecha</th>
                         <th>Oficina</th>
@@ -210,8 +220,8 @@
             </table>
 
             <h2>Historial de Ventas</h2>
-            <table class="table table-bordered history-table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Fecha</th>
                         <th>Documento</th>
