@@ -113,8 +113,9 @@
                         </td>
                         <td>${{ product.cantidad * product.costo_neto }}</td>
                         <td>
-                            <button class="btn btn-sm btn-warning custom_btn update-btn">Actualizar</button>
-                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                            <a class="btn btn-sm btn-warning custom_btn update-btn" data_id="{{ product.id }}" href="#" onclick="return confirm('¿Estas seguro que quieres editar la cantidad de este producto?')">Actualizar</a>
+                            <a class="btn btn-sm btn-danger delete-btn" data-id="{{ product.id }}"
+                            href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -137,18 +138,6 @@
                 console.log("Actualizar producto con ID: " + rowId + " a la cantidad: " + newQuantity);
 
                 // Aquí podrías agregar el código para realizar una llamada AJAX y actualizar la cantidad en el servidor.
-            });
-        });
-
-        // Agrega un controlador de eventos a cada botón de eliminar
-        document.querySelectorAll('.btn-danger').forEach(button => {
-            button.addEventListener('click', function () {
-                var rowId = this.closest('tr').getAttribute('id');
-                console.log("Eliminar producto con ID: " + rowId);
-
-                // Aquí podrías agregar el código para realizar una llamada AJAX y eliminar el producto del carro.
-                // Después de la eliminación exitosa, podrías eliminar visualmente la fila de la tabla:
-                // this.closest('tr').remove();
             });
         });
     });

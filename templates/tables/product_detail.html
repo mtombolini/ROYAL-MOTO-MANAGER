@@ -65,7 +65,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="4">No se encontró ningún producto con el SKU especificado.</td>
+                        <td colspan="5">No se encontró ningún producto con el SKU especificado.</td>
                     </tr>
                     {% endif %}
                 </tbody>
@@ -166,7 +166,7 @@
                             {% endfor %}
                         {% else %}
                         <tr>
-                            <td colspan="2">No se encontró ningún registro de stock.</td>
+                            <td colspan="4">No se encontró ningún registro de stock.</td>
                         </tr>
                         {% endif %}
                     </tbody>
@@ -260,6 +260,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if product.sales_list %}
                         {% for sale_list in product.sales_list %}
                         <tr>
                             <td>{{ sale_list.fecha }}</td>
@@ -270,6 +271,11 @@
                             <td>{{ sale_list.valor_total_formated }}</td>
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No se encontró ningún registro de ventas.</td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -296,6 +302,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if product.consumption_details_list %}
                         {% for consumption_detail_list in product.consumption_details_list %}
                         <tr>
                             <td>{{ consumption_detail_list.fecha }}</td>
@@ -305,6 +312,11 @@
                             <td>{{ consumption_detail_list.costo_neto_formated }}</td>
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5">No se encontró ningún registro de consumos.</td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -332,6 +344,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if product.reception_details_list %}
                         {% for reception_detail_list in product.reception_details_list %}
                         <tr>
                             <td>{{ reception_detail_list.fecha }}</td>
@@ -342,6 +355,11 @@
                             <td>{{ reception_detail_list.costo_neto_formated }}</td>
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No se encontró ningún registro de recepciones.</td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>

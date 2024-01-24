@@ -9,13 +9,6 @@ from models.cart import BuyCart, BuyCartDetail
 from models.user import User
 from models.model_cart import ModelCart
 
-def unformat_number(formatted_number):
-    if formatted_number == None:
-        return 999999
-    unformatted_number = formatted_number.replace(".", "").replace(",", ".").replace("$", "")
-    return float(unformatted_number)
-
-
 compras_blueprint = Blueprint('compras', __name__)
 
 @compras_blueprint.route('/stock_critico')
@@ -61,14 +54,28 @@ def compras():
         return render_template('error.html'), 500
     
     
-@compras_blueprint.route('/eliminar_carro/<int:cart_id>', methods=['POST'])
+@compras_blueprint.route('/eliminar_carro/<int:cart_id>')
 @requires_roles('desarrollador')
 def eliminar_carro(cart_id):
     try:
         if ModelCart.delete_cart_by_id(cart_id):
-            return jsonify({'success': True}), 200
+            return redirect(url_for('compras.compras'))
         else:
             return jsonify({'error': 'Carro no encontrado'}), 404
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+    
+@compras_blueprint.route('/eliminar_producto_carro/<int:cart_id>/<int:cart_detail_id>/<int:products_quantity>')
+@requires_roles('desarrollador')
+def eliminar_producto(cart_id, cart_detail_id, products_quantity):
+    try:
+        if products_quantity == 1:
+            return redirect(url_for('compras.eliminar_carro', cart_id=cart_id))
+        elif ModelCart.delete_cart_detail_by_id(cart_detail_id):
+            return redirect(url_for('compras.carro', cart_id=cart_id))
+        else:
+            return jsonify({'error': 'Producto no encontrado'}), 404
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
@@ -124,3 +131,8 @@ def agregar_producto():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@compras_blueprint.route('/actualizar_producto_carro/<int:cart_id>/<int:cart_detail_id>')
+@requires_roles('desarrollador')
+def actualizar_producto_carro(cls, cart_id, cart_detail_id):
+    pass

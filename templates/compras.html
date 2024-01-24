@@ -65,12 +65,13 @@
                             {% elif cart_item.estado == 'Emitido' %}
                             <button class="btn btn-sm btn-warning action-btn custom_btn" data-id="{{ cart_item.id }}">Recepcionar</button>
                             {% endif %}
-                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}">Eliminar</button>
+                            <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
+                            href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id)}}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
                         </td>
                     </tr>
                     {% else %}
                         <tr>
-                            <td colspan="8">No hay compras disponibles.</td>
+                            <td colspan="9">No hay compras disponibles.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -84,48 +85,14 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    // Selecciona todas las filas de la tabla y agrega un controlador de eventos de clic
-    document.querySelectorAll('tr[id^="cart-item-"]').forEach(row => {
-        row.addEventListener('click', function(event) {
-            // Evita que el clic se propague si se hizo clic en un botón
-            if(event.target.tagName !== 'BUTTON') {
-                // Obtén el cartId de la primera celda de la fila
-                const cartId = this.cells[0].textContent.trim();
-                window.location.href = '/carro/' + cartId; // Redirige a la ruta de la función carro en Flask
-            }
-        });
-    });
-
-        // Controlador para botones de eliminar
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function (event) {
-                event.stopPropagation(); // Evita que el evento de clic se propague a la fila
-
-                const cartId = this.dataset.id;
-                console.log("ID", cartId);
-                const url = '/eliminar_carro/' + cartId;
-                console.log('Intentando eliminar el carro con ID:', cartId);
-                console.log('URL de la solicitud:', url);
-
-                if (confirm('¿Estás seguro de que deseas eliminar este carro?')) {
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }).then(response => {
-                        console.log('Respuesta del servidor:', response);
-                        if (response.ok) {
-                            const rowToDelete = document.getElementById('cart-item-' + cartId);
-                            if (rowToDelete) {
-                                rowToDelete.remove();
-                            }
-                        } else {
-                            alert('Error al eliminar el carro');
-                        }
-                    }).catch(error => {
-                        console.error('Error al realizar la solicitud:', error);
-                    });
+        // Selecciona todas las filas de la tabla y agrega un controlador de eventos de clic
+        document.querySelectorAll('tr[id^="cart-item-"]').forEach(row => {
+            row.addEventListener('click', function(event) {
+                // Evita que el clic se propague si se hizo clic en un botón
+                if(event.target.tagName !== 'BUTTON') {
+                    // Obtén el cartId de la primera celda de la fila
+                    const cartId = this.cells[0].textContent.trim();
+                    window.location.href = '/carro/' + cartId; // Redirige a la ruta de la función carro en Flask
                 }
             });
         });
