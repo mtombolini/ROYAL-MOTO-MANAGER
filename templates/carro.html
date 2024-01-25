@@ -109,11 +109,11 @@
                         <td>{{ product.sku_producto }}</td>
                         <td>${{ product.costo_neto }}</td>
                         <td>
-                            <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input">
+                            <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input" id="quantity-{{ product.id }}">
                         </td>
                         <td>${{ product.cantidad * product.costo_neto }}</td>
                         <td>
-                            <a class="btn btn-sm btn-warning custom_btn update-btn" data_id="{{ product.id }}" href="#" onclick="return confirm('¿Estas seguro que quieres editar la cantidad de este producto?')">Actualizar</a>
+                            <a class="btn btn-sm btn-warning custom_btn" data-id="{{ product.id }}" data-cart-id="{{ product.cart_id }}" onclick="actualizarProducto(this)">Actualizar</a>
                             <a class="btn btn-sm btn-danger delete-btn" data-id="{{ product.id }}"
                             href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">Eliminar</a>
                         </td>
@@ -129,18 +129,42 @@
 
 {% block scripts %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Agrega un controlador de eventos a cada botón de actualizar
-        document.querySelectorAll('.update-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                var rowId = this.closest('tr').getAttribute('id');
-                var newQuantity = this.closest('tr').querySelector('.quantity-input').value;
-                console.log("Actualizar producto con ID: " + rowId + " a la cantidad: " + newQuantity);
+    function actualizarProducto(element) {
+        var productId = element.getAttribute('data-id');
+        var cartId = element.getAttribute('data-cart-id');
+        var cantidad = document.getElementById('quantity-' + productId).value;
 
-                // Aquí podrías agregar el código para realizar una llamada AJAX y actualizar la cantidad en el servidor.
-            });
+        console.log(productId);
+        console.log(cartId);
+        console.log(cantidad);
+
+        var data = {
+            cantidad: cantidad,
+            cart_id: cartId,
+            cart_detail_id: productId
+        };
+
+        fetch("{{ url_for('compras.actualizar_producto_carro') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
-    });
+    }
 </script>
 {% endblock %}
 

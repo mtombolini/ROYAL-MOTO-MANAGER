@@ -128,11 +128,11 @@ class ModelCart:
             costo = 0
             for detail in cart.details:
                 cantidad += detail.cantidad
-                costo += detail.costo_neto
+                costo += detail.cantidad * detail.costo_neto
 
             cart.monto_neto = costo
             cart.cantidad_productos = cantidad
-                
+
             session.commit()
             session.refresh(cart)
             return cart
@@ -147,7 +147,7 @@ class ModelCart:
         try:
             cart_detail = session.query(BuyCartDetail).filter(BuyCartDetail.id == cart_detail_id).first()
             cart_detail.cantidad = cantidad
-            cart_detail.costo_neto = cart_detail.costo_neto * cantidad
+
             session.commit()
             session.refresh(cart_detail)
             return cart_detail

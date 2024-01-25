@@ -132,7 +132,16 @@ def agregar_producto():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@compras_blueprint.route('/actualizar_producto_carro/<int:cart_id>/<int:cart_detail_id>')
+@compras_blueprint.route('/actualizar_producto_carro', methods=['POST'])
 @requires_roles('desarrollador')
-def actualizar_producto_carro(cls, cart_id, cart_detail_id):
-    pass
+def actualizar_producto_carro():
+    try:
+        cantidad = request.json['cantidad']
+        cart_detail_id = request.json['cart_detail_id']
+        cart_id = request.json['cart_id']
+        
+        ModelCart.update_cart_detail(cart_detail_id, cantidad)
+        ModelCart.check_to_update_all_cart(cart_id)
+        return jsonify({'redirect': url_for('compras.carro', cart_id=cart_id)})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

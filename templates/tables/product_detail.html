@@ -383,7 +383,6 @@
             product: product,
             cantidad: cantidad
         };
-        console.log(data);
 
         fetch("{{ url_for('compras.agregar_producto') }}", {
             method: 'POST',
