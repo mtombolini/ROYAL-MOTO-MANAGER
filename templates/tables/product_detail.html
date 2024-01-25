@@ -92,7 +92,25 @@
                     {% endif %}
                 </tbody>
             </table>
-            
+
+            <h2>Datos Futuros</h2>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
+                    <tr>
+                        <th>Fecha Siguiente Recomendación</th>
+                        <th>Disponibilidad</th>
+                        <th>Cantidad Siguiente Recomendación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ product.days_to_recommendation }}</td>
+                        <td>{{ product.disponibilidad }}</td>
+                        <td>{{ product.recommendation }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
             <h2>Predicción de Ventas</h2>
             {% if product.prediction %}
             <div id="myPlot">

@@ -1,12 +1,16 @@
 import json
 import pandas as pd
 
+from datetime import datetime, timedelta
+from math import ceil
+
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, ForeignKey, or_, cast
 
 from databases.base import Base
 from databases.session import AppSession
 from services.stock_manager.simple.test import predict
+from services.stock_manager.parameters_service import DAYS_OF_ANTICIPATION, DAYS_TO_LAST
 
 from models.supplier import Supplier
 from models.shipping import Shipping
@@ -267,9 +271,33 @@ class Product(Base):
 
                 services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
                 if analysis and product.type not in services and len(df_kardex) > 1:
-                    prediction = predict(df_kardex)
+                    prediction, mean = predict(df_kardex)
                 else:
                     prediction = None
+                    mean = None
+
+                today = datetime.now().date()
+                stock_actual = stock['stock_lira'] + stock['stock_sobrexistencia']
+                if mean is not None and mean != 0:
+                    disponibilidad = ceil(stock_actual / mean)
+                    fecha_disponibilidad = today + timedelta(days=disponibilidad)
+                else:
+                    disponibilidad = None
+                    fecha_disponibilidad = None
+
+                if mean is not None:
+                    recommendation = ceil(mean * (DAYS_TO_LAST - DAYS_OF_ANTICIPATION))
+                else:
+                    recommendation = None
+                    fecha_recommendation = None
+
+                if mean is not None and mean != 0:
+                    days_to_recommendation = ceil((stock_actual - mean * DAYS_OF_ANTICIPATION) / mean)
+                    fecha_days_to_recommendation = today + timedelta(days=days_to_recommendation)
+                else:
+                    days_to_recommendation = None
+                    fecha_days_to_recommendation = None
+
 
                 product_data = {
                     **product.__dict__,
@@ -282,7 +310,10 @@ class Product(Base):
                     "price_list": price_list,
                     "kardex": kardex,
                     "df_kardex": df_kardex,
-                    "prediction": prediction
+                    "prediction": prediction,
+                    "disponibilidad": fecha_disponibilidad,
+                    "recommendation": recommendation,
+                    "days_to_recommendation": fecha_days_to_recommendation
                 }
 
                 return product_data, prediction  # Return the product's attributes directly
