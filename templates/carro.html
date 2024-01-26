@@ -92,7 +92,7 @@
             <div class="d-grid my-2">
                 {% if data_general.estado == 'Creado' %}
                 <button class="btn btn-success m-0 proceder-btn" type="button" onclick="emitirCompra(this)" 
-                data-general="{{ data_general.cart_id }} {{ data_general.descripcion }} {{ data_general.proveedor }} {{ data_general.fecha_creacion }} {{ data_general.estado }}">Proceder al Pago</button>
+                data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}">Proceder al Pago</button>
                 {% else %}
                 <button class="btn btn-success m-0 proceder-btn" type="button" onclick="descargarPDF(this)" 
                 data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}" 
@@ -125,12 +125,15 @@
                     <tr id="product-{{ product.id }}">
                         <td>{{ product.descripcion_producto }}</td>
                         <td>{{ product.sku_producto }}</td>
-                        <td>${{ product.costo_neto }}</td>
                         {% if data_general.estado == 'Creado' %}
+                            <td>
+                                <input type="number" value="{{ product.costo_neto }}" min="1" class="form-control-sm quantity-input" id="costo-{{ product.id }}">
+                            </td>
                             <td>
                                 <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input" id="quantity-{{ product.id }}">
                             </td>
                         {% else %}
+                            <td>${{ product.costo_neto }}</td>
                             <td>{{ product.cantidad }}</td>
                         {% endif %}
                         <td>${{ product.cantidad * product.costo_neto }}</td>
@@ -155,8 +158,10 @@
         var productId = element.getAttribute('data-id');
         var cartId = element.getAttribute('data-cart-id');
         var cantidad = document.getElementById('quantity-' + productId).value;
+        var costo = document.getElementById('costo-' + productId).value;
 
         var data = {
+            costo: costo,
             cantidad: cantidad,
             cart_id: cartId,
             cart_detail_id: productId

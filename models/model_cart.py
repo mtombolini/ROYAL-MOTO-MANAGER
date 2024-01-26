@@ -142,11 +142,12 @@ class ModelCart:
             session.close()
 
     @classmethod
-    def update_cart_detail(cls, cart_detail_id, cantidad):
+    def update_cart_detail(cls, cart_detail_id, cantidad, costo):
         session = AppSession()
         try:
             cart_detail = session.query(BuyCartDetail).filter(BuyCartDetail.id == cart_detail_id).first()
             cart_detail.cantidad = cantidad
+            cart_detail.costo_neto = costo
 
             session.commit()
             session.refresh(cart_detail)
