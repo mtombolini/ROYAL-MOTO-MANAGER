@@ -93,10 +93,10 @@ def agregar_producto():
         product['last_net_cost'] = float(product['last_net_cost'])
 
         carts = ModelCart.get_all_carts()
-        existing_cart = next((cart for cart in carts if cart.proveedor == product['supplier']), None)
+        existing_carts = [cart for cart in carts if cart.proveedor == product['supplier'] and cart.estado == "Creado"]
 
-        if existing_cart and existing_cart.estado == "Creado":
-            cart = existing_cart
+        if existing_carts:
+            cart = existing_carts[0]
         else:
             cart_data = {
                 'descripcion': "Descripción Pendiente",
