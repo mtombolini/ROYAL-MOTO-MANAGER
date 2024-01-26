@@ -48,4 +48,5 @@ def data_extractor(kardex):
 
     ohlc_data.index = pd.to_datetime(ohlc_data.index)
     
+    ohlc_data.to_excel('kardex.xlsx')
     return ohlc_data
