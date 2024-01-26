@@ -278,8 +278,11 @@ class Product(Base):
 
                 today = datetime.now().date()
                 stock_actual = stock['stock_lira'] + stock['stock_sobrexistencia']
+                
                 if mean is not None and mean != 0:
                     disponibilidad = ceil(stock_actual / mean)
+                    if disponibilidad < 0:
+                        disponibilidad = 0
                     fecha_disponibilidad = today + timedelta(days=disponibilidad)
                 else:
                     disponibilidad = None
@@ -293,6 +296,8 @@ class Product(Base):
 
                 if mean is not None and mean != 0:
                     days_to_recommendation = ceil((stock_actual - mean * DAYS_OF_ANTICIPATION) / mean)
+                    if days_to_recommendation < 0:
+                        days_to_recommendation = 0
                     fecha_days_to_recommendation = today + timedelta(days=days_to_recommendation)
                 else:
                     days_to_recommendation = None

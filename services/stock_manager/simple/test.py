@@ -12,10 +12,10 @@ def predict(kardex):
         recommendation: int = predict_units_to_buy(product_data[:-i if i > 0 else None])
         recommendations.append(recommendation)
 
-    mean, _, _, _ = get_sales_current_distribution(product_data)
+    mean, _, historic_mean, _ = get_sales_current_distribution(product_data)
     plot_data = plot_data_and_recommendations(product_data, recommendations)
     
-    return plot_data, mean
+    return plot_data, historic_mean
 
 def predict_no_plot(kardex):
     product_data: pd.DataFrame = data_extractor(kardex)
