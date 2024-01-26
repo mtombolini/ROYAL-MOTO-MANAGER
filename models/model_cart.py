@@ -155,3 +155,18 @@ class ModelCart:
             raise Exception(ex)
         finally:
             session.close()
+
+    @classmethod
+    def update_cart_status(cls, cart_id):
+        session = AppSession()
+        try:
+            cart = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()
+            cart.estado = "Emitida"
+
+            session.commit()
+            session.refresh(cart)
+            return cart
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()

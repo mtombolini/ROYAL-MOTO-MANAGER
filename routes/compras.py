@@ -73,6 +73,7 @@ def eliminar_producto(cart_id, cart_detail_id, products_quantity):
         if products_quantity == 1:
             return redirect(url_for('compras.eliminar_carro', cart_id=cart_id))
         elif ModelCart.delete_cart_detail_by_id(cart_detail_id):
+            ModelCart.check_to_update_all_cart(cart_id)
             return redirect(url_for('compras.carro', cart_id=cart_id))
         else:
             return jsonify({'error': 'Producto no encontrado'}), 404
@@ -94,7 +95,7 @@ def agregar_producto():
         carts = ModelCart.get_all_carts()
         existing_cart = next((cart for cart in carts if cart.proveedor == product['supplier']), None)
 
-        if existing_cart:
+        if existing_cart and existing_cart.estado == "Creado":
             cart = existing_cart
         else:
             cart_data = {
@@ -143,5 +144,18 @@ def actualizar_producto_carro():
         ModelCart.update_cart_detail(cart_detail_id, cantidad)
         ModelCart.check_to_update_all_cart(cart_id)
         return jsonify({'redirect': url_for('compras.carro', cart_id=cart_id)})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@compras_blueprint.route('/emitir_compra/', methods=['POST'])
+@requires_roles('desarrollador')
+def emitir_compra():
+    try:
+        data = request.json
+        general_data = data['general']
+
+        ModelCart.update_cart_status(general_data['cartId'])
+
+        return jsonify({'redirect': url_for('compras.carro', cart_id=general_data['cartId'])})
     except Exception as e:
         return jsonify({'error': str(e)}), 500

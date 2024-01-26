@@ -58,13 +58,6 @@
                         <td>{{ cart_item.estado }}</td>
                         <td>{{ cart_item.rendimiento }}</td>
                         <td>
-                            {% if cart_item.estado == 'Creado' %}
-                            <button class="btn btn-sm btn-warning check-btn custom_btn" data-id="{{ cart_item.cart_id }}">Revisar</button>
-                            {% elif cart_item.estado == 'Revisado' %}
-                            <button class="btn btn-sm btn-warning action-btn custom_btn" data-id="{{ cart_item.id }}">Emitir</button>
-                            {% elif cart_item.estado == 'Emitido' %}
-                            <button class="btn btn-sm btn-warning action-btn custom_btn" data-id="{{ cart_item.id }}">Recepcionar</button>
-                            {% endif %}
                             <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
                             href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id)}}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
                         </td>
