@@ -1,4 +1,5 @@
 from __future__ import annotations
+from parameters import FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT, SCHEDULE_RECORDS_TIME_FORMAT
 from datetime import time
 from flask import Blueprint, render_template, redirect, url_for, flash, jsonify, request, Response
 from flask_wtf import FlaskForm
@@ -9,19 +10,28 @@ from decorators.roles import requires_roles
 from datetime import datetime, timedelta
 from models.employee import Employee
 from models.model_user import ModelUser
-from models.overtime_hours import OvertimeRecord
+from models.overtime_hours import (OvertimeRecord,
+    OvertimeRecordRecordNotFoundError, OvertimeRecordKeyError,
+    OvertimeRecordRecordColumnNotFoundError,
+)                             
 from rut_chile import rut_chile
 from typing import List, Dict, Tuple
 
 START_YEAR: int = 2020
 START_MONTH: int = 1
 
+WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 
          'Mayo', 'Junio', 'Julio', 'Agosto',
          'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 human_resources_blueprint = Blueprint('human_resources', __name__)
-            
+
+def reformat_strftime(strf_date: str, from_format: str, to_format: str) -> str:
+    parsed_date = datetime.strptime(strf_date, from_format)
+    reformated_date = parsed_date.strftime(to_format)
+    return reformated_date
+    
 def format_run(run: str) -> str:        
     run = run.replace('.', '').replace('-', '')  # Remove existing formatting
     body, verifier = run[:-1], run[-1]  # Split into body and verifier
@@ -50,11 +60,8 @@ def format_employees_data_for_render(employees_data: List[Dict | None],
         
     return employees_data
 
-def format_overtime_record_data_for_database(form: OvertimeRecordForm) -> Tuple:
-    employee_id = form.employee_id.data
-    month = form.month.data
-    overtime_hours = form.overtime_hours.data
-    return employee_id, month, overtime_hours
+def format_overtime_record_time_attr_value_for_database(value: str) -> time:
+    return datetime.strptime(value, SCHEDULE_RECORDS_TIME_FORMAT).time()
 
 def get_month_list(start_year: int, start_month: int) -> List[str]:
     start_date = datetime(start_year, start_month, 1)
@@ -120,7 +127,6 @@ class OvertimeRecordForm(FlaskForm):
         ]
     )
     month = SelectField('Mes', choices=get_month_list(START_YEAR, START_MONTH))
-    overtime_hours = IntegerField('Horas Extra')
     
     
     
@@ -231,106 +237,61 @@ def delete_employee(employee_id: int) -> Response:
     
 
 
-# <----- Overtime Record' Configuration -----> #
-@human_resources_blueprint.route('/overtime_hours_management')
+# <----- Overtime Records' Configuration -----> #
+@human_resources_blueprint.route('/overtime_hours_management/<int:employee_id>/<string:month>')
 @requires_roles('desarrollador')
-def overtime_hours_management() -> str:
+def overtime_hours_management(employee_id: int | None=None, month: str | None=None) -> str:
     form = OvertimeRecordForm()
     try:
-        # Format role data for the SelectField
-        data: List[Dict] = OvertimeRecord.get_all()
-        # data = format_employees_data_for_render(data, form)
+        month = reformat_strftime(month, FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT)
+        data: List[Dict] = OvertimeRecord.get_employee_month_schedule_record(employee_id, month) if employee_id and month else None
         return render_template('human_resources/overtime_hours_management/overtime_hours_management.html', 
                                page_title="Registro de Horas Extra", 
                                data=data,
-                               form=form)  
+                               form=form,
+                               show_table=bool(employee_id) and bool(month))  
     except Exception as e:
         return render_template('error.html'), 500
-    
-@human_resources_blueprint.route('/create_overtime_record', methods=['POST'])
-@requires_roles('desarrollador')
-def create_overtime_record() -> str:
-    form = OvertimeRecordForm()
-    try:
-        if form.validate_on_submit():
-            run, first_name, last_name, joined_in, lunch_break, user_id = format_employee_data_for_database(form)
-            OvertimeRecord.create(
-                run=run, 
-                first_name=first_name, 
-                last_name=last_name, 
-                joined_in=joined_in, 
-                lunch_break=lunch_break, 
-                user_id=user_id
-            )
-            flash('Empleado añadido con éxito', 'success')
-        else:
-            # Form validation failed
-            errors = {field.name: field.errors for field in form if field.errors}
-            flash(
-                f'ERROR 400 (BAD REQUEST): '
-                f'{", ".join([f"{errors[key]}" for key in errors.keys()])}',
-                'error',
-            )
-    except Exception as ex:
-        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error') 
-    finally:
-        return redirect(url_for('human_resources.employees_management')) 
 
 
-"""
-@human_resources_blueprint.route('/get_overtime_record/<int:employee_id>/<string:month>')
+@human_resources_blueprint.route('/update_overtime_record/<int:employee_id>/<string:date>', methods=['POST'])
 @requires_roles('desarrollador')
-def get_overtime_record(employee_id: int, month: str) -> Response:
+def update_overtime_record(employee_id: int, date: str) -> str:
     try:
-        employee_data: Dict = Employee.get(employee_id)
-        response = jsonify(employee_data)
-        response.status_code = 200 # Successful
-        return response
+        updates = request.form
+        if not updates or len(updates) != 1:
+            raise AttributeError('Invalid update data')
+        key, value = next(iter(updates.items()))
+        valid_keys = ["check_in", "check_out", "lunch_break_start", "lunch_break_end"]
+        if key not in valid_keys:
+            raise KeyError('Invalid attribute for update')
+        value = format_overtime_record_time_attr_value_for_database(value)
+        OvertimeRecord.edit(employee_id=employee_id, date=date, **{key: value})
+        flash('Registro editado exitosamente', 'success')
+    except OvertimeRecordRecordColumnNotFoundError as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
+    except OvertimeRecordKeyError as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
+    except OvertimeRecordRecordNotFoundError as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')        
     except Exception as ex:
-        response = jsonify({'error': str(ex), 
-                            'message': 'An error ocurred while fetching employee data'})
-        response.status_code = 500 # Internal Server Error
-        return response
-    
-    
-@human_resources_blueprint.route('/edit_employee/<int:employee_id>', methods=['POST'])
-@requires_roles('desarrollador')
-def edit_employee(employee_id: int) -> str:
-    form = EmployeeForm()
-    form.id.data = employee_id
-    try:
-        if form.validate_on_submit():
-            run, first_name, last_name, joined_in, lunch_break, user_id = format_employee_data_for_database(form)
-            Employee.edit(employee_id,
-                          run=run, 
-                          first_name=first_name,
-                          last_name=last_name,
-                          joined_in=joined_in,
-                          lunch_break=lunch_break,
-                          user_id=user_id)
-            flash('Cambios guardados con éxito', 'success')
-        else:
-            # Form validation failed
-            errors = {field.name: field.errors for field in form if field.errors}
-            flash(
-                f'ERROR 400 (BAD REQUEST): '
-                f'{", ".join([f"{errors[key]}" for key in errors.keys()])}',
-                'error',
-            )
-    except Exception as ex:
-        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error') 
+        flash(
+            f'ERROR 400 (BAD REQUEST): '
+            f'{str(ex)}',
+            'error',
+        )
     finally:
-        return redirect(url_for('human_resources.employees_management'))       
-   
+        month = "-".join(date.split("-")[:-1])
+        return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
+
     
-@human_resources_blueprint.route('/delete_employee/<int:employee_id>')
+@human_resources_blueprint.route('/delete_overtime_record/<int:employee_id>/<string:month>')
 @requires_roles('desarrollador')
-def delete_employee(employee_id: int) -> Response:
+def delete_overtime_record(employee_id: int, month: str) -> str:
     try:
-        Employee.delete(employee_id)
-        flash('Empleado eliminado con éxito', 'success')
+        OvertimeRecord.delete(employee_id, month)
+        flash('Registro eliminado con éxito', 'success')
     except Exception as ex:
         flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
-        return redirect(url_for('human_resources.employees_management'))    
-"""
+        return redirect(url_for('human_resources.overtime_hours_management')) 

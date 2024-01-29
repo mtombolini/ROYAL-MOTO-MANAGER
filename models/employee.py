@@ -1,7 +1,9 @@
+from __future__ import annotations
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, Time
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
+from models.overtime_hours import OvertimeRecord
 from typing import List, Dict
 
 class EmployeeNotFoundError(ValueError):
@@ -23,6 +25,7 @@ class Employee(Base):
     last_name = Column(String(255))
     joined_in = Column(Date())
     lunch_break = Column(Time())  # Nombre de variable ajustado
+    
     overtime_hours = relationship('OvertimeRecord', back_populates='employee')
 
     @classmethod

@@ -1,0 +1,21 @@
+<form method="POST" action="{{ url_for('human_resources.create_overtime_record') }}">
+
+    {{ form.hidden_tag() }}
+  
+    <div class="mb-3">
+      {{ form.employee_id.label(class="form-label") }}
+      {{ form.employee_id(class="form-control", id="createOvertimeRecordModalEmployeeId") }}
+    </div>
+  
+    <div class="mb-3">
+      {{ form.month.label(class="form-label") }}
+      {{ form.month(class="form-control", id="createOvertimeRecordModalMonth") }}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.overtime_hours.label(class="form-label") }}
+      {{ form.overtime_hours(class="form-control", id="createOvertimeRecordModalOvertimeHours") }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Añadir registro</button>
+  </form>
