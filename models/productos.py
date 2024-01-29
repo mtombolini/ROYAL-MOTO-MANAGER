@@ -75,11 +75,11 @@ class Product(Base):
                 search_query = f"%{search_query.lower()}%"
                 products = session.query(cls).filter(
                     or_(
-                        cast(Product.variant_id, String).ilike(search_query),
-                        Product.type.ilike(search_query),
-                        Product.sku.ilike(search_query),
-                        Product.description.ilike(search_query),
-                        Product.supplier.has(Supplier.trading_name.ilike(search_query))
+                        cast(cls.variant_id, String).ilike(search_query),
+                        cls.type.ilike(search_query),
+                        cls.sku.ilike(search_query),
+                        cls.description.ilike(search_query),
+                        cls.supplier.has(Supplier.trading_name.ilike(search_query))
                     )
                 ).all()
 

@@ -42,6 +42,25 @@
         border-color: #dc3545;
     }
 
+    .pagination .page-item.active .page-link {
+        color: white;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .pagination .page-link {
+        color: #dc3545;
+    }
+    
+    .pagination .page-link:hover {
+        color: white;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+    }
 </style>
 
 {% if recommendations %}
@@ -90,6 +109,41 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('home.home', page=1, search=search_query) }}">Primera</a>
+                    </li>
+            
+                    {% set max_pages_shown = 5 %}
+                    {% set half_range_shown = (max_pages_shown // 2) %}
+                    {% set start_page = current_page - half_range_shown %}
+                    {% set end_page = current_page + half_range_shown %}
+            
+                    {% if start_page < 1 %}
+                        {% set start_page = 1 %}
+                        {% set end_page = max_pages_shown %}
+                    {% endif %}
+            
+                    {% if end_page > total_pages %}
+                        {% set start_page = total_pages - max_pages_shown + 1 %}
+                        {% set end_page = total_pages %}
+                        {% if start_page < 1 %}
+                            {% set start_page = 1 %}
+                        {% endif %}
+                    {% endif %}
+            
+                    {% for i in range(start_page, end_page + 1) %}
+                        <li class="page-item {% if i == current_page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('home.home', page=i, search=search_query) }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+            
+                    <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('home.home', page=total_pages, search=search_query) }}">Última</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

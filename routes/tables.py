@@ -9,7 +9,6 @@ tables_blueprint = Blueprint('tables', __name__)
 
 @tables_blueprint.route('/productos', defaults={'page': 1})
 @tables_blueprint.route('/productos/pages/<int:page>')
-
 def get_products(page):
     search_query = request.args.get('search', '')
     per_page = 75
