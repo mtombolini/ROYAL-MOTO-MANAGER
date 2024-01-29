@@ -1,12 +1,16 @@
 import json
 import pandas as pd
 
+from datetime import datetime, timedelta
+from math import ceil
+
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, or_, cast
 
 from databases.base import Base
 from databases.session import AppSession
 from services.stock_manager.simple.test import predict
+from services.stock_manager.parameters_service import DAYS_OF_ANTICIPATION, DAYS_TO_LAST
 
 from models.supplier import Supplier
 from models.shipping import Shipping
@@ -30,7 +34,7 @@ class Product(Base):
     description = Column(String(255))
     sku = Column(String(255))
     supplier_id = Column(Integer, ForeignKey('suppliers.id'))
-    
+
     stock = relationship("ProductStock", uselist=False, back_populates="product")
     consumption_details = relationship("ConsumptionDetail", back_populates="product")
     reception_details = relationship("ReceptionDetail", back_populates="product")
@@ -52,6 +56,48 @@ class Product(Base):
                     }
                 for product in products
                 ]
+
+                for product_data, product in zip(products_data, products):
+                    supplier = product.supplier
+                    if supplier:
+                        product_data['supplier_trading_name'] = supplier.trading_name
+                    else:
+                        product_data['supplier_trading_name'] = None
+
+                return products_data
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def filter_products(cls, search_query):
+        with AppSession() as session:
+            try:
+                search_query = f"%{search_query.lower()}%"
+                products = session.query(cls).filter(
+                    or_(
+                        cast(cls.variant_id, String).ilike(search_query),
+                        cls.type.ilike(search_query),
+                        cls.sku.ilike(search_query),
+                        cls.description.ilike(search_query),
+                        cls.supplier.has(Supplier.trading_name.ilike(search_query))
+                    )
+                ).all()
+
+                products_data = [
+                    {
+                        key: value
+                        for key, value in product.__dict__.items()
+                        if not key.startswith('_')
+                    }
+                for product in products
+                ]
+
+                for product_data, product in zip(products_data, products):
+                    supplier = product.supplier
+                    if supplier:
+                        product_data['supplier_trading_name'] = supplier.trading_name
+                    else:
+                        product_data['supplier_trading_name'] = None
 
                 return products_data
             except Exception as ex:
@@ -224,10 +270,39 @@ class Product(Base):
                 kardex = df_kardex.to_dict('records')
 
                 services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
-                if analysis and not df_kardex.empty and product.type not in services:
-                    prediction = predict(df_kardex)
+                if analysis and product.type not in services and len(df_kardex) > 1:
+                    prediction, mean = predict(df_kardex)
                 else:
                     prediction = None
+                    mean = None
+
+                today = datetime.now().date()
+                stock_actual = stock['stock_lira'] + stock['stock_sobrexistencia']
+                
+                if mean is not None and mean != 0:
+                    disponibilidad = ceil(stock_actual / mean)
+                    if disponibilidad < 0:
+                        disponibilidad = 0
+                    fecha_disponibilidad = today + timedelta(days=disponibilidad)
+                else:
+                    disponibilidad = None
+                    fecha_disponibilidad = None
+
+                if mean is not None:
+                    recommendation = ceil(mean * (DAYS_TO_LAST - DAYS_OF_ANTICIPATION))
+                else:
+                    recommendation = None
+                    fecha_recommendation = None
+
+                if mean is not None and mean != 0:
+                    days_to_recommendation = ceil((stock_actual - mean * DAYS_OF_ANTICIPATION) / mean)
+                    if days_to_recommendation < 0:
+                        days_to_recommendation = 0
+                    fecha_days_to_recommendation = today + timedelta(days=days_to_recommendation)
+                else:
+                    days_to_recommendation = None
+                    fecha_days_to_recommendation = None
+
 
                 product_data = {
                     **product.__dict__,
@@ -240,7 +315,10 @@ class Product(Base):
                     "price_list": price_list,
                     "kardex": kardex,
                     "df_kardex": df_kardex,
-                    "prediction": prediction
+                    "prediction": prediction,
+                    "disponibilidad": fecha_disponibilidad,
+                    "recommendation": recommendation,
+                    "days_to_recommendation": fecha_days_to_recommendation
                 }
 
                 return product_data, prediction  # Return the product's attributes directly

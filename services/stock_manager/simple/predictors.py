@@ -41,7 +41,7 @@ def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty:
 def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
-    mean, std, historic_mean, _= get_sales_current_distribution(product_data)
+    mean, std, historic_mean, _ = get_sales_current_distribution(product_data)
 
     if mean * std == 0:
         return historic_mean * days_to_last - product_data.iloc[-1]["Close"]

@@ -1,4 +1,5 @@
 import pandas as pd
+from services.stock_manager.parameters_service import DECAY
 
 from typing import Tuple
 
@@ -13,12 +14,15 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     Returns:
         _type_: _description_
     """
-    # Determine the number of days to consider (up to 30 or the number of available days)
     days_to_consider = min(len(data), 30)
 
     # Extract the last 'days_to_consider' days
-    last_30_days = data[-days_to_consider:]
-    all_days = data
+    not_all_days = data[data["Close"] != 0]
+
+    last_30_days = not_all_days[-days_to_consider:]
+    last_30_days = last_30_days[last_30_days["Close"] != 0]
+    all_days = data[data["Close"] != 0]
+    not_all_days = data[data["Close"] != 0]
 
     # Calculate mean and standard deviation
     mean_sales = last_30_days['Sales'].mean()
@@ -28,3 +32,22 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     historic_std = all_days['Sales'].std()
     
     return mean_sales, std_sales, historic_mean, historic_std
+
+# def calculate_mean(sales: pd.Series) -> float:
+#     sales_list = sales.tolist()
+#     factors = [DECAY ** i for i in range(1, len(sales_list) + 1)]
+#     factors.reverse()
+
+#     suma = sum([sales_list[i] * factors[i] for i in range(len(sales_list))])
+#     return suma / sum(factors)
+
+# def calculate_std(sales: pd.Series) -> float:
+#     mean = calculate_mean(sales)
+
+#     sales_list = sales.tolist()
+#     factors = [DECAY ** i for i in range(1, len(sales_list) + 1)]
+#     factors.reverse()
+
+#     suma = sum([((sales_list[i] - mean) ** 2) * factors[i] for i in range(len(sales_list))])
+
+#     return (suma / sum(factors)) ** 0.5

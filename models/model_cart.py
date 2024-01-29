@@ -30,6 +30,22 @@ class ModelCart:
             session.close()
 
     @classmethod
+    def delete_cart_detail_by_id(cls, cart_detail_id):
+        session = AppSession()
+        try:
+            cart_detail_to_delete = session.query(BuyCartDetail).filter(BuyCartDetail.id == cart_detail_id).first()
+            if cart_detail_to_delete:
+                session.delete(cart_detail_to_delete)
+                session.commit()
+                return True
+            else:
+                return False
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
+
+    @classmethod
     def get_cart_detail_by_id(cls, cart_id):
         session = AppSession()
         try:
@@ -103,5 +119,55 @@ class ModelCart:
         finally:
             session.close()
 
+    @classmethod
+    def check_to_update_all_cart(cls, cart_id):
+        session = AppSession()
+        try:
+            cart = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()
+            cantidad = 0
+            costo = 0
+            for detail in cart.details:
+                cantidad += detail.cantidad
+                costo += detail.cantidad * detail.costo_neto
 
-    
+            cart.monto_neto = costo
+            cart.cantidad_productos = cantidad
+
+            session.commit()
+            session.refresh(cart)
+            return cart
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
+
+    @classmethod
+    def update_cart_detail(cls, cart_detail_id, cantidad, costo):
+        session = AppSession()
+        try:
+            cart_detail = session.query(BuyCartDetail).filter(BuyCartDetail.id == cart_detail_id).first()
+            cart_detail.cantidad = cantidad
+            cart_detail.costo_neto = costo
+
+            session.commit()
+            session.refresh(cart_detail)
+            return cart_detail
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
+
+    @classmethod
+    def update_cart_status(cls, cart_id):
+        session = AppSession()
+        try:
+            cart = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()
+            cart.estado = "Emitida"
+
+            session.commit()
+            session.refresh(cart)
+            return cart
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()

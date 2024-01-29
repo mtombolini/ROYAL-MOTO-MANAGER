@@ -5,12 +5,40 @@
 {% block body %}
 {% include 'header.html' %}
 
-<div class="container m-3">
+
+<style>
+    .container-fluid {
+        max-width: 90%;
+    }
+    
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+    
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .proceder-btn {
+        margin: 0 0 0 0;
+        border-color: #28a745;
+    }
+
+    .proceder-btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+</style>
+
+
+<div class="container-fluid mt-3">
     <div class="row">
-        <!-- Div alineado al inicio (start) -->
         <div class="col-md-5">
-            <div class="bg-secondary text-white p-1 rounded">
-                <h4>Detalle de la Compra</h4>
+            <div class="bg-warning text-dark p-1 rounded mt-2">
+                <h4 class="mb-1">Detalle de la Compra</h4>
             </div>
 
             <ul class="list-group mt-1">
@@ -35,49 +63,54 @@
                     <span>{{ data_general.estado }}</span>
                 </li>
             </ul>
-            <!-- <div class="d-grid gap-2 my-3">
-                <button class="btn btn-success" type="button">Proceder al Pago</button>
-            </div> -->
         </div>
 
-        <!-- Espacio vacío para separar los divs -->
         <div class="col-md-3"></div>
 
-        <!-- Div alineado al final (end) -->
         <div class="col-md-4">
-            <div class="bg-danger text-white p-1 rounded">
-                <h4>Resumen de la Compra</h4>
+            <div class="bg-danger text-white p-1 rounded mt-2">
+                <h4 class="mb-1">Resumen de la Compra</h4>
             </div>
             <ul class="list-group mt-1">
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
-                    Cantidad de Items
-                    <strong>{{ data_resume.cantidad_articulos }}</strong>
+                    <strong>Cantidad de Items</strong>
+                    <span>{{ data_resume.cantidad_articulos }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
-                    Subtotal
+                    <strong>Subtotal</strong>
                     <span>$ {{ data_resume.subtotal }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" syle="padding-top: 5px; padding-bottom: 5px;">
-                    Impuestos
+                    <strong>Impuestos</strong>
                     <span>$ {{ data_resume.impuestos }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
-                    Total
+                    <strong>Total</strong>
                     <span>$ {{ data_resume.total }}</span>
                 </li>
             </ul>
             <div class="d-grid my-2">
-                <button class="btn btn-success" type="button">Proceder al Pago</button>
+                {% if data_general.estado == 'Creado' %}
+                <button class="btn btn-success m-0 proceder-btn" type="button" onclick="emitirCompra(this)" 
+                data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}">Proceder al Pago</button>
+                {% else %}
+                <button class="btn btn-success m-0 proceder-btn" type="button" onclick="descargarPDF(this)" 
+                data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}" 
+                data-resume="{{ data_resume.cantidad_articulos }} {{ data_resume.subtotal }} {{ data_resume.impuestos }} {{ data_resume.total }}" 
+                data-detail="{% for product in data_detail %}{{ product.id }}|{{ product.sku_producto }}|{{ product.descripcion_producto }}|{{ product.costo_neto }}|{{ product.cantidad }}, {% endfor %}">Descargar PDF</button>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
-    <hr style="height: 2px; background-color: black;">
 
+<hr style="height: 2px; background-color: black;">
+
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>Producto</th>
                         <th>SKU</th>
@@ -92,14 +125,22 @@
                     <tr id="product-{{ product.id }}">
                         <td>{{ product.descripcion_producto }}</td>
                         <td>{{ product.sku_producto }}</td>
-                        <td>${{ product.costo_neto }}</td>
+                        {% if data_general.estado == 'Creado' %}
+                            <td>
+                                <input type="number" value="{{ product.costo_neto }}" min="1" class="form-control-sm quantity-input" id="costo-{{ product.id }}">
+                            </td>
+                            <td>
+                                <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input" id="quantity-{{ product.id }}">
+                            </td>
+                        {% else %}
+                            <td>${{ product.costo_neto }}</td>
+                            <td>{{ product.cantidad }}</td>
+                        {% endif %}
+                        <td>${{ product.cantidad * product.costo_neto }}</td>
                         <td>
-                            <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input">
-                        </td>
-                        <td>${{ product.subtotal }}</td>
-                        <td>
-                            <button class="btn btn-sm btn-info update-btn">Actualizar</button>
-                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                            <button class="btn btn-sm btn-warning custom_btn" data-id="{{ product.id }}" data-cart-id="{{ product.cart_id }}" onclick="actualizarProducto(this)">Actualizar</button>
+                            <a class="btn btn-sm btn-danger delete-btn" data-id="{{ product.id }}"
+                            href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -107,37 +148,165 @@
             </table>
         </div>
     </div>
-
 </div>
 
 {% endblock %}
 
 {% block scripts %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Agrega un controlador de eventos a cada botón de actualizar
-        document.querySelectorAll('.update-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                var rowId = this.closest('tr').getAttribute('id');
-                var newQuantity = this.closest('tr').querySelector('.quantity-input').value;
-                console.log("Actualizar producto con ID: " + rowId + " a la cantidad: " + newQuantity);
+    function actualizarProducto(element) {
+        var productId = element.getAttribute('data-id');
+        var cartId = element.getAttribute('data-cart-id');
+        var cantidad = document.getElementById('quantity-' + productId).value;
+        var costo = document.getElementById('costo-' + productId).value;
 
-                // Aquí podrías agregar el código para realizar una llamada AJAX y actualizar la cantidad en el servidor.
-            });
+        var data = {
+            costo: costo,
+            cantidad: cantidad,
+            cart_id: cartId,
+            cart_detail_id: productId
+        };
+
+        fetch("{{ url_for('compras.actualizar_producto_carro') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    function emitirCompra(element) {
+        var generalDataString = element.getAttribute('data-general');
+        var generalDataParts = generalDataString.split(';');
+        var generalData = {
+            cartId: generalDataParts[0],
+            descripcion: generalDataParts[1],
+            proveedor: generalDataParts[2],
+            fechaCreacion: generalDataParts[3],
+            estado: generalDataParts[4]
+        };
+
+        var data = {
+            general: generalData
+        };
+
+        fetch("{{ url_for('compras.emitir_compra') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<script>
+    function descargarPDF(element) {
+        var generalDataString = element.getAttribute('data-general');
+        var generalDataParts = generalDataString.split(';');
+        var generalData = {
+            cartId: generalDataParts[0],
+            descripcion: generalDataParts[1],
+            proveedor: generalDataParts[2],
+            fechaCreacion: generalDataParts[3],
+            estado: generalDataParts[4]
+        };
+
+        var resumeDataString = element.getAttribute('data-resume');
+        var resumeDataParts = resumeDataString.split(' ');
+        var resumeData = {
+            cantidadArticulos: resumeDataParts[0],
+            subtotal: resumeDataParts[1],
+            impuestos: resumeDataParts[2],
+            total: resumeDataParts[3]
+        };
+
+        var detailDataString = element.getAttribute('data-detail');
+        var detailDataArray = detailDataString.split(', ');
+        var detailData = detailDataArray.map(function(detail) {
+            var detailParts = detail.split('|');
+            return {
+                id: detailParts[0],
+                skuProducto: detailParts[1],
+                descripcionProducto: detailParts[2],
+                costoNeto: detailParts[3],
+                cantidad: detailParts[4]
+            };
+        });
+        
+        if (detailData[detailData.length - 1].id === '') {
+            detailData.pop();
+        }
+
+        var data = {
+            general: generalData,
+            resume: resumeData,
+            detail: detailData
+        };
+
+        var doc = new jsPDF();
+
+        var y = 10;
+
+        doc.text('ID del Carrito: ' + generalData.cartId, 10, y);
+        y += 10;
+        doc.text('Descripción: ' + generalData.descripcion, 10, y);
+        y += 10;
+        doc.text('Proveedor: ' + generalData.proveedor, 10, y);
+        y += 10;
+        doc.text('Fecha de Creación: ' + generalData.fechaCreacion, 10, y);
+        y += 10;
+        doc.text('Estado: ' + generalData.estado, 10, y);
+        y += 20;
+
+        doc.text('Resumen del Pedido:', 10, y);
+        y += 10;
+        doc.text('Cantidad de Artículos: ' + resumeData.cantidadArticulos, 10, y);
+        y += 10;
+        doc.text('Subtotal: ' + resumeData.subtotal, 10, y);
+        y += 10;
+        doc.text('Impuestos: ' + resumeData.impuestos, 10, y);
+        y += 10;
+        doc.text('Total: ' + resumeData.total, 10, y);
+        y += 20;
+
+        doc.text('Detalles del Pedido:', 10, y);
+        y += 10;
+        detailData.forEach(function(item) {
+            doc.text('ID: ' + item.id + ', SKU: ' + item.skuProducto + ', Descripción: ' + item.descripcionProducto + ', Costo Neto: ' + item.costoNeto + ', Cantidad: ' + item.cantidad, 10, y);
+            y += 10;
         });
 
-        // Agrega un controlador de eventos a cada botón de eliminar
-        document.querySelectorAll('.btn-danger').forEach(button => {
-            button.addEventListener('click', function () {
-                var rowId = this.closest('tr').getAttribute('id');
-                console.log("Eliminar producto con ID: " + rowId);
+        doc.save('compra-' + generalData.cartId + '.pdf');
+    }
 
-                // Aquí podrías agregar el código para realizar una llamada AJAX y eliminar el producto del carro.
-                // Después de la eliminación exitosa, podrías eliminar visualmente la fila de la tabla:
-                // this.closest('tr').remove();
-            });
-        });
-    });
 </script>
 {% endblock %}
-

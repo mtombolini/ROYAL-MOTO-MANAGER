@@ -23,5 +23,9 @@ def create_db(db_url, default_db_url):
 
     return create_engine(db_url)
 
-app_engine = create_db(APP_DB_URL, DEFAULT_DB_URL)
+if CONFIG.CONFIG_TYPE == 'development':
+    app_engine = create_db(APP_DB_URL, DEFAULT_DB_URL)
+else:
+    app_engine = create_engine(APP_DB_URL)
+
 AppSession = sessionmaker(bind=app_engine)
