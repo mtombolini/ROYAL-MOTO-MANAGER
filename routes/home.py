@@ -16,7 +16,7 @@ def index():
 @login_required
 def home(page):
     search_query = request.args.get('search', '')
-    per_page = 50
+    per_page = 10
 
     filtered_recommendations = DayRecommendation.filter_recommendations(search_query)
 

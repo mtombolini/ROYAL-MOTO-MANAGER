@@ -61,9 +61,68 @@
     .pagination .page-item.disabled .page-link {
         color: #6c757d;
     }
+
+    .slider .card {
+        margin: 15px;
+    }
 </style>
 
 {% if recommendations %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="slider">
+                <!-- Repite este bloque para cada carta -->
+                <div>
+                    <div class="card">
+                        <img class="card-img-top" src="ruta_a_tu_imagen" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Título de la carta 1</h5>
+                            <p class="card-text">Algún texto de ejemplo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <img class="card-img-top" src="ruta_a_tu_imagen" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Título de la carta 2</h5>
+                            <p class="card-text">Algún texto de ejemplo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <img class="card-img-top" src="ruta_a_tu_imagen" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Título de la carta 3</h5>
+                            <p class="card-text">Algún texto de ejemplo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <img class="card-img-top" src="ruta_a_tu_imagen" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Título de la carta 4</h5>
+                            <p class="card-text">Algún texto de ejemplo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <img class="card-img-top" src="ruta_a_tu_imagen" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Título de la carta 5</h5>
+                            <p class="card-text">Algún texto de ejemplo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 search-button d-flex justify-content-between">
@@ -151,4 +210,19 @@
     <p>No hay recomendaciones.</p>
 {% endif %}
 
+<script>
+    $(document).ready(function(){
+        $('.slider').slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true, // Activa el desplazamiento automático
+            autoplaySpeed: 2000, // Tiempo en milisegundos entre desplazamientos
+            arrows: false, // Desactiva los botones de flecha
+            draggable: true, // Permite arrastrar con el mouse
+            swipe: true // Permite arrastrar con gestos táctiles
+        });
+    });
+    
+</script>
 {% endblock %}
