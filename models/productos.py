@@ -108,136 +108,12 @@ class Product(Base):
         with AppSession() as session:
             try:
                 product = session.query(cls).filter(cls.variant_id == variant_id).first()  # Retrieve a single product
-                stock = product.stock.__dict__
 
-                data = []
-                for reception_detail in product.reception_details:
-                    reception = reception_detail.reception
-
-                    if reception.document_type == "Sin Documento":
-                        num = reception_detail.reception_id
-                    else:
-                        num = reception.document_number
-
-                    if "GUÍA" in reception.document_type:
-                        shipping = Shipping.seach_shipping_guide_by_number(f"{num}.0")
-                        if shipping is not None and shipping["shipping_type"] != "Traslados internos (no constituye venta)":
-                            data.append({
-                            "fecha": reception.date,
-                            "documento": reception.document_type + " " + str(num),
-                            "tipo_de_documento": reception.document_type,
-                            "numero_de_documento": num,
-                            "oficina": reception.office,
-                            "nota": reception.note,
-                            "cantidad": reception_detail.quantity,
-                            "costo_neto": reception_detail.net_cost,
-                            "costo_neto_formated": format_number(reception_detail.net_cost)
-                        })
-                            
-                    else:
-                        data.append({
-                            "fecha": reception.date,
-                            "documento": reception.document_type + " " + str(num),
-                            "tipo_de_documento": reception.document_type,
-                            "numero_de_documento": num,
-                            "oficina": reception.office,
-                            "nota": reception.note,
-                            "cantidad": reception_detail.quantity,
-                            "costo_neto": reception_detail.net_cost,
-                            "costo_neto_formated": format_number(reception_detail.net_cost)
-                        })
-
-                df = pd.DataFrame(data)
-                if df.empty:
-                    reception_details_list = []
-                else:
-                    reception_details_list = df.sort_values('fecha').to_dict('records')
-
-                selected_document = None
-                if not df.empty:
-                    df = df.sort_values('fecha', ascending=False)
-                    factura_recente = df[df['tipo_de_documento'] == 'Factura']
-                    if not factura_recente.empty:
-                        selected_document = factura_recente.iloc[0]
-                    else:
-                        sin_documento_recente = df[df['tipo_de_documento'] == 'Sin Documento']
-                        if not sin_documento_recente.empty:
-                            selected_document = sin_documento_recente.iloc[0]
-                        else:
-                            selected_document = None
-
-                if selected_document is not None:
-                    last_net_cost = {
-                        "fecha": selected_document['fecha'],
-                        "costo_neto": selected_document['costo_neto'],
-                        "costo_neto_formated": selected_document['costo_neto_formated']
-                    }
-                else:
-                    last_net_cost = {
-                        "fecha": None,
-                        "costo_neto": None,
-                        "costo_neto_formated": None
-                    }
-
-                data_consumos = []
-                for consumption_detail in product.consumption_details:
-                    consumption = consumption_detail.consumption
-                    data_consumos.append({
-                        "fecha": consumption.date,
-                        "oficina": consumption.office,
-                        "nota": consumption.note,
-                        "cantidad": consumption_detail.quantity,
-                        "costo_neto": consumption_detail.net_cost,
-                        "costo_neto_formated": format_number(consumption_detail.net_cost)
-                    })
-
-                df_consumos = pd.DataFrame(data_consumos)
-                if df_consumos.empty:
-                    consumption_details_list = []
-                else:
-                    consumption_details_list = df_consumos.sort_values('fecha').to_dict('records')
-
-                data_ventas = []
-                for document_detail in product.document_details:
-                    document = document_detail.document
-                    sales = document.sales
-                    if sales != []:
-                        for sale in sales:
-                            sale_model = sale.sale
-                            data_ventas.append({
-                                "fecha": document.date,
-                                "documento": document.document_type + " " + document.document_number,
-                                "tipo_de_documento": document.document_type,
-                                "numero_de_documento": document.document_number,
-                                "oficina": document.office,
-                                "cantidad": document_detail.quantity,
-                                "valor_unitario": document_detail.net_unit_value,
-                                "valor_unitario_formated": format_number(document_detail.net_total_value),
-                                "valor_total": document_detail.net_total_value * document_detail.quantity,
-                                "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
-                            })
-
-                df_ventas = pd.DataFrame(data_ventas)
-                if df_ventas.empty:
-                    sales_list = []
-                else:
-                    sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
-
-                data_precios = []
-                for price_list in product.price_list:
-                    data_precios.append({
-                        "name": price_list.name,
-                        "valor": price_list.value,
-                        "valor_formated": format_number(price_list.value),
-                        "factor_ponderador": (price_list.value / last_net_cost['costo_neto']) if (last_net_cost['costo_neto'] != None) and (last_net_cost['costo_neto'] != 0) else "Indefinido",
-                        "factor_ponderador_formated": format_decimal(price_list.value / last_net_cost['costo_neto']) if (last_net_cost['costo_neto'] != None) and (last_net_cost['costo_neto'] != 0) else "Indefinido"
-                    })
-
-                df_precios = pd.DataFrame(data_precios)
-                if df_precios.empty:
-                    price_list = []
-                else:
-                    price_list = df_precios.to_dict('records')
+                stock = cls.get_product_stock(variant_id)
+                last_net_cost, reception_details_list, df = cls.get_product_reception(variant_id)
+                consumption_details_list, df_consumos = cls.get_product_comsumptions(variant_id)
+                sales_list, df_ventas = cls.get_product_sales(variant_id)
+                price_list, df_precios = cls.get_product_price_list(variant_id, last_net_cost)
 
                 if not df_ventas.empty:
                     df_ventas = df_ventas.drop_duplicates()
@@ -324,6 +200,182 @@ class Product(Base):
                 return product_data, prediction  # Return the product's attributes directly
             except Exception as ex:
                 raise
+
+    @classmethod
+    def get_product_stock(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                stock = product.stock.__dict__
+                return stock
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def get_product_reception(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data = []
+                for reception_detail in product.reception_details:
+                    reception = reception_detail.reception
+
+                    if reception.document_type == "Sin Documento":
+                        num = reception_detail.reception_id
+                    else:
+                        num = reception.document_number
+
+                    if "GUÍA" in reception.document_type:
+                        shipping = Shipping.seach_shipping_guide_by_number(f"{num}.0")
+                        if shipping is not None and shipping["shipping_type"] != "Traslados internos (no constituye venta)":
+                            data.append({
+                            "fecha": reception.date,
+                            "documento": reception.document_type + " " + str(num),
+                            "tipo_de_documento": reception.document_type,
+                            "numero_de_documento": num,
+                            "oficina": reception.office,
+                            "nota": reception.note,
+                            "cantidad": reception_detail.quantity,
+                            "costo_neto": reception_detail.net_cost,
+                            "costo_neto_formated": format_number(reception_detail.net_cost)
+                        })
+                            
+                    else:
+                        data.append({
+                            "fecha": reception.date,
+                            "documento": reception.document_type + " " + str(num),
+                            "tipo_de_documento": reception.document_type,
+                            "numero_de_documento": num,
+                            "oficina": reception.office,
+                            "nota": reception.note,
+                            "cantidad": reception_detail.quantity,
+                            "costo_neto": reception_detail.net_cost,
+                            "costo_neto_formated": format_number(reception_detail.net_cost)
+                        })
+
+                df = pd.DataFrame(data)
+                if df.empty:
+                    reception_details_list = []
+                else:
+                    reception_details_list = df.sort_values('fecha').to_dict('records')
+
+                selected_document = None
+                if not df.empty:
+                    df = df.sort_values('fecha', ascending=False)
+                    factura_recente = df[df['tipo_de_documento'] == 'Factura']
+                    if not factura_recente.empty:
+                        selected_document = factura_recente.iloc[0]
+                    else:
+                        sin_documento_recente = df[df['tipo_de_documento'] == 'Sin Documento']
+                        if not sin_documento_recente.empty:
+                            selected_document = sin_documento_recente.iloc[0]
+                        else:
+                            selected_document = None
+
+                if selected_document is not None:
+                    last_net_cost = {
+                        "fecha": selected_document['fecha'],
+                        "costo_neto": selected_document['costo_neto'],
+                        "costo_neto_formated": selected_document['costo_neto_formated']
+                    }
+                else:
+                    last_net_cost = {
+                        "fecha": None,
+                        "costo_neto": None,
+                        "costo_neto_formated": None
+                    }
+
+                return last_net_cost, reception_details_list, df
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def get_product_comsumptions(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data_consumos = []
+                for consumption_detail in product.consumption_details:
+                    consumption = consumption_detail.consumption
+                    data_consumos.append({
+                        "fecha": consumption.date,
+                        "oficina": consumption.office,
+                        "nota": consumption.note,
+                        "cantidad": consumption_detail.quantity,
+                        "costo_neto": consumption_detail.net_cost,
+                        "costo_neto_formated": format_number(consumption_detail.net_cost)
+                    })
+
+                df_consumos = pd.DataFrame(data_consumos)
+                if df_consumos.empty:
+                    consumption_details_list = []
+                else:
+                    consumption_details_list = df_consumos.sort_values('fecha').to_dict('records')
+
+                return consumption_details_list, df_consumos
+            except Exception as ex:
+                raise
+                
+    @classmethod
+    def get_product_sales(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data_ventas = []
+                for document_detail in product.document_details:
+                    document = document_detail.document
+                    sales = document.sales
+                    if sales != []:
+                        for sale in sales:
+                            sale_model = sale.sale
+                            data_ventas.append({
+                                "fecha": document.date,
+                                "documento": document.document_type + " " + document.document_number,
+                                "tipo_de_documento": document.document_type,
+                                "numero_de_documento": document.document_number,
+                                "oficina": document.office,
+                                "cantidad": document_detail.quantity,
+                                "valor_unitario": document_detail.net_unit_value,
+                                "valor_unitario_formated": format_number(document_detail.net_total_value),
+                                "valor_total": document_detail.net_total_value * document_detail.quantity,
+                                "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
+                            })
+
+                df_ventas = pd.DataFrame(data_ventas)
+                if df_ventas.empty:
+                    sales_list = []
+                else:
+                    sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
+
+                return sales_list, df_ventas
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def get_product_price_list(cls, variant_id, last_net_cost):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data_precios = []
+                for price_list in product.price_list:
+                    data_precios.append({
+                        "name": price_list.name,
+                        "valor": price_list.value,
+                        "valor_formated": format_number(price_list.value),
+                        "factor_ponderador": (price_list.value / last_net_cost['costo_neto']) if (last_net_cost['costo_neto'] != None) and (last_net_cost['costo_neto'] != 0) else "Indefinido",
+                        "factor_ponderador_formated": format_decimal(price_list.value / last_net_cost['costo_neto']) if (last_net_cost['costo_neto'] != None) and (last_net_cost['costo_neto'] != 0) else "Indefinido"
+                    })
+
+                df_precios = pd.DataFrame(data_precios)
+                if df_precios.empty:
+                    price_list = []
+                else:
+                    price_list = df_precios.to_dict('records')
+                
+                return price_list, df_precios
+            except Exception as ex:
+                raise
+                
 
 class ProductStock(Base):
     __tablename__ = 'productos_stock'

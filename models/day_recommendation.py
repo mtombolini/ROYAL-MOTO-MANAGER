@@ -14,20 +14,25 @@ class DayRecommendation(Base):
 
     @classmethod
     def get_all(cls):
+        from models.productos import Product
         with AppSession() as session:
             try:
                 recomendations = session.query(cls).all()
 
                 recomendation_data = []
                 for recomendation in recomendations:
+                    last_net_cost, _, _ = Product.get_product_reception(recomendation.variant_id)
                     recomendation_data.append({
                         'variant_id': recomendation.variant_id,
                         'sku': recomendation.product.sku,
                         'proveedor': recomendation.product.supplier.trading_name,
+                        'rut': recomendation.product.supplier.rut,
                         'description': recomendation.product.description,
                         'recommendation': recomendation.recommendation,
-                        'date': recomendation.date
+                        'date': recomendation.date,
+                        'last_net_cost': last_net_cost,
                     })
+                
 
                 sorted_data = sorted(recomendation_data, key=lambda x: (x['proveedor'], -x['recommendation']))
                 

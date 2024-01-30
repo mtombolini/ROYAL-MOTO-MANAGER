@@ -1,8 +1,3 @@
-PASSWORD_MYSQL = ''
-PASSWORD_POSTGRES = '909932'
-USER_MYSQL = 0
-USER_POSTGRES = 'maximilianotombolini'
-
 from datetime import time, timedelta
 
 FORM_DATE_FORMAT = "%Y-%m"
