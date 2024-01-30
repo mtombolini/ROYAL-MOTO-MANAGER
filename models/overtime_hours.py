@@ -45,11 +45,12 @@ class OvertimeRecord(Base):
     _check_out = Column(Time())
     _lunch_break_start = Column(Time())
     _lunch_break_end = Column(Time())
-    _confirmed = Column(Boolean())
+    #_confirmed = Column(Boolean())
+    #_is_holiday = Column(Boolean)
     
-    @property
-    def confirmed(self) -> bool:
-        return self._confirmed
+    #@property
+    #def confirmed(self) -> bool:
+        #return self._confirmed
     
     
     @property
@@ -289,7 +290,7 @@ class OvertimeRecord(Base):
                 raise 
             
             
-    def toggle_confirmed_status(self) -> None:
-        with AppSession() as session:
-            self._confirmed = not self._confirmed 
-            session.commit()     
+    #def toggle_confirmed_status(self) -> None:
+        #with AppSession() as session:
+            #self._confirmed = not self._confirmed 
+            #session.commit()     
