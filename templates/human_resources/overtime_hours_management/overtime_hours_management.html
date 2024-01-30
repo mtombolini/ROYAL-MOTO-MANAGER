@@ -146,8 +146,12 @@
                                     <td>{{ overtime_record.total_hours_worked }}</td>
                                     <td>{{ overtime_record.overtime_hours }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary">Confirmar</button>
-                                        <button type="button" class="btn btn-danger">Feriado</button>
+                                        <button type="button" class="btn btn-danger">Confirmar</button>
+                                        <form action="{{ url_for('human_resources.assign_holiday_day', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                                        </form>
+                                        
+                                        
                                     </td>
                                 {% else %}
                                     <td colspan="8" class="empty-row">DOMINGO</td>
