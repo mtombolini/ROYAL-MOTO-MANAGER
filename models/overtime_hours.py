@@ -211,8 +211,12 @@ class OvertimeRecord(Base):
                 monthly_overtime_hours = calculate_monthly_overtime_hours(
                     employee_month_record_data
                 )
-                print(monthly_total_hours_worked, monthly_overtime_hours)
-                return employee_month_record_data
+                monthly_standard_total_hours_worked = monthly_total_hours_worked - monthly_overtime_hours
+                return employee_month_record_data, {
+                    'monthly_total_hours_worked': monthly_total_hours_worked,
+                    'monthly_overtime_hours': monthly_overtime_hours,
+                    'monthly_standard_total_hours_worked': monthly_standard_total_hours_worked,
+                }
             except Exception as ex:
                 session.rollback()
                 raise

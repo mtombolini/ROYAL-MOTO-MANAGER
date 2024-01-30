@@ -244,10 +244,11 @@ def overtime_hours_management(employee_id: int | None=None, month: str | None=No
     form = OvertimeRecordForm()
     try:
         month = reformat_strftime(month, FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT)
-        data: List[Dict] = OvertimeRecord.get_employee_month_schedule_record(employee_id, month) if employee_id and month else None
+        data, summary_data = OvertimeRecord.get_employee_month_schedule_record(employee_id, month) if employee_id and month else (None, None)
         return render_template('human_resources/overtime_hours_management/overtime_hours_management.html', 
                                page_title="Registro de Horas Extra", 
                                data=data,
+                               summary_data=summary_data,
                                form=form,
                                show_table=bool(employee_id) and bool(month))  
     except Exception as e:
