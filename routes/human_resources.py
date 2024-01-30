@@ -69,7 +69,7 @@ def get_month_list(start_year: int, start_month: int) -> List[str]:
     months = []
 
     while start_date <= end_date:
-        months.append(start_date.strftime("%m.%Y"))
+        months.append(start_date.strftime(FORM_DATE_FORMAT))
         # Move to the next month
         start_date += timedelta(days=32)
         start_date = start_date.replace(day=1)
