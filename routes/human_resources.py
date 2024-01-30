@@ -63,6 +63,22 @@ def format_employees_data_for_render(employees_data: List[Dict | None],
 def format_overtime_record_time_attr_value_for_database(value: str) -> time:
     return datetime.strptime(value, SCHEDULE_RECORDS_TIME_FORMAT).time()
 
+def format_timedelta_for_render(value: timedelta) -> str:
+    total_seconds = value.total_seconds()
+    hours = int(total_seconds // 3600)
+    minutes = int((total_seconds % 3600) // 60)
+    seconds = int(total_seconds % 60)
+    return f"{hours} hours, {minutes} minutes, {seconds} seconds"
+
+def format_overtime_record_data_for_render(data: List[Dict], summary_data: Dict) -> Tuple(List[Dict], Dict):
+    for record in data:
+        record['total_hours_worked'] = format_timedelta_for_render(record['total_hours_worked']) if record['total_hours_worked'] is not None else None
+        record['overtime_hours'] = format_timedelta_for_render(record['overtime_hours']) if record['overtime_hours'] is not None else None
+        
+    for key in summary_data.keys():
+        summary_data[key] = format_timedelta_for_render(summary_data[key])
+    return data, summary_data
+
 def get_month_list(start_year: int, start_month: int) -> List[str]:
     start_date = datetime(start_year, start_month, 1)
     end_date = datetime.now()
@@ -245,6 +261,7 @@ def overtime_hours_management(employee_id: int | None=None, month: str | None=No
     try:
         month = reformat_strftime(month, FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT)
         data, summary_data = OvertimeRecord.get_employee_month_schedule_record(employee_id, month) if employee_id and month else (None, None)
+        data, summary_data = format_overtime_record_data_for_render(data, summary_data) if data and summary_data else (None, None)
         return render_template('human_resources/overtime_hours_management/overtime_hours_management.html', 
                                page_title="Registro de Horas Extra", 
                                data=data,

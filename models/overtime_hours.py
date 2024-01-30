@@ -180,26 +180,25 @@ class OvertimeRecord(Base):
     @classmethod
     def get_employee_month_schedule_record(cls, employee_id: int, month: str) -> List[Dict]:
         with AppSession() as session:
-            month: datetime = datetime.strptime(month, SCHEDULE_RECORDS_DATE_FORMAT)
-            _, days_in_month = calendar.monthrange(month=month.month, year=month.year)
+            month_start: datetime = datetime.strptime(month, SCHEDULE_RECORDS_DATE_FORMAT)
+            previous_month_start = (month_start - timedelta(days=1)).replace(day=26)
+            current_month_start = month_start  # First day of the current month
+            current_month_end = current_month_start.replace(day=25)
+            _, days_in_month = calendar.monthrange(month=previous_month_start.month, year=month_start.year)
             try:
                 employee_month_record: List[cls] = session.query(cls).filter(
                     and_(
-                        month + timedelta(days=days_in_month) > cls.date,
-                        cls.date >= month
+                        current_month_end > cls.date,
+                        cls.date >= previous_month_start
                     ),
                     cls.employee_id == employee_id
                 ).order_by(cls.date).all()
                 employee_month_record_data = [
                     (
                         employee_month_record.pop(0).get_column_values() 
-                        if employee_month_record and employee_month_record[0].date == datetime(
-                            day=i, month=month.month, year=month.year
-                        ).date()
+                        if employee_month_record and employee_month_record[0].date == (previous_month_start + timedelta(days=i)).date()
                         else cls.generate_standard_record_data(
-                            employee_id=employee_id, date=datetime(
-                                day=i, month=month.month, year=month.year,
-                            ).date(),
+                            employee_id=employee_id, date=(previous_month_start + timedelta(days=i)).date(),
                             session=session
                         )
                     )
