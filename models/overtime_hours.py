@@ -11,9 +11,18 @@ from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
 from datetime import datetime, timedelta, time
+from functools import reduce
 from typing import List, Dict
 import calendar
 import inspect
+           
+def calculate_monthly_total_hours_worked(records_data):
+    iterable = [record['total_hours_worked'] for record in records_data if record['total_hours_worked']]
+    return reduce(lambda x, y: x+y, iterable, timedelta())
+
+def calculate_monthly_overtime_hours(records_data):
+    iterable = [record['overtime_hours'] for record in records_data if record['total_hours_worked']]
+    return reduce(lambda x, y: x+y, iterable, timedelta()) 
 
 class OvertimeRecordRecordNotFoundError(ValueError):
     """Exception raised when the overtime hours record of an employee 
@@ -196,6 +205,13 @@ class OvertimeRecord(Base):
                     )
                     for i in range(1, days_in_month + 1)
                 ]
+                monthly_total_hours_worked = calculate_monthly_total_hours_worked(
+                    employee_month_record_data
+                )
+                monthly_overtime_hours = calculate_monthly_overtime_hours(
+                    employee_month_record_data
+                )
+                print(monthly_total_hours_worked, monthly_overtime_hours)
                 return employee_month_record_data
             except Exception as ex:
                 session.rollback()
@@ -262,4 +278,4 @@ class OvertimeRecord(Base):
                     )
             except Exception as ex:
                 session.rollback()
-                raise           
+                raise       

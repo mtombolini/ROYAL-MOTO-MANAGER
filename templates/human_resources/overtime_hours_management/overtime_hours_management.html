@@ -34,12 +34,23 @@
 
 <div class="container-fluid mt-3">
     <div class="row">
-        <!-- Column for Form -->
-        <div class="col-md-6 ms-3">
-            <form id="overtimeForm" onsubmit="updateFormAction()" method="get" class="d-flex align-items-center gap-2">
-                <input type="number" id="employeeIdSelect" name="employee_id" class="form-control">
-                <input type="month" id="monthSelect" name="month" class="form-control">
-                <button type="submit" class="btn btn-primary">Aceptar</button>
+        <div class="col-12">
+            <form id="overtimeForm" onsubmit="updateFormAction()" method="get">
+                <!-- Employee ID Dropdown -->
+                <select id="employeeIdSelect" name="employee_id">
+                    {% for id, name in form.employee_id.choices %}
+                        <option value="{{ id }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            
+                <!-- Month Dropdown -->
+                <select id="monthSelect" name="month">
+                    {% for month_value in form.month.choices %}
+                        <option value="{{ month_value }}">{{ month_value }}</option>
+                    {% endfor %}
+                </select>
+            
+                <button type="submit">Submit</button>
             </form>
         </div>
     </div>
