@@ -1,5 +1,5 @@
 from __future__ import annotations
-from sqlalchemy import Column, Integer, ForeignKey, Date, Time, and_
+from sqlalchemy import Column, Integer, ForeignKey, Date, Time, Boolean, and_
 from parameters import (
     STANDARD_CHECK_IN_WEEKDAY, STANDARD_CHECK_OUT_WEEKDAY,
     STANDARD_CHECK_IN_SATURDAY, STANDARD_CHECK_OUT_SATURDAY,
@@ -45,6 +45,11 @@ class OvertimeRecord(Base):
     _check_out = Column(Time())
     _lunch_break_start = Column(Time())
     _lunch_break_end = Column(Time())
+    _confirmed = Column(Boolean())
+    
+    @property
+    def confirmed(self) -> bool:
+        return self._confirmed
     
     
     @property
@@ -281,4 +286,10 @@ class OvertimeRecord(Base):
                     )
             except Exception as ex:
                 session.rollback()
-                raise       
+                raise 
+            
+            
+    def toggle_confirmed_status(self) -> None:
+        with AppSession() as session:
+            self._confirmed = not self._confirmed 
+            session.commit()     

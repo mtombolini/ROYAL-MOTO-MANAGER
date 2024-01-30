@@ -115,6 +115,7 @@
                             <th>Fin Colación</th>
                             <th>Total trabajado</th>
                             <th>Horas Extra</th>
+                            <th>Confirmado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -146,11 +147,18 @@
                                     <td>{{ overtime_record.total_hours_worked }}</td>
                                     <td>{{ overtime_record.overtime_hours }}</td>
                                     <td>
+                                        {% if overtime_record.confirmed %}
+                                            ✅
+                                        {% else %}
+                                            ❌
+                                        {% endif %}
+                                    </td>
+                                    <td>
                                         <button type="button" class="btn btn-primary">Confirmar</button>
                                         <button type="button" class="btn btn-danger">Feriado</button>
                                     </td>
                                 {% else %}
-                                    <td colspan="8" class="empty-row">DOMINGO</td>
+                                    <td colspan="9" class="empty-row">DOMINGO</td>
                                 {% endif %}
                             </tr>
                         {% else %}
