@@ -33,25 +33,26 @@
 </style>
 
 <div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-12">
-            <form id="overtimeForm" onsubmit="updateFormAction()" method="get">
-                <!-- Employee ID Dropdown -->
-                <select id="employeeIdSelect" name="employee_id">
-                    {% for id, name in form.employee_id.choices %}
-                        <option value="{{ id }}">{{ name }}</option>
-                    {% endfor %}
-                </select>
-            
-                <!-- Month Dropdown -->
-                <select id="monthSelect" name="month">
-                    {% for month_value in form.month.choices %}
-                        <option value="{{ month_value }}">{{ month_value }}</option>
-                    {% endfor %}
-                </select>
-            
-                <button type="submit">Submit</button>
-            </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="overtimeForm" onsubmit="updateFormAction()" method="get" class="d-flex align-items-center gap-2">
+                    <label for="employeeIdSelect" class="form-label-bold">Empleado</label>
+                        <select id="employeeIdSelect" name="employee_id" class="form-control">
+                            {% for id, name in form.employee_id.choices %}
+                                <option value="{{ id }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="monthSelect" class="form-label-bold">Periodo</label>
+                        <select id="monthSelect" name="month" class="form-control">
+                            {% for month_value in form.month.choices %}
+                                <option value="{{ month_value }}">{{ month_value }}</option>
+                            {% endfor %}
+                        </select>
+                
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                </form>
+            </div>
         </div>
     </div>
     <hr style="height: 2px; background-color: black;">
@@ -114,6 +115,7 @@
                             <th>Fin Colación</th>
                             <th>Total trabajado</th>
                             <th>Horas Extra</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,8 +145,12 @@
                                     </td>
                                     <td>{{ overtime_record.total_hours_worked }}</td>
                                     <td>{{ overtime_record.overtime_hours }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary">Confirmar</button>
+                                        <button type="button" class="btn btn-danger">Feriado</button>
+                                    </td>
                                 {% else %}
-                                    <td colspan="7" class="empty-row">DOMINGO</td>
+                                    <td colspan="8" class="empty-row">DOMINGO</td>
                                 {% endif %}
                             </tr>
                         {% else %}
@@ -154,7 +160,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>
+            </div>             
         </div>
     {% endif %}
 </div>
@@ -166,7 +172,12 @@
         var month = document.getElementById('monthSelect').value;
         var form = document.getElementById('overtimeForm');
         form.action = '/overtime_hours_management/' + employeeId + '/' + month;
+    
+        // Restablecer los valores de los selectores a su estado inicial
+        document.getElementById('employeeIdSelect').value = '';
+        document.getElementById('monthSelect').value = '';
     }
+    
 </script>
 {% endblock %}
 
