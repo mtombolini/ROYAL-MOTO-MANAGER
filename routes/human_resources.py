@@ -264,6 +264,7 @@ def overtime_hours_management(employee_id: int | None=None, month: str | None=No
         data, summary_data = format_overtime_record_data_for_render(data, summary_data) if data and summary_data else (None, None)
         return render_template('human_resources/overtime_hours_management/overtime_hours_management.html', 
                                page_title="Registro de Horas Extra", 
+                               month=month,
                                data=data,
                                summary_data=summary_data,
                                form=form,
@@ -302,7 +303,6 @@ def update_overtime_record(employee_id: int, date: str) -> str:
         month = "-".join(date.split("-")[:-1])
         return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
 
-    
 @human_resources_blueprint.route('/delete_overtime_record/<int:employee_id>/<string:month>')
 @requires_roles('desarrollador')
 def delete_overtime_record(employee_id: int, month: str) -> str:
@@ -313,3 +313,19 @@ def delete_overtime_record(employee_id: int, month: str) -> str:
         flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
         return redirect(url_for('human_resources.overtime_hours_management')) 
+    
+
+# <---- Asignación de Feriado ---->
+@human_resources_blueprint.route('/assign_holiday/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
+@requires_roles('desarrollador')
+def assign_holiday_day(employee_id: int, date: str, month):
+    # Imprimir el formulario en la consola
+    print("AA", request.form)  # Esto imprimirá el contenido del formulario en la consola
+
+    # Mostrar mensaje flash
+    flash(f'Asignaste al empleado {employee_id} en el día {date} como feriado', 'success')
+    month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
+
+    # Redirigir a la vista 'overtime_hours_management' con valores de 'employee_id' y 'month'
+    return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
+
