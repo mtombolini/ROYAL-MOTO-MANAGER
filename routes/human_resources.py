@@ -318,14 +318,42 @@ def delete_overtime_record(employee_id: int, month: str) -> str:
 # <---- Asignación de Feriado ---->
 @human_resources_blueprint.route('/assign_holiday/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
 @requires_roles('desarrollador')
-def assign_holiday_day(employee_id: int, date: str, month):
+def assign_holiday_day(employee_id: int, date: str, month: str) -> str:
     # Imprimir el formulario en la consola
     print("AA", request.form)  # Esto imprimirá el contenido del formulario en la consola
 
     # Mostrar mensaje flash
     flash(f'Asignaste al empleado {employee_id} en el día {date} como feriado', 'success')
+    OvertimeRecord.toggle_is_holiday_status(employee_id, date)
     month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
 
     # Redirigir a la vista 'overtime_hours_management' con valores de 'employee_id' y 'month'
     return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
 
+
+@human_resources_blueprint.route('/mark_as_vacation/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
+@requires_roles('desarrollador')
+def mark_as_vacation(employee_id: int, date: str, month: str) -> str:
+    # Imprimir el formulario en la consola
+
+    # Mostrar mensaje flash
+    flash(f'Asignaste al empleado {employee_id} en el día {date} como vacaciones pagadas.', 'success')
+    OvertimeRecord.toggle_is_on_vacation_status(employee_id, date)
+    month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
+
+    # Redirigir a la vista 'overtime_hours_management' con valores de 'employee_id' y 'month'
+    return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
+
+
+@human_resources_blueprint.route('/mark_as_absence/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
+@requires_roles('desarrollador')
+def mark_as_absence(employee_id: int, date: str, month: str) -> str:
+    # Imprimir el formulario en la consola
+
+    # Mostrar mensaje flash
+    flash(f'Asignaste al empleado {employee_id} en el día {date} como ausencia (Permiso no pagado).', 'success')
+    OvertimeRecord.toggle_absence_status(employee_id, date)
+    month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
+
+    # Redirigir a la vista 'overtime_hours_management' con valores de 'employee_id' y 'month'
+    return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))

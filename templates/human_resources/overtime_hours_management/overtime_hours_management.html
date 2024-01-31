@@ -116,7 +116,7 @@
                             <th>Total trabajado</th>
                             <th>Horas Extra</th>
                             <th>Confirmado</th>
-                            <th>Acciones</th>
+                            <th colspan="2">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -134,36 +134,54 @@
                                             <input type="text" name="check_out" value="{{ overtime_record.check_out }}" class="edit-input" onblur="this.form.submit()">
                                         </form>
                                     </td>
-                                    <td>
-                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
-                                            <input type="text" name="lunch_break_start" value="{{ overtime_record.lunch_break_start }}" class="edit-input" onblur="this.form.submit()">
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
-                                            <input type="text" name="lunch_break_end" value="{{ overtime_record.lunch_break_end }}" class="edit-input" onblur="this.form.submit()">
-                                        </form>
-                                    </td>
+                                    {% if (overtime_record.lunch_break_start or overtime_record.lunch_break_end) %}
+                                        <td>
+                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
+                                                <input type="text" name="lunch_break_start" value="{{ overtime_record.lunch_break_start }}" class="edit-input" onblur="this.form.submit()">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
+                                                <input type="text" name="lunch_break_end" value="{{ overtime_record.lunch_break_end }}" class="edit-input" onblur="this.form.submit()">
+                                            </form>
+                                        </td>
+                                    {% else %}
+                                        <td colspan="2">NO HAY COLACIÓN</td>
+                                    {% endif %}
                                     <td>{{ overtime_record.total_hours_worked }}</td>
                                     <td>{{ overtime_record.overtime_hours }}</td>
-                                    <td>
-                                        {% if overtime_record.confirmed %}
-                                            ✅
-                                        {% else %}
-                                            ❌
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger">Confirmar</button>
-                                        <form action="{{ url_for('human_resources.assign_holiday_day', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
-                                            <button type="submit" class="btn btn-primary">Marcar como Feriado</button>
-                                        </form>
-                                        
-                                        
-                                    </td>
                                 {% else %}
-                                    <td colspan="9" class="empty-row">DOMINGO</td>
+                                    {% if overtime_record.is_on_vacation %}
+                                        <td colspan="6" class="empty-row">VACACIONES</td>
+                                    {% elif overtime_record.is_holiday %}
+                                        <td colspan="6" class="empty-row">FERIADO</td>
+                                    {% elif overtime_record.absence %}
+                                        <td colspan="6" class="empty-row">AUSENCIA (PERMISO NO PAGADO)</td>
+                                    {% else %}
+                                        <td colspan="6" class="empty-row">DOMINGO</td>
+                                    {% endif %}
                                 {% endif %}
+                                <td>
+                                    {% if overtime_record.confirmed %}
+                                        ✅
+                                    {% else %}
+                                        ❌
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger">Confirmar</button>
+                                    <form action="{{ url_for('human_resources.assign_holiday_day', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-primary">Marcar como Feriado</button>
+                                    </form>  
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('human_resources.mark_as_vacation', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-primary">Marcar como Vacaciones</button>
+                                    </form> 
+                                    <form action="{{ url_for('human_resources.mark_as_absence', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-primary">Marcar como Ausencia</button>
+                                    </form> 
+                                </td>
                             </tr>
                         {% else %}
                             <tr>

@@ -45,12 +45,29 @@ class OvertimeRecord(Base):
     _check_out = Column(Time())
     _lunch_break_start = Column(Time())
     _lunch_break_end = Column(Time())
-    #_confirmed = Column(Boolean())
-    #_is_holiday = Column(Boolean)
+    _confirmed = Column(Boolean(), default=False)
+    _is_holiday = Column(Boolean(), default=False)
+    _is_on_vacation = Column(Boolean(), default=False)
+    _absence = Column(Boolean(), default=False)
     
-    #@property
-    #def confirmed(self) -> bool:
-        #return self._confirmed
+    @property
+    def is_holiday(self) -> bool:
+        return self._is_holiday
+     
+    
+    @property
+    def confirmed(self) -> bool:
+        return self._confirmed
+    
+    
+    @property
+    def is_on_vacation(self) -> bool:
+        return self._is_on_vacation
+    
+    
+    @property
+    def absence(self) -> bool:
+        return self._absence
     
     
     @property
@@ -61,10 +78,10 @@ class OvertimeRecord(Base):
     
     @property
     def check_in(self) -> time:
-        if self.is_saturday():
-            return self._check_in or STANDARD_CHECK_IN_SATURDAY
-        elif self.is_sunday():
+        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
             return None
+        elif self.is_saturday():
+            return self._check_in or STANDARD_CHECK_IN_SATURDAY
         else:
             return self._check_in or STANDARD_CHECK_IN_WEEKDAY
     
@@ -76,10 +93,10 @@ class OvertimeRecord(Base):
     
     @property
     def check_out(self) -> time:
-        if self.is_saturday():
-            return self._check_out or STANDARD_CHECK_OUT_SATURDAY
-        elif self.is_sunday():
+        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
             return None
+        elif self.is_saturday():
+            return self._check_out or STANDARD_CHECK_OUT_SATURDAY
         else:
             return self._check_out or STANDARD_CHECK_OUT_WEEKDAY
     
@@ -91,7 +108,7 @@ class OvertimeRecord(Base):
             
     @property
     def lunch_break_start(self) -> time:
-        if self.is_saturday() or self.is_sunday():
+        if self.is_saturday() or self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
             return None
         else:
             if self._lunch_break_start:
@@ -110,7 +127,7 @@ class OvertimeRecord(Base):
     
     @property
     def lunch_break_end(self) -> time | None:
-        if self.is_saturday() or self.is_sunday():
+        if self.is_saturday() or self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
             return None
         else:
             if self._lunch_break_end:
@@ -129,12 +146,12 @@ class OvertimeRecord(Base):
     @property
     def total_hours_worked(self) -> timedelta | None:
         date_today = datetime.today().date()
-        if self.is_saturday():
+        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
+            return timedelta(hours=0)
+        elif self.is_saturday():
             datetime_check_in = datetime.combine(date_today, self.check_in)
             datetime_check_out = datetime.combine(date_today, self.check_out)
             return datetime_check_out - datetime_check_in
-        elif self.is_sunday():
-            return timedelta(hours=0)
         else:
             datetime_check_in = datetime.combine(date_today, self.check_in)
             datetime_check_out = datetime.combine(date_today, self.check_out)            
@@ -147,10 +164,10 @@ class OvertimeRecord(Base):
     
     @property
     def overtime_hours(self) -> timedelta | None:
-        if self.is_saturday():
-            return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_SATURDAY
-        elif self.is_sunday():
+        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
             return None
+        elif self.is_saturday():
+            return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_SATURDAY
         else:
             return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
     
@@ -169,7 +186,7 @@ class OvertimeRecord(Base):
             value = getattr(self, name)
             if isinstance(value, property):
                 columns[name] = value.fget(self)
-            elif not name.startswith('_') and not inspect.ismethod(value):
+            elif not name.startswith('_') and not inspect.ismethod(value) or name in ["_is_holiday", "_confirmed", "_is_on_vacation", "_absence"]:
                 columns[name] = value
         return columns
     
@@ -289,8 +306,46 @@ class OvertimeRecord(Base):
                 session.rollback()
                 raise 
             
+    
+    @classmethod       
+    def toggle_confirmed_status(cls, employee_id: int, date: str) -> None:
+        with AppSession() as session: 
+            record = session.query(cls).filter(cls.employee_id == employee_id,
+                                               cls.date == date).one_or_none()
+        if record:
+            cls.edit(employee_id, date, **{'_confirmed': not record.is_holiday})
+        else:
+            cls.edit(employee_id, date, **{'_confirmed': True})
             
-    #def toggle_confirmed_status(self) -> None:
-        #with AppSession() as session:
-            #self._confirmed = not self._confirmed 
-            #session.commit()     
+    
+    @classmethod       
+    def toggle_is_holiday_status(cls, employee_id: int, date: str) -> None:
+        with AppSession() as session: 
+            record = session.query(cls).filter(cls.employee_id == employee_id,
+                                               cls.date == date).one_or_none()
+        if record:
+            cls.edit(employee_id, date, **{'_is_holiday': not record.is_holiday})
+        else:
+            cls.edit(employee_id, date, **{'_is_holiday': True})    
+
+
+    @classmethod       
+    def toggle_is_on_vacation_status(cls, employee_id: int, date: str) -> None:
+        with AppSession() as session: 
+            record = session.query(cls).filter(cls.employee_id == employee_id,
+                                               cls.date == date).one_or_none()
+        if record:
+            cls.edit(employee_id, date, **{'_is_on_vacation': not record.is_on_vacation})
+        else:
+            cls.edit(employee_id, date, **{'_is_on_vacation': True}) 
+            
+            
+    @classmethod
+    def toggle_absence_status(cls, employee_id: int, date: str) -> None:
+        with AppSession() as session: 
+            record = session.query(cls).filter(cls.employee_id == employee_id,
+                                               cls.date == date).one_or_none()
+        if record:
+            cls.edit(employee_id, date, **{'_absence': not record.absence})
+        else:
+            cls.edit(employee_id, date, **{'_absence': True})    
