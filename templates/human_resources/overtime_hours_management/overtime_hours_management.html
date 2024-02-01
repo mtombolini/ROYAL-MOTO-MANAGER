@@ -117,9 +117,13 @@
                             <th>Horas Extra</th>
                             <th>Confirmado</th>
                             <th colspan="2">Acciones</th>
+                            <th>Horas trabajadas</th>
+                            <th>Horas extra</th>
+                            <th>Horas estándar</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% set ns = namespace(current_week_number=0) %}
                         {% for overtime_record in data %}
                             <tr>
                                 <td>{{ overtime_record.date }}</td>
@@ -182,6 +186,16 @@
                                         <button type="submit" class="btn btn-primary">Marcar como Ausencia</button>
                                     </form> 
                                 </td>
+                                {% if weekly_data[ns.current_week_number].week_start == overtime_record.date %}
+                                    {% set week_summary = weekly_data[ns.current_week_number] %}
+                                    <!-- Weekly Summary Columns with Rowspan -->
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.total_hours_worked }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.overtime_hours }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.standard_hours }}</td>
+                                    {% if weekly_data|length - 1 > ns.current_week_number %}
+                                        {% set ns.current_week_number = ns.current_week_number + 1 %}
+                                    {% endif %}
+                                {% endif %}
                             </tr>
                         {% else %}
                             <tr>

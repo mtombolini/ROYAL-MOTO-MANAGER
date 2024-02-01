@@ -1,5 +1,5 @@
 from __future__ import annotations
-from parameters import FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT, SCHEDULE_RECORDS_TIME_FORMAT
+from parameters import FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT, SCHEDULE_RECORDS_TIME_FORMAT, FORM_COMPLETE_DATE_FORMAT
 from datetime import time
 from flask import Blueprint, render_template, redirect, url_for, flash, jsonify, request, Response
 from flask_wtf import FlaskForm
@@ -7,7 +7,7 @@ from wtforms import StringField, SelectField, Field, HiddenField, IntegerField
 from wtforms_components import DateField, TimeField, TimeRange
 from wtforms.validators import DataRequired, Length, ValidationError
 from decorators.roles import requires_roles
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from models.employee import Employee
 from models.model_user import ModelUser
 from models.overtime_hours import (OvertimeRecord,
@@ -16,6 +16,7 @@ from models.overtime_hours import (OvertimeRecord,
 )                             
 from rut_chile import rut_chile
 from typing import List, Dict, Tuple
+from math import ceil
 
 START_YEAR: int = 2020
 START_MONTH: int = 1
@@ -64,20 +65,35 @@ def format_overtime_record_time_attr_value_for_database(value: str) -> time:
     return datetime.strptime(value, SCHEDULE_RECORDS_TIME_FORMAT).time()
 
 def format_timedelta_for_render(value: timedelta) -> str:
-    total_seconds = value.total_seconds()
-    hours = int(total_seconds // 3600)
-    minutes = int((total_seconds % 3600) // 60)
-    seconds = int(total_seconds % 60)
+    total_seconds = int(value.total_seconds())
+    if total_seconds != 0:
+        hours = abs(total_seconds) // 3600 * int(total_seconds / abs(total_seconds))
+        minutes = (abs(total_seconds) % 3600) // 60
+        seconds = abs(total_seconds) % 60
+    else:
+        hours, minutes, seconds = (0,) * 3
     return f"{hours} hours, {minutes} minutes, {seconds} seconds"
 
-def format_overtime_record_data_for_render(data: List[Dict], summary_data: Dict) -> Tuple(List[Dict], Dict):
+def format_overtime_record_data_for_render(data: List[Dict], 
+                                           weekly_data: List[Dict[str, int | timedelta]], 
+                                           summary_data: Dict) -> Tuple(List[Dict], Dict):
     for record in data:
+        record['date'] = record['date'].strftime(FORM_COMPLETE_DATE_FORMAT)
         record['total_hours_worked'] = format_timedelta_for_render(record['total_hours_worked']) if record['total_hours_worked'] is not None else None
         record['overtime_hours'] = format_timedelta_for_render(record['overtime_hours']) if record['overtime_hours'] is not None else None
         
+    for week in weekly_data:
+        for key, value in week.items():
+            if not isinstance(value, int):
+                if isinstance(value, date):
+                    week[key] = week[key].strftime(FORM_COMPLETE_DATE_FORMAT)
+                else:
+                    week[key] = format_timedelta_for_render(week[key])
+            
     for key in summary_data.keys():
         summary_data[key] = format_timedelta_for_render(summary_data[key])
-    return data, summary_data
+        
+    return data, weekly_data, summary_data
 
 def get_month_list(start_year: int, start_month: int) -> List[str]:
     start_date = datetime(start_year, start_month, 1)
@@ -260,12 +276,14 @@ def overtime_hours_management(employee_id: int | None=None, month: str | None=No
     form = OvertimeRecordForm()
     try:
         month = reformat_strftime(month, FORM_DATE_FORMAT, SCHEDULE_RECORDS_DATE_FORMAT)
-        data, summary_data = OvertimeRecord.get_employee_month_schedule_record(employee_id, month) if employee_id and month else (None, None)
-        data, summary_data = format_overtime_record_data_for_render(data, summary_data) if data and summary_data else (None, None)
+        data, weekly_data, summary_data = OvertimeRecord.get_employee_month_schedule_record(employee_id, month) if employee_id and month else (None, None, None)
+        data, weekly_data, summary_data = format_overtime_record_data_for_render(data, weekly_data, summary_data) if data and summary_data else (None, None, None)
+        print(weekly_data)
         return render_template('human_resources/overtime_hours_management/overtime_hours_management.html', 
                                page_title="Registro de Horas Extra", 
                                month=month,
                                data=data,
+                               weekly_data=weekly_data,
                                summary_data=summary_data,
                                form=form,
                                show_table=bool(employee_id) and bool(month))  

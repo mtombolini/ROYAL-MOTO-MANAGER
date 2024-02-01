@@ -6,16 +6,23 @@ from parameters import (
     STANDARD_LUNCH_BREAK_DURATION, STANDARD_LUNCH_BREAK_START,
     SCHEDULE_RECORDS_DATE_FORMAT, STANDARD_TOTAL_HOURS_WORKED_WEEKDAY,
     STANDARD_TOTAL_HOURS_WORKED_SATURDAY,
+    MONTH_CUT,
 )
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta, time, date
 from functools import reduce
-from typing import List, Dict
+from typing import List, Dict, Generator, Tuple
 import calendar
 import inspect
-           
+
+def get_current_month_end_and_previous_month_start(month: str) -> Tuple[datetime, datetime]:
+    month_start: datetime = datetime.strptime(month, SCHEDULE_RECORDS_DATE_FORMAT)
+    previous_month_start = (month_start - timedelta(days=1)).replace(day=MONTH_CUT+1)
+    current_month_end = month_start.replace(day=MONTH_CUT) 
+    return previous_month_start, current_month_end
+   
 def calculate_monthly_total_hours_worked(records_data):
     iterable = [record['total_hours_worked'] for record in records_data if record['total_hours_worked']]
     return reduce(lambda x, y: x+y, iterable, timedelta())
@@ -23,6 +30,45 @@ def calculate_monthly_total_hours_worked(records_data):
 def calculate_monthly_overtime_hours(records_data):
     iterable = [record['overtime_hours'] for record in records_data if record['total_hours_worked']]
     return reduce(lambda x, y: x+y, iterable, timedelta()) 
+
+def calculate_weekly_overtime_and_total_hours(month: str, records_data: List[Dict]) -> List[Dict[str, date | int | timedelta]]:
+    previous_month_start, current_month_end = get_current_month_end_and_previous_month_start(month)
+
+    def get_week_periods(start_date: datetime, end_date: datetime) -> Generator[Tuple[date, date], None, None]:
+        current_start = start_date
+        # Check if the start date is a Monday (weekday 0). If not, start from that day.
+        if current_start.weekday() != 0:
+            current_end = min(current_start + timedelta(days=6 - current_start.weekday()), end_date)
+            yield current_start.date(), current_end.date()
+            current_start = current_end + timedelta(days=1)
+
+        # For subsequent weeks, start from Monday.
+        while current_start <= end_date:
+            current_end = min(current_start + timedelta(days=6), end_date)
+            yield current_start.date(), current_end.date()
+            current_start = current_end + timedelta(days=1)
+
+    weekly_overtime = []
+    for week_start, week_end in get_week_periods(previous_month_start, current_month_end):
+        weekly_overtime_hours_records = [
+            record['overtime_hours'] for record in records_data if week_end >= record['date'] >= week_start
+        ]
+        weekly_total_hours_records = [
+            record['total_hours_worked'] for record in records_data if week_end >= record['date'] >= week_start
+        ]
+
+        total_hours_worked = reduce(lambda x, y: x + y, weekly_total_hours_records, timedelta())
+        overtime_hours = reduce(lambda x, y: x + y, weekly_overtime_hours_records, timedelta())
+
+        weekly_overtime.append({
+            'week_start': week_start,
+            'days_in_week': (week_end - week_start).days + 1,
+            'total_hours_worked': total_hours_worked,
+            'overtime_hours': overtime_hours,
+            'standard_hours': total_hours_worked - overtime_hours,
+        })
+
+    return weekly_overtime
 
 class OvertimeRecordRecordNotFoundError(ValueError):
     """Exception raised when the overtime hours record of an employee 
@@ -78,7 +124,7 @@ class OvertimeRecord(Base):
     
     @property
     def check_in(self) -> time:
-        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
+        if not self.was_worked():
             return None
         elif self.is_saturday():
             return self._check_in or STANDARD_CHECK_IN_SATURDAY
@@ -93,7 +139,7 @@ class OvertimeRecord(Base):
     
     @property
     def check_out(self) -> time:
-        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
+        if not self.was_worked():
             return None
         elif self.is_saturday():
             return self._check_out or STANDARD_CHECK_OUT_SATURDAY
@@ -108,7 +154,7 @@ class OvertimeRecord(Base):
             
     @property
     def lunch_break_start(self) -> time:
-        if self.is_saturday() or self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
+        if not self.was_worked():
             return None
         else:
             if self._lunch_break_start:
@@ -122,12 +168,11 @@ class OvertimeRecord(Base):
     def lunch_break_start(self, value: time) -> None:
         if isinstance(value, time):
             self._lunch_break_start = value
-    
-            
+        
     
     @property
     def lunch_break_end(self) -> time | None:
-        if self.is_saturday() or self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
+        if not self.was_worked():
             return None
         else:
             if self._lunch_break_end:
@@ -146,7 +191,7 @@ class OvertimeRecord(Base):
     @property
     def total_hours_worked(self) -> timedelta | None:
         date_today = datetime.today().date()
-        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
+        if not self.was_worked():
             return timedelta(hours=0)
         elif self.is_saturday():
             datetime_check_in = datetime.combine(date_today, self.check_in)
@@ -163,15 +208,34 @@ class OvertimeRecord(Base):
     
     
     @property
-    def overtime_hours(self) -> timedelta | None:
-        if self.is_sunday() or self.is_holiday or self.is_on_vacation or self.absence:
-            return None
-        elif self.is_saturday():
-            return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_SATURDAY
+    def overtime_hours(self) -> timedelta:
+        if self.was_worked():
+            if self.is_saturday():
+                return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_SATURDAY
+            else:
+                return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
         else:
-            return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
+            if self.is_working_day():
+                if self.is_saturday():
+                    return -STANDARD_TOTAL_HOURS_WORKED_SATURDAY
+                else:
+                    return -STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
+            else:
+                return timedelta(0)
+        
+        
+    def is_working_day(self) -> bool:
+        return not (self.is_holiday or self.is_on_vacation or self.is_sunday())
     
     
+    def was_worked(self) -> bool:
+        return self.is_working_day() and not self.absence
+    
+    
+    def is_payable(self) -> bool:
+        return self.is_working_day() or self.is_on_vacation
+        
+        
     def is_saturday(self) -> bool:
         return self.date.weekday() == 5
     
@@ -186,7 +250,9 @@ class OvertimeRecord(Base):
             value = getattr(self, name)
             if isinstance(value, property):
                 columns[name] = value.fget(self)
-            elif not name.startswith('_') and not inspect.ismethod(value) or name in ["_is_holiday", "_confirmed", "_is_on_vacation", "_absence"]:
+            elif not name.startswith('_') and not inspect.ismethod(value) or name in [
+                "_is_holiday", "_confirmed", "_is_on_vacation", "_absence"
+            ]:
                 columns[name] = value
         return columns
     
@@ -203,11 +269,8 @@ class OvertimeRecord(Base):
     @classmethod
     def get_employee_month_schedule_record(cls, employee_id: int, month: str) -> List[Dict]:
         with AppSession() as session:
-            month_start: datetime = datetime.strptime(month, SCHEDULE_RECORDS_DATE_FORMAT)
-            previous_month_start = (month_start - timedelta(days=1)).replace(day=26)
-            current_month_start = month_start  # First day of the current month
-            current_month_end = current_month_start.replace(day=25)
-            _, days_in_month = calendar.monthrange(month=previous_month_start.month, year=month_start.year)
+            previous_month_start, current_month_end = get_current_month_end_and_previous_month_start(month)
+            _, days_in_month = calendar.monthrange(month=previous_month_start.month, year=previous_month_start.year)
             try:
                 employee_month_record: List[cls] = session.query(cls).filter(
                     and_(
@@ -225,16 +288,15 @@ class OvertimeRecord(Base):
                             session=session
                         )
                     )
-                    for i in range(1, days_in_month + 1)
+                    for i in range(days_in_month)
                 ]
-                monthly_total_hours_worked = calculate_monthly_total_hours_worked(
-                    employee_month_record_data
+                weekly_total_and_overtime_hours = calculate_weekly_overtime_and_total_hours(
+                    month, employee_month_record_data
                 )
-                monthly_overtime_hours = calculate_monthly_overtime_hours(
-                    employee_month_record_data
-                )
+                monthly_total_hours_worked = calculate_monthly_total_hours_worked(employee_month_record_data)
+                monthly_overtime_hours = calculate_monthly_overtime_hours(employee_month_record_data)
                 monthly_standard_total_hours_worked = monthly_total_hours_worked - monthly_overtime_hours
-                return employee_month_record_data, {
+                return employee_month_record_data, weekly_total_and_overtime_hours, {
                     'monthly_total_hours_worked': monthly_total_hours_worked,
                     'monthly_overtime_hours': monthly_overtime_hours,
                     'monthly_standard_total_hours_worked': monthly_standard_total_hours_worked,
