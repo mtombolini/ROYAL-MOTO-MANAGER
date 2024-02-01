@@ -269,7 +269,6 @@ def suppliers_management() -> str:
     form = SupplierForm()
     try:
         data: List[Dict] = Supplier.get_all()
-        print(data)
         data = format_suppliers_data_for_render(data)
         return render_template('configuraciones/suppliers_management/suppliers_management.html', 
                                page_title="Administración de Proveedores", 
