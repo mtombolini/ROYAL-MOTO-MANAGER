@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 # from databases.session import AppSession
 from models.productos import Product
@@ -7,22 +8,20 @@ from services.stock_manager.simple.test import predict_no_plot
 
 class Analyser:
     def __init__(self):
-        self.ids = []
-        self.products = self.get_all()
+        self.ids = self.get_ids()
         self.kardexs = {}
         self.analysed = {}
         self.bad_ids = []
 
-    def get_all(self):
-        return Product.get_all_products()
-    
     def get_ids(self):
-        print('Obteniendo ids...')
-        for product in self.products:
-            self.ids.append(product['variant_id'])
+        return Product.get_all_products_ids()
 
     def get_kardexs(self):
         print('Obteniendo kardexs...')
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({"tipo": "analisis", "mensaje": f"Obteniendo kardexs..."})
+            log_file.write(message + "\n")
+
         for id in self.ids:
             product_data, _ = Product.filter_product(id, False)
             services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
@@ -40,6 +39,7 @@ class Analyser:
 
     def analyse(self):
         print('Analizando...')
+        count = 0
         good_ids = [id for id in self.ids if id not in self.bad_ids]
         for id in good_ids:
             print(id)
@@ -48,8 +48,16 @@ class Analyser:
                 'recommendation': recommendation,
                 'date': date
             }
+            count += 1
+            with open("logs/api_status.log", "a") as log_file:
+                message = json.dumps({"tipo": "analisis", "mensaje": f"Analizando... {count}/{len(good_ids)}"})
+                log_file.write(message + "\n")
 
     def create_model(self, session):
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({"tipo": "analisis", "mensaje": f"Guardando recomendaciones..."})
+            log_file.write(message + "\n")
+
         df_day_recommendation = pd.DataFrame.from_dict(self.analysed, orient='index').reset_index()
         df_day_recommendation.rename(columns={'index': 'variant_id'}, inplace=True)
 
@@ -62,6 +70,14 @@ class Analyser:
             session.add(day_recommendation)
 
         session.commit()
+
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({"tipo": "analisis", "mensaje": f"Recomendaciones guardadas"})
+            log_file.write(message + "\n")
+
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({"tipo": "analisis-listo", "mensaje": f"Analisis ✅"})
+            log_file.write(message + "\n")
 
     def main(self, session):
         self.get_ids()

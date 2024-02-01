@@ -15,14 +15,14 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
         _type_: _description_
     """
     days_to_consider = min(len(data), 30)
-
+    
     # Extract the last 'days_to_consider' days
     not_all_days = data[data["Close"] != 0]
 
     last_30_days = not_all_days[-days_to_consider:]
-    last_30_days = last_30_days[last_30_days["Close"] != 0]
+    
+    # last_30_days = last_30_days[last_30_days["Close"] != 0]
     all_days = data[data["Close"] != 0]
-    not_all_days = data[data["Close"] != 0]
 
     # Calculate mean and standard deviation
     mean_sales = last_30_days['Sales'].mean()
@@ -30,6 +30,19 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
 
     historic_mean = all_days['Sales'].mean()
     historic_std = all_days['Sales'].std()
+
+    # TODO: Review this part after getting kardex right
+    if pd.isna(mean_sales):
+        mean_sales = 0
+
+    if pd.isna(std_sales):
+        std_sales = 0
+    
+    if pd.isna(historic_mean):
+        historic_mean = 0
+
+    if pd.isna(historic_std):
+        historic_std = 0
     
     return mean_sales, std_sales, historic_mean, historic_std
 
