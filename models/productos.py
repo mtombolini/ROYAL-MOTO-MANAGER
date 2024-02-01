@@ -44,6 +44,16 @@ class Product(Base):
     day_recommendation = relationship("DayRecommendation", back_populates="product")
 
     @classmethod
+    def get_all_products_ids(cls):
+        with AppSession() as session:
+            try:
+                products = session.query(cls).all()
+                products_ids = [product.variant_id for product in products]
+                return products_ids
+            except Exception as ex:
+                raise
+
+    @classmethod
     def get_all_products(cls):
         with AppSession() as session:
             try:
