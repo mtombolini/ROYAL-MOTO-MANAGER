@@ -75,8 +75,8 @@ def format_timedelta_for_render(value: timedelta) -> str:
     return f"{hours} hours, {minutes} minutes, {seconds} seconds"
 
 def format_overtime_record_data_for_render(data: List[Dict], 
-                                           weekly_data: List[Dict[str, int | timedelta]], 
-                                           summary_data: Dict) -> Tuple(List[Dict], Dict):
+                                           weekly_data: List[Dict[str, int | timedelta | date]], 
+                                           summary_data: Dict) -> Tuple[List[Dict], List[Dict[str, int | str]], Dict]:
     for record in data:
         record['date'] = record['date'].strftime(FORM_COMPLETE_DATE_FORMAT)
         record['total_hours_worked'] = format_timedelta_for_render(record['total_hours_worked']) if record['total_hours_worked'] is not None else None
@@ -99,7 +99,7 @@ def get_month_list(start_year: int, start_month: int) -> List[str]:
     start_date = datetime(start_year, start_month, 1)
     end_date = datetime.now()
     months = []
-
+    
     while start_date <= end_date:
         months.append(start_date.strftime(FORM_DATE_FORMAT))
         # Move to the next month
@@ -150,15 +150,35 @@ class EmployeeForm(FlaskForm):
 class OvertimeRecordForm(FlaskForm):
     employee_id = SelectField(
         'Empleado', coerce=int,
-        choices=[
+        choices=[]
+    )
+    month = SelectField('Mes', choices=[])
+    
+    def __init__(self) -> None:
+        self.reset_employee_id_choices()
+        self.reset_month_choices()
+    
+    
+    def get_employee_id_choices(self) -> List[Tuple[int, str]]:
+        return [
             (
                 employee['id'], 
                 ' '.join((employee['first_name'], employee['last_name']))
             ) 
             for employee in Employee.get_all()
         ]
-    )
-    month = SelectField('Mes', choices=get_month_list(START_YEAR, START_MONTH))
+        
+    
+    def get_month_choices(self) -> List[str]:
+        return get_month_list(START_YEAR, START_MONTH)
+        
+        
+    def reset_employee_id_choices(self) -> None:
+        self.employee_id.choices = self.get_employee_id_choices()
+        
+        
+    def reset_month_choices(self) -> None:
+        self.month.choices = self.get_month_choices()
     
     
     
@@ -319,6 +339,7 @@ def update_overtime_record(employee_id: int, date: str) -> str:
     finally:
         month = "-".join(date.split("-")[:-1])
         return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
+
 
 @human_resources_blueprint.route('/delete_overtime_record/<int:employee_id>/<string:month>')
 @requires_roles('desarrollador')

@@ -43,7 +43,7 @@
                                 <option value="{{ id }}">{{ name }}</option>
                             {% endfor %}
                         </select>
-                        <label for="monthSelect" class="form-label-bold">Periodo</label>
+                    <label for="monthSelect" class="form-label-bold">Periodo</label>
                         <select id="monthSelect" name="month" class="form-control">
                             {% for month_value in form.month.choices %}
                                 <option value="{{ month_value }}">{{ month_value }}</option>
