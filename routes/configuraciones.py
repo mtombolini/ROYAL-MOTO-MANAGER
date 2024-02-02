@@ -14,6 +14,7 @@ import re
 
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
+# ------------------------- FORMATTING FUNCTIONS ------------------------- #
 def format_rut(rut: str) -> str:        
     rut = rut.replace('.', '').replace('-', '')  # Remove existing formatting
     body, verifier = rut[:-1], rut[-1]  # Split into body and verifier
@@ -32,8 +33,7 @@ def format_suppliers_data_for_render(suppliers_data: List[Dict | None]) -> List[
     for supplier in suppliers_data:
         supplier['credit_term'] = supplier['credit_term'].value
     return suppliers_data
-        
-        
+
 class NoRUTDuplicateValidator:
     def __call__(self, form: FlaskForm, field: Field) -> None:
         print(Supplier.get_all())
@@ -41,11 +41,10 @@ class NoRUTDuplicateValidator:
             if format_rut(field.data) == supplier['rut'] and form.id.data != supplier['id']:
                 raise ValidationError("There is already a supplier with this RUT.")
 
-
+# ------------------------- FORMS ------------------------- #
 class RoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
-    
-    
+
 class UserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
@@ -53,8 +52,7 @@ class UserForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired()])
     apellido = StringField('Apellido', validators=[DataRequired()])
     id_role = SelectField('Role', coerce=int, validators=[DataRequired()])
-    
-    
+
 class SupplierForm(FlaskForm):
     id = HiddenField('ID de proveedor')
     rut = StringField('RUT', validators=[DataRequired(), NoRUTDuplicateValidator()])
@@ -67,6 +65,7 @@ class SupplierForm(FlaskForm):
     )
     delivery_period = StringField('Tiempo de entrega', validators=[DataRequired()])
 
+# ------------------------- ROLE ROUTES ------------------------- #
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
 def administracion_de_roles():
@@ -162,9 +161,7 @@ def editar_rol(id_role):
 
     return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
 
-
-
-# <----- Configuracion de Usuarios -----> #
+# ------------------------- USER ROUTES ------------------------- #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
 def administracion_de_usuarios():
@@ -262,7 +259,7 @@ def eliminar_usuario(id_user):
     return redirect(url_for('configuraciones.administracion_de_usuarios')) 
 
 
-# <----- Suppliers' Configuration -----> #
+# ------------------------- SUPPLIER ROUTES ------------------------- #
 @configuraciones_blueprint.route('/suppliers_management')
 @requires_roles('desarrollador')
 def suppliers_management() -> str:
@@ -319,7 +316,6 @@ def create_supplier() -> str:
     finally:
         return redirect(url_for('configuraciones.suppliers_management'))
        
-    
 @configuraciones_blueprint.route('/edit_supplier/<int:supplier_id>', methods=['POST'])
 @requires_roles('desarrollador')
 def edit_supplier(supplier_id: int) -> str:
@@ -359,57 +355,3 @@ def delete_supplier(supplier_id: int) -> Response:
         flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
         return redirect(url_for('configuraciones.suppliers_management'))
-        
-
-
-# @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])
-# @requires_roles('desarrollador')
-# def carro(cart_id):
-#     try:
-        
-#         data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
-#         data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
-#         data_resume = resumen_compra(data_detail)
-#         print(data_resume['total'])
-
-#         return render_template('carro.html', page_title=f"Carro de Compras", data_detail=data_detail, data_general=data_general, data_resume=data_resume)
-#     except Exception as e:
-#         print(e)
-#         return render_template('error.html'), 500
-    
-# def resumen_compra(data_detail):
-#     cantidad_articulos = len(data_detail)
-#     subtotal = sum(item.costo_neto for item in data_detail)
-#     impuestos = subtotal * 0.19  # Asumiendo un 19% de impuesto
-#     total = subtotal + impuestos
-
-#     return {
-#         'cantidad_articulos': cantidad_articulos,
-#         'subtotal': subtotal,
-#         'impuestos': impuestos,
-#         'total': total
-#     }
-
-    
-# @compras_blueprint.route('/compras')
-# @requires_roles('desarrollador')
-# def compras():
-#     try:
-#         data = ModelCart.get_all_carts()
-#         return render_template('compras.html', page_title="Compras", data=data)
-#     except Exception as e:
-#         print(e)
-#         return render_template('error.html'), 500
-    
-    
-# @compras_blueprint.route('/eliminar_carro/<int:cart_id>', methods=['POST'])
-# @requires_roles('desarrollador')
-# def eliminar_carro(cart_id):
-#     try:
-#         if ModelCart.delete_cart_by_id(cart_id):
-#             return jsonify({'success': True}), 200
-#         else:
-#             return jsonify({'error': 'Carro no encontrado'}), 404
-#     except Exception as e:
-#         print(e)
-#         return jsonify({'error': str(e)}), 500
