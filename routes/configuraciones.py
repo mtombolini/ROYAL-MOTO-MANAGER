@@ -1,5 +1,5 @@
 from __future__ import annotations
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, Response
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, Response, send_file
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectField, HiddenField, Field
 from wtforms.validators import DataRequired, Length, Email, ValidationError
@@ -8,6 +8,8 @@ from decorators.roles import requires_roles
 from models.model_user import ModelUser
 from models.supplier import Supplier, CreditTerm
 from enum import Enum
+from io import BytesIO
+import pandas as pd
 from typing import List, Dict, Tuple
 import re
 
@@ -213,12 +215,8 @@ def get_user(user_id):
 @requires_roles('desarrollador')
 def editar_usuario(user_id):
     data = request.get_json()
-    
-    print(data)
     username = data.get('username')
-    print(username)
     correo = data.get('email')
-    print(correo)
     nombre = data.get('first_name')
     apellido = data.get('last_name')
     id_role = data.get('id_role')
@@ -315,7 +313,7 @@ def create_supplier() -> str:
         flash(F'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
         return redirect(url_for('configuraciones.suppliers_management'))
-       
+
 @configuraciones_blueprint.route('/edit_supplier/<int:supplier_id>', methods=['POST'])
 @requires_roles('desarrollador')
 def edit_supplier(supplier_id: int) -> str:
@@ -343,8 +341,7 @@ def edit_supplier(supplier_id: int) -> str:
         flash(F'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally: 
         return redirect(url_for('configuraciones.suppliers_management'))
-   
-        
+
 @configuraciones_blueprint.route('/delete_supplier/<int:supplier_id>')
 @requires_roles('desarrollador')
 def delete_supplier(supplier_id: int) -> Response:
@@ -354,4 +351,26 @@ def delete_supplier(supplier_id: int) -> Response:
     except Exception as ex:
         flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
+        return redirect(url_for('configuraciones.suppliers_management'))
+    
+@configuraciones_blueprint.route('/exportar_proveedores')
+@requires_roles('desarrollador')
+def export_suppliers():
+    try:
+        suppliers_data: List[Dict] = Supplier.get_all()
+        suppliers_data = format_suppliers_data_for_render(suppliers_data)
+
+        column_order = ['rut', 'business_name', 'trading_name', 'credit_term', 'delivery_period']
+        df = pd.DataFrame(suppliers_data).reindex(columns=column_order)
+
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Proveedores')
+
+        output.seek(0)
+
+        return send_file(output, as_attachment=True, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', download_name='proveedores.xlsx')
+    
+    except Exception as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
         return redirect(url_for('configuraciones.suppliers_management'))
