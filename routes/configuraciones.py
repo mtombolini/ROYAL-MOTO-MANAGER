@@ -328,7 +328,7 @@ def edit_supplier(supplier_id: int) -> str:
                           trading_name=trading_name,
                           credit_term=credit_term,
                           delivery_period=delivery_period)
-            flash('Cambios guardados con éxito', 'success')    
+            flash('Cambios guardados con éxito', 'success')
         else:
             # Form validation failed
             errors = {field.name: field.errors for field in form if field.errors}
@@ -373,4 +373,39 @@ def export_suppliers():
     
     except Exception as ex:
         flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
+        return redirect(url_for('configuraciones.suppliers_management'))
+
+@configuraciones_blueprint.route('/importar_proveedores', methods=['POST'])
+@requires_roles('desarrollador')
+def import_suppliers():
+    try:
+        required_columns = ['rut', 'business_name', 'trading_name', 'credit_term', 'delivery_period']
+        file = request.files['file']
+        if file.filename.endswith('.xlsx') or file.filename.endswith('xls'):
+            df = pd.read_excel(file)
+            if not all(column in df.columns for column in required_columns):
+                flash('El archivo Excel no tiene todas las columnas requeridas', 'error')
+                return redirect(url_for('configuraciones.suppliers_management'))
+            
+            if df[required_columns].isnull().any().any():
+                # df.dropna(subset=required_columns, inplace=True)
+                flash('Todos los datos deben estar llenos en el archivo Excel', 'error')
+                return redirect(url_for('configuraciones.suppliers_management'))
+
+            suppliers_data = df.to_dict(orient='records')
+
+            for supplier in suppliers_data:
+                supplier['rut'] = format_rut(supplier['rut'])
+                supplier['credit_term'] = CreditTerm(supplier['credit_term'])
+
+            new_df = pd.DataFrame(suppliers_data)
+
+            Supplier.create_from_df(new_df)
+
+            flash('Proveedores importados con éxito', 'success')
+        else:
+            flash('ERROR 400 (BAD REQUEST): El archivo debe estar en formato .xlsx', 'error')
+    except Exception as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
+    finally:
         return redirect(url_for('configuraciones.suppliers_management'))

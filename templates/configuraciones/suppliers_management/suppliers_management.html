@@ -42,7 +42,10 @@
 
             <div class="d-flex btn-group shadow">
                 <a class="btn btn-warning m-0 border-2 custom_btn" href="{{ url_for('configuraciones.export_suppliers') }}">Decargar Excel</a>
-                <a class="btn btn-warning m-0 border-2 custom_btn" href="{{ url_for('configuraciones.export_suppliers') }}">Cargar Excel</a>
+                <form class="btn btn-warning m-0 border-2 custom_btn" method="post" action="{{ url_for('configuraciones.import_suppliers') }}" enctype="multipart/form-data">
+                    <label for="fileUpload">Cargar Excel</label>
+                    <input type="file" name="file" id="fileUpload" style="display: none;" onchange="form.submit()">
+                </form>
             </div>
         </div>
         <div class="col-12 p-0">
