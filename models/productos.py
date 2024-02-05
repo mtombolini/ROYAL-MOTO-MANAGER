@@ -17,6 +17,7 @@ from models.shipping import Shipping
 from models.price_list import PriceList
 from models.document import DocumentDetail
 from models.reception import ReceptionDetail
+from models.last_net_cost import LastNetCost
 from models.consumption import ConsumptionDetail
 from models.day_recommendation import DayRecommendation
 
@@ -42,6 +43,7 @@ class Product(Base):
     price_list = relationship("PriceList", back_populates="product")
     supplier = relationship("Supplier", back_populates="products")
     day_recommendation = relationship("DayRecommendation", back_populates="product")
+    last_net_cost = relationship("LastNetCost", uselist=False, back_populates="product")
 
     @classmethod
     def get_all_products_ids(cls):
@@ -222,7 +224,7 @@ class Product(Base):
                 raise
 
     @classmethod
-    def get_product_reception(cls, variant_id):
+    def get_product_reception(cls, variant_id, normal_search=True):
         with AppSession() as session:
             try:
                 product = session.query(cls).filter(cls.variant_id == variant_id).first()
@@ -294,6 +296,13 @@ class Product(Base):
                         "costo_neto": None,
                         "costo_neto_formated": None
                     }
+
+                if not normal_search:
+                    LastNetCost.create_last_net_cost(
+                        variant_id, 
+                        last_net_cost['costo_neto_formated'], 
+                        last_net_cost['costo_neto'], 
+                        last_net_cost['fecha'])
 
                 return last_net_cost, reception_details_list, df
             except Exception as ex:

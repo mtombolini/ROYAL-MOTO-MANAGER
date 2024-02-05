@@ -21,7 +21,6 @@ class DayRecommendation(Base):
 
                 recomendation_data = []
                 for recomendation in recomendations:
-                    last_net_cost, _, _ = Product.get_product_reception(recomendation.variant_id)
                     recomendation_data.append({
                         'variant_id': recomendation.variant_id,
                         'sku': recomendation.product.sku,
@@ -30,7 +29,7 @@ class DayRecommendation(Base):
                         'description': recomendation.product.description,
                         'recommendation': recomendation.recommendation,
                         'date': recomendation.date,
-                        'last_net_cost': last_net_cost,
+                        'last_net_cost': recomendation.product.last_net_cost.net_cost
                     })
                 
 

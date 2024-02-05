@@ -36,7 +36,6 @@ def home(page):
     for recommendation in all_recommendations:
         number_of_products += recommendation['recommendation']
             
-
     search_query = request.args.get('search', '')
     per_page = 10
 
@@ -60,7 +59,7 @@ def home(page):
         proveedor = recommendation['proveedor']
         rut = recommendation['rut']
         cantidad_recomendaciones = recommendation['recommendation']
-        costo_producto = recommendation['last_net_cost']['costo_neto']
+        costo_producto = recommendation['last_net_cost']
 
         result[(proveedor, rut)]['proveedor'] = proveedor
         result[(proveedor, rut)]['rut'] = rut
