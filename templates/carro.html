@@ -180,12 +180,15 @@
                     </div>
                 </div>
                 
-                <div class="row m-0 align-items-center mb-3 ms-2">
-                    <div class="col-auto p-0 me-4">
-                        <label for="folioInput" class="form-label">Numero de Folio:</label>
-                        <input type="number" class="form-control d-inline-block" min="0" id="folioInput" style="width: 120px;">
+                <div class="row m-0 align-items-center mb-3 ms-2" id="inputContainer">
+                    <div class="col-auto p-0 me-2">
+                        <label for="folioInput1" class="form-label">Numero de Folio:</label>
+                        <input type="number" class="form-control d-inline-block folio-input" min="0" id="folioInput1" style="width: 120px;">
                     </div>
-                    <div class="col-auto p-0 ms-4">
+                </div>
+
+                <div class="row m-0 align-items-end mb-3 ms-2">
+                    <div class="col-auto p-0 me-4">
                         <label for="documentoSelect" class="form-label">Tipo de Documento:</label>
                         <select class="form-select d-inline-block" id="documentoSelect" aria-label="Tipo de Documento" style="width: auto;">
                             <option selected>Selecciona el tipo de documento</option>
@@ -194,10 +197,7 @@
                             <option value="guiaDespacho">Guía de Despacho</option>
                         </select>
                     </div>
-                </div>
-                
-                <div class="row m-0 align-items-end mb-3 ms-2">
-                    <div class="col-auto p-0">
+                    <div class="col-auto p-0 ms-4">
                         <label class="form-label me-2">Precio:</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="precioRadio" id="precioNeto" value="neto">
@@ -243,7 +243,6 @@
                         </tbody>
                     </table>
                 </div>
-                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -259,6 +258,32 @@
 
 {% block scripts %}
 <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const maxInputs = 6;
+        const inputContainer = document.getElementById('inputContainer');
+    
+        function addInput(index) {
+            const newInputDiv = document.createElement('div');
+            newInputDiv.classList.add('col-auto', 'p-0', 'me-2');
+            const labelContent = index === 1 ? 'Numero de Folio:' : '+';
+            newInputDiv.innerHTML = `
+                <label for="folioInput${index}" class="form-label">${labelContent}</label>
+                <input type="number" class="form-control d-inline-block folio-input ms-1" min="0" id="folioInput${index}" style="width: 120px;">
+            `;
+            inputContainer.appendChild(newInputDiv);
+        }
+    
+        inputContainer.addEventListener('input', (event) => {
+            if (event.target.classList.contains('folio-input')) {
+                const allInputs = inputContainer.querySelectorAll('.folio-input');
+                const lastInput = allInputs[allInputs.length - 1];
+                if (lastInput.value !== '' && allInputs.length < maxInputs) {
+                    addInput(allInputs.length + 1);
+                }
+            }
+        });
+    });
+
     function recepcionarCompra(element) {
         console.log('Recepcionar Compra');
     }
