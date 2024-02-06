@@ -6,9 +6,10 @@ from models.supplier import Supplier, CreditTerm
 from models.productos import Product, ProductStock
 from models.document import Document, DocumentDetail
 from models.reception import Reception, ReceptionDetail
+from models.associations import product_supplier_association
 from models.consumption import Consumption, ConsumptionDetail
 
-from api.extractors.supplier_extractor import df_suppliers
+from api.extractors.supplier_extractor import df_suppliers, df_connections
 
 from random import randint
 
@@ -34,6 +35,7 @@ class DataFrameMain():
         self.df_price_list = None
 
         self.df_suppliers = df_suppliers
+        self.df_connections = df_connections
         self.suppliers_id = []
 
         self.df_shippings = None
@@ -80,7 +82,6 @@ class DataFrameMain():
     def create_suppliers(self, session):
         for index, row in self.df_suppliers.iterrows():
             supplier = Supplier(
-                id = int(row['id']),
                 rut = row['rut'],
                 business_name = row['business_name'],
                 trading_name = row['trading_name'],
@@ -95,10 +96,31 @@ class DataFrameMain():
                 variant_id=int(row['Variant ID']),
                 type=row['Product Type'],
                 description=row['Product Description'],
-                sku=row['SKU'],
-                supplier_id=int(randint(1, 20))
+                sku=row['SKU']
             )
             session.add(product)
+
+    def create_products_suppliers(self, session):
+        for index, row in self.df_connections.iterrows():
+            product = session.query(Product).filter_by(sku=row['sku']).one_or_none()
+            supplier = session.query(Supplier).filter_by(rut=row['rut']).one_or_none()
+            
+            if product and supplier:
+                association = product_supplier_association.insert().values(
+                    product_sku=product.sku,
+                    supplier_rut=supplier.rut
+                )
+                session.execute(association)
+        session.commit()
+    
+    def associate_unlinked_products_to_generic_supplier(self, session):
+        generic_supplier = session.query(Supplier).filter_by(rut='00.000.000-0').one_or_none()
+        all_products = session.query(Product).all()
+        for product in all_products:
+            if not product.suppliers:
+                product.suppliers.append(generic_supplier)
+        session.commit()
+
 
     def create_stocks(self, session):
         for index, row in self.df_stocks.iterrows():
@@ -232,10 +254,14 @@ class DataFrameMain():
         self.correct_consumos()
         self.correct_recetions()
         self.correct_price_list()
-
         self.create_shippings(session)
         self.create_suppliers(session)
         self.create_products(session)
+
+        session.commit()
+
+        self.create_products_suppliers(session)
+        self.associate_unlinked_products_to_generic_supplier(session)
         self.create_stocks(session)
         self.create_consumptions(session)
         self.create_consumptions_details(session)

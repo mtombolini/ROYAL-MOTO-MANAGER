@@ -17,6 +17,10 @@ from models.document import Document, DocumentDetail
 from models.day_recommendation import DayRecommendation
 from models.reception import Reception, ReceptionDetail
 from models.consumption import Consumption, ConsumptionDetail
+from models.employee import Employee
+from models.overtime_hours import OvertimeRecord
+from models.last_net_cost import LastNetCost
+from models.associations import product_supplier_association
 
 from sqlalchemy import func
 

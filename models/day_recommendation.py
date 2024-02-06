@@ -24,8 +24,8 @@ class DayRecommendation(Base):
                     recomendation_data.append({
                         'variant_id': recomendation.variant_id,
                         'sku': recomendation.product.sku,
-                        'proveedor': recomendation.product.supplier.trading_name,
-                        'rut': recomendation.product.supplier.rut,
+                        'proveedor': recomendation.product.suppliers[0].trading_name,
+                        'rut': recomendation.product.suppliers[0].rut,
                         'description': recomendation.product.description,
                         'recommendation': recomendation.recommendation,
                         'date': recomendation.date,
@@ -51,7 +51,7 @@ class DayRecommendation(Base):
                         cast(cls.variant_id, String).ilike(search_query),
                         cls.product.has(Product.sku.ilike(search_query)),
                         cls.product.has(Product.description.ilike(search_query)),
-                        cls.product.has(Product.supplier.has(Supplier.trading_name.ilike(search_query)))
+                        cls.product.has(Product.suppliers.any(Supplier.trading_name.ilike(search_query)))
                     )
                 ).all()
 
@@ -60,7 +60,7 @@ class DayRecommendation(Base):
                     recomendation_data.append({
                         'variant_id': recomendation.variant_id,
                         'sku': recomendation.product.sku,
-                        'proveedor': recomendation.product.supplier.trading_name,
+                        'proveedor': recomendation.product.suppliers[0].trading_name,
                         'description': recomendation.product.description,
                         'recommendation': recomendation.recommendation,
                         'date': recomendation.date

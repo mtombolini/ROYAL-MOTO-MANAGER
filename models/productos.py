@@ -20,6 +20,7 @@ from models.reception import ReceptionDetail
 from models.last_net_cost import LastNetCost
 from models.consumption import ConsumptionDetail
 from models.day_recommendation import DayRecommendation
+from models.associations import product_supplier_association
 
 def format_number(number):
     return "${:,.2f}".format(number).replace(",", "X").replace(".", ",").replace("X", ".")
@@ -33,17 +34,16 @@ class Product(Base):
     variant_id = Column(Integer, primary_key=True)
     type = Column(String(255))
     description = Column(String(255))
-    sku = Column(String(255))
-    supplier_id = Column(Integer, ForeignKey('suppliers.id'))
+    sku = Column(String(255), unique=True)
 
     stock = relationship("ProductStock", uselist=False, back_populates="product")
     consumption_details = relationship("ConsumptionDetail", back_populates="product")
     reception_details = relationship("ReceptionDetail", back_populates="product")
     document_details = relationship("DocumentDetail", back_populates="product")
     price_list = relationship("PriceList", back_populates="product")
-    supplier = relationship("Supplier", back_populates="products")
     day_recommendation = relationship("DayRecommendation", back_populates="product")
     last_net_cost = relationship("LastNetCost", uselist=False, back_populates="product")
+    suppliers = relationship('Supplier', secondary=product_supplier_association, back_populates='products')
 
     @classmethod
     def get_all_products_ids(cls):
@@ -70,7 +70,7 @@ class Product(Base):
                 ]
 
                 for product_data, product in zip(products_data, products):
-                    supplier = product.supplier
+                    supplier = product.suppliers
                     if supplier:
                         product_data['supplier_trading_name'] = supplier.trading_name
                     else:
@@ -91,7 +91,7 @@ class Product(Base):
                         cls.type.ilike(search_query),
                         cls.sku.ilike(search_query),
                         cls.description.ilike(search_query),
-                        cls.supplier.has(Supplier.trading_name.ilike(search_query))
+                        cls.suppliers.any(Supplier.trading_name.ilike(search_query))
                     )
                 ).all()
 
@@ -105,7 +105,7 @@ class Product(Base):
                 ]
 
                 for product_data, product in zip(products_data, products):
-                    supplier = product.supplier
+                    supplier = product.suppliers[0]
                     if supplier:
                         product_data['supplier_trading_name'] = supplier.trading_name
                     else:
@@ -194,7 +194,7 @@ class Product(Base):
 
                 product_data = {
                     **product.__dict__,
-                    "supplier": product.supplier.__dict__,
+                    "supplier": product.suppliers[0].__dict__,
                     "stock": stock,
                     "reception_details_list": reception_details_list,
                     "consumption_details_list": consumption_details_list,

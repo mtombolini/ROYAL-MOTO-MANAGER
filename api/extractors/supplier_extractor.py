@@ -2,10 +2,15 @@ import requests
 import json
 import pandas as pd
 
-SUPPLIERS = "https://gist.githubusercontent.com/franco-anfossi/06a273959c67287a879980dba725b248/raw/d04ad1c9bc6178315342d1677a4e3232933e7953/gistfile1.txt"
+SUPPLIERS = "https://gist.githubusercontent.com/franco-anfossi/06a273959c67287a879980dba725b248/raw/8db78e5910705c8307575f08fd40d9bafbbf9526/gistfile1.txt"
 
-response = requests.get(SUPPLIERS)
+CONNECTIONS = "https://gist.githubusercontent.com/franco-anfossi/4d39e60b87b7161f0994212f2bd35a1a/raw/6724b052b71827862051515a227e1d234d0a97cd/gistfile1.txt"
 
-data = json.loads(response.text)
+response_suppliers = requests.get(SUPPLIERS)
+data_suppliers = json.loads(response_suppliers.text)
 
-df_suppliers = pd.DataFrame(data)
+response_connections = requests.get(CONNECTIONS)
+data_connections = json.loads(response_connections.text)
+
+df_suppliers = pd.DataFrame(data_suppliers)
+df_connections = pd.DataFrame(data_connections)
