@@ -58,6 +58,12 @@
                     <strong>Fecha Creacion</strong>
                     <span>{{ data_general.fecha_creacion }}</span>
                 </li>
+                {% if data_general.estado == 'Recepcionado' %}
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Fecha Recepcion</strong>
+                    <span>{{ data_general.fecha_recepcion }}</span>
+                </li>
+                {% endif %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
                     <strong>Estado</strong>
                     <span>{{ data_general.estado }}</span>
@@ -94,10 +100,17 @@
                 <button class="btn btn-success m-0 proceder-btn" type="button" onclick="emitirCompra(this)" 
                 data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}">Proceder al Pago</button>
                 {% else %}
-                <button class="btn btn-success m-0 proceder-btn" type="button" onclick="descargarPDF(this)" 
-                data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}" 
-                data-resume="{{ data_resume.cantidad_articulos }} {{ data_resume.subtotal }} {{ data_resume.impuestos }} {{ data_resume.total }}" 
-                data-detail="{% for product in data_detail %}{{ product.id }}|{{ product.sku_producto }}|{{ product.descripcion_producto }}|{{ product.costo_neto }}|{{ product.cantidad }}, {% endfor %}">Descargar PDF</button>
+                <div class="d-flex">
+                    <div class="flex-fill me-1">
+                    <button class="btn btn-success w-100 m-0 proceder-btn" type="button" data-bs-toggle="modal" data-bs-target="#modalRecepcionCompra">Recepcionar Compra</button>
+                    </div>
+                    <div class="flex-fill ms-1">
+                    <button class="btn btn-success w-100 m-0 proceder-btn" type="button" onclick="descargarPDF(this)" 
+                    data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}" 
+                    data-resume="{{ data_resume.cantidad_articulos }} {{ data_resume.subtotal }} {{ data_resume.impuestos }} {{ data_resume.total }}" 
+                    data-detail="{% for product in data_detail %}{{ product.id }}|{{ product.sku_producto }}|{{ product.descripcion_producto }}|{{ product.costo_neto }}|{{ product.cantidad }}, {% endfor %}">Descargar PDF</button>
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -150,10 +163,106 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalRecepcionCompra" tabindex="-1" aria-labelledby="modalRecepcionCompraLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRecepcionCompraLabel">Recepción de Compra</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row m-0 align-items-start mb-3 ms-2">
+                    <div class="col-auto p-0">
+                        <span class="me-4">Rut: {{ data_general.rut }}</span>
+                    </div>
+                    <div class="col-auto p-0">
+                        <span class="ms-4">Proveedor: {{ data_general.proveedor }}</span>
+                    </div>
+                </div>
+                
+                <div class="row m-0 align-items-center mb-3 ms-2">
+                    <div class="col-auto p-0 me-4">
+                        <label for="folioInput" class="form-label">Numero de Folio:</label>
+                        <input type="number" class="form-control d-inline-block" min="0" id="folioInput" style="width: 120px;">
+                    </div>
+                    <div class="col-auto p-0 ms-4">
+                        <label for="documentoSelect" class="form-label">Tipo de Documento:</label>
+                        <select class="form-select d-inline-block" id="documentoSelect" aria-label="Tipo de Documento" style="width: auto;">
+                            <option selected>Selecciona el tipo de documento</option>
+                            <option value="sinDocumento">Sin Documento</option>
+                            <option value="factura">Factura</option>
+                            <option value="guiaDespacho">Guía de Despacho</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row m-0 align-items-end mb-3 ms-2">
+                    <div class="col-auto p-0">
+                        <label class="form-label me-2">Precio:</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="precioRadio" id="precioNeto" value="neto">
+                            <label class="form-check-label" for="precioNeto">Neto</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="precioRadio" id="precioBruto" value="bruto" checked>
+                            <label class="form-check-label" for="precioBruto">Bruto</label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                
+                <div>
+                    <table class="table table-hover table-striped">
+                        <thead class="table-dark text-light">
+                            <tr>
+                                <th>SKU</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>% Descuento</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in data_detail %}
+                            <tr id="product-modal-{{ product.id }}">
+                                <td>{{ product.sku_producto }}</td>
+                                <td>{{ product.descripcion_producto }}</td>
+                                <td>
+                                    <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input" id="quantity-{{ product.id }}">
+                                </td>
+                                <td>
+                                    <input type="number" value="{{ product.costo_neto }}" min="1" class="form-control-sm quantity-input" id="costo-{{ product.id }}">
+                                </td>
+                                <td>
+                                    <input type="number" value="0" min="0" max="100" class="form-control-sm quantity-input" id="descuento-{{ product.id }}">
+                                </td>
+                                <td>${{ product.cantidad * product.costo_neto }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Proceder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}
 
 {% block scripts %}
 <script>
+    function recepcionarCompra(element) {
+        console.log('Recepcionar Compra');
+    }
+
     function actualizarProducto(element) {
         var productId = element.getAttribute('data-id');
         var cartId = element.getAttribute('data-cart-id');

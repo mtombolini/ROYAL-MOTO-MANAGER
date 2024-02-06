@@ -101,7 +101,9 @@ def agregar_producto():
             cart_data = {
                 'descripcion': "Descripción Pendiente",
                 'fecha_creacion': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'fecha_recepcion': "-",
                 'proveedor': product['supplier'],
+                'rut': product['rut'],
                 'monto_neto': 0,
                 'cantidad_productos': 0,
                 'estado': "Creado",
@@ -156,7 +158,20 @@ def emitir_compra():
         data = request.json
         general_data = data['general']
 
-        ModelCart.update_cart_status(general_data['cartId'])
+        ModelCart.update_cart_status(general_data['cartId'], "Emitida")
+
+        return jsonify({'redirect': url_for('compras.carro', cart_id=general_data['cartId'])})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@compras_blueprint.route('/recepcionar_compra', methods=['POST'])
+@requires_roles('desarrollador')
+def recepcionar_compra():
+    try:
+        data = request.json
+        general_data = data['general']
+
+        # ModelCart.update_cart_reception(general_data['cartId'])
 
         return jsonify({'redirect': url_for('compras.carro', cart_id=general_data['cartId'])})
     except Exception as e:
