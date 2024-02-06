@@ -1,10 +1,12 @@
-from sqlalchemy import Column, Integer, String, Select, text
+from sqlalchemy import Column, Integer, String, Select, text, ForeignKey
 from sqlalchemy.types import Enum
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
 from typing import List, Dict
 import enum
+from models.associations import product_supplier_association
+
 
 class SupplierNotFoundError(ValueError):
     """Exception raised when a supplier is not found."""
@@ -21,14 +23,14 @@ class CreditTerm(enum.Enum):
 class Supplier(Base):
     __tablename__ = "suppliers"
     
-    id = Column(Integer, primary_key=True)
-    rut = Column(String(12))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    rut = Column(String(12), unique=True)
     business_name = Column(String(255))
     trading_name = Column(String(255))
     credit_term = Column(Enum(CreditTerm))
     delivery_period = Column(Integer)
 
-    products = relationship("Product", back_populates="supplier")
+    products = relationship('Product', secondary=product_supplier_association, back_populates='suppliers')
 
     @classmethod
     def create_from_df(cls, supplier_df):
@@ -179,4 +181,4 @@ class Supplier(Base):
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()
-                raise           
+                raise
