@@ -46,6 +46,15 @@ class Product(Base):
     suppliers = relationship('Supplier', secondary=product_supplier_association, back_populates='products')
 
     @classmethod
+    def product_filter_by_sku(cls, sku):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.sku == sku).first()
+                return product, product.suppliers[0].rut, product.last_net_cost.net_cost
+            except Exception as ex:
+                raise
+
+    @classmethod
     def get_all_products_ids(cls):
         with AppSession() as session:
             try:

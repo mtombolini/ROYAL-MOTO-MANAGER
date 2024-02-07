@@ -1,13 +1,14 @@
 from datetime import datetime
 from html import unescape
 
-from flask import Blueprint, render_template, redirect, url_for, jsonify, request
+from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash
 from flask_login import login_required
 from decorators.roles import requires_roles
 
 from models.cart import BuyCart, BuyCartDetail
 from models.user import User
 from models.model_cart import ModelCart
+from models.productos import Product
 
 compras_blueprint = Blueprint('compras', __name__)
 
@@ -30,10 +31,10 @@ def carro(cart_id):
         return render_template('error.html'), 500
     
 def resumen_compra(data_general):
-    cantidad_articulos = data_general.cantidad_productos
-    subtotal = data_general.monto_neto
-    impuestos = subtotal * 0.19  # Asumiendo un 19% de impuesto
-    total = subtotal + impuestos
+    cantidad_articulos = round(data_general.cantidad_productos, 2)
+    subtotal = round(data_general.monto_neto, 2)
+    impuestos = round(subtotal * 0.19, 2)  # Asumiendo un 19% de impuesto
+    total = round(subtotal + impuestos, 2)
 
     return {
         'cantidad_articulos': cantidad_articulos,
@@ -66,15 +67,17 @@ def eliminar_carro(cart_id):
         print(e)
         return jsonify({'error': str(e)}), 500
     
-@compras_blueprint.route('/eliminar_producto_carro/<int:cart_id>/<int:cart_detail_id>/<int:products_quantity>')
+@compras_blueprint.route('/eliminar_producto_carro/<int:cart_id>/<int:cart_detail_id>/<int:products_quantity>/<state>')
 @requires_roles('desarrollador')
-def eliminar_producto(cart_id, cart_detail_id, products_quantity):
+def eliminar_producto(cart_id, cart_detail_id, products_quantity, state):
     try:
         if products_quantity == 1:
             return redirect(url_for('compras.eliminar_carro', cart_id=cart_id))
-        elif ModelCart.delete_cart_detail_by_id(cart_detail_id):
+        elif ModelCart.delete_cart_detail_by_id(cart_detail_id) and state == "Creado":
             ModelCart.check_to_update_all_cart(cart_id)
             return redirect(url_for('compras.carro', cart_id=cart_id))
+        elif ModelCart.delete_cart_detail_by_id(cart_detail_id) and state == "Emitida":
+            return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
         else:
             return jsonify({'error': 'Producto no encontrado'}), 404
     except Exception as e:
@@ -164,15 +167,46 @@ def emitir_compra():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@compras_blueprint.route('/recepcionar_compra', methods=['POST'])
+@compras_blueprint.route('/recepcionar_carro_compra/<int:cart_id>')
 @requires_roles('desarrollador')
-def recepcionar_compra():
+def recepcionar_carro_compra(cart_id):
     try:
-        data = request.json
-        general_data = data['general']
+        data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
+        data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
+        data_resume = resumen_compra(data_general)
 
-        # ModelCart.update_cart_reception(general_data['cartId'])
-
-        return jsonify({'redirect': url_for('compras.carro', cart_id=general_data['cartId'])})
+        return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume)
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return render_template('error.html'), 500
+    
+@compras_blueprint.route('/agregar_producto_recepcion/<int:cart_id>')
+@requires_roles('desarrollador')
+def agregar_producto_recepcion(cart_id):
+    try:
+        search_query = request.args.get('search', '')
+        product, rut, last_net_cost = Product.product_filter_by_sku(search_query)
+        if product is None:
+            flash('Producto no encontrado', 'error')
+        elif rut != ModelCart.get_cart_detail_by_id(cart_id)[0].rut:
+            flash('Producto no corresponde al proveedor', 'error')
+        else:
+            detail_data = {
+                'cart_id': cart_id,
+                'variant_id': product.variant_id,
+                'descripcion_producto': unescape(product.description),
+                'sku_producto': product.sku,
+                'costo_neto': float(last_net_cost),
+                'cantidad': 1
+            }
+
+            ModelCart.create_cart_detail(detail_data)
+
+            suma_monto = detail_data['costo_neto'] * 1
+            suma_cantidad = 1
+
+            ModelCart.update_cart(cart_id, int(suma_monto), suma_cantidad)
+
+    except Exception as e:
+        return render_template('error.html'), 500
+    finally:
+        return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
