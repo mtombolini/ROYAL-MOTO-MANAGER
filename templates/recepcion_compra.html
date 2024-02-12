@@ -39,6 +39,36 @@
         border-color: #dc3545;
         color: white;
     }
+
+    .add-dates-button {
+        text-align: left;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+        padding: 0 0 0 0;
+    }
+
+    #dateInputContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .date-input-group {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 10px;
+        width: 80%;
+    }
+
+    .date-label {
+        margin-bottom: 0;
+    }
+
+    .date-input {
+        width: auto;
+    }
 </style>
 
 <div class="container-fluid mt-3">
@@ -72,17 +102,18 @@
             <div class="col-auto p-0 ms-4">
                 <label class="form-label me-2">Precio:</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="precioRadio" id="precioNeto" value="neto">
+                    <input class="form-check-input" type="radio" name="precioRadio" id="precioNeto" value="neto" checked>
                     <label class="form-check-label" for="precioNeto">Neto</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="precioRadio" id="precioBruto" value="bruto" checked>
+                    <input class="form-check-input" type="radio" name="precioRadio" id="precioBruto" value="bruto">
                     <label class="form-check-label" for="precioBruto">Bruto</label>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="col-12 add-product-button d-flex justify-content-end">
+        <div class="col-12 add-product-button d-flex justify-content-between">
+            <button class="btn btn-warning m-0 border-2 custom_btn shadow" data-bs-toggle="modal" data-bs-target="#agregarFechasModal" data-cartid="{{ data_general.cart_id }}">Editar Fechas de Pago</button>
             <div class="d-flex">
                 <form action="{{ url_for('compras.agregar_producto_recepcion', cart_id=data_general.cart_id, search=search_query) }}" method="get" class="input-group">
                     <input type="text" name="search" class="form-control shadow" placeholder="Buscar..." value="{{ search_query }}">
@@ -112,15 +143,18 @@
                             <input type="number" value="{{ product.cantidad }}" min="1" class="form-control-sm quantity-input width" id="quantity-{{ product.id }}" style="width: 100px">
                         </td>
                         <td>
-                            <input type="number" value="{{ product.costo_neto }}" min="1" class="form-control-sm cost-input" id="costo-{{ product.id }}" style="width: 100px">
+                            <input type="number" value="{{ product.costo_neto }}" min="1" class="form-control-sm cost-input" id="costo-{{ product.id }}" data-original-cost="{{ product.costo_neto }}" style="width: 100px">
                         </td>
+                        
                         <td>
                             <input type="number" value="0" min="0" max="100" class="form-control-sm discount-input" id="descuento-{{ product.id }}" style="width: 100px">
                         </td>
                         <td>$ {{ product.cantidad * product.costo_neto }}</td>
                         <td>
                             <a class="btn btn-sm btn-danger delete-btn" data-id="{{ product.id }}"
-                                href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length, state=data_general.estado) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">Eliminar</a>
+                                href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length, state=data_general.estado) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -134,7 +168,6 @@
                         <p class="fw-bold m-0 me-2">Subtotal:</p>
                         <p class="subtotal">$</p>
                     </div>
-                    <!-- Ajusta las clases de Bootstrap para un espaciado menor -->
                     <div class="col-auto d-flex justify-content-start me-3">
                         <p class="fw-bold m-0 me-2">Descuento:</p>
                         <p class="discount">%</p>
@@ -165,10 +198,130 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="agregarFechasModal" tabindex="-1" aria-labelledby="agregarFechasModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarFechasLabel">Agregar Fechas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dateInputContainer"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning custom_btn btn-save-changes">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const dateInputContainer = document.getElementById('dateInputContainer');
+    
+        function addDateInput(index, date = '') {
+            const newDateInputDiv = document.createElement('div');
+            newDateInputDiv.classList.add('date-input-group', 'mb-3', 'd-flex', 'align-items-center');
+            newDateInputDiv.innerHTML = `
+                <label class="date-label me-2" for="dateInput${index}">Fecha ${index}:</label>
+                <input type="date" class="form-control date-input me-2" id="dateInput${index}" value="${date}">
+                <button type="button" class="btn btn-danger btn-sm delete-date-btn ms-0" data-index="${index}">&times;</button>
+            `;
+            dateInputContainer.appendChild(newDateInputDiv);
+        
+            newDateInputDiv.querySelector('.delete-date-btn').addEventListener('click', function() {
+                const allDateInputs = dateInputContainer.querySelectorAll('.date-input-group');
+                if(allDateInputs.length > 1) {
+                    newDateInputDiv.remove();
+                } else {
+                    newDateInputDiv.querySelector('.date-input').value = '';
+                }
+                reindexDateInputs();
+                ensureEmptyInput();
+            });
+            
+        }
+
+        function reindexDateInputs() {
+            const allDateInputs = dateInputContainer.querySelectorAll('.date-input-group');
+            allDateInputs.forEach((div, index) => {
+                const newIndex = index + 1;
+                div.querySelector('.date-label').innerHTML = `Fecha ${newIndex}:`;
+                div.querySelector('.date-input').id = `dateInput${newIndex}`;
+                div.querySelector('.delete-date-btn').setAttribute('data-index', newIndex);
+            });
+        }
+
+        dateInputContainer.addEventListener('input', (event) => {
+            if (event.target.classList.contains('date-input')) {
+                const allDateInputs = dateInputContainer.querySelectorAll('.date-input');
+                const lastDateInput = allDateInputs[allDateInputs.length - 1];
+                if (lastDateInput.value !== '') {
+                    addDateInput(allDateInputs.length + 1);
+                }
+            }
+        });
+
+        function ensureEmptyInput() {
+            const allDateInputs = dateInputContainer.querySelectorAll('.date-input');
+            const lastDateInput = allDateInputs[allDateInputs.length - 1];
+            if (lastDateInput && lastDateInput.value !== '') {
+                addDateInput(allDateInputs.length + 1);
+            } else if (allDateInputs.length === 0) {
+                addDateInput(1);
+            }
+        }
+    
+        function loadPayDates(cartId) {
+            fetch(`/obtener_fechas_de_pago/${cartId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        data.forEach((date, index) => addDateInput(index + 1, date));
+                    }
+                    ensureEmptyInput();
+                });
+        }
+
+        document.querySelector('.btn-save-changes').addEventListener('click', function() {
+            const allDateInputs = document.querySelectorAll('.date-input');
+            const dates = Array.from(allDateInputs).map(input => input.value).filter(value => value !== '');
+            const modal = document.getElementById('agregarFechasModal'); // Acceder al modal
+            const cartId = $(modal).data('cartid'); // Obtener el cartId almacenado en el modal
+            const state = 'recepcionado'
+
+            fetch(`/actualizar_fechas_de_pago/${cartId}/${state}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({dates}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            });
+        });
+
+        $('#agregarFechasModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que activó el modal
+            var cartId = button.data('cartid'); // Extraer el cartId del botón que abrió el modal
+        
+            // Limpiar el contenedor de inputs antes de cargar nuevas fechas
+            dateInputContainer.innerHTML = '';
+        
+            $(this).data('cartid', cartId);
+            loadPayDates(cartId);
+        });
+        
+        
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const quantityInputs = document.querySelectorAll('.quantity-input');
         const discountInputs = document.querySelectorAll('.discount-input');
@@ -210,18 +363,20 @@
             var totalCantidad = 0;
             var totalSinDescuento = 0;
             var totalConDescuento = 0;
+            var cost = 0;
             
             $('tr[id^="product-modal-"]').each(function() {
                 var $row = $(this);
                 var quantity = parseFloat($row.find('.quantity-input').val()) || 0;
-                var cost = parseFloat($row.find('.cost-input').val()) || 0;
+                var originalCost = parseFloat($row.find('.cost-input').data('original-cost')) || 0;
+                cost = updateNetoBrutoCost(originalCost);
                 var discountPercentage = parseFloat($row.find('.discount-input').val()) / 100 || 0;
     
                 var totalItemSinDescuento = quantity * cost;
                 var totalItemConDescuento = totalItemSinDescuento * (1 - discountPercentage);
     
                 $row.find('td').eq(5).text('$ ' + totalItemConDescuento.toFixed(2));
-    
+                
                 subtotal += totalItemConDescuento;
                 totalCantidad += quantity;
                 totalSinDescuento += totalItemSinDescuento;
@@ -233,6 +388,20 @@
             updateCantidadItems(totalCantidad);
 
             updateDescuentoTotal(totalSinDescuento, totalConDescuento);
+        }
+
+        function updateNetoBrutoCost(originalCost) {
+            var tipoPrecio = $('input[name="precioRadio"]:checked').val();
+            var valorFinal = 0;
+            
+            if(tipoPrecio === 'neto') {
+                valorFinal = originalCost;
+            } else if(tipoPrecio === 'bruto') {
+                valorFinal = originalCost * 1.19;
+            }
+
+            $('.cost-input').val(valorFinal.toFixed(2));
+            return valorFinal;
         }
 
         function updateNetoBrutoIVA(subtotal) {
