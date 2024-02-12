@@ -1,14 +1,18 @@
 from datetime import datetime
 from html import unescape
+from app.config import TOKEN
 
 from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash
 from flask_login import login_required
 from decorators.roles import requires_roles
 
+from api.search.product_search import ProductSearch
+
 from models.cart import BuyCart, BuyCartDetail
 from models.user import User
 from models.model_cart import ModelCart
 from models.productos import Product
+from models.pay_dates import PayDates
 
 compras_blueprint = Blueprint('compras', __name__)
 
@@ -73,13 +77,19 @@ def eliminar_producto(cart_id, cart_detail_id, products_quantity, state):
     try:
         if products_quantity == 1:
             return redirect(url_for('compras.eliminar_carro', cart_id=cart_id))
-        elif ModelCart.delete_cart_detail_by_id(cart_detail_id) and state == "Creado":
-            ModelCart.check_to_update_all_cart(cart_id)
-            return redirect(url_for('compras.carro', cart_id=cart_id))
-        elif ModelCart.delete_cart_detail_by_id(cart_detail_id) and state == "Emitida":
-            return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
-        else:
-            return jsonify({'error': 'Producto no encontrado'}), 404
+        
+        elif state == "Creado":
+            if ModelCart.delete_cart_detail_by_id(cart_detail_id):
+                ModelCart.check_to_update_all_cart(cart_id)
+                return redirect(url_for('compras.carro', cart_id=cart_id))
+        
+        elif state == "Emitida":
+            if ModelCart.delete_cart_detail_by_id(cart_detail_id):
+                ModelCart.check_to_update_all_cart(cart_id)
+                return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
+            
+        return jsonify({'error': 'Producto no encontrado'}), 404
+    
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
@@ -185,17 +195,45 @@ def agregar_producto_recepcion(cart_id):
     try:
         search_query = request.args.get('search', '')
         product, rut, last_net_cost = Product.product_filter_by_sku(search_query)
+        continue_search = True
+        api_call = False
         if product is None:
-            flash('Producto no encontrado', 'error')
-        elif rut != ModelCart.get_cart_detail_by_id(cart_id)[0].rut:
-            flash('Producto no corresponde al proveedor', 'error')
-        else:
+            product_search = ProductSearch(TOKEN)
+            product_data = product_search.get_data(search_query)
+
+            if product_data is None or product_data['count'] == 0:
+                continue_search = False
+                flash('Producto no encontrado', 'error')
+            else:
+                api_call = True
+                continue_search = True
+
+        if continue_search and not api_call:
+            if rut != ModelCart.get_cart_detail_by_id(cart_id)[0].rut:
+                flash('Producto no corresponde al proveedor', 'error')
+            else:
+                detail_data = {
+                    'cart_id': cart_id,
+                    'variant_id': product.variant_id,
+                    'descripcion_producto': unescape(product.description),
+                    'sku_producto': product.sku,
+                    'costo_neto': float(last_net_cost),
+                    'cantidad': 1
+                }
+                ModelCart.create_cart_detail(detail_data)
+
+                suma_monto = detail_data['costo_neto'] * 1
+                suma_cantidad = 1
+
+                ModelCart.update_cart(cart_id, int(suma_monto), suma_cantidad)
+
+        elif continue_search and api_call:
             detail_data = {
                 'cart_id': cart_id,
-                'variant_id': product.variant_id,
-                'descripcion_producto': unescape(product.description),
-                'sku_producto': product.sku,
-                'costo_neto': float(last_net_cost),
+                'variant_id': product_data['variant id'],
+                'descripcion_producto': unescape(product_data['description']),
+                'sku_producto': product_data['sku'],
+                'costo_neto': float(1),
                 'cantidad': 1
             }
 
@@ -210,3 +248,31 @@ def agregar_producto_recepcion(cart_id):
         return render_template('error.html'), 500
     finally:
         return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
+    
+@compras_blueprint.route('/obtener_fechas_de_pago/<int:cart_id>', methods=['GET'])
+@requires_roles('desarrollador')
+def get_paydates(cart_id):
+    pay_dates = PayDates.get_pay_dates(cart_id)
+    dates = [pay_date.fecha_pago.strftime('%Y-%m-%d') for pay_date in pay_dates]
+    return jsonify(dates)
+
+@compras_blueprint.route('/actualizar_fechas_de_pago/<int:cart_id>/<state>', methods=['POST'])
+def update_paydates(cart_id, state):
+    try:
+        dates = request.json['dates']
+        
+        PayDates.delete_existing_dates(cart_id)
+
+        PayDates.create_new_dates(cart_id, dates)
+        flash('Fechas de pago actualizadas', 'success')
+        if state == 'emitida':
+            return jsonify({'status': 'success', 'redirect': url_for('compras.carro', cart_id=cart_id)})
+        else:
+            return jsonify({'status': 'success', 'redirect': url_for('compras.recepcionar_carro_compra', cart_id=cart_id)})
+        
+    except Exception as e:
+        flash('Error al actualizar fechas de pago', 'error')
+        if state == 'emitida':
+            return jsonify({'error': str(e), 'redirect': url_for('compras.carro', cart_id=cart_id)}), 500
+        else:
+            return jsonify({'error': str(e), 'redirect': url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500
