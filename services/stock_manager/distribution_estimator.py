@@ -1,5 +1,6 @@
+from services.stock_manager.parameters_service import CONFIDENCE_LEVEL, DECAY
 import pandas as pd
-from services.stock_manager.parameters_service import DECAY
+import scipy.stats as stats
 
 from typing import Tuple
 
@@ -26,25 +27,27 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
 
     # Calculate mean and standard deviation
     mean_sales = last_30_days['Sales'].mean()
-    std_sales = last_30_days['Sales'].std()
+    std_sales = last_30_days['Sales'].std(ddof=1)  # ddof=1 for sample std deviation
 
+    # Historic data calculations
     historic_mean = all_days['Sales'].mean()
     historic_std = all_days['Sales'].std()
 
-    # TODO: Review this part after getting kardex right
-    if pd.isna(mean_sales):
-        mean_sales = 0
+    # Handle missing data
+    if pd.isna(mean_sales): mean_sales = 0
+    if pd.isna(std_sales): std_sales = 0
+    if pd.isna(historic_mean): historic_mean = 0
+    if pd.isna(historic_std): historic_std = 0
 
-    if pd.isna(std_sales):
-        std_sales = 0
-    
-    if pd.isna(historic_mean):
-        historic_mean = 0
+    # Calculate the 95% CI for the mean sales
+    degrees_freedom = days_to_consider - 1
+    t_critical = stats.t.ppf((1 + CONFIDENCE_LEVEL) / 2, df=degrees_freedom)
+    margin_of_error = t_critical * (std_sales / (days_to_consider ** 0.5))
 
-    if pd.isna(historic_std):
-        historic_std = 0
-    
-    return mean_sales, std_sales, historic_mean, historic_std
+    lower_bound_ci = mean_sales - margin_of_error
+    upper_bound_ci = mean_sales + margin_of_error
+
+    return mean_sales, std_sales, historic_mean, historic_std, lower_bound_ci, upper_bound_ci
 
 # def calculate_mean(sales: pd.Series) -> float:
 #     sales_list = sales.tolist()

@@ -7,6 +7,8 @@ from scipy.stats import norm
 from services.stock_manager.parameters_service import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST
 from services.stock_manager.distribution_estimator import get_sales_current_distribution
 
+from typing import Dict
+
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty: float) -> bool:
@@ -29,7 +31,7 @@ def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty:
     """
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
-    mean, std, historic_mean, _ = get_sales_current_distribution(product_data)
+    mean, std, historic_mean, _,lower_bound_ci, upper_bound_ci = get_sales_current_distribution(product_data)
 
     stock_left: int = product_data["Close"].iloc[-1]
     prob_of_running_out = 1 - norm.cdf(stock_left, loc=mean * days_of_anticipation, 
@@ -38,26 +40,29 @@ def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty:
     return prob_of_running_out > certainty or int(stock_left) <= ceil(historic_mean)
 
 
-def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> int:
+def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> Dict[str, int]:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
-    mean, std, historic_mean, _ = get_sales_current_distribution(product_data)
+    mean, std, historic_mean, _, lower_bound_ci, upper_bound_ci = get_sales_current_distribution(product_data)
 
     if mean * std == 0:
-        return historic_mean * days_to_last - product_data.iloc[-1]["Close"]
+        return {
+            'without_confidence': historic_mean * days_to_last - product_data.iloc[-1]["Close"],
+        }
 
-    return max(0, mean * days_to_last - product_data.iloc[-1]["Close"])
+    return {
+        'without_confidence': max(0, mean * days_to_last - product_data.iloc[-1]["Close"]),
+        'with_confidence': max(0, lower_bound_ci * days_to_last - product_data.iloc[-1]["Close"]),
+    }
 
 
 def predict_units_to_buy(product_data):
-    to_buy = ceil(
-        (
-            should_buy(
-                product_data, 
-                days_of_anticipation=DAYS_OF_ANTICIPATION, 
-                certainty=CERTAINTY
-            ) * units_to_buy(product_data, days_to_last=DAYS_TO_LAST)
-        )
+    should_buy_ = should_buy(
+        product_data, 
+        days_of_anticipation=DAYS_OF_ANTICIPATION, 
+        certainty=CERTAINTY
     )
+    units_to_buy_ = units_to_buy(product_data, days_to_last=DAYS_TO_LAST)
+    to_buy = {key: should_buy_ * units for key, units in units_to_buy_.items()}
     
     return to_buy
