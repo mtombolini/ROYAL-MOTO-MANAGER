@@ -13,14 +13,13 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[Dict
     for date, row in data.iloc[1:].iterrows():
         recommendation = recommendations[i]['without_confidence']
         recommendation_with_confidence = recommendations[i]['with_confidence'] if 'with_confidence' in recommendations[i].keys() else None
-        
 
         if recommendation != 0:
             fig.add_trace(
                 go.Scatter(
                     x=[date], y=[row['Close']], mode='markers', marker_symbol='triangle-up', 
                     text=(f"Buy {int(recommendation)} units." +
-                          (f"\nFor assurance, there's a {CONFIDENCE_LEVEL*100}% chance that more than "
+                          (f"\\nFor assurance, there is a {int(CONFIDENCE_LEVEL*100)}% chance that more than "
                            f"{int(recommendation_with_confidence)} units are needed.") if recommendation_with_confidence else ""), 
                     marker_color='blue', marker_size=5,
                     name='Buy Recommendation'
@@ -40,5 +39,5 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[Dict
         margin=dict(l=20, r=20, t=20, b=20),
         yaxis_title='Cantidad'
     )
-    
+ 
     return pio.to_json(fig)

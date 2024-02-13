@@ -26,6 +26,6 @@ def get_products(page):
 @tables_blueprint.route("/productos/<variant_id>")
 def product_detail(variant_id):
     product, prediction = Product.filter_product(variant_id)
-
+    print(prediction)
     return render_template("tables/product_detail.html", product=product, variant_id=variant_id, prediction=prediction, page_title=f"{product['description']}")
 
