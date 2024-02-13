@@ -1,6 +1,7 @@
 from databases.base import Base
 from databases.session import app_engine, AppSession
 
+from models.office import Office
 from models.returns import Return
 from models.user import User, Role
 from models.supplier import Supplier
