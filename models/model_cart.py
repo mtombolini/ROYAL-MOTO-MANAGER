@@ -68,6 +68,7 @@ class ModelCart:
                 fecha_recepcion=cart_data['fecha_creacion'],
                 proveedor=cart_data['proveedor'],
                 rut=cart_data['rut'],
+                razon_social=cart_data['razon_social'],
                 monto_neto=cart_data['monto_neto'],
                 cantidad_productos=cart_data['cantidad_productos'],
                 estado=cart_data['estado'],
