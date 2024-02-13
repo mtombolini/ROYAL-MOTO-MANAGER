@@ -31,6 +31,37 @@
         border-color: #dc3545;
         color: white;
     }
+
+    .add-dates-button {
+        text-align: left;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+        padding: 0 0 0 0;
+    }
+
+    #dateInputContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .date-input-group {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 10px;
+        width: 80%;
+    }
+
+    .date-label {
+        margin-bottom: 0;
+    }
+
+    .date-input {
+        width: auto;
+    }
+
 </style>
 
 
@@ -58,6 +89,12 @@
                     <strong>Fecha Creacion</strong>
                     <span>{{ data_general.fecha_creacion }}</span>
                 </li>
+                {% if data_general.estado == 'Recepcionado' %}
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Fecha Recepcion</strong>
+                    <span>{{ data_general.fecha_recepcion }}</span>
+                </li>
+                {% endif %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
                     <strong>Estado</strong>
                     <span>{{ data_general.estado }}</span>
@@ -77,6 +114,10 @@
                     <span>{{ data_resume.cantidad_articulos }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong>Cantidad de detalles</strong>
+                    <span>{{ data_detail | length }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="padding-top: 5px; padding-bottom: 5px;">
                     <strong>Subtotal</strong>
                     <span>$ {{ data_resume.subtotal }}</span>
                 </li>
@@ -94,10 +135,17 @@
                 <button class="btn btn-success m-0 proceder-btn" type="button" onclick="emitirCompra(this)" 
                 data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}">Proceder al Pago</button>
                 {% else %}
-                <button class="btn btn-success m-0 proceder-btn" type="button" onclick="descargarPDF(this)" 
-                data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}" 
-                data-resume="{{ data_resume.cantidad_articulos }} {{ data_resume.subtotal }} {{ data_resume.impuestos }} {{ data_resume.total }}" 
-                data-detail="{% for product in data_detail %}{{ product.id }}|{{ product.sku_producto }}|{{ product.descripcion_producto }}|{{ product.costo_neto }}|{{ product.cantidad }}, {% endfor %}">Descargar PDF</button>
+                <div class="d-flex">
+                    <div class="flex-fill me-1">
+                    <a class="btn btn-success w-100 m-0 proceder-btn" href="{{ url_for('compras.recepcionar_carro_compra', cart_id=data_general.cart_id) }}" onclick="return confirm('¿Estas seguro que deseas recepcionar la compra?')">Recepcionar Compra</a>
+                    </div>
+                    <div class="flex-fill ms-1">
+                    <button class="btn btn-success w-100 m-0 proceder-btn" type="button" onclick="descargarPDF(this)" 
+                    data-general="{{ data_general.cart_id }};{{ data_general.descripcion }};{{ data_general.proveedor }};{{ data_general.fecha_creacion }};{{ data_general.estado }}" 
+                    data-resume="{{ data_resume.cantidad_articulos }} {{ data_resume.subtotal }} {{ data_resume.impuestos }} {{ data_resume.total }}" 
+                    data-detail="{% for product in data_detail %}{{ product.id }}|{{ product.sku_producto }}|{{ product.descripcion_producto }}|{{ product.costo_neto }}|{{ product.cantidad }}, {% endfor %}">Descargar PDF</button>
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -108,7 +156,12 @@
 
 <div class="container-fluid mt-3">
     <div class="row">
-        <div class="col-12">
+        {% if data_general.estado == 'Creado' %}
+        <div class="col-12 add-dates-button d-flex justify-content-between">
+            <button class="btn btn-warning m-0 border-2 custom_btn shadow" data-bs-toggle="modal" data-bs-target="#agregarFechasModal" data-cartid="{{ data_general.cart_id }}">Agregar Fechas de Pago Previsorias</button>
+        </div>
+        {% endif %}
+        <div class="col-12 p-0">
             <table class="table table-hover table-striped">
                 <thead class="table-dark text-light">
                     <tr>
@@ -117,7 +170,9 @@
                         <th>Costo Neto</th>
                         <th>Cantidad</th>
                         <th>Subtotal</th>
+                        {% if data_general.estado == 'Creado' %}
                         <th>Acciones</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -136,12 +191,14 @@
                             <td>${{ product.costo_neto }}</td>
                             <td>{{ product.cantidad }}</td>
                         {% endif %}
-                        <td>${{ product.cantidad * product.costo_neto }}</td>
+                        <td>${{ (product.cantidad * product.costo_neto) | round(2) }}</td>
+                        {% if data_general.estado == 'Creado' %}
                         <td>
                             <button class="btn btn-sm btn-warning custom_btn" data-id="{{ product.id }}" data-cart-id="{{ product.cart_id }}" onclick="actualizarProducto(this)">Actualizar</button>
                             <a class="btn btn-sm btn-danger delete-btn" data-id="{{ product.id }}"
-                            href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">Eliminar</a>
+                            href="{{ url_for('compras.eliminar_producto', cart_id=product.cart_id, cart_detail_id=product.id, products_quantity=data_detail|length, state=data_general.estado) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este producto?')">Eliminar</a>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -150,10 +207,130 @@
     </div>
 </div>
 
+<div class="modal fade" id="agregarFechasModal" tabindex="-1" aria-labelledby="agregarFechasModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarFechasLabel">Agregar Fechas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="dateInputContainer"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning custom_btn btn-save-changes">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const dateInputContainer = document.getElementById('dateInputContainer');
+    
+        function addDateInput(index, date = '') {
+            const newDateInputDiv = document.createElement('div');
+            newDateInputDiv.classList.add('date-input-group', 'mb-3', 'd-flex', 'align-items-center');
+            newDateInputDiv.innerHTML = `
+                <label class="date-label me-2" for="dateInput${index}">Fecha ${index}:</label>
+                <input type="date" class="form-control date-input me-2" id="dateInput${index}" value="${date}">
+                <button type="button" class="btn btn-danger btn-sm delete-date-btn ms-0" data-index="${index}">&times;</button>
+            `;
+            dateInputContainer.appendChild(newDateInputDiv);
+        
+            newDateInputDiv.querySelector('.delete-date-btn').addEventListener('click', function() {
+                const allDateInputs = dateInputContainer.querySelectorAll('.date-input-group');
+                if(allDateInputs.length > 1) {
+                    newDateInputDiv.remove();
+                } else {
+                    newDateInputDiv.querySelector('.date-input').value = '';
+                }
+                reindexDateInputs();
+                ensureEmptyInput();
+            });
+            
+        }
+
+        function reindexDateInputs() {
+            const allDateInputs = dateInputContainer.querySelectorAll('.date-input-group');
+            allDateInputs.forEach((div, index) => {
+                const newIndex = index + 1;
+                div.querySelector('.date-label').innerHTML = `Fecha ${newIndex}:`;
+                div.querySelector('.date-input').id = `dateInput${newIndex}`;
+                div.querySelector('.delete-date-btn').setAttribute('data-index', newIndex);
+            });
+        }
+
+        dateInputContainer.addEventListener('input', (event) => {
+            if (event.target.classList.contains('date-input')) {
+                const allDateInputs = dateInputContainer.querySelectorAll('.date-input');
+                const lastDateInput = allDateInputs[allDateInputs.length - 1];
+                if (lastDateInput.value !== '') {
+                    addDateInput(allDateInputs.length + 1);
+                }
+            }
+        });
+
+        function ensureEmptyInput() {
+            const allDateInputs = dateInputContainer.querySelectorAll('.date-input');
+            const lastDateInput = allDateInputs[allDateInputs.length - 1];
+            if (lastDateInput && lastDateInput.value !== '') {
+                addDateInput(allDateInputs.length + 1);
+            } else if (allDateInputs.length === 0) {
+                addDateInput(1);
+            }
+        }
+    
+        function loadPayDates(cartId) {
+            fetch(`/obtener_fechas_de_pago/${cartId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        data.forEach((date, index) => addDateInput(index + 1, date));
+                    }
+                    ensureEmptyInput();
+                });
+        }
+
+        document.querySelector('.btn-save-changes').addEventListener('click', function() {
+            const allDateInputs = document.querySelectorAll('.date-input');
+            const dates = Array.from(allDateInputs).map(input => input.value).filter(value => value !== '');
+            const modal = document.getElementById('agregarFechasModal'); // Acceder al modal
+            const cartId = $(modal).data('cartid'); // Obtener el cartId almacenado en el modal
+            const state = 'emitida'
+        
+            fetch(`/actualizar_fechas_de_pago/${cartId}/${state}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({dates}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            });
+        });
+
+        $('#agregarFechasModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que activó el modal
+            var cartId = button.data('cartid'); // Extraer el cartId del botón que abrió el modal
+        
+            // Limpiar el contenedor de inputs antes de cargar nuevas fechas
+            dateInputContainer.innerHTML = '';
+        
+            $(this).data('cartid', cartId);
+            loadPayDates(cartId);
+        });
+        
+        
+    });
+
     function actualizarProducto(element) {
         var productId = element.getAttribute('data-id');
         var cartId = element.getAttribute('data-cart-id');

@@ -1,13 +1,20 @@
 from datetime import datetime
 from html import unescape
+from app.config import TOKEN
 
-from flask import Blueprint, render_template, redirect, url_for, jsonify, request
+from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash
 from flask_login import login_required
 from decorators.roles import requires_roles
 
-from models.cart import BuyCart, BuyCartDetail
+from api.get.product_search import ProductSearch
+from api.post.reception_post import ReceptionPost
+
 from models.user import User
+from models.office import Office
+from models.productos import Product
+from models.pay_dates import PayDates
 from models.model_cart import ModelCart
+from models.cart import BuyCart, BuyCartDetail
 
 compras_blueprint = Blueprint('compras', __name__)
 
@@ -30,10 +37,10 @@ def carro(cart_id):
         return render_template('error.html'), 500
     
 def resumen_compra(data_general):
-    cantidad_articulos = data_general.cantidad_productos
-    subtotal = data_general.monto_neto
-    impuestos = subtotal * 0.19  # Asumiendo un 19% de impuesto
-    total = subtotal + impuestos
+    cantidad_articulos = round(data_general.cantidad_productos, 2)
+    subtotal = round(data_general.monto_neto, 2)
+    impuestos = round(subtotal * 0.19, 2)  # Asumiendo un 19% de impuesto
+    total = round(subtotal + impuestos, 2)
 
     return {
         'cantidad_articulos': cantidad_articulos,
@@ -66,17 +73,25 @@ def eliminar_carro(cart_id):
         print(e)
         return jsonify({'error': str(e)}), 500
     
-@compras_blueprint.route('/eliminar_producto_carro/<int:cart_id>/<int:cart_detail_id>/<int:products_quantity>')
+@compras_blueprint.route('/eliminar_producto_carro/<int:cart_id>/<int:cart_detail_id>/<int:products_quantity>/<state>')
 @requires_roles('desarrollador')
-def eliminar_producto(cart_id, cart_detail_id, products_quantity):
+def eliminar_producto(cart_id, cart_detail_id, products_quantity, state):
     try:
         if products_quantity == 1:
             return redirect(url_for('compras.eliminar_carro', cart_id=cart_id))
-        elif ModelCart.delete_cart_detail_by_id(cart_detail_id):
-            ModelCart.check_to_update_all_cart(cart_id)
-            return redirect(url_for('compras.carro', cart_id=cart_id))
-        else:
-            return jsonify({'error': 'Producto no encontrado'}), 404
+        
+        elif state == "Creado":
+            if ModelCart.delete_cart_detail_by_id(cart_detail_id):
+                ModelCart.check_to_update_all_cart(cart_id)
+                return redirect(url_for('compras.carro', cart_id=cart_id))
+        
+        elif state == "Emitida":
+            if ModelCart.delete_cart_detail_by_id(cart_detail_id):
+                ModelCart.check_to_update_all_cart(cart_id)
+                return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
+            
+        return jsonify({'error': 'Producto no encontrado'}), 404
+    
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
@@ -101,7 +116,10 @@ def agregar_producto():
             cart_data = {
                 'descripcion': "Descripción Pendiente",
                 'fecha_creacion': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'fecha_recepcion': "-",
                 'proveedor': product['supplier'],
+                'rut': product['rut'],
+                'razon_social': product['social_reason'],
                 'monto_neto': 0,
                 'cantidad_productos': 0,
                 'estado': "Creado",
@@ -156,8 +174,161 @@ def emitir_compra():
         data = request.json
         general_data = data['general']
 
-        ModelCart.update_cart_status(general_data['cartId'])
+        ModelCart.update_cart_status(general_data['cartId'], "Emitida")
 
         return jsonify({'redirect': url_for('compras.carro', cart_id=general_data['cartId'])})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@compras_blueprint.route('/recepcionar_carro_compra/<int:cart_id>')
+@requires_roles('desarrollador')
+def recepcionar_carro_compra(cart_id):
+    try:
+        data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
+        data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
+        data_resume = resumen_compra(data_general)
+        offices_info = Office.get_all_offices()
+        pay_dates_len = len(PayDates.get_pay_dates(cart_id))
+
+        return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume, offices=offices_info, pay_dates_len=pay_dates_len)
+    except Exception as e:
+        return render_template('error.html'), 500
+    
+@compras_blueprint.route('/agregar_producto_recepcion/<int:cart_id>')
+@requires_roles('desarrollador')
+def agregar_producto_recepcion(cart_id):
+    try:
+        search_query = request.args.get('search', '')
+        product, rut, last_net_cost = Product.product_filter_by_sku(search_query)
+        continue_search = True
+        api_call = False
+        if product is None:
+            product_search = ProductSearch(TOKEN)
+            product_data = product_search.get_data(search_query)
+
+            if product_data is None or product_data['count'] == 0:
+                continue_search = False
+                flash('Producto no encontrado', 'error')
+            else:
+                api_call = True
+                continue_search = True
+
+        if continue_search and not api_call:
+            if rut != ModelCart.get_cart_detail_by_id(cart_id)[0].rut:
+                flash('Producto no corresponde al proveedor', 'error')
+            else:
+                detail_data = {
+                    'cart_id': cart_id,
+                    'variant_id': product.variant_id,
+                    'descripcion_producto': unescape(product.description),
+                    'sku_producto': product.sku,
+                    'costo_neto': float(last_net_cost),
+                    'cantidad': 1
+                }
+                ModelCart.create_cart_detail(detail_data)
+
+                suma_monto = detail_data['costo_neto'] * 1
+                suma_cantidad = 1
+
+                ModelCart.update_cart(cart_id, int(suma_monto), suma_cantidad)
+
+        elif continue_search and api_call:
+            detail_data = {
+                'cart_id': cart_id,
+                'variant_id': product_data['variant id'],
+                'descripcion_producto': unescape(product_data['description']),
+                'sku_producto': product_data['sku'],
+                'costo_neto': float(1),
+                'cantidad': 1
+            }
+
+            ModelCart.create_cart_detail(detail_data)
+
+            suma_monto = detail_data['costo_neto'] * 1
+            suma_cantidad = 1
+
+            ModelCart.update_cart(cart_id, int(suma_monto), suma_cantidad)
+
+    except Exception as e:
+        return render_template('error.html'), 500
+    finally:
+        return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
+    
+@compras_blueprint.route('/obtener_fechas_de_pago/<int:cart_id>', methods=['GET'])
+@requires_roles('desarrollador')
+def get_paydates(cart_id):
+    pay_dates = PayDates.get_pay_dates(cart_id)
+    dates = [pay_date.fecha_pago.strftime('%Y-%m-%d') for pay_date in pay_dates]
+    return jsonify(dates)
+
+@compras_blueprint.route('/actualizar_fechas_de_pago/<int:cart_id>/<state>', methods=['POST'])
+def update_paydates(cart_id, state):
+    try:
+        dates = request.json['dates']
+        
+        PayDates.delete_existing_dates(cart_id)
+
+        PayDates.create_new_dates(cart_id, dates)
+        flash('Fechas de pago actualizadas', 'success')
+        if state == 'emitida':
+            return jsonify({'status': 'success', 'redirect': url_for('compras.carro', cart_id=cart_id)})
+        else:
+            return jsonify({'status': 'success', 'redirect': url_for('compras.recepcionar_carro_compra', cart_id=cart_id)})
+        
+    except Exception as e:
+        flash('Error al actualizar fechas de pago', 'error')
+        if state == 'emitida':
+            return jsonify({'error': str(e), 'redirect': url_for('compras.carro', cart_id=cart_id)}), 500
+        else:
+            return jsonify({'error': str(e), 'redirect': url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500
+        
+@compras_blueprint.route('/procesar_datos_recepcion', methods=['POST'])
+def procesar_datos_recepcion():
+    try:
+        if not request.is_json:
+            return jsonify({"error": "La solicitud no contiene JSON"}), 400
+
+        datos_recibidos = dict(request.get_json())
+
+        cart_id = datos_recibidos['cartId']
+        for product in datos_recibidos['productos']:
+            cart_detail_id = product['id']
+            cantidad = product['cantidad']
+            costo_neto = product['costo']
+
+            ModelCart.update_cart_detail(cart_detail_id, cantidad, costo_neto)
+
+        ModelCart.check_to_update_all_cart(cart_id)
+        ModelCart.update_cart_status(cart_id, "Recepcionada")
+
+        document = datos_recibidos['tipoDocumentoValue']
+        officeId = int(datos_recibidos['sucursalValue'])
+        documentNumber = datos_recibidos['numerosFolios']
+        note = f"{datos_recibidos['businessName']} / {datos_recibidos['rut']}"
+
+        details = []
+        for product in datos_recibidos['productos']:
+            details.append({
+                'quantity': product['cantidad'],
+                'variantId': product['variantId'],
+                'cost': float(product['costo_real'])
+            })
+
+        data_post = {
+            'document': document,
+            'officeId': officeId,
+            'documentNumber': documentNumber,
+            'note': note,
+            'details': details
+        }
+
+        reception_post = ReceptionPost(TOKEN)
+        response = reception_post.send_data(data_post)
+
+        if response is None:
+            raise
+        else:
+            return jsonify({"mensaje": "Datos recibidos correctamente", "redirect": url_for('compras.carro', cart_id=cart_id)})
+        
+    except Exception as e:
+        return jsonify({"error": str(e), "redirect": url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500
