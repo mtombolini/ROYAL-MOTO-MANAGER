@@ -8,7 +8,7 @@ def data_extractor(kardex):
     df['fecha'] = pd.to_datetime(df['fecha'], format='%Y/%m/%d %H:%M:%S')
     df['fecha'] = df['fecha'].dt.normalize()
 
-    df['ventas'] = df.apply(lambda x: x['salida'] if x['tipo'] == 'Venta' else 0, axis=1)
+    df['ventas'] = df.apply(lambda x: x['salida'] if x['tipo_salida'] == 'Venta' else 0, axis=1)
 
     ohlc_data = df.groupby('fecha').agg({
         'stock_actual': 'last',
