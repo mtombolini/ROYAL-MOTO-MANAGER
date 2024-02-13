@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, jsonify, reques
 from flask_login import login_required
 from decorators.roles import requires_roles
 
-from api.search.product_search import ProductSearch
+from api.get.product_search import ProductSearch
 
 from models.user import User
 from models.office import Office
