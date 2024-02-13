@@ -118,6 +118,7 @@ def agregar_producto():
                 'fecha_recepcion': "-",
                 'proveedor': product['supplier'],
                 'rut': product['rut'],
+                'razon_social': product['social_reason'],
                 'monto_neto': 0,
                 'cantidad_productos': 0,
                 'estado': "Creado",
