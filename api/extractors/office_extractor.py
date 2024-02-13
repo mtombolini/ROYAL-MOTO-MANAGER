@@ -6,6 +6,9 @@ from app.config import TOKEN
 from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
 
+from models.office import Office
+from databases.session import AppSession
+
 class OfficeExtractor(DataExtractor):
     def __init__(self, token):
         super().__init__(token)
@@ -86,7 +89,23 @@ if __name__ == "__main__":
 
     print("Obteniendo sucursales...")
     extractor.get_data()
-    print(extractor.df_offices)
+    session = AppSession()
+    for index, row in extractor.df_offices.iterrows():
+        office = Office(
+            id=int(row['ID']),
+            name=row['Nombre'],
+            address=row['Dirección'],
+            municipality=row['Comuna'],
+            city=row['Ciudad'],
+            country=row['Pais'],
+            active_state=row['Estado'],
+            latitude=row['Latitud'],
+            longitude=row['Longitud']
+        )
+        session.add(office)
+
+    session.commit()
+    session.close()
 
     # print("Guardando datos en Excel...")
     # extractor.save_to_excel(extractor.df_offices, "sucursales_data.xlsx")
