@@ -23,3 +23,14 @@ class Office(Base):
                 return offices
             except Exception as ex:
                 raise
+
+    @classmethod
+    def get_all_offices_names(cls):
+        with AppSession() as session:
+            try:
+                offices = session.query(cls.name).all()
+                office_data = [office[0] for office in offices]
+
+                return office_data
+            except Exception as ex:
+                raise
