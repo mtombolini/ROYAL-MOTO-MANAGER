@@ -50,8 +50,11 @@ class Product(Base):
         with AppSession() as session:
             try:
                 product = session.query(cls).filter(cls.sku == sku).first()
+                if product is None:
+                    return None, None, None
                 return product, product.suppliers[0].rut, product.last_net_cost.net_cost
             except Exception as ex:
+                print(ex)
                 raise
 
     @classmethod
