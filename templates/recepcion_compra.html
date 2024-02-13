@@ -80,8 +80,19 @@
             <div class="col-auto p-0">
                 <span class="ms-4">Proveedor: {{ data_general.proveedor }}</span>
             </div>
+        </div>
+
+        <div class="row m-0 align-items-start mb-3 ms-2">
             <div class="col-auto p-0">
-                <span class="ms-4">Sucursal: </span>
+                <label for="sucursalSelect" class="form-label">Sucursal:</label>
+                <select class="form-select d-inline-block" id="sucursalSelect" aria-label="Sucursal" style="width: auto;">
+                    <option selected>Selecciona una sucursal</option>
+                    {% for office in offices %}
+                        {% if office.active_state == '0' %}
+                            <option value="{{ office.id }}">{{ office.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
             </div>
         </div>
 
