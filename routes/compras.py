@@ -8,11 +8,12 @@ from decorators.roles import requires_roles
 
 from api.search.product_search import ProductSearch
 
-from models.cart import BuyCart, BuyCartDetail
 from models.user import User
-from models.model_cart import ModelCart
+from models.office import Office
 from models.productos import Product
 from models.pay_dates import PayDates
+from models.model_cart import ModelCart
+from models.cart import BuyCart, BuyCartDetail
 
 compras_blueprint = Blueprint('compras', __name__)
 
@@ -184,8 +185,9 @@ def recepcionar_carro_compra(cart_id):
         data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
         data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
         data_resume = resumen_compra(data_general)
+        offices_info = Office.get_all_offices_names()
 
-        return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume)
+        return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume, offices=offices_info)
     except Exception as e:
         return render_template('error.html'), 500
     
