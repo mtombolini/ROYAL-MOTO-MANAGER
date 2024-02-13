@@ -85,8 +85,8 @@
         <div class="row m-0 align-items-start mb-3 ms-2">
             <div class="col-auto p-0">
                 <label for="sucursalSelect" class="form-label">Sucursal:</label>
-                <select class="form-select d-inline-block" id="sucursalSelect" aria-label="Sucursal" style="width: auto;">
-                    <option selected>Selecciona una sucursal</option>
+                <select class="form-select d-inline-block" id="sucursalSelect" aria-label="Sucursal" required style="width: auto;">
+                    <option selected value="">Selecciona una sucursal</option>
                     {% for office in offices %}
                         {% if office.active_state == '0' %}
                             <option value="{{ office.id }}">{{ office.name }}</option>
@@ -99,18 +99,18 @@
         <div class="row m-0 align-items-center mb-3 ms-2" id="inputContainer">
             <div class="col-auto p-0 me-2">
                 <label for="folioInput1" class="form-label">Numero de Folio:</label>
-                <input type="number" class="form-control d-inline-block folio-input" min="1" id="folioInput1" style="width: 120px;">
+                <input type="number" class="form-control d-inline-block folio-input" min="1" id="folioInput1" required style="width: 120px;">
             </div>
         </div>
 
         <div class="row m-0 align-items-end mb-3 ms-2">
             <div class="col-auto p-0 me-4">
                 <label for="documentoSelect" class="form-label">Tipo de Documento:</label>
-                <select class="form-select d-inline-block" id="documentoSelect" aria-label="Tipo de Documento" style="width: auto;">
-                    <option selected>Selecciona el tipo de documento</option>
-                    <option value="sinDocumento">Sin Documento</option>
-                    <option value="factura">Factura</option>
-                    <option value="guiaDespacho">Guía de Despacho</option>
+                <select class="form-select d-inline-block" id="documentoSelect" aria-label="Tipo de Documento" requiered style="width: auto;">
+                    <option selected value="">Selecciona el tipo de documento</option>
+                    <option value="Sin Documento">Sin Documento</option>
+                    <option value="Factura">Factura</option>
+                    <option value="Guía">Guía de Despacho</option>
                 </select>
             </div>
             <div class="col-auto p-0 ms-4">
@@ -150,7 +150,7 @@
                 </thead>
                 <tbody>
                     {% for product in data_detail %}
-                    <tr id="product-modal-{{ product.id }}">
+                    <tr id="product-modal-{{ product.id }}" data-variant-id="{{ product.variant_id }}">
                         <td>{{ product.sku_producto }}</td>
                         <td>{{ product.descripcion_producto }}</td>
                         <td>
@@ -207,7 +207,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <button type="button" class="btn btn-primary">Siguiente</button>
+                <button type="button" id="submitButton" class="btn btn-success proceder-btn">Recepcionar</button>
             </div>
         </div>
     </div>
@@ -235,7 +235,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const dateInputContainer = document.getElementById('dateInputContainer');
-    
+
         function addDateInput(index, date = '') {
             const newDateInputDiv = document.createElement('div');
             newDateInputDiv.classList.add('date-input-group', 'mb-3', 'd-flex', 'align-items-center');
@@ -256,7 +256,6 @@
                 reindexDateInputs();
                 ensureEmptyInput();
             });
-            
         }
 
         function reindexDateInputs() {
@@ -288,7 +287,7 @@
                 addDateInput(1);
             }
         }
-    
+
         function loadPayDates(cartId) {
             fetch(`/obtener_fechas_de_pago/${cartId}`)
                 .then(response => response.json())
@@ -325,22 +324,20 @@
         $('#agregarFechasModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Botón que activó el modal
             var cartId = button.data('cartid'); // Extraer el cartId del botón que abrió el modal
-        
+
             // Limpiar el contenedor de inputs antes de cargar nuevas fechas
             dateInputContainer.innerHTML = '';
-        
+
             $(this).data('cartid', cartId);
             loadPayDates(cartId);
         });
-        
-        
     });
 
     document.addEventListener('DOMContentLoaded', function () {
         const quantityInputs = document.querySelectorAll('.quantity-input');
         const discountInputs = document.querySelectorAll('.discount-input');
         const costInputs = document.querySelectorAll('.cost-input');
-    
+
         function enforceMinMax(el) {
             if (el.value !== '') {
                 let value = parseInt(el.value);
@@ -351,13 +348,13 @@
                 }
             }
         }
-    
+
         quantityInputs.forEach(input => {
             input.addEventListener('input', function () {
                 enforceMinMax(this);
             });
         });
-    
+
         discountInputs.forEach(input => {
             input.addEventListener('input', function () {
                 enforceMinMax(this);
@@ -370,7 +367,7 @@
             });
         });
     });
-    
+
     $(document).ready(function() {
         function updateItemTotal() {
             var subtotal = 0;
@@ -378,7 +375,7 @@
             var totalSinDescuento = 0;
             var totalConDescuento = 0;
             var cost = 0;
-            
+
             $('tr[id^="product-modal-"]').each(function() {
                 var $row = $(this);
                 var quantity = parseFloat($row.find('.quantity-input').val()) || 0;
@@ -389,9 +386,9 @@
 
                 var totalItemSinDescuento = quantity * cost;
                 var totalItemConDescuento = totalItemSinDescuento * (1 - discountPercentage);
-    
+
                 $row.find('td').eq(5).text('$ ' + totalItemConDescuento.toFixed(2));
-                
+
                 subtotal += totalItemConDescuento;
                 totalCantidad += quantity;
                 totalSinDescuento += totalItemSinDescuento;
@@ -423,7 +420,7 @@
             var tipoPrecio = $('input[name="precioRadio"]:checked').val();
             var valorFinal = 0;
             var iva = 0;
-            
+
             if(tipoPrecio === 'neto') {
                 valorFinal = subtotal;
                 iva = valorFinal * 0.19;
@@ -456,7 +453,8 @@
     document.addEventListener('DOMContentLoaded', (event) => {
         const maxInputs = 6;
         const inputContainer = document.getElementById('inputContainer');
-    
+        const submitButton = document.getElementById('submitButton');
+
         function addInput(index) {
             const newInputDiv = document.createElement('div');
             newInputDiv.classList.add('col-auto', 'p-0', 'me-2');
@@ -477,10 +475,70 @@
                 }
             }
         });
-    });
 
-    function recepcionarCompra(element) {
-        console.log('Recepcionar Compra');
-    }
+        submitButton.addEventListener('click', () => {
+            const sucursal = document.getElementById('sucursalSelect');
+            const documento = document.getElementById('documentoSelect');
+            if (!sucursal.value || !documento.value) {
+                alert('Por favor, seleccione una sucursal y un tipo de documento.');
+                return;
+            }
+
+            const folioInputs = inputContainer.querySelectorAll('.folio-input');
+            const isAnyFolioFilled = Array.from(folioInputs).some(input => input.value !== '');
+            if (!isAnyFolioFilled) {
+                alert('Por favor, ingrese al menos un número de folio.');
+                return;
+            }
+
+            const tipoDocumentoValue = document.getElementById('documentoSelect').value;
+            const sucursalValue = document.getElementById('sucursalSelect').value;
+            const brutoNetoValue = document.querySelector('input[name="precioRadio"]:checked').value;
+
+            const numerosFolios = Array.from(folioInputs).map(input => input.value).filter(value => value !== '').join(' / ');
+
+            const productos = [];
+
+            // Recoger datos de los productos
+            document.querySelectorAll('tbody tr').forEach((row) => {
+                const id = row.id.split('-')[2]; // Obtiene el ID del producto basado en el ID de la fila
+                const variantId = row.dataset.variantId; // Obtiene el variant_id usando dataset
+                const sku = row.cells[0].textContent.trim(); // Asume que el SKU es el primer elemento td
+                const cantidad = document.getElementById(`quantity-${id}`).value;
+                const costo = document.getElementById(`costo-${id}`).value;
+                const descuento = document.getElementById(`descuento-${id}`).value;
+                if (brutoNetoValue === 'bruto') {
+                    productos.push({
+                        variantId,
+                        sku,
+                        cantidad: parseInt(cantidad, 10),
+                        descuento: parseFloat(descuento / 100),
+                        costo: parseFloat(costo).toFixed(2),
+                        costo_real: parseFloat((parseFloat(costo).toFixed(2) / 1.19) * (1 - (descuento / 100))).toFixed(2)
+                    });
+                } else {
+                    productos.push({
+                        variantId,
+                        sku,
+                        cantidad: parseInt(cantidad, 10),
+                        descuento: parseFloat(descuento / 100),
+                        costo: parseFloat(costo).toFixed(2),
+                        costo_real: parseFloat(parseFloat(costo).toFixed(2) * (1 - parseFloat(descuento / 100))).toFixed(2)
+                    });
+                }
+            });
+
+            // Crear un diccionario con todos los datos recogidos
+            const datosRequeridos = {
+                tipoDocumentoValue,
+                sucursalValue,
+                numerosFolios,
+                brutoNetoValue,
+                productos
+            };
+
+            console.log(datosRequeridos);
+        });
+    });
 </script>
 {% endblock %}
