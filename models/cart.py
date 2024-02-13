@@ -12,6 +12,7 @@ class BuyCart(Base):
     fecha_recepcion = Column(DateTime)
     proveedor = Column(String(255))
     rut = Column(String(255))
+    razon_social = Column(String(255))
     monto_neto = Column(Integer)  
     cantidad_productos = Column(Integer)
     estado = Column(String(255))
