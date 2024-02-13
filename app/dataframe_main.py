@@ -1,3 +1,4 @@
+from models.office import Office
 from models.returns import Return
 from models.shipping import Shipping
 from models.price_list import PriceList
@@ -39,6 +40,8 @@ class DataFrameMain():
         self.suppliers_id = []
 
         self.df_shippings = None
+
+        self.df_offices = None
 
     def correct_products(self):
         self.df_products = self.df_products.dropna()
@@ -247,6 +250,21 @@ class DataFrameMain():
                 variant_id=int(row['Variant ID'])
             )
             session.add(price_list)
+
+    def create_offices(self, session):
+        for index, row in self.df_offices.iterrows():
+            office = Office(
+                id=int(row['ID']),
+                name=row['Nombre'],
+                address=row['Dirección'],
+                municipality=row['Comuna'],
+                city=row['Ciudad'],
+                country=row['Pais'],
+                active_state=row['Estado'],
+                latitude=row['Latitud'],
+                longitude=row['Longitud']
+            )
+            session.add(office)
     
     def create_data_base(self, session):
         self.correct_documents()
@@ -256,6 +274,7 @@ class DataFrameMain():
         self.correct_price_list()
         self.create_shippings(session)
         self.create_suppliers(session)
+        self.create_offices(session)
         self.create_products(session)
 
         session.commit()
