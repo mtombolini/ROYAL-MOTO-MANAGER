@@ -7,6 +7,7 @@ from flask_login import login_required
 from decorators.roles import requires_roles
 
 from api.get.product_search import ProductSearch
+from api.post.reception_post import ReceptionPost
 
 from models.user import User
 from models.office import Office
@@ -187,8 +188,9 @@ def recepcionar_carro_compra(cart_id):
         data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
         data_resume = resumen_compra(data_general)
         offices_info = Office.get_all_offices()
+        pay_dates_len = len(PayDates.get_pay_dates(cart_id))
 
-        return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume, offices=offices_info)
+        return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume, offices=offices_info, pay_dates_len=pay_dates_len)
     except Exception as e:
         return render_template('error.html'), 500
     
@@ -279,3 +281,54 @@ def update_paydates(cart_id, state):
             return jsonify({'error': str(e), 'redirect': url_for('compras.carro', cart_id=cart_id)}), 500
         else:
             return jsonify({'error': str(e), 'redirect': url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500
+        
+@compras_blueprint.route('/procesar_datos_recepcion', methods=['POST'])
+def procesar_datos_recepcion():
+    try:
+        if not request.is_json:
+            return jsonify({"error": "La solicitud no contiene JSON"}), 400
+
+        datos_recibidos = dict(request.get_json())
+
+        cart_id = datos_recibidos['cartId']
+        for product in datos_recibidos['productos']:
+            cart_detail_id = product['id']
+            cantidad = product['cantidad']
+            costo_neto = product['costo']
+
+            ModelCart.update_cart_detail(cart_detail_id, cantidad, costo_neto)
+
+        ModelCart.check_to_update_all_cart(cart_id)
+        ModelCart.update_cart_status(cart_id, "Recepcionada")
+
+        document = datos_recibidos['tipoDocumentoValue']
+        officeId = int(datos_recibidos['sucursalValue'])
+        documentNumber = datos_recibidos['numerosFolios']
+        note = f"{datos_recibidos['businessName']} / {datos_recibidos['rut']}"
+
+        details = []
+        for product in datos_recibidos['productos']:
+            details.append({
+                'quantity': product['cantidad'],
+                'variantId': product['variantId'],
+                'cost': float(product['costo_real'])
+            })
+
+        data_post = {
+            'document': document,
+            'officeId': officeId,
+            'documentNumber': documentNumber,
+            'note': note,
+            'details': details
+        }
+
+        reception_post = ReceptionPost(TOKEN)
+        response = reception_post.send_data(data_post)
+
+        if response is None:
+            raise
+        else:
+            return jsonify({"mensaje": "Datos recibidos correctamente", "redirect": url_for('compras.carro', cart_id=cart_id)})
+        
+    except Exception as e:
+        return jsonify({"error": str(e), "redirect": url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500

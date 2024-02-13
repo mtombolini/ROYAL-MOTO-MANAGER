@@ -75,10 +75,10 @@
     <div class="row">
         <div class="row m-0 align-items-start mb-3 ms-2">
             <div class="col-auto p-0">
-                <span class="me-4">Rut: {{ data_general.rut }}</span>
+                <span class="me-4" data-rut="{{ data_general.rut }}">Rut: {{ data_general.rut }}</span>
             </div>
             <div class="col-auto p-0">
-                <span class="ms-4">Proveedor: {{ data_general.proveedor }}</span>
+                <span class="ms-4" data-business-name="{{ data_general.razon_social }}">Proveedor: {{ data_general.proveedor }}</span>
             </div>
         </div>
 
@@ -207,7 +207,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <button type="button" id="submitButton" class="btn btn-success proceder-btn">Recepcionar</button>
+                <button type="button" id="submitButton" class="btn btn-success proceder-btn" data-pay-dates-len="{{ pay_dates_len }}" data-cart-id="{{ data_general.cart_id }}">Recepcionar</button>
             </div>
         </div>
     </div>
@@ -477,6 +477,14 @@
         });
 
         submitButton.addEventListener('click', () => {
+            const payDatesLen = parseInt(submitButton.dataset.payDatesLen, 10);
+            const cartId = parseInt(submitButton.dataset.cartId, 10);
+
+            if (payDatesLen === 0) {
+                alert('Por favor, añade al menos una fecha de pago.');
+                return;
+            }
+
             const sucursal = document.getElementById('sucursalSelect');
             const documento = document.getElementById('documentoSelect');
             if (!sucursal.value || !documento.value) {
@@ -496,7 +504,10 @@
             const brutoNetoValue = document.querySelector('input[name="precioRadio"]:checked').value;
 
             const numerosFolios = Array.from(folioInputs).map(input => input.value).filter(value => value !== '').join(' / ');
-
+            const rutElement = document.querySelector('[data-rut]');
+            const businessNameElement = document.querySelector('[data-business-name]');
+            const rut = rutElement ? rutElement.dataset.rut : '';
+            const businessName = businessNameElement ? businessNameElement.dataset.businessName : '';
             const productos = [];
 
             // Recoger datos de los productos
@@ -509,19 +520,23 @@
                 const descuento = document.getElementById(`descuento-${id}`).value;
                 if (brutoNetoValue === 'bruto') {
                     productos.push({
+                        id,
                         variantId,
                         sku,
                         cantidad: parseInt(cantidad, 10),
                         descuento: parseFloat(descuento / 100),
-                        costo: parseFloat(costo).toFixed(2),
+                        costo_visual: parseFloat(costo).toFixed(2),
+                        costo: parseFloat((parseFloat(costo).toFixed(2) / 1.19)).toFixed(2),
                         costo_real: parseFloat((parseFloat(costo).toFixed(2) / 1.19) * (1 - (descuento / 100))).toFixed(2)
                     });
                 } else {
                     productos.push({
+                        id,
                         variantId,
                         sku,
                         cantidad: parseInt(cantidad, 10),
                         descuento: parseFloat(descuento / 100),
+                        costo_visual: parseFloat(costo).toFixed(2),
                         costo: parseFloat(costo).toFixed(2),
                         costo_real: parseFloat(parseFloat(costo).toFixed(2) * (1 - parseFloat(descuento / 100))).toFixed(2)
                     });
@@ -530,14 +545,35 @@
 
             // Crear un diccionario con todos los datos recogidos
             const datosRequeridos = {
+                cartId,
                 tipoDocumentoValue,
                 sucursalValue,
                 numerosFolios,
-                brutoNetoValue,
-                productos
+                productos,
+                rut,
+                businessName
             };
 
-            console.log(datosRequeridos);
+            fetch('/procesar_datos_recepcion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datosRequeridos),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+                return data;
+            })
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         });
     });
 </script>
