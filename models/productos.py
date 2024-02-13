@@ -140,8 +140,10 @@ class Product(Base):
                     df_entradas = df[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
 
                 if df_consumos.empty and df_ventas.empty:
-                    df_salidas = create_empty_dataframe(['fecha', 'salida'])
+                    df_salidas = create_empty_dataframe(['fecha', 'salida', 'tipo_salida'])
                 else:
+                    df_consumos['tipo_salida'] = 'consumo'
+                    df_ventas['tipo_salida'] = 'venta'
                     df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
 
                 df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
@@ -151,7 +153,7 @@ class Product(Base):
                 df_unificado['stock_actual'] = df_unificado['stock_actual'].cumsum()
 
                 # Crear el DataFrame del Kardex
-                df_kardex = df_unificado[['fecha', 'entrada', 'salida', 'stock_actual']]
+                df_kardex = df_unificado[['fecha', 'entrada', 'salida', 'stock_actual', 'tipo_salida']]
                 df_kardex['entrada'] = df_kardex['entrada'].astype(int)
                 df_kardex['salida'] = df_kardex['salida'].astype(int)
                 df_kardex['stock_actual'] = df_kardex['stock_actual'].astype(int)

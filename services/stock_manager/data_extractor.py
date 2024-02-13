@@ -8,17 +8,25 @@ def data_extractor(kardex):
     df['fecha'] = pd.to_datetime(df['fecha'], format='%Y/%m/%d %H:%M:%S')
     df['fecha'] = df['fecha'].dt.normalize()
 
+    df['ventas'] = df.apply(lambda x: x['salida'] if x['tipo'] == 'Venta' else 0, axis=1)
+
     ohlc_data = df.groupby('fecha').agg({
         'stock_actual': 'last',
         'entrada': 'sum',
-        'salida': 'sum',
+        'salida': 'sum',  # Total outflows
+        'ventas': 'sum',  # Sum of sales quantities specifically
     }).rename(
-        columns={'stock_actual': 'Close', 'entrada': 'Purchases','salida': 'Sales'}
-        )
+        columns={
+            'stock_actual': 'Close', 
+            'entrada': 'Purchases', 
+            'salida': 'Outflow',  # Total outflows including sales
+            'ventas': 'Sales'  # Sum of sales quantities
+        }
+    )
     
-    ohlc_data['Open'] = ohlc_data['Close'] - ohlc_data['Purchases'] + ohlc_data['Sales']
+    ohlc_data['Open'] = ohlc_data['Close'] - ohlc_data['Purchases'] + ohlc_data['Outflow']
     ohlc_data['High'] = ohlc_data['Open'] + ohlc_data['Purchases']
-    ohlc_data['Low'] = ohlc_data['Open'] - ohlc_data['Sales']
+    ohlc_data['Low'] = ohlc_data['Open'] - ohlc_data['Outflow']
 
     today = [time.strftime("%Y-%m-%d %H:%M:%S")]
     today_df = pd.DataFrame(today, columns=['fecha'])
@@ -33,7 +41,7 @@ def data_extractor(kardex):
     ohlc_data = ohlc_data.reindex(all_dates)
 
     ohlc_data['Purchases'].fillna(0, inplace=True)
-    ohlc_data['Sales'].fillna(0, inplace=True)
+    ohlc_data['Outflow'].fillna(0, inplace=True)
 
     ohlc_data['Close'].ffill(inplace=True)
     ohlc_data['Open'].fillna(ohlc_data['Close'], inplace=True)
