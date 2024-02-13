@@ -144,7 +144,7 @@ class Product(Base):
                 else:
                     df_consumos['tipo_salida'] = 'consumo'
                     df_ventas['tipo_salida'] = 'venta'
-                    df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad']].rename(columns={'cantidad': 'salida'})
+                    df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad', 'tipo_salida']].rename(columns={'cantidad': 'salida'})
 
                 df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
 
