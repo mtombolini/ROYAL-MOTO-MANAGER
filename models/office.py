@@ -11,7 +11,7 @@ class Office(Base):
     municipality = Column(String(255))
     city = Column(String(255))
     country = Column(String(255))
-    active_state = Column(String(255))
+    active_state = Column(String(255)) # CAMBIAR A NUM
     latitude = Column(String(255))
     longitude = Column(String(255))
 
@@ -20,17 +20,14 @@ class Office(Base):
         with AppSession() as session:
             try:
                 offices = session.query(cls).all()
-                return offices
-            except Exception as ex:
-                raise
-
-    @classmethod
-    def get_all_offices_names(cls):
-        with AppSession() as session:
-            try:
-                offices = session.query(cls.name).all()
-                office_data = [office[0] for office in offices]
-
+                office_data = [
+                    {
+                        key: value
+                        for key, value in office.__dict__.items()
+                        if not key.startswith('_')
+                    } 
+                    for office in offices
+                ]
                 return office_data
             except Exception as ex:
                 raise

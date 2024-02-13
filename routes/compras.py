@@ -185,7 +185,7 @@ def recepcionar_carro_compra(cart_id):
         data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
         data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
         data_resume = resumen_compra(data_general)
-        offices_info = Office.get_all_offices_names()
+        offices_info = Office.get_all_offices()
 
         return render_template('recepcion_compra.html', page_title="Recepción", data_detail=data_detail, data_general=data_general, data_resume=data_resume, offices=offices_info)
     except Exception as e:
