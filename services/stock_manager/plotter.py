@@ -18,11 +18,11 @@ def plot_data_and_recommendations(data: pd.DataFrame, recommendations: List[Dict
             fig.add_trace(
                 go.Scatter(
                     x=[date], y=[row['Close']], mode='markers', marker_symbol='triangle-up', 
-                    text=(f"Buy {int(recommendation)} units." +
-                          (f"\\nFor assurance, there is a {int(CONFIDENCE_LEVEL*100)}% chance that more than "
-                           f"{int(recommendation_with_confidence)} units are needed.") if recommendation_with_confidence else ""), 
+                    text=(f"Comprar {int(recommendation)} unidades." +
+                          ((f"\\nPara mayor seguridad, hay un {int(CONFIDENCE_LEVEL*50 + 50)}% de probabilidad de que se necesiten "
+                           f"{int(recommendation_with_confidence)} unidades o más.") if recommendation_with_confidence else "")), 
                     marker_color='blue', marker_size=5,
-                    name='Buy Recommendation'
+                    name='Comprar'
                 )
             )
 
