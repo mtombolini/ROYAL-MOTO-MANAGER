@@ -27,4 +27,3 @@ def get_products(page):
 def product_detail(variant_id):
     product, prediction = Product.filter_product(variant_id)
     return render_template("tables/product_detail.html", product=product, variant_id=variant_id, prediction=prediction, page_title=f"{product['description']}")
-
