@@ -20,7 +20,7 @@ class OfficeExtractor(DataExtractor):
         self.office_id = None
 
     def get_data(self):
-        while True: #not stop_signal_is_set():
+        while not stop_signal_is_set():
             endpoint = f"offices.json?limit={self.limit}&offset={self.offset}"
             response = self.make_request(endpoint)
 
@@ -38,8 +38,8 @@ class OfficeExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for office in response['items']:
-            # if stop_signal_is_set():
-            #     return
+            if stop_signal_is_set():
+                return
             
             self.office_id = office['id']
 
@@ -76,7 +76,7 @@ class OfficeExtractor(DataExtractor):
         print("Obteniendo Sucursales...")
         self.get_data()
 
-        if True: # not stop_signal_is_set():
+        if not stop_signal_is_set():
             with open("logs/api_status.log", "a") as log_file:
                 message = json.dumps({"tipo": "sucursales-listo", "mensaje": f"Sucursales ✅"})
                 log_file.write(message + "\n")
