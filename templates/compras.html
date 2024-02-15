@@ -59,7 +59,7 @@
                         <td>{{ cart_item.rendimiento }}</td>
                         <td>
                             <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
-                            href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id)}}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
+                            href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
                         </td>
                     </tr>
                     {% else %}

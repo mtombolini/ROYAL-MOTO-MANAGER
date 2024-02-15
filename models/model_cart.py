@@ -65,7 +65,10 @@ class ModelCart:
             cart = BuyCart(
                 descripcion=cart_data['descripcion'],
                 fecha_creacion=cart_data['fecha_creacion'],
+                fecha_recepcion=cart_data['fecha_creacion'],
                 proveedor=cart_data['proveedor'],
+                rut=cart_data['rut'],
+                razon_social=cart_data['razon_social'],
                 monto_neto=cart_data['monto_neto'],
                 cantidad_productos=cart_data['cantidad_productos'],
                 estado=cart_data['estado'],
@@ -158,11 +161,11 @@ class ModelCart:
             session.close()
 
     @classmethod
-    def update_cart_status(cls, cart_id):
+    def update_cart_status(cls, cart_id, estado):
         session = AppSession()
         try:
             cart = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()
-            cart.estado = "Emitida"
+            cart.estado = estado
 
             session.commit()
             session.refresh(cart)
