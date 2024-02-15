@@ -326,7 +326,7 @@ def procesar_datos_recepcion():
         for product in datos_recibidos['productos']:
             cart_detail_id = product['id']
             cantidad = product['cantidad']
-            costo_neto = product['costo']
+            costo_neto = product['costo_real']
 
             ModelCart.update_cart_detail(cart_detail_id, cantidad, costo_neto)
 
