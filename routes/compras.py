@@ -84,14 +84,14 @@ def eliminar_producto(cart_id, cart_detail_id, products_quantity, state):
             if ModelCart.delete_cart_detail_by_id(cart_detail_id):
                 ModelCart.check_to_update_all_cart(cart_id)
                 return redirect(url_for('compras.carro', cart_id=cart_id))
-        
+
         elif state == "Emitida":
             if ModelCart.delete_cart_detail_by_id(cart_detail_id):
                 ModelCart.check_to_update_all_cart(cart_id)
                 return redirect(url_for('compras.recepcionar_carro_compra', cart_id=cart_id))
-            
+
         return jsonify({'error': 'Producto no encontrado'}), 404
-    
+
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
@@ -285,12 +285,44 @@ def update_paydates(cart_id, state):
 @compras_blueprint.route('/procesar_datos_recepcion', methods=['POST'])
 def procesar_datos_recepcion():
     try:
-        if not request.is_json:
-            return jsonify({"error": "La solicitud no contiene JSON"}), 400
-
         datos_recibidos = dict(request.get_json())
-
         cart_id = datos_recibidos['cartId']
+
+        document = datos_recibidos['tipoDocumentoValue']
+        officeId = int(datos_recibidos['sucursalValue'])
+        business_name_limitado = datos_recibidos['businessName'][:85]
+        note = f"{business_name_limitado} / {datos_recibidos['rut']}"
+        documentNumber = datos_recibidos['numerosFolios']
+        numberList = datos_recibidos['listaFolios']
+
+        all_data_post = []
+        for folio in numberList:
+            details = []
+            for product in datos_recibidos['productos']:
+                if product['folio'] == folio:
+                    details.append({
+                        'quantity': product['cantidad'],
+                        'variantId': product['variantId'],
+                        'cost': float(product['costo_real'])
+                    })
+
+            data_post = {
+                'document': document,
+                'officeId': officeId,
+                'documentNumber': folio,
+                'note': note,
+                'details': details
+            }
+
+            all_data_post.append(data_post)
+
+        responses = []
+        for data_post in all_data_post:
+            reception_post = ReceptionPost(TOKEN)
+            response = reception_post.send_data(data_post)
+
+            responses.append(response)
+
         for product in datos_recibidos['productos']:
             cart_detail_id = product['id']
             cantidad = product['cantidad']
@@ -300,35 +332,11 @@ def procesar_datos_recepcion():
 
         ModelCart.check_to_update_all_cart(cart_id)
         ModelCart.update_cart_status(cart_id, "Recepcionada")
+        ModelCart.update_cart_datatime(cart_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-        document = datos_recibidos['tipoDocumentoValue']
-        officeId = int(datos_recibidos['sucursalValue'])
-        documentNumber = datos_recibidos['numerosFolios']
-        note = f"{datos_recibidos['businessName']} / {datos_recibidos['rut']}"
-
-        details = []
-        for product in datos_recibidos['productos']:
-            details.append({
-                'quantity': product['cantidad'],
-                'variantId': product['variantId'],
-                'cost': float(product['costo_real'])
-            })
-
-        data_post = {
-            'document': document,
-            'officeId': officeId,
-            'documentNumber': documentNumber,
-            'note': note,
-            'details': details
-        }
-
-        reception_post = ReceptionPost(TOKEN)
-        response = reception_post.send_data(data_post)
-
-        if response is None:
-            raise
-        else:
-            return jsonify({"mensaje": "Datos recibidos correctamente", "redirect": url_for('compras.carro', cart_id=cart_id)})
+        # if None in responses:
+        #     raise
+        return jsonify({"mensaje": "Datos recibidos correctamente", "redirect": url_for('compras.carro', cart_id=cart_id)})
         
     except Exception as e:
         return jsonify({"error": str(e), "redirect": url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500

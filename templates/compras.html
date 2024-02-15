@@ -58,8 +58,10 @@
                         <td>{{ cart_item.estado }}</td>
                         <td>{{ cart_item.rendimiento }}</td>
                         <td>
+                            {% if cart_item.estado != 'Recepcionada' %}
                             <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
                             href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% else %}
@@ -78,14 +80,11 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Selecciona todas las filas de la tabla y agrega un controlador de eventos de clic
         document.querySelectorAll('tr[id^="cart-item-"]').forEach(row => {
             row.addEventListener('click', function(event) {
-                // Evita que el clic se propague si se hizo clic en un botón
                 if(event.target.tagName !== 'BUTTON') {
-                    // Obtén el cartId de la primera celda de la fila
                     const cartId = this.cells[0].textContent.trim();
-                    window.location.href = '/carro/' + cartId; // Redirige a la ruta de la función carro en Flask
+                    window.location.href = '/carro/' + cartId;
                 }
             });
         });
