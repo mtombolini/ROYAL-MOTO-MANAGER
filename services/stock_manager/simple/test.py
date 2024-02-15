@@ -14,7 +14,7 @@ def predict(kardex):
         recommendation: Dict[str, int] = predict_units_to_buy(product_data[:-i if i > 0 else None])
         recommendations.append(recommendation)
 
-    _, _, historic_mean, _, _, _ = get_sales_current_distribution(product_data)
+    _, _, historic_mean, _, _, _, days_considered = get_sales_current_distribution(product_data)
     plot_data = plot_data_and_recommendations(product_data, recommendations)
     
     return plot_data, historic_mean
