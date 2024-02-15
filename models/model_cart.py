@@ -174,3 +174,18 @@ class ModelCart:
             raise Exception(ex)
         finally:
             session.close()
+
+    @classmethod
+    def update_cart_datatime(cls, cart_id, fecha_recepcion):
+        session = AppSession()
+        try:
+            cart = session.query(BuyCart).filter(BuyCart.cart_id == cart_id).first()
+            cart.fecha_recepcion = fecha_recepcion
+
+            session.commit()
+            session.refresh(cart)
+            return cart
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
