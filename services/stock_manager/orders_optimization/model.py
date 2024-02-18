@@ -1,5 +1,5 @@
 import numpy as np
-from stock_manager.parameters_service import DAYS_OF_ANTICIPATION, DAYS_TO_LAST
+from stock_manager.parameters_service import DAYS_TO_LAST, OBJECTIVE_COEFFICIENTS
 from cylp.cy import CyClpSimplex
 from cylp.py.modeling.CyLPModel import CyLPModel, CyLPArray, CyLPConstraint
 import random
@@ -24,6 +24,7 @@ stock = model.addVariable('stock', (L, max(M), N), isInt=True) # How much stock 
 # Constants
 # TODO: INTEGRATE CONSTANTS WITH APPLICATION DATABASE.
 sales = np.matrix() # INTEGRATE WITH DATABASE. DIMS = (L, max(M), N)
+costs = np.matrix() # INTEGRATE WITH DATABASE. DIMS = (L, max(M))
 prices = np.matrix() # INTEGRATE WITH DATABASE. DIMS = (L, max(M))
 initial_stocks = np.matrix([]) # INTEGRATE WITH DATABASE. DIMS = (L, max(M))
 emergency_stock = np.matrix([]) # INTEGRATE WITH DATABASE. DIMS = (L, max(M))
@@ -65,14 +66,13 @@ for i in range(L):
     for j in range(M[i]):
         for t in range(N):
             model += v[i, j, t] <= sum([sales[i, j, t+time_since_sale] for time_since_sale in range(last_order[i, j])]) # New orders for a product won't be placed before at least one sale.
-            
-            
-# TODO: PURCHASES SHOULD BE JUST BIG ENOUGH TO FIT THE DEMAND.
-# TODO: ORDERS SHOULD BE TIMED SO THAT THE AMOUNT OF DELIVERIES FROM EACH SUPPLIER IS MINIMIZED.
+
             
 # Objective function
+C, D, E = OBJECTIVE_COEFFICIENTS
+
 oversupplying_penalty = sum([sum([sum([x[i, j, t] - sales[i, j, t] for t in range(N)]) for j in range(M[i])]) for i in range(L)])
 supplier_orders_alignment = sum([sum([w[i, t] * sum(v[i, j, t]**2 for j in range(M[i])) for t in range(N)]) for i in range(L)])
+utilities = sum([sum([sum([x[i, j, t] * (prices[i, j] - costs[i, j]) for t in range(N)]) for j in range(M[i])]) for i in range(L)])
 
-
-#model.objective = 
+model.objective = C * utilities + D * supplier_orders_alignment - E * oversupplying_penalty

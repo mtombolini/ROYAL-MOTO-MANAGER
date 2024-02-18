@@ -6,3 +6,5 @@ DOWN_COLOR: str = 'red'
 UP_COLOR: str = 'green'
 DECAY = 0.92
 ONE_DATA_POINT_PONDERATOR: float = .05
+
+OBJECTIVE_COEFFICIENTS = [1, 5, 1]
