@@ -43,10 +43,10 @@ def import_table_data_from_sql(file_path):
             print(f"Datos importados exitosamente desde {file_path}")
 
 # Llamada a la función de exportación para tablas específicas
-# tablas_export = ['carros_compras', 'carros_compras_detalles']
-# for tabla in tablas_export:
-#     export_table_data_to_sql(tabla)
+tablas_export = ['carros_compras', 'carros_compras_detalles']
+for tabla in tablas_export:
+    export_table_data_to_sql(tabla)
 
-tablas_import = ['carros_compras_backup.sql', 'carros_compras_detalles_backup.sql']
-for archivo in tablas_import:
-    import_table_data_from_sql(f"backup/{archivo}")
+# tablas_import = ['carros_compras_backup.sql', 'carros_compras_detalles_backup.sql']
+# for archivo in tablas_import:
+#     import_table_data_from_sql(f"backup/{archivo}")
