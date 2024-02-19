@@ -409,6 +409,22 @@ class Product(Base):
             except Exception as ex:
                 raise
                 
+    @classmethod
+    def update_product_supplier(cls, variant_id, supplier_id):
+        session = AppSession()
+        try:
+            product = session.query(cls).filter_by(variant_id=variant_id).first()
+            new_supplier = session.query(Supplier).filter_by(id=supplier_id).first()
+            product.suppliers.clear()
+            product.suppliers.append(new_supplier)
+
+            session.commit()
+            session.refresh(product)
+        except Exception as ex:
+            session.rollback()
+            raise
+        finally:
+            session.close()
 
 class ProductStock(Base):
     __tablename__ = 'productos_stock'

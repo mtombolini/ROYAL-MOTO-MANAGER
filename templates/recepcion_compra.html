@@ -544,8 +544,14 @@
         function updateFolioValues() {
             folioList.splice(0, folioList.length, ...Array.from(document.querySelectorAll('.folio-input')).map(input => input.value).filter(value => value !== ''));
         }
-    
+
         submitButton.addEventListener('click', () => {
+            const isConfirmed = confirm('¿Estás seguro de que deseas recepcionar estos datos?');
+
+            if (!isConfirmed) {
+                return;
+            }
+
             const payDatesLen = parseInt(submitButton.dataset.payDatesLen, 10);
             const cartId = parseInt(submitButton.dataset.cartId, 10);
     
