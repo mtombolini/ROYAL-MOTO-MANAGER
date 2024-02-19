@@ -1,0 +1,1 @@
+INSERT INTO carros_compras (cart_id, descripcion, fecha_creacion, fecha_recepcion, proveedor, rut, razon_social, monto_neto, cantidad_productos, estado, revision, rendimiento) VALUES (2, 'Descripción Pendiente', '2024-02-13 16:34:00', '2024-02-13 16:34:00', 'Sin Proveedor', '00.000.000-0', 'SIN PROVEEDOR', 14499, 9, 'Recepcionada', 'Pendiente', 'Pendiente');
