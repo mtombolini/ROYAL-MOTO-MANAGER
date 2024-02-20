@@ -2,9 +2,12 @@ from datetime import datetime
 from html import unescape
 from app.config import TOKEN
 
-from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash
+from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash, send_file
 from flask_login import login_required
 from decorators.roles import requires_roles
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from extras.pdf_generator import create_formatted_pdf
 
 from api.get.product_search import ProductSearch
 from api.post.reception_post import ReceptionPost
@@ -340,3 +343,17 @@ def procesar_datos_recepcion():
         
     except Exception as e:
         return jsonify({"error": str(e), "redirect": url_for('compras.recepcionar_carro_compra', cart_id=cart_id)}), 500
+    
+@compras_blueprint.route('/generar-pdf-recepcion', methods=['POST'])
+def generar_pdf():
+    data = request.json
+
+    general_data = data['general'].split(';')
+    resume_data = data['resume'].split(';')
+    detail_data = [d.split('|') for d in data['detail'].split(', ')[:-1]]
+
+    buffer = BytesIO()
+    create_formatted_pdf(buffer, general_data, resume_data, detail_data)
+    buffer.seek(0)
+
+    return send_file(buffer, as_attachment=True, download_name='archivo.pdf', mimetype='application/pdf')
