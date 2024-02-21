@@ -12,6 +12,7 @@ from routes.reportes import reportes_blueprint
 from routes.configuraciones import configuraciones_blueprint
 from routes.human_resources import human_resources_blueprint
 from routes.api_routes import api_blueprint, api_actualizacion
+from routes.webhook import webhook_blueprint
 
 from models.model_user import ModelUser
 
@@ -35,6 +36,7 @@ app.register_blueprint(api_blueprint)
 app.register_blueprint(api_actualizacion)
 app.register_blueprint(human_resources_blueprint)
 app.register_blueprint(tables_blueprint)
+app.register_blueprint(webhook_blueprint)
 
 app.make_default_options_response
 
