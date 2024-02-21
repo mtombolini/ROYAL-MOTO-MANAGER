@@ -1,13 +1,15 @@
 from datetime import datetime
 from html import unescape
 from app.config import TOKEN
+import os
+import pdfkit
+import base64
 
-from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash, send_file
+from flask import Blueprint, render_template, redirect, url_for, jsonify, request, flash, send_file, current_app
 from flask_login import login_required
 from decorators.roles import requires_roles
 from reportlab.pdfgen import canvas
 from io import BytesIO
-from extras.pdf_generator import create_formatted_pdf
 
 from api.get.product_search import ProductSearch
 from api.post.reception_post import ReceptionPost
@@ -107,12 +109,15 @@ def agregar_producto():
         product = data['product']
         cantidad = int(data['cantidad'])
 
+        if product['last_net_cost'] == "None":
+            product['last_net_cost'] = 1.0
+
         product['description'] = unescape(product['description'])
         product['last_net_cost'] = float(product['last_net_cost'])
 
         carts = ModelCart.get_all_carts()
         existing_carts = [cart for cart in carts if cart.proveedor == product['supplier'] and cart.estado == "Creado"]
-
+        print(existing_carts)
         if existing_carts:
             cart = existing_carts[0]
         else:
@@ -347,13 +352,42 @@ def procesar_datos_recepcion():
 @compras_blueprint.route('/generar-pdf-recepcion', methods=['POST'])
 def generar_pdf():
     data = request.json
+    logo_path = os.path.join(current_app.root_path, 'static\\img\\logo_invert.png')
+    logo_path = logo_path.replace('\\app\\', '\\')
+
+    with open(logo_path, "rb") as image_file:
+        image_base64 = base64.b64encode(image_file.read()).decode()
 
     general_data = data['general'].split(';')
     resume_data = data['resume'].split(';')
     detail_data = [d.split('|') for d in data['detail'].split(', ')[:-1]]
 
-    buffer = BytesIO()
-    create_formatted_pdf(buffer, general_data, resume_data, detail_data)
+    general = {
+        "id": general_data[0],
+        "descripcion": general_data[1],
+        "proveedor": general_data[2],
+        "fecha_creacion": general_data[3],
+        "estado": general_data[4],
+    }
+
+    resume = {
+        "cantidad_items": resume_data[0],
+        "cantidad_detalles": resume_data[1],
+        "subtotal": resume_data[2],
+        "impuestos": resume_data[3],
+        "total": resume_data[4]
+    }
+
+    html = render_template('pdfs/emition_pdf.html', general_data=general, resume_data=resume, detail_data=detail_data, image_base64=image_base64)
+
+    options = {
+        'footer-right': '[page]',
+        'page-size': 'Letter'
+    }
+
+    pdf = pdfkit.from_string(html, False, options=options)
+
+    buffer = BytesIO(pdf)
     buffer.seek(0)
 
     return send_file(buffer, as_attachment=True, download_name='archivo.pdf', mimetype='application/pdf')
