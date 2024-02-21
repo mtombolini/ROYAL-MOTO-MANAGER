@@ -1,5 +1,6 @@
 from models.cart import BuyCart, BuyCartDetail
 from databases.session import AppSession
+from sqlalchemy import text
 
 class ModelCart:
     @classmethod
@@ -60,9 +61,11 @@ class ModelCart:
     @classmethod
     def create_cart(cls, cart_data):
         session = AppSession()
-        
         try:
+            result = session.execute(text("SELECT MAX(cart_id) FROM carros_compras"))
+            max_id = result.scalar()
             cart = BuyCart(
+                cart_id = max_id + 1,
                 descripcion=cart_data['descripcion'],
                 fecha_creacion=cart_data['fecha_creacion'],
                 fecha_recepcion=cart_data['fecha_creacion'],
@@ -75,7 +78,6 @@ class ModelCart:
                 revision=cart_data['revision'],
                 rendimiento=cart_data['rendimiento']
             )
-
             session.add(cart)
             session.commit()
             session.refresh(cart)
@@ -90,7 +92,10 @@ class ModelCart:
     def create_cart_detail(cls, cart_detail_data):
         session = AppSession()
         try:
+            result = session.execute(text("SELECT MAX(id) FROM carros_compras_detalles"))
+            max_id = result.scalar()
             cart_detail = BuyCartDetail(
+                id=max_id + 1,
                 cart_id=cart_detail_data['cart_id'],
                 variant_id=cart_detail_data['variant_id'],
                 descripcion_producto=cart_detail_data['descripcion_producto'],

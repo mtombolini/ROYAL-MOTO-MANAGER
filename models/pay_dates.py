@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, DateTime, ForeignKey, text
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
@@ -40,8 +40,10 @@ class PayDates(Base):
     def create_new_dates(cls, cart_id, dates):
         session = AppSession()
         try:
+            result = session.execute(text("SELECT MAX(id) FROM fechas_pago"))
+            max_id = result.scalar()
             for date_str in dates:
-                new_date = cls(cart_id=cart_id, fecha_pago=datetime.strptime(date_str, '%Y-%m-%d'))
+                new_date = cls(id=max_id + 1, cart_id=cart_id, fecha_pago=datetime.strptime(date_str, '%Y-%m-%d'))
                 session.add(new_date)
             session.commit()
         except Exception as ex:
