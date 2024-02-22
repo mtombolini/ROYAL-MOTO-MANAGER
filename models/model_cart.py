@@ -15,6 +15,17 @@ class ModelCart:
             session.close()
 
     @classmethod
+    def get_receptioned_carts(cls):
+        session = AppSession()
+        try:
+            carts = session.query(BuyCart).filter(BuyCart.estado == 'Recepcionada').all()
+            return carts
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            session.close()
+
+    @classmethod
     def delete_cart_by_id(cls, cart_id):
         session = AppSession()
         try:
