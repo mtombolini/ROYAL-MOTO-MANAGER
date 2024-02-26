@@ -1,10 +1,12 @@
 import pandas as pd
 import json
+import time 
 
-# from databases.session import AppSession
+from databases.session import AppSession
 from models.productos import Product
 from models.day_recommendation import DayRecommendation
 from services.stock_manager.simple.test import predict_no_plot
+from services.stock_manager.orders_optimization.model import Optimizer
 
 class Analyser:
     def __init__(self):
@@ -18,12 +20,14 @@ class Analyser:
 
     def get_kardexs(self):
         print('Obteniendo kardexs...')
+        start = time.time()
         with open("logs/api_status.log", "a") as log_file:
             message = json.dumps({"tipo": "analisis", "mensaje": f"Obteniendo kardexs..."})
             log_file.write(message + "\n")
 
         for id in self.ids:
             product_data, _ = Product.filter_product(id, False)
+            supplier_id = product_data['supplier']['id']
             services = {'SERVICIO DE TALLER', 'SERVICIOS', 'SERVICIOS DE TALLER'}
             if product_data['type'] not in services:
                 df_kardex = product_data['df_kardex']
@@ -31,16 +35,25 @@ class Analyser:
                 unique_dates = df_kardex['fecha'].nunique()
 
                 if unique_dates > 1:
-                    self.kardexs[id] = df_kardex
+                    if supplier_id not in self.kardexs:
+                        self.kardexs[supplier_id] = {}
+                    self.kardexs[supplier_id][id] = product_data
                 else:
                     self.bad_ids.append(id)
             else:
                 self.bad_ids.append(id)
+                
+        end = time.time()
+        print(end - start)
 
     def analyse(self):
         print('Analizando...')
         count = 0
         good_ids = [id for id in self.ids if id not in self.bad_ids]
+        # TODO: CLASSIFY BY SUPPLIER
+        # TODO: FEED TO 'Optimizer' CLASS
+        optimizer = Optimizer(self.kardexs)
+        optimizer.run()
         for id in good_ids:
             print(id)
             recommendation, date = predict_no_plot(self.kardexs[id])
@@ -90,6 +103,6 @@ if __name__ == '__main__':
     analyser.get_ids()
     analyser.get_kardexs()
     analyser.analyse()
-    # session = AppSession()
-    # analyser.create_model(session)
-    # session.close()
+    session = AppSession()
+    analyser.create_model(session)
+    session.close()
