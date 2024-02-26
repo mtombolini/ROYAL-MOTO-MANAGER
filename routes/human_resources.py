@@ -310,9 +310,9 @@ def overtime_hours_management(employee_id: int | None=None, month: str | None=No
         return render_template('error.html'), 500
 
 
-@human_resources_blueprint.route('/update_overtime_record/<int:employee_id>/<string:date>', methods=['POST'])
+@human_resources_blueprint.route('/update_overtime_record/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
 @requires_roles('desarrollador')
-def update_overtime_record(employee_id: int, date: str) -> str:
+def update_overtime_record(employee_id: int, date: str, month: str) -> str:
     try:
         updates = request.form
         if not updates or len(updates) != 1:
@@ -337,7 +337,7 @@ def update_overtime_record(employee_id: int, date: str) -> str:
             'error',
         )
     finally:
-        month = "-".join(date.split("-")[:-1])
+        month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
         return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
 
 

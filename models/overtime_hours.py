@@ -222,6 +222,22 @@ class OvertimeRecord(Base):
                     return -STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
             else:
                 return timedelta(0)
+            
+    
+    @property        
+    def is_late(self) -> bool:
+        if self.is_working_day():
+            return (not self.is_saturday and self.check_in > STANDARD_CHECK_IN_WEEKDAY) or (self.is_saturday and self.check_in > STANDARD_CHECK_IN_SATURDAY)
+        else:
+            return False
+        
+    
+    @property    
+    def leaves_early(self) -> bool:
+        if self.is_working_day():
+            return (not self.is_saturday and self.check_out < STANDARD_CHECK_OUT_SATURDAY) or (self.is_saturday and self.check_out < STANDARD_CHECK_OUT_WEEKDAY)
+        else:
+            return False
         
         
     def is_working_day(self) -> bool:

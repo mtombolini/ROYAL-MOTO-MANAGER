@@ -129,23 +129,23 @@
                                 <td>{{ overtime_record.date }}</td>
                                 {% if (overtime_record.check_in or overtime_record.check_out or overtime_record.lunch_break_start or overtime_record.lunch_break_end) %}
                                     <td>
-                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
+                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
                                             <input type="text" name="check_in" value="{{ overtime_record.check_in }}" class="edit-input" onblur="this.form.submit()">
                                         </form>
                                     </td>
                                     <td>
-                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
+                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
                                             <input type="text" name="check_out" value="{{ overtime_record.check_out }}" class="edit-input" onblur="this.form.submit()">
                                         </form>
                                     </td>
                                     {% if (overtime_record.lunch_break_start or overtime_record.lunch_break_end) %}
                                         <td>
-                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
+                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
                                                 <input type="text" name="lunch_break_start" value="{{ overtime_record.lunch_break_start }}" class="edit-input" onblur="this.form.submit()">
                                             </form>
                                         </td>
                                         <td>
-                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id) }}" method="post" class="edit-form">
+                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
                                                 <input type="text" name="lunch_break_end" value="{{ overtime_record.lunch_break_end }}" class="edit-input" onblur="this.form.submit()">
                                             </form>
                                         </td>
