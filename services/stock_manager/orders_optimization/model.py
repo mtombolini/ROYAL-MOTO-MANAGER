@@ -1,7 +1,7 @@
 import numpy as np
 from pyomo.environ import (
     ConcreteModel, Var, Objective, Constraint, NonNegativeIntegers, maximize, RangeSet, Param, sum_product, Binary,
-    NonNegativeIntegers, SolverFactory, value
+    NonNegativeIntegers, SolverFactory, value, SolverManagerFactory
 )
 from services.stock_manager.parameters_service import DAYS_TO_LAST, OBJECTIVE_COEFFICIENTS
 from services.stock_manager.data_extractor import data_extractor
@@ -13,6 +13,8 @@ import time
 class Optimizer:
     
     def __init__(self, kardexs: Dict[int, Dict]) -> None:
+        self.opt_prob = SolverFactory('bonmin', solver_io='minlp')
+        self.solver_manager = SolverManagerFactory('neos')
         self.start = time.time()
         self.model = ConcreteModel()
         
@@ -191,11 +193,8 @@ class Optimizer:
 
 
     def optimize(self):
-        # Specify the solver
-        solver = SolverFactory('bonmin', solver_io='neos')
-
         # Solve the model
-        result = solver.solve(self.model, tee=True)  # 'tee=True' displays solver output
+        result = self.solver_manager.solve(self.model, keepfiles=True, tee=True, opt=self.opt_prob)
 
         # Check solver status
         if (result.solver.status == 'ok') and (result.solver.termination_condition == 'optimal'):

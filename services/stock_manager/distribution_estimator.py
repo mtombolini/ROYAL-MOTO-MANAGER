@@ -45,7 +45,7 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     t_critical = stats.t.ppf((1 + CONFIDENCE_LEVEL) / 2, df=degrees_freedom)
     margin_of_error = t_critical * (std_sales / ((days_considered + 0.000001) ** 0.5))
 
-    lower_bound_ci = mean_sales - margin_of_error
+    lower_bound_ci = max(0, mean_sales - margin_of_error)
     upper_bound_ci = mean_sales + margin_of_error
 
     return mean_sales, std_sales, historic_mean, historic_std, lower_bound_ci, upper_bound_ci, days_considered
