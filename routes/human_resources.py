@@ -21,7 +21,7 @@ from math import ceil
 START_YEAR: int = 2020
 START_MONTH: int = 1
 
-WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+WEEKDAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
 MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 
          'Mayo', 'Junio', 'Julio', 'Agosto',
          'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
@@ -67,21 +67,25 @@ def format_overtime_record_time_attr_value_for_database(value: str) -> time:
 def format_timedelta_for_render(value: timedelta) -> str:
     total_seconds = int(value.total_seconds())
     if total_seconds != 0:
-        hours = abs(total_seconds) // 3600 * int(total_seconds / abs(total_seconds))
+        hours = abs(total_seconds) // 3600
         minutes = (abs(total_seconds) % 3600) // 60
         seconds = abs(total_seconds) % 60
+        sign = int(total_seconds / abs(total_seconds))
     else:
         hours, minutes, seconds = (0,) * 3
-    return f"{hours} hours, {minutes} minutes, {seconds} seconds"
+        sign = 1
+    return f"{'-' if sign == -1 else ''}{hours} horas, {minutes} minutos, {seconds} segundos"
 
 def format_overtime_record_data_for_render(data: List[Dict], 
                                            weekly_data: List[Dict[str, int | timedelta | date]], 
                                            summary_data: Dict) -> Tuple[List[Dict], List[Dict[str, int | str]], Dict]:
     for record in data:
+        record['readable_date'] = f"{WEEKDAYS[record['date'].weekday()]}, {record['date'].day} de {MESES[record['date'].month - 1]} del {record['date'].year}"
         record['date'] = record['date'].strftime(FORM_COMPLETE_DATE_FORMAT)
         record['total_hours_worked'] = format_timedelta_for_render(record['total_hours_worked']) if record['total_hours_worked'] is not None else None
         record['overtime_hours'] = format_timedelta_for_render(record['overtime_hours']) if record['overtime_hours'] is not None else None
-        
+        record['hours_early'] = format_timedelta_for_render(record['hours_early']) if record['hours_early'] is not None else None  
+        record['hours_late'] = format_timedelta_for_render(record['hours_late']) if record['hours_late'] is not None else None 
     for week in weekly_data:
         for key, value in week.items():
             if not isinstance(value, int):
@@ -354,11 +358,26 @@ def delete_overtime_record(employee_id: int, month: str) -> str:
     
 
 # <---- Asignación de Feriado ---->
+@human_resources_blueprint.route('/confirm/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
+@requires_roles('desarrollador')
+def confirm(employee_id: int, date: str, month: str) -> str:
+    confirmed, employee_name = OvertimeRecord.toggle_confirmed_status(employee_id, date)
+    if confirmed:
+        flash(f'Confirmaste el registro de {employee_name} en el día {date}', 'success')
+    else:
+        flash(f'Retiraste la confirmación del registro de {employee_name} en el día {date}', 'success')
+    month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
+    return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
+
+
 @human_resources_blueprint.route('/assign_holiday/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
 @requires_roles('desarrollador')
 def assign_holiday_day(employee_id: int, date: str, month: str) -> str:
-    flash(f'Asignaste al empleado {employee_id} en el día {date} como feriado', 'success')
-    OvertimeRecord.toggle_is_holiday_status(employee_id, date)
+    is_holiday, employee_name = OvertimeRecord.toggle_is_holiday_status(employee_id, date)
+    if is_holiday:
+        flash(f'Asignaste el día {date} como feriado', 'success')
+    else:
+        flash(f'Reasignaste el día {date} como día laboral', 'success')
     month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
     return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
 
@@ -366,8 +385,11 @@ def assign_holiday_day(employee_id: int, date: str, month: str) -> str:
 @human_resources_blueprint.route('/mark_as_vacation/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
 @requires_roles('desarrollador')
 def mark_as_vacation(employee_id: int, date: str, month: str) -> str:
-    flash(f'Asignaste al empleado {employee_id} en el día {date} como vacaciones pagadas.', 'success')
-    OvertimeRecord.toggle_is_on_vacation_status(employee_id, date)
+    is_on_vacation, employee_name = OvertimeRecord.toggle_is_on_vacation_status(employee_id, date)
+    if is_on_vacation:
+        flash(f'Asignaste vacaciones pagadas al empleado {employee_name} en el día {date}.', 'success')
+    else:
+        flash(f'Reasignaste el día {date} como día laboral para el empleado {employee_name}', 'success')
     month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
     return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
 
@@ -375,7 +397,10 @@ def mark_as_vacation(employee_id: int, date: str, month: str) -> str:
 @human_resources_blueprint.route('/mark_as_absence/<int:employee_id>/<string:date>/<string:month>', methods=['POST'])
 @requires_roles('desarrollador')
 def mark_as_absence(employee_id: int, date: str, month: str) -> str:
-    flash(f'Asignaste al empleado {employee_id} en el día {date} como ausencia (Permiso no pagado).', 'success')
-    OvertimeRecord.toggle_absence_status(employee_id, date)
+    absence, employee_name = OvertimeRecord.toggle_absence_status(employee_id, date)
+    if absence:
+        flash(f'Registraste al empleado {employee_name} en el día {date} como ausente (Permiso no pagado).', 'success')
+    else:
+        flash(f'Registraste nuevamente al empleado {employee_name} en el día {date} como presente.', 'success')
     month = reformat_strftime(month, SCHEDULE_RECORDS_DATE_FORMAT, FORM_DATE_FORMAT)
     return redirect(url_for('human_resources.overtime_hours_management', employee_id=employee_id, month=month))
