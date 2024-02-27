@@ -1,13 +1,16 @@
 from models.model_cart import ModelCart
+from models.price_list import PriceList
 from models.pay_dates import PayDates
 from models.productos import Product
-from math import ceil
 from datetime import datetime
-from collections import defaultdict
+from math import ceil
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+from plotly.subplots import make_subplots
 
 class BuysAnalysis:
-    def __init__(self):
-        self.buys = ModelCart.get_receptioned_carts()
+    def __init__(self, cart_id):
+        self.buys = [ModelCart.get_cart_by_id(cart_id)]
         self.payment_info = {}
         self.product_info = {}
 
@@ -52,9 +55,13 @@ class BuysAnalysis:
             total_revenue_term = 0  # Ingresos totales de las ventas relacionadas con esta compra
 
             # Comprobando si existe información de producto para esta compra
+            estimated_revenue = 0
             for product_id in buy_info['variant_id_list']:
                 if (product_id, cart_id) in self.product_info:
                     quantity = self.product_info[product_id, cart_id]['product_quantity']
+                    price_list_info = PriceList.get_price_list_by_variant_id(product_id)
+                    estimated_revenue_product = price_list_info[0].value
+                    estimated_revenue += estimated_revenue_product * quantity
                     sum_quantity_today = 0
                     sum_quantity_term = 0
                     product_sales_info_today = self.product_info[product_id, cart_id]['sales_today']
@@ -99,10 +106,14 @@ class BuysAnalysis:
             # Almacenar la información del margen por compra
             margin_info[cart_id] = {
                 'total_cost': total_cost,
-                'total_revenue_today': total_revenue_today,
-                'net_margin_percentage_today': net_margin_percentage_today,
+                'product_quantity': buy_info['product_quantity'],
+                'estimated_revenue': estimated_revenue,
+                'tax_estimated': estimated_revenue * 0.19,
+                'tax_today': total_revenue_today * 0.19,
                 'total_revenue_term': total_revenue_term,
-                'net_margin_percentage_term': net_margin_percentage_term
+                'total_revenue_today': total_revenue_today,
+                'net_margin_percentage_term': net_margin_percentage_term,
+                'net_margin_percentage_today': net_margin_percentage_today,
             }
 
         return margin_info
@@ -232,21 +243,72 @@ class BuysAnalysis:
 
         return product_margin_info
 
+    def create_barras_apiladas(self, margin_info):
+        categories = ['Estimado', 'Hoy']
+        costs = margin_info['total_cost']
+        taxes_estimated = margin_info['tax_estimated']
+        net_margins_estimated = margin_info['estimated_revenue'] - costs
+
+        costs_today = margin_info['total_cost']
+        taxes_today = margin_info['tax_today']
+        net_margins_today = margin_info['total_revenue_today'] - costs
+        if net_margins_today < 0:
+            if taxes_today <= abs(net_margins_today):
+                taxes_today = 0
+                costs_today = costs_today - abs(net_margins_today)
+            else:
+                taxes_today = taxes_today - abs(net_margins_today)
+            net_margins_today = 0
+
+        # Creating the figure
+        fig = go.Figure()
+
+        # Adding traces for each category
+        # Cost
+        fig.add_trace(go.Bar(name='Costo Total', x=categories, y=[costs, costs], marker_color='#ffc107'))
+
+        # Tax
+        fig.add_trace(go.Bar(name='IVA', x=categories, y=[taxes_estimated, taxes_today], marker_color='#dc3545'))
+
+        # Net Margin
+        fig.add_trace(go.Bar(name='Margen Neto Estimado', x=['Estimado'], y=[net_margins_estimated], marker_color='salmon'))
+        fig.add_trace(go.Bar(name='Margen Neto Actual', x=['Hoy'], y=[net_margins_today], marker_color='tomato'))
+
+        # Adjusting layout for a stacked bar chart
+        fig.update_layout(
+            barmode='stack',
+            title_text="Comparación de Costos, IVA y Márgenes Netos (Estimado vs. Hoy)",
+            yaxis=dict(tickformat=',')  # Adjusting tick format to display full numbers
+        )
+
+        fig.show()
+
+
 
 if __name__ == "__main__":
-    buys = BuysAnalysis()
+    buys = BuysAnalysis(11)
+    print(buys.buys)
     buys.create_info()
-    # margin_info = buys.calculate_net_margin_per_purchase()
+    margin_info = buys.calculate_net_margin_per_purchase()
+    print(margin_info)
+    print("-")
     # print(margin_info[11])
     # print(margin_info[12])
     # print(margin_info[13])
     # print("-")
 
-    # margin_product_info = buys.calculate_net_margin_per_product()
+    margin_product_info = buys.calculate_net_margin_per_product()
+    print(margin_product_info)
+    print("-")
     # cart_ids_to_find = {11, 12, 13}
     # filtered_entries = {key: value for key, value in margin_product_info.items() if key[1] in cart_ids_to_find}
     # print(filtered_entries)
 
     sales_evaluation = buys.evaluate_sales_by_payment_term()
-    print(sales_evaluation[12])
-    
+    print(sales_evaluation)
+    print("-")
+
+    # buys.create_pie_charts(margin_info[11])
+    # buys.create_pie_not_interactive(margin_info[11])
+    # buys.create_barras_lado_a_lado(margin_info[11])
+    buys.create_barras_apiladas(margin_info[11])

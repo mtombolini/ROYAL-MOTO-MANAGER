@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from html import unescape
 from app.config import TOKEN
 import os
@@ -20,6 +21,7 @@ from models.productos import Product
 from models.pay_dates import PayDates
 from models.model_cart import ModelCart
 from models.cart import BuyCart, BuyCartDetail
+from services.analysis.buys_analisys import BuysAnalysis
 
 compras_blueprint = Blueprint('compras', __name__)
 
@@ -391,3 +393,16 @@ def generar_pdf():
     buffer.seek(0)
 
     return send_file(buffer, as_attachment=True, download_name='archivo.pdf', mimetype='application/pdf')
+
+@compras_blueprint.route('/rendimiento_compra/<int:cart_id>')
+def rendimiento_compra(cart_id):
+    try:
+        buys_analysis = BuysAnalysis(cart_id)
+        buys_analysis.create_info()
+        purchase_margin = buys_analysis.calculate_net_margin_per_purchase()
+        print(purchase_margin)
+        json_purchase_margin = json.dumps(purchase_margin[cart_id])
+        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, purchase_margin=json_purchase_margin)
+    
+    except Exception as e:
+        return render_template('error.html'), 500
