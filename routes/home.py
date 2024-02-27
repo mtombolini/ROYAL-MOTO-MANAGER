@@ -3,7 +3,7 @@ from datetime import datetime
 from collections import defaultdict
 
 from flask_login import login_required
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, session
 
 from decorators.roles import requires_roles
 from models.day_recommendation import DayRecommendation
@@ -19,6 +19,16 @@ def index():
 @requires_roles('desarrollador')
 @login_required
 def home(page):
+    current_search_query = request.args.get('search', '')
+
+    if 'search_query' not in session or current_search_query != session.get('search_query'):
+        session['search_query'] = current_search_query
+        if current_search_query and page != 1:
+            return redirect(url_for('home.home', search=current_search_query, page=1))
+    else:
+        if page < 1:
+            page = 1
+
     fecha_hora_actual = datetime.now()
     numero_dia_semana = fecha_hora_actual.weekday()
     dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
@@ -35,11 +45,10 @@ def home(page):
     number_of_products = 0
     for recommendation in all_recommendations:
         number_of_products += recommendation['recommendation']
-            
-    search_query = request.args.get('search', '')
+
     per_page = 10
 
-    filtered_recommendations = DayRecommendation.filter_recommendations(search_query)
+    filtered_recommendations = DayRecommendation.filter_recommendations(current_search_query)
 
     total_filtered_recommendations = []
     for recommendation in filtered_recommendations:
@@ -76,6 +85,6 @@ def home(page):
         supplier['costo_total'] = round(supplier['costo_total'], 1)
 
     if not recommendations:
-        return render_template('home.html', supplier_data=supplier_data, fecha_actual=fecha_actual, total_recommendations=number_of_products, all_recommendations=all_recommendations, recommendations=recommendations, page_title="Inicio", total_pages=total_pages, current_page=page, search_query=search_query)
+        return render_template('home.html', supplier_data=supplier_data, fecha_actual=fecha_actual, total_recommendations=number_of_products, all_recommendations=all_recommendations, recommendations=recommendations, page_title="Inicio", total_pages=total_pages, current_page=page, search_query=current_search_query)
     
-    return render_template('home.html', supplier_data=supplier_data, fecha_actual=fecha_actual, total_recommendations=number_of_products, all_recommendations=all_recommendations, recommendations=recommendations, page_title="Inicio & Recomendaciones", total_pages=total_pages, current_page=page, search_query=search_query)
+    return render_template('home.html', supplier_data=supplier_data, fecha_actual=fecha_actual, total_recommendations=number_of_products, all_recommendations=all_recommendations, recommendations=recommendations, page_title="Inicio & Recomendaciones", total_pages=total_pages, current_page=page, search_query=current_search_query)

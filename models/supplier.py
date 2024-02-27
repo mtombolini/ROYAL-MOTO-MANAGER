@@ -182,3 +182,15 @@ class Supplier(Base):
                 # Undo any changes made to session
                 session.rollback()
                 raise
+
+    @classmethod
+    def get_all_class(cls) -> List[Dict]:
+        session = AppSession()
+        try:
+            suppliers = session.query(cls).all()
+            return suppliers
+        except Exception as ex:
+            # Undo any changes made to session
+            raise
+        finally:
+            session.close()

@@ -27,6 +27,14 @@ def calculate_monthly_total_hours_worked(records_data):
     iterable = [record['total_hours_worked'] for record in records_data if record['total_hours_worked']]
     return reduce(lambda x, y: x+y, iterable, timedelta())
 
+def calculate_monthly_late_check_ins(records_data):
+    iterable = [record['hours_late'] for record in records_data if record['hours_late']]
+    return reduce(lambda x, y: x+y, iterable, timedelta()) 
+
+def calculate_monthly_early_check_outs(records_data):
+    iterable = [record['hours_early'] for record in records_data if record['hours_early']]
+    return reduce(lambda x, y: x+y, iterable, timedelta()) 
+
 def calculate_monthly_overtime_hours(records_data):
     iterable = [record['overtime_hours'] for record in records_data if record['total_hours_worked']]
     return reduce(lambda x, y: x+y, iterable, timedelta()) 
@@ -56,16 +64,30 @@ def calculate_weekly_overtime_and_total_hours(month: str, records_data: List[Dic
         weekly_total_hours_records = [
             record['total_hours_worked'] for record in records_data if week_end >= record['date'] >= week_start
         ]
+        weekly_late_check_ins_records = [
+            record['hours_late'] for record in records_data if week_end >= record['date'] >= week_start and record['is_late']
+        ]
+        weekly_early_check_outs_records = [
+            record['hours_early'] for record in records_data if week_end >= record['date'] >= week_start and record['leaves_early']
+        ]
 
         total_hours_worked = reduce(lambda x, y: x + y, weekly_total_hours_records, timedelta())
-        overtime_hours = reduce(lambda x, y: x + y, weekly_overtime_hours_records, timedelta())
+        net_overtime_hours = reduce(lambda x, y: x + y, weekly_overtime_hours_records, timedelta())
+        total_hours_late = reduce(lambda x, y: x + y, weekly_late_check_ins_records, timedelta())
+        total_hours_early = reduce(lambda x, y: x + y, weekly_early_check_outs_records, timedelta())
+        gross_overtime_hours = net_overtime_hours + total_hours_early + total_hours_late
 
         weekly_overtime.append({
             'week_start': week_start,
             'days_in_week': (week_end - week_start).days + 1,
             'total_hours_worked': total_hours_worked,
-            'overtime_hours': overtime_hours,
-            'standard_hours': total_hours_worked - overtime_hours,
+            'net_overtime_hours': net_overtime_hours,
+            'gross_overtime_hours': gross_overtime_hours,
+            'standard_hours': total_hours_worked - net_overtime_hours,
+            'total_hours_late': total_hours_late,
+            'late_check_ins_count': len(weekly_late_check_ins_records),
+            'total_hours_early': total_hours_early,
+            'early_chech_outs_count': len(weekly_early_check_outs_records),
         })
 
     return weekly_overtime
@@ -156,6 +178,8 @@ class OvertimeRecord(Base):
     def lunch_break_start(self) -> time:
         if not self.was_worked():
             return None
+        elif self.is_saturday():
+            return None
         else:
             if self._lunch_break_start:
                 return self._lunch_break_start
@@ -173,6 +197,8 @@ class OvertimeRecord(Base):
     @property
     def lunch_break_end(self) -> time | None:
         if not self.was_worked():
+            return None
+        elif self.is_saturday():
             return None
         else:
             if self._lunch_break_end:
@@ -222,6 +248,40 @@ class OvertimeRecord(Base):
                     return -STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
             else:
                 return timedelta(0)
+            
+    
+    @property        
+    def is_late(self) -> bool:
+        if self.was_worked():
+            return (not self.is_saturday() and self.check_in > STANDARD_CHECK_IN_WEEKDAY) or (self.is_saturday and self.check_in > STANDARD_CHECK_IN_SATURDAY)
+        else:
+            return False
+        
+    
+    @property    
+    def leaves_early(self) -> bool:
+        if self.was_worked():
+            return (not self.is_saturday() and self.check_out < STANDARD_CHECK_OUT_WEEKDAY) or (self.is_saturday() and self.check_out < STANDARD_CHECK_OUT_SATURDAY)
+        else:
+            return False
+        
+        
+    @property
+    def hours_late(self) -> timedelta:
+        if self.is_late:
+            if self.is_saturday():
+                return datetime.combine(self.date, self.check_in) - datetime.combine(self.date, STANDARD_CHECK_IN_SATURDAY)
+            else:
+                return datetime.combine(self.date, self.check_in) - datetime.combine(self.date, STANDARD_CHECK_IN_WEEKDAY)
+        return timedelta()
+    
+    @property
+    def hours_early(self) -> timedelta:
+        if self.leaves_early:
+            if self.is_saturday():
+                return datetime.combine(self.date, STANDARD_CHECK_OUT_SATURDAY) - datetime.combine(self.date, self.check_out)
+            else:
+                return datetime.combine(self.date, STANDARD_CHECK_OUT_WEEKDAY) - datetime.combine(self.date, self.check_out)
         
         
     def is_working_day(self) -> bool:
@@ -294,12 +354,18 @@ class OvertimeRecord(Base):
                     month, employee_month_record_data
                 )
                 monthly_total_hours_worked = calculate_monthly_total_hours_worked(employee_month_record_data)
-                monthly_overtime_hours = calculate_monthly_overtime_hours(employee_month_record_data)
-                monthly_standard_total_hours_worked = monthly_total_hours_worked - monthly_overtime_hours
+                monthly_net_overtime_hours = calculate_monthly_overtime_hours(employee_month_record_data)
+                monthly_late_check_ins = calculate_monthly_late_check_ins(employee_month_record_data)
+                monthly_early_check_outs = calculate_monthly_early_check_outs(employee_month_record_data)
+                monthly_standard_total_hours_worked = monthly_total_hours_worked - monthly_net_overtime_hours
+                monthly_gross_overtime_hours = monthly_net_overtime_hours + monthly_late_check_ins + monthly_early_check_outs
                 return employee_month_record_data, weekly_total_and_overtime_hours, {
                     'monthly_total_hours_worked': monthly_total_hours_worked,
-                    'monthly_overtime_hours': monthly_overtime_hours,
+                    'monthly_net_overtime_hours': monthly_net_overtime_hours,
                     'monthly_standard_total_hours_worked': monthly_standard_total_hours_worked,
+                    'monthly_late_check_ins': monthly_late_check_ins,
+                    'monthly_early_check_outs': monthly_early_check_outs,
+                    'monthly_gross_overtime_hours': monthly_gross_overtime_hours,
                 }
             except Exception as ex:
                 session.rollback()
@@ -374,10 +440,15 @@ class OvertimeRecord(Base):
         with AppSession() as session: 
             record = session.query(cls).filter(cls.employee_id == employee_id,
                                                cls.date == date).one_or_none()
-        if record:
-            cls.edit(employee_id, date, **{'_confirmed': not record.is_holiday})
-        else:
-            cls.edit(employee_id, date, **{'_confirmed': True})
+            if record:
+                cls.edit(employee_id, date, **{'_confirmed': not record.confirmed})
+                return not record.confirmed, record.employee_name
+            else:
+                from models.employee import Employee
+                employee = session.query(Employee).filter(Employee.id == employee_id).one_or_none()
+                employee_name = " ".join((employee.first_name, employee.last_name))
+                cls.edit(employee_id, date, **{'_confirmed': True})
+                return True, employee_name
             
     
     @classmethod       
@@ -385,10 +456,15 @@ class OvertimeRecord(Base):
         with AppSession() as session: 
             record = session.query(cls).filter(cls.employee_id == employee_id,
                                                cls.date == date).one_or_none()
-        if record:
-            cls.edit(employee_id, date, **{'_is_holiday': not record.is_holiday})
-        else:
-            cls.edit(employee_id, date, **{'_is_holiday': True})    
+            if record:
+                cls.edit(employee_id, date, **{'_is_holiday': not record.is_holiday})
+                return not record.is_holiday, record.employee_name            
+            else:
+                from models.employee import Employee
+                employee = session.query(Employee).filter(Employee.id == employee_id).one_or_none()
+                employee_name = " ".join((employee.first_name, employee.last_name))
+                cls.edit(employee_id, date, **{'_is_holiday': True}) 
+                return True, employee_name   
 
 
     @classmethod       
@@ -396,10 +472,15 @@ class OvertimeRecord(Base):
         with AppSession() as session: 
             record = session.query(cls).filter(cls.employee_id == employee_id,
                                                cls.date == date).one_or_none()
-        if record:
-            cls.edit(employee_id, date, **{'_is_on_vacation': not record.is_on_vacation})
-        else:
-            cls.edit(employee_id, date, **{'_is_on_vacation': True}) 
+            if record:
+                cls.edit(employee_id, date, **{'_is_on_vacation': not record.is_on_vacation})
+                return not record.is_on_vacation, record.employee_name
+            else:
+                from models.employee import Employee
+                employee = session.query(Employee).filter(Employee.id == employee_id).one_or_none()
+                employee_name = " ".join((employee.first_name, employee.last_name))
+                cls.edit(employee_id, date, **{'_is_on_vacation': True}) 
+                return True, employee_name
             
             
     @classmethod
@@ -407,7 +488,12 @@ class OvertimeRecord(Base):
         with AppSession() as session: 
             record = session.query(cls).filter(cls.employee_id == employee_id,
                                                cls.date == date).one_or_none()
-        if record:
-            cls.edit(employee_id, date, **{'_absence': not record.absence})
-        else:
-            cls.edit(employee_id, date, **{'_absence': True})    
+            if record:
+                cls.edit(employee_id, date, **{'_absence': not record.absence})
+                return not record.absence, record.employee_name
+            else:
+                from models.employee import Employee
+                employee = session.query(Employee).filter(Employee.id == employee_id).one_or_none()
+                employee_name = " ".join((employee.first_name, employee.last_name))
+                cls.edit(employee_id, date, **{'_absence': True})  
+                return True, employee_name  

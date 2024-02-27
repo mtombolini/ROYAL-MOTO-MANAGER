@@ -20,9 +20,8 @@ class BuyCart(Base):
     rendimiento = Column(String(255))
 
     # Relación uno a muchos: un carro puede tener muchos detalles.
-    details = relationship("BuyCartDetail", back_populates="cart")
-    pay_dates = relationship("PayDates", back_populates="cart")
-
+    details = relationship("BuyCartDetail", back_populates="cart", cascade="all, delete, delete-orphan")
+    pay_dates = relationship("PayDates", back_populates="cart", cascade="all, delete, delete-orphan")
 
 class BuyCartDetail(Base):
     __tablename__ = 'carros_compras_detalles'
