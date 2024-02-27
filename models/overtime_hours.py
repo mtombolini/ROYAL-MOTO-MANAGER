@@ -178,6 +178,8 @@ class OvertimeRecord(Base):
     def lunch_break_start(self) -> time:
         if not self.was_worked():
             return None
+        elif self.is_saturday():
+            return None
         else:
             if self._lunch_break_start:
                 return self._lunch_break_start
@@ -195,6 +197,8 @@ class OvertimeRecord(Base):
     @property
     def lunch_break_end(self) -> time | None:
         if not self.was_worked():
+            return None
+        elif self.is_saturday():
             return None
         else:
             if self._lunch_break_end:
