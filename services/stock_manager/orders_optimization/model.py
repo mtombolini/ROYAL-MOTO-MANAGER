@@ -3,12 +3,15 @@ from pyomo.environ import (
     ConcreteModel, Var, Objective, Constraint, NonNegativeIntegers, maximize, RangeSet, Param, sum_product, Binary,
     NonNegativeIntegers, SolverFactory, value, SolverManagerFactory
 )
+from dotenv import load_dotenv
 from services.stock_manager.parameters_service import DAYS_TO_LAST, OBJECTIVE_COEFFICIENTS
 from services.stock_manager.data_extractor import data_extractor
 from services.stock_manager.distribution_estimator import get_sales_current_distribution
 from typing import Dict, Tuple
 from random import expovariate, randint
 import time
+
+load_dotenv('.env')
 
 class Optimizer:
     
