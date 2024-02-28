@@ -1,11 +1,14 @@
+import numpy as np
+import pandas as pd
+import matplotlib.dates as mdates
+import plotly.graph_objects as go
+
+from math import ceil
+from models.productos import Product
+from models.pay_dates import PayDates
 from models.model_cart import ModelCart
 from models.price_list import PriceList
-from models.pay_dates import PayDates
-from models.productos import Product
-from datetime import datetime
-from math import ceil
-import plotly.graph_objects as go
-import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
 from plotly.subplots import make_subplots
 
 class BuysAnalysis:
@@ -24,7 +27,7 @@ class BuysAnalysis:
             productos = ModelCart.get_cart_detail_by_id(buy.cart_id)
 
             self.payment_info[buy.cart_id] = {
-                "variant_id_list": [producto.variant_id for producto in productos[1]],
+                "variant_id_list": [(producto.variant_id, producto.id) for producto in productos[1]],
                 "pay_dates_quantity": len(pay_dates),
                 "product_quantity": buy.cantidad_productos,
                 "products_per_month": ceil(buy.cantidad_productos / len(pay_dates)),
@@ -39,7 +42,7 @@ class BuysAnalysis:
                 if existing:
                     sale_list_today = Product.get_product_filtered_sales(producto.variant_id, buy.fecha_recepcion, datetime.now())
                     sale_list_payment_term = Product.get_product_filtered_sales(producto.variant_id, buy.fecha_recepcion, max(fechas))
-                    self.product_info[producto.variant_id, buy.cart_id] = {
+                    self.product_info[producto.variant_id, buy.cart_id, producto.id] = {
                         "product_quantity": producto.cantidad,
                         "product_cost": producto.costo_neto,
                         "sales_today": sale_list_today,
@@ -56,16 +59,16 @@ class BuysAnalysis:
 
             # Comprobando si existe información de producto para esta compra
             estimated_revenue = 0
-            for product_id in buy_info['variant_id_list']:
-                if (product_id, cart_id) in self.product_info:
-                    quantity = self.product_info[product_id, cart_id]['product_quantity']
-                    price_list_info = PriceList.get_price_list_by_variant_id(product_id)
-                    estimated_revenue_product = price_list_info[0].value
+            for tuple_ids in buy_info['variant_id_list']:
+                if (tuple_ids[0], cart_id, tuple_ids[1]) in self.product_info:
+                    quantity = self.product_info[tuple_ids[0], cart_id, tuple_ids[1]]['product_quantity']
+                    price_list_info = PriceList.get_price_list_by_variant_id(tuple_ids[0])
+                    estimated_revenue_product = price_list_info[0].value / 1.19
                     estimated_revenue += estimated_revenue_product * quantity
                     sum_quantity_today = 0
                     sum_quantity_term = 0
-                    product_sales_info_today = self.product_info[product_id, cart_id]['sales_today']
-                    product_sales_info_payment_term = self.product_info[product_id, cart_id]['sales_payment_term']
+                    product_sales_info_today = self.product_info[tuple_ids[0], cart_id, tuple_ids[1]]['sales_today']
+                    product_sales_info_payment_term = self.product_info[tuple_ids[0], cart_id, tuple_ids[1]]['sales_payment_term']
 
                     # Sumar todos los ingresos de las ventas de productos de esta compra
                     for sale in product_sales_info_today:
@@ -140,10 +143,10 @@ class BuysAnalysis:
                 }
 
                 total_products_sold_up_to_date = 0
-                for product_id in buy_info['variant_id_list']:
-                    if (product_id, cart_id) in self.product_info:
-                        product_sales_info = self.product_info[product_id, cart_id]['sales_today']
-                        product_quantity = self.product_info[product_id, cart_id]['product_quantity']
+                for tuple_ids in buy_info['variant_id_list']:
+                    if (tuple_ids[0], cart_id, tuple_ids[1]) in self.product_info:
+                        product_sales_info = self.product_info[tuple_ids[0], cart_id, tuple_ids[1]]['sales_today']
+                        product_quantity = self.product_info[tuple_ids[0], cart_id, tuple_ids[1]]['product_quantity']
 
                         product_sales_count = sum(sale['cantidad'] for sale in product_sales_info if sale['fecha'] <= pay_date)
                         product_sales_count = min(product_sales_count, product_quantity)
@@ -153,7 +156,7 @@ class BuysAnalysis:
                         is_on_target_product = product_sales_count >= expected_sales_by_term_product
 
                         sales_evaluation[cart_id]['pay_terms'][term_key]['detail'].append({
-                            'product_id': product_id,
+                            'product_id': tuple_ids[0],
                             'max_product_quantity': product_quantity,
                             'total_products_sold_up_to_date': product_sales_count,
                             'expected_sales_by_term': expected_sales_by_term_product,
@@ -167,18 +170,20 @@ class BuysAnalysis:
 
         return sales_evaluation
 
-
-
     def calculate_net_margin_per_product(self):
         product_margin_info = {}
 
         for ids, product_sales_info in self.product_info.items():
+            estimated_revenue = 0
             product_variant_id = ids[0]
             cart_id = ids[1]
             product_cost = product_sales_info['product_cost']  # Costo unitario del producto
             product_quantity = product_sales_info['product_quantity']  # Cantidad comprada del producto
 
             total_product_cost = product_cost * product_quantity  # Costo total de los productos comprados
+            price_list_info = PriceList.get_price_list_by_variant_id(product_variant_id)
+            estimated_revenue_product = price_list_info[0].value / 1.19
+            estimated_revenue += estimated_revenue_product * product_quantity
 
             # Ingresos totales de las ventas de este producto, separados por hoy y a término
             total_revenue_today = 0
@@ -219,9 +224,11 @@ class BuysAnalysis:
             if total_product_cost > 0:  # Evitar división por cero
                 net_margin_percentage_today = ((total_revenue_today - total_product_cost) / total_product_cost) * 100
                 net_margin_percentage_term = ((total_revenue_term - total_product_cost) / total_product_cost) * 100
+                net_margin_percentage_estimated = ((estimated_revenue - total_product_cost) / total_product_cost) * 100
             else:
                 net_margin_percentage_today = 0
                 net_margin_percentage_term = 0
+                net_margin_percentage_estimated = 0
 
             if (product_variant_id, cart_id) not in product_margin_info:
                 # Almacenar la información del margen por producto
@@ -229,10 +236,12 @@ class BuysAnalysis:
                     'total_cost': total_product_cost,
                     'product_cost': product_cost,
                     'product_quantity': product_quantity,
+                    'estimated_revenue': estimated_revenue,
                     'total_revenue_today': total_revenue_today,
                     'total_revenue_term': total_revenue_term,
                     'net_margin_percentage_today': net_margin_percentage_today,
-                    'net_margin_percentage_term': net_margin_percentage_term
+                    'net_margin_percentage_term': net_margin_percentage_term,
+                    'net_margin_percentage_estimated': net_margin_percentage_estimated
                 }
             else:
                 # Actualizar la información del margen por producto
@@ -281,12 +290,222 @@ class BuysAnalysis:
             yaxis=dict(tickformat=',')  # Adjusting tick format to display full numbers
         )
 
-        fig.show()
+        # fig.show()
+        return fig.to_json()
 
+    def distribucion_productos(self, margin_product_info):
+        # Extracción de etiquetas (IDs de producto) y valores (cantidades y costo total)
+        labels = [str(key) for key in margin_product_info.keys()]
+        quantities = [info['product_quantity'] for info in margin_product_info.values()]
+        total_costs = [info['total_cost'] for info in margin_product_info.values()]
 
+        # Creación de los subplots
+        fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
+
+        # Gráfico de dona para la cantidad de productos
+        fig.add_trace(go.Pie(labels=labels, values=quantities, name="", hole=.4), 1, 1)
+
+        # Gráfico de dona para el costo total de los productos
+        fig.add_trace(go.Pie(labels=labels, values=total_costs, name="", hole=.4), 1, 2)
+
+        # Ajustes finales del layout
+        fig.update_layout(title_text='Distribución de Productos por Cantidad y Costo Total')
+
+        # Mostrar el gráfico
+        # fig.show()
+        return fig.to_json()
+
+    def distribucion_productos_valores(self, margin_product_info):
+        # Extracción de etiquetas (IDs de producto) y valores (cantidades y costo total)
+        labels_estimados = [str(key) for key in margin_product_info.keys()]
+        estimados = [info['estimated_revenue'] for info in margin_product_info.values()]
+        hoy = [info['total_revenue_today'] for info in margin_product_info.values()]
+        faltante = sum(estimados) - sum(hoy)
+
+        labels = labels_estimados.copy()
+        labels.append('Faltante')
+
+        hoy.append(faltante)
+
+        # Creación de los subplots
+        fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
+
+        fig.add_trace(go.Pie(labels=labels_estimados, values=estimados, name="", hole=.4), 1, 1)
+
+        fig.add_trace(go.Pie(labels=labels, values=hoy, name="", hole=.4), 1, 2)
+
+        # Ajustes finales del layout
+        fig.update_layout(title_text='Distribución de Productos por Venta Estimada y Venta hasta Hoy')
+
+        # Mostrar el gráfico
+        # fig.show()
+        return fig.to_json()
+
+    def barra_progreso(self, sales_evaluation):
+        # Identificando el último término de pago y extrayendo la cantidad total vendida y la cantidad máxima
+        latest_term = max(sales_evaluation['pay_terms'].keys())
+        total_sold = sales_evaluation['pay_terms'][latest_term]['total_products_sold_up_to_date_general']
+        max_quantity = sales_evaluation['product_quantity']
+
+        # Creando el gráfico de barra de progreso
+        fig = go.Figure(go.Bar(
+            x=[total_sold, max_quantity - total_sold],  # Datos para el total vendido y el restante hacia la meta
+            y=[''],
+            orientation='h',
+            marker=dict(color=["green", "lightgrey"]),  # Color verde para lo vendido, gris para lo restante
+            hoverinfo="x",  # Mostrar solo el valor en el hover
+        ))
+
+        # Ajustes del layout para simular una barra de progreso
+        fig.update_layout(
+            title_text=f"Progreso de Ventas: {total_sold} / {max_quantity}",
+            xaxis=dict(showgrid=False, showticklabels=True, tickformat=',', range=[0, max_quantity]),
+            yaxis=dict(showticklabels=False),
+            showlegend=False,
+            barmode='stack'
+        )
+
+        # Mostrar el gráfico
+        # fig.show()
+        return fig.to_json()
+    
+    def roi_por_productos(self, margin_product_info):
+        # Preparando los datos para la tabla
+        product_ids = [f"{prod[0]}" for prod in margin_product_info.keys()]  # Creación de IDs de producto
+        roi_today = [round(margin_product_info[prod]['net_margin_percentage_today'] / 100, 2) for prod in margin_product_info.keys()]
+        roi_estimated = [round(margin_product_info[prod]['net_margin_percentage_estimated'] / 100, 2) for prod in margin_product_info.keys()]
+
+        # Creación de la tabla
+        fig = go.Figure(data=[go.Table(
+            header=dict(values=['Product ID', 'ROI Today', 'ROI Estimated'],
+                        fill_color='paleturquoise',
+                        align='left'),
+            cells=dict(values=[product_ids, roi_today, roi_estimated],
+                    fill_color='lavender',
+                    align='left'))
+        ])
+
+        # Mostrar la tabla
+        # fig.show()
+        return fig.to_json()
+
+    def breakeven_de_compra(self, margin_info, margin_product_info, sales_evaluation):
+        product_ids = [prod[0] for prod in margin_product_info.keys()]
+        dict_auxiliar = {key: value for key, value in self.product_info.items() if key[0] in product_ids}
+
+        ventas_list = []
+        for product_key, product_info in dict_auxiliar.items():
+            for sale in product_info['sales_today']:
+                ventas_list.append({
+                    'producto_id': product_key[0],
+                    'fecha': sale['fecha'],
+                    'cantidad': sale['cantidad'],
+                    'valor_unitario': sale['valor_unitario'],
+                })
+
+        sales_data = []
+        for sale in ventas_list:
+            sales_data.append((sale['fecha'], sale['cantidad'] * sale['valor_unitario']))
+
+        sales_data_df = pd.DataFrame(sales_data, columns=['Date', 'TotalSales'])
+        sales_data_df['Date'] = pd.to_datetime(sales_data_df['Date'])
+
+        # Generar rango de fechas desde la fecha de recepción hasta la última fecha de venta
+        start_date = sales_evaluation['reception_date']
+        end_date = sales_data_df['Date'].max()
+        date_range = pd.date_range(start=start_date, end=end_date)
+
+        # Asegurar que todas las fechas estén en el DataFrame, rellenando con 0 donde no haya ventas
+        sales_data_grouped = sales_data_df.groupby(sales_data_df['Date'].dt.date).agg({'TotalSales': 'sum'}).reindex(date_range, fill_value=0).reset_index().rename(columns={'index': 'Date'})
+        sales_data_grouped['CumulativeTotalSales'] = sales_data_grouped['TotalSales'].cumsum()
+
+        # Fechas de los plazos de pago para líneas verticales
+        pay_terms_dates = [term_info['pay_date'] for term_key, term_info in sales_evaluation['pay_terms'].items()]
+
+        # Utilizar CumulativeTotalSales para el gráfico
+        fig = go.Figure()
+
+        # Añadir las ventas acumuladas diarias como una línea
+        fig.add_trace(go.Scatter(x=sales_data_grouped['Date'], y=sales_data_grouped['CumulativeTotalSales'], mode='lines', name='Cumulative Daily Sales'))
+
+        # Añadir líneas horizontales para total_cost y estimated_revenue
+        # Asegúrate de que margin_info y pay_terms_dates están definidos como en tu entorno
+        fig.add_hline(y=margin_info['total_cost'], line_dash="dot", annotation_text="Total Cost", annotation_position="bottom right")
+        fig.add_hline(y=margin_info['estimated_revenue'], line_dash="dot", annotation_text="Estimated Revenue", annotation_position="top right")
+
+        # Añadir líneas verticales para los plazos de pago
+        for pay_date in pay_terms_dates:
+            fig.add_vline(x=pay_date, line_dash="dash", line_color="grey")
+
+        dates_numeric = np.array([mdates.date2num(date) for date in sales_data_grouped['Date']])
+        sales = sales_data_grouped['CumulativeTotalSales'].values
+
+        # Calcular los coeficientes de la regresión lineal
+        slope, intercept = np.polyfit(dates_numeric, sales, 1)
+
+        # Calcular los valores de la línea de tendencia
+        trend_line = slope * dates_numeric + intercept
+
+        # Convertir fechas numéricas de vuelta a formato de fecha para Plotly
+        trend_dates = [mdates.num2date(date_num) for date_num in dates_numeric]
+
+        # Añadir la línea de tendencia al gráfico
+        fig.add_trace(go.Scatter(x=trend_dates, y=trend_line, mode='lines', name='Trend Line'))
+
+        min_date = sales_data_grouped['Date'].min()
+        max_date = pay_terms_dates[-1]
+
+        # Extiende estas fechas por 2 días en cada dirección
+        extended_min_date = min_date - pd.Timedelta(days=2)
+        extended_max_date = max_date + pd.Timedelta(days=2)
+        
+        # Actualiza el layout del gráfico para ajustar el rango del eje X
+        fig.update_layout(
+            annotations=[
+                # Anotación para estimated_revenue
+                dict(
+                    xref='paper', x=0.95, y=margin_info['estimated_revenue'],
+                    xanchor='right', yanchor='bottom',
+                    text=f"Estimated Revenue: {round(margin_info['estimated_revenue'], 2):,}",
+                    font=dict(family='Arial', size=12),
+                    showarrow=False,
+                    bgcolor='rgba(255,255,255,0.8)'
+                ),
+                # Anotación para total_cost
+                dict(
+                    xref='paper', x=0.95, y=margin_info['total_cost'],
+                    xanchor='right', yanchor='bottom',
+                    text=f"Total Cost: {margin_info['total_cost']:,}",
+                    font=dict(family='Arial', size=12),
+                    showarrow=False,
+                    bgcolor='rgba(255,255,255,0.8)'
+                )
+            ],
+            xaxis=dict(
+                range=[extended_min_date, extended_max_date],
+                showgrid=True, 
+                gridwidth=1, 
+                gridcolor='White'
+            ),
+            yaxis=dict(
+                range=[0, margin_info['estimated_revenue'] * 1.1],
+                showgrid=True, 
+                gridwidth=1, 
+                gridcolor='White',
+                tickformat=',',  # Usa ',' para separar miles, mostrando números completos
+            ),
+            title='Product Sales and Financial Milestones',
+            xaxis_title='Date',
+            yaxis_title='Cumulative Sales',
+        )
+
+        # Mostrar el gráfico
+        # fig.show()
+        return fig.to_json()
 
 if __name__ == "__main__":
-    buys = BuysAnalysis(11)
+    ids = 12
+    buys = BuysAnalysis(ids)
     print(buys.buys)
     buys.create_info()
     margin_info = buys.calculate_net_margin_per_purchase()
@@ -308,7 +527,8 @@ if __name__ == "__main__":
     print(sales_evaluation)
     print("-")
 
-    # buys.create_pie_charts(margin_info[11])
-    # buys.create_pie_not_interactive(margin_info[11])
-    # buys.create_barras_lado_a_lado(margin_info[11])
-    buys.create_barras_apiladas(margin_info[11])
+    # buys.create_barras_apiladas(margin_info[11])
+    # buys.distribucion_productos_valores(margin_product_info)
+    # buys.barra_progreso(sales_evaluation[ids])
+    # buys.roi_por_productos(margin_product_info)
+    # buys.breakeven_de_compra(margin_info[ids], margin_product_info, sales_evaluation[ids])

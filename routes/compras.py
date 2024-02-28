@@ -399,10 +399,19 @@ def rendimiento_compra(cart_id):
     try:
         buys_analysis = BuysAnalysis(cart_id)
         buys_analysis.create_info()
+
         purchase_margin = buys_analysis.calculate_net_margin_per_purchase()
-        print(purchase_margin)
-        json_purchase_margin = json.dumps(purchase_margin[cart_id])
-        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, purchase_margin=json_purchase_margin)
+        margin_product_info = buys_analysis.calculate_net_margin_per_product()
+        sales_evaluation = buys_analysis.evaluate_sales_by_payment_term()
+
+        json_barras = buys_analysis.create_barras_apiladas(purchase_margin[cart_id])
+        json_distribucion_productos = buys_analysis.distribucion_productos(margin_product_info)
+        json_distribucion_productos_valores = buys_analysis.distribucion_productos_valores(margin_product_info) 
+        json_barra_progreso = buys_analysis.barra_progreso(sales_evaluation[cart_id])
+        json_roi_por_productos = buys_analysis.roi_por_productos(margin_product_info)
+        json_breakeven_de_compra = buys_analysis.breakeven_de_compra(purchase_margin[cart_id], margin_product_info, sales_evaluation[cart_id])
+
+        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_distribucion_productos=json_distribucion_productos, json_distribucion_productos_valores=json_distribucion_productos_valores, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra)
     
     except Exception as e:
         return render_template('error.html'), 500

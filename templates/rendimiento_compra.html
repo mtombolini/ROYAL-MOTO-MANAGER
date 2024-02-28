@@ -15,7 +15,54 @@
     <h1>Hi</h1>
     <div id="vis-1"></div>
     <div id="vis-2"></div>
+    <div id="vis-3"></div>
+    <div id="vis-4"></div>
+    <div id="vis-5"></div>
+    <div id="vis-6"></div>
 </div>
 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    try {
+        var vis1 = JSON.parse('{{ json_barras | safe }}');
+        Plotly.newPlot('vis-1', vis1);
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
 
+    try {
+        var vis2 = JSON.parse('{{ json_distribucion_productos | safe }}');
+        Plotly.newPlot('vis-2', vis2);
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+
+    try {
+        var vis3 = JSON.parse('{{ json_distribucion_productos_valores | safe }}');
+        Plotly.newPlot('vis-3', vis3);
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+
+    try {
+        var vis4 = JSON.parse('{{ json_barra_progreso | safe }}');
+        Plotly.newPlot('vis-4', vis4);
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+
+    try {
+        var vis5 = JSON.parse('{{ json_roi_por_productos | safe }}');
+        Plotly.newPlot('vis-5', vis5);
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+
+    try {
+        var vis6 = JSON.parse('{{ json_breakeven_de_compra | safe }}');
+        Plotly.newPlot('vis-6', vis6);
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+</script>
 {% endblock %}
