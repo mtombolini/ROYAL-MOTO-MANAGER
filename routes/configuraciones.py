@@ -157,11 +157,13 @@ def editar_rol(id_role):
         session.close()
 
         if success:
-            return jsonify({'status': 'success', 'message': 'Rol actualizado con éxito.'})
+            flash('Rol actualizado con éxito.', 'success')
+            return jsonify({'status': 'success', 'message': 'Rol actualizado con éxito.', 'redirect': url_for('configuraciones.administracion_de_roles')})
         else:
-            return jsonify({'status': 'error', 'message': 'Error al actualizar el rol.'}), 400
+            flash('Error al actualizar el rol.', 'error')
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el rol.', 'redirect': url_for('configuraciones.administracion_de_roles')}), 400
 
-    return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
+    return jsonify({'status': 'error', 'message': 'Descripción inválida.', 'redirect': url_for('configuraciones.administracion_de_roles')}), 400
 
 # ------------------------- USER ROUTES ------------------------- #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
@@ -230,11 +232,13 @@ def editar_usuario(user_id):
         session.close()
 
         if success:
-            return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.'})
+            flash('Usuario actualizado con éxito.', 'success')
+            return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.', 'redirect': url_for('configuraciones.administracion_de_usuarios')})
         else:
-            return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.'}), 400
+            flash('Error al actualizar el usuario.', 'error')
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.', 'redirect': url_for('configuraciones.administracion_de_usuarios')}), 400
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return jsonify({'status': 'error', 'message': str(e), 'redirect': url_for('configuraciones.administracion_de_usuarios')}), 500
 
 
 @configuraciones_blueprint.route('/eliminar_usuario/<int:id_user>')
