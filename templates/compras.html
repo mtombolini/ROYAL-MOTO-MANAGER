@@ -58,9 +58,13 @@
                         <td>{{ cart_item.estado }}</td>
                         <td>{{ cart_item.rendimiento }}</td>
                         <td>
+                            {% if cart_item.estado == 'Recepcionada' %}
+                                <a class="btn btn-sm btn-warning rendimiento-btn custom_btn"
+                                href="{{ url_for('compras.rendimiento_compra', cart_id=cart_item.cart_id) }}">Analisis</a>
+                            {% endif %}
                             {% if cart_item.estado != 'Recepcionada' %}
-                            <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
-                            href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
+                                <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
+                                href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
                             {% endif %}
                         </td>
                     </tr>
