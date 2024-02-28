@@ -1,15 +1,18 @@
+import random
+import colorsys
 import numpy as np
 import pandas as pd
+import plotly.express as px
 import matplotlib.dates as mdates
 import plotly.graph_objects as go
+import matplotlib.colors as mcolors
 
 from math import ceil
+from datetime import datetime
 from models.productos import Product
 from models.pay_dates import PayDates
 from models.model_cart import ModelCart
 from models.price_list import PriceList
-from datetime import datetime, timedelta
-from plotly.subplots import make_subplots
 
 class BuysAnalysis:
     def __init__(self, cart_id):
@@ -253,7 +256,7 @@ class BuysAnalysis:
         return product_margin_info
 
     def create_barras_apiladas(self, margin_info):
-        categories = ['Estimado', 'Hoy']
+        categories = ['Ingresos Maximos', 'Ingresos Actuales']
         costs = margin_info['total_cost']
         taxes_estimated = margin_info['tax_estimated']
         net_margins_estimated = margin_info['estimated_revenue'] - costs
@@ -280,113 +283,99 @@ class BuysAnalysis:
         fig.add_trace(go.Bar(name='IVA', x=categories, y=[taxes_estimated, taxes_today], marker_color='#dc3545'))
 
         # Net Margin
-        fig.add_trace(go.Bar(name='Margen Neto Estimado', x=['Estimado'], y=[net_margins_estimated], marker_color='salmon'))
-        fig.add_trace(go.Bar(name='Margen Neto Actual', x=['Hoy'], y=[net_margins_today], marker_color='tomato'))
+        fig.add_trace(go.Bar(name='Margen Neto Máximo', x=['Ingresos Maximos'], y=[net_margins_estimated], marker_color='salmon'))
+        fig.add_trace(go.Bar(name='Margen Neto Actual', x=['Ingresos Actuales'], y=[net_margins_today], marker_color='tomato'))
 
         # Adjusting layout for a stacked bar chart
         fig.update_layout(
             barmode='stack',
-            title_text="Comparación de Costos, IVA y Márgenes Netos (Estimado vs. Hoy)",
+            title_text="Comparación de Costos, IVA y Márgenes Netos (Máximo vs. Actual)",
             yaxis=dict(tickformat=',')  # Adjusting tick format to display full numbers
         )
 
         # fig.show()
         return fig.to_json()
+    
+    def distribuciones_productos(self, margin_product_info):
+        labels_generales = []
+        quantities = []
+        total_costs = []
+        estimados = []
+        hoy = []
+        for key, info in margin_product_info.items():
+            sku = Product.product_filter_by_id(key[0]).sku
+            labels_generales.append(str(sku))
+            quantities.append(info['product_quantity'])
+            total_costs.append(info['total_cost'])
+            estimados.append(info['estimated_revenue'])
+            hoy.append(info['total_revenue_today'])
 
-    def distribucion_productos(self, margin_product_info):
-        # Extracción de etiquetas (IDs de producto) y valores (cantidades y costo total)
-        labels = [str(key) for key in margin_product_info.keys()]
-        quantities = [info['product_quantity'] for info in margin_product_info.values()]
-        total_costs = [info['total_cost'] for info in margin_product_info.values()]
+        labels_hoy = labels_generales.copy()
+        labels_hoy.append('Faltante')
 
-        # Creación de los subplots
-        fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
-
-        # Gráfico de dona para la cantidad de productos
-        fig.add_trace(go.Pie(labels=labels, values=quantities, name="", hole=.4), 1, 1)
-
-        # Gráfico de dona para el costo total de los productos
-        fig.add_trace(go.Pie(labels=labels, values=total_costs, name="", hole=.4), 1, 2)
-
-        # Ajustes finales del layout
-        fig.update_layout(title_text='Distribución de Productos por Cantidad y Costo Total')
-
-        # Mostrar el gráfico
-        # fig.show()
-        return fig.to_json()
-
-    def distribucion_productos_valores(self, margin_product_info):
-        # Extracción de etiquetas (IDs de producto) y valores (cantidades y costo total)
-        labels_estimados = [str(key) for key in margin_product_info.keys()]
-        estimados = [info['estimated_revenue'] for info in margin_product_info.values()]
-        hoy = [info['total_revenue_today'] for info in margin_product_info.values()]
         faltante = sum(estimados) - sum(hoy)
-
-        labels = labels_estimados.copy()
-        labels.append('Faltante')
-
         hoy.append(faltante)
 
-        # Creación de los subplots
-        fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
+        colores_generales = self.generar_colores_amarillo_rojo(len(labels_generales))
+        colores_hoy = colores_generales + ['lightgrey']
 
-        fig.add_trace(go.Pie(labels=labels_estimados, values=estimados, name="", hole=.4), 1, 1)
+        # Crear las figuras con los colores específicos
+        fig1 = go.Figure(data=[go.Pie(labels=labels_generales, values=quantities, hole=.4, marker=dict(colors=colores_generales))])
+        fig2 = go.Figure(data=[go.Pie(labels=labels_generales, values=total_costs, hole=.4, marker=dict(colors=colores_generales))])
+        fig3 = go.Figure(data=[go.Pie(labels=labels_generales, values=estimados, hole=.4, marker=dict(colors=colores_generales))])
+        fig4 = go.Figure(data=[go.Pie(labels=labels_hoy, values=hoy, hole=.4, marker=dict(colors=colores_hoy))])
 
-        fig.add_trace(go.Pie(labels=labels, values=hoy, name="", hole=.4), 1, 2)
 
-        # Ajustes finales del layout
-        fig.update_layout(title_text='Distribución de Productos por Venta Estimada y Venta hasta Hoy')
+        fig1.update_layout(title_text='Distribución de Productos por Cantidad')
+        fig2.update_layout(title_text='Distribución de Productos por Costo Total')
+        fig3.update_layout(title_text='Distribución de Productos por Venta Maxima')
+        fig4.update_layout(title_text='Distribución de Productos por Venta hasta Hoy')
+        
+        # fig2.show()
+        return fig1.to_json(), fig2.to_json(), fig3.to_json(), fig4.to_json()
 
-        # Mostrar el gráfico
-        # fig.show()
-        return fig.to_json()
+    def generar_colores_amarillo_rojo(self, n):
+        colores_hex = []
+        min_saturation, max_saturation = 75, 90
+        min_lightness, max_lightness = 50, 80
+        
+        for i in range(n):
+            hue = (1/6) * (i / (n - 1))
 
+            saturation = random.randint(min_saturation, max_saturation) / 100.0
+            lightness = random.randint(min_lightness, max_lightness) / 100.0
+            
+            rgb = colorsys.hls_to_rgb(hue, lightness, saturation)
+            colores_hex.append('#' + ''.join(f'{int(c*255):02x}' for c in rgb))
+        return colores_hex
+    
     def barra_progreso(self, sales_evaluation):
-        # Identificando el último término de pago y extrayendo la cantidad total vendida y la cantidad máxima
         latest_term = max(sales_evaluation['pay_terms'].keys())
         total_sold = sales_evaluation['pay_terms'][latest_term]['total_products_sold_up_to_date_general']
         max_quantity = sales_evaluation['product_quantity']
-
-        # Creando el gráfico de barra de progreso
-        fig = go.Figure(go.Bar(
-            x=[total_sold, max_quantity - total_sold],  # Datos para el total vendido y el restante hacia la meta
-            y=[''],
-            orientation='h',
-            marker=dict(color=["green", "lightgrey"]),  # Color verde para lo vendido, gris para lo restante
-            hoverinfo="x",  # Mostrar solo el valor en el hover
-        ))
-
-        # Ajustes del layout para simular una barra de progreso
-        fig.update_layout(
-            title_text=f"Progreso de Ventas: {total_sold} / {max_quantity}",
-            xaxis=dict(showgrid=False, showticklabels=True, tickformat=',', range=[0, max_quantity]),
-            yaxis=dict(showticklabels=False),
-            showlegend=False,
-            barmode='stack'
-        )
-
-        # Mostrar el gráfico
-        # fig.show()
-        return fig.to_json()
+        
+        return {'total_sold': total_sold, 'max_quantity': max_quantity, 'percentage': round(total_sold / max_quantity * 100, 2)}
     
     def roi_por_productos(self, margin_product_info):
-        # Preparando los datos para la tabla
-        product_ids = [f"{prod[0]}" for prod in margin_product_info.keys()]  # Creación de IDs de producto
+        product_ids = [f"{Product.product_filter_by_id(prod[0]).sku}" for prod in margin_product_info.keys()]
         roi_today = [round(margin_product_info[prod]['net_margin_percentage_today'] / 100, 2) for prod in margin_product_info.keys()]
         roi_estimated = [round(margin_product_info[prod]['net_margin_percentage_estimated'] / 100, 2) for prod in margin_product_info.keys()]
 
-        # Creación de la tabla
         fig = go.Figure(data=[go.Table(
-            header=dict(values=['Product ID', 'ROI Today', 'ROI Estimated'],
-                        fill_color='paleturquoise',
+            header=dict(values=['Product ID', 'ROI Today', 'ROI Máximo'],
+                        fill_color='black',
+                        font=dict(color='white'),
                         align='left'),
             cells=dict(values=[product_ids, roi_today, roi_estimated],
-                    fill_color='lavender',
+                    fill_color='lightgrey',
                     align='left'))
         ])
 
+        fig.update_layout(title_text='ROI por Producto (Actual vs. Máximo)')
+
         # Mostrar la tabla
         # fig.show()
+        
         return fig.to_json()
 
     def breakeven_de_compra(self, margin_info, margin_product_info, sales_evaluation):
@@ -426,10 +415,8 @@ class BuysAnalysis:
         fig = go.Figure()
 
         # Añadir las ventas acumuladas diarias como una línea
-        fig.add_trace(go.Scatter(x=sales_data_grouped['Date'], y=sales_data_grouped['CumulativeTotalSales'], mode='lines', name='Cumulative Daily Sales'))
+        fig.add_trace(go.Scatter(x=sales_data_grouped['Date'], y=sales_data_grouped['CumulativeTotalSales'], mode='lines', name='Ventas Acumuladas'))
 
-        # Añadir líneas horizontales para total_cost y estimated_revenue
-        # Asegúrate de que margin_info y pay_terms_dates están definidos como en tu entorno
         fig.add_hline(y=margin_info['total_cost'], line_dash="dot", annotation_text="Total Cost", annotation_position="bottom right")
         fig.add_hline(y=margin_info['estimated_revenue'], line_dash="dot", annotation_text="Estimated Revenue", annotation_position="top right")
 
@@ -450,10 +437,17 @@ class BuysAnalysis:
         trend_dates = [mdates.num2date(date_num) for date_num in dates_numeric]
 
         # Añadir la línea de tendencia al gráfico
-        fig.add_trace(go.Scatter(x=trend_dates, y=trend_line, mode='lines', name='Trend Line'))
+        fig.add_trace(go.Scatter(x=trend_dates, y=trend_line, mode='lines', name='Tendencia'))
 
         min_date = sales_data_grouped['Date'].min()
         max_date = pay_terms_dates[-1]
+
+        date_range_extended = pd.date_range(start=start_date, end=max_date)
+        optimal_sales_per_day = margin_info['estimated_revenue'] * 0.95 / (max_date - start_date).days
+        optimal_sales_line = [optimal_sales_per_day * (date - start_date).days for date in date_range_extended]
+
+        # Añadir la línea óptima al gráfico
+        fig.add_trace(go.Scatter(x=date_range_extended, y=optimal_sales_line, mode='lines', name='Óptimo de Ventas', line=dict(color='green')))
 
         # Extiende estas fechas por 2 días en cada dirección
         extended_min_date = min_date - pd.Timedelta(days=2)
@@ -466,7 +460,7 @@ class BuysAnalysis:
                 dict(
                     xref='paper', x=0.95, y=margin_info['estimated_revenue'],
                     xanchor='right', yanchor='bottom',
-                    text=f"Estimated Revenue: {round(margin_info['estimated_revenue'], 2):,}",
+                    text=f"Ganancia Máxima: {round(margin_info['estimated_revenue'], 2):,}",
                     font=dict(family='Arial', size=12),
                     showarrow=False,
                     bgcolor='rgba(255,255,255,0.8)'
@@ -475,7 +469,7 @@ class BuysAnalysis:
                 dict(
                     xref='paper', x=0.95, y=margin_info['total_cost'],
                     xanchor='right', yanchor='bottom',
-                    text=f"Total Cost: {margin_info['total_cost']:,}",
+                    text=f"Costo de la Compra: {margin_info['total_cost']:,}",
                     font=dict(family='Arial', size=12),
                     showarrow=False,
                     bgcolor='rgba(255,255,255,0.8)'
@@ -494,9 +488,8 @@ class BuysAnalysis:
                 gridcolor='White',
                 tickformat=',',  # Usa ',' para separar miles, mostrando números completos
             ),
-            title='Product Sales and Financial Milestones',
-            xaxis_title='Date',
-            yaxis_title='Cumulative Sales',
+            title='Analisis de Ventas (Breakeven)',
+            yaxis_title='Ventas Acumuladas',
         )
 
         # Mostrar el gráfico
@@ -511,24 +504,18 @@ if __name__ == "__main__":
     margin_info = buys.calculate_net_margin_per_purchase()
     print(margin_info)
     print("-")
-    # print(margin_info[11])
-    # print(margin_info[12])
-    # print(margin_info[13])
-    # print("-")
 
     margin_product_info = buys.calculate_net_margin_per_product()
     print(margin_product_info)
     print("-")
-    # cart_ids_to_find = {11, 12, 13}
-    # filtered_entries = {key: value for key, value in margin_product_info.items() if key[1] in cart_ids_to_find}
-    # print(filtered_entries)
 
     sales_evaluation = buys.evaluate_sales_by_payment_term()
     print(sales_evaluation)
     print("-")
 
-    # buys.create_barras_apiladas(margin_info[11])
+    # buys.create_barras_apiladas(margin_info[ids])
     # buys.distribucion_productos_valores(margin_product_info)
     # buys.barra_progreso(sales_evaluation[ids])
     # buys.roi_por_productos(margin_product_info)
     # buys.breakeven_de_compra(margin_info[ids], margin_product_info, sales_evaluation[ids])
+    # buys.distribuciones_productos(margin_product_info)
