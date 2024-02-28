@@ -71,7 +71,6 @@ def predict_units_to_buy(product_data):
         certainty=CERTAINTY
     )
     units_to_buy_ = units_to_buy(product_data, days_to_last=DAYS_TO_LAST)
-    print(units_to_buy_)
     to_buy = {key: should_buy_ * units for key, units in units_to_buy_.items()}
     
     return to_buy
