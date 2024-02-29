@@ -1,16 +1,18 @@
 import warnings
 import pandas as pd
 
-from math import ceil, floor
+from math import ceil, floor, exp
 from scipy.stats import norm
 
-from services.stock_manager.parameters_service import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST, ONE_DATA_POINT_PONDERATOR
+from services.stock_manager.parameters_service import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST, FEW_DATA_POINTS_PONDERATOR_LINEAR_COEFFICIENTS
 from services.stock_manager.distribution_estimator import get_sales_current_distribution
 
 from typing import Dict, Tuple
 import numpy as np
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+M, N = FEW_DATA_POINTS_PONDERATOR_LINEAR_COEFFICIENTS
 
 def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty: float) -> bool:
     """
@@ -47,21 +49,18 @@ def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> Dict[str, int
     mean, std, historic_mean, _, lower_bound_ci, upper_bound_ci, days_considered = get_sales_current_distribution(product_data)
     print(historic_mean)
 
-    if mean * std == 0 and days_considered <= 6:
+    if mean * std == 0:
         return {
-            'without_confidence': max(0, floor((historic_mean * days_to_last - product_data.iloc[-1]["Close"]) * ONE_DATA_POINT_PONDERATOR)),
+            'without_confidence': floor(max(0, historic_mean * days_to_last - product_data.iloc[-1]["Close"]) * 1/(1 + exp(-(M * days_considered + N)))),
         }
-    elif mean * std == 0:
+    else:
         return {
-            'without_confidence': max(0, floor(historic_mean * days_to_last - product_data.iloc[-1]["Close"])),
+            'without_confidence': floor(max(0, mean * days_to_last - product_data.iloc[-1]["Close"]) * 1/(1 + exp(-(M * days_considered + N)))),
+            'with_confidence': np.array([
+                floor(max(0, (lower_bound_ci * days_to_last - product_data.iloc[-1]["Close"]) * 1/(1 + exp(-(M * days_considered + N))))), 
+                floor(max(0, (upper_bound_ci * days_to_last - product_data.iloc[-1]["Close"]) * 1/(1 + exp(-(M * days_considered + N))))),
+            ]),
         }
-    return {
-        'without_confidence': max(0, floor(mean * days_to_last - product_data.iloc[-1]["Close"])),
-        'with_confidence': np.array([
-            max(0, int(lower_bound_ci * days_to_last - product_data.iloc[-1]["Close"])), 
-            floor(upper_bound_ci * days_to_last - product_data.iloc[-1]["Close"]),
-        ]),
-    }
 
 
 def predict_units_to_buy(product_data):

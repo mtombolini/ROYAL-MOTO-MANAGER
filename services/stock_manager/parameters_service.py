@@ -5,4 +5,4 @@ DAYS_TO_LAST: int = 30
 DOWN_COLOR: str = 'red'
 UP_COLOR: str = 'green'
 DECAY = 0.92
-ONE_DATA_POINT_PONDERATOR: float = .05
+FEW_DATA_POINTS_PONDERATOR_LINEAR_COEFFICIENTS: tuple[float] = (.15, -.6)
