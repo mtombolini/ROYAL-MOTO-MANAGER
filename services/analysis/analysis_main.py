@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-# from databases.session import AppSession
+from databases.session import AppSession
 from models.productos import Product
 from models.day_recommendation import DayRecommendation
 from services.stock_manager.simple.test import predict_no_plot
@@ -90,6 +90,6 @@ if __name__ == '__main__':
     analyser.get_ids()
     analyser.get_kardexs()
     analyser.analyse()
-    # session = AppSession()
-    # analyser.create_model(session)
-    # session.close()
+    session = AppSession()
+    analyser.create_model(session)
+    session.close()

@@ -43,7 +43,7 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     # Calculate the 95% CI for the mean sales
     degrees_freedom = days_to_consider - 1
     t_critical = stats.t.ppf((1 + CONFIDENCE_LEVEL) / 2, df=degrees_freedom)
-    margin_of_error = t_critical * (std_sales / (days_considered ** 0.5))
+    margin_of_error = t_critical * (std_sales / ((days_considered + 0.0000000000000000000000000000000000000000000001) ** 0.5))
 
     lower_bound_ci = mean_sales - margin_of_error
     upper_bound_ci = mean_sales + margin_of_error

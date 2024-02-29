@@ -42,9 +42,11 @@ class PayDates(Base):
         try:
             result = session.execute(text("SELECT MAX(id) FROM fechas_pago"))
             max_id = result.scalar()
+            suma = 0
             for date_str in dates:
-                new_date = cls(id=max_id + 1, cart_id=cart_id, fecha_pago=datetime.strptime(date_str, '%Y-%m-%d'))
+                new_date = cls(id=max_id + 1 + suma, cart_id=cart_id, fecha_pago=datetime.strptime(date_str, '%Y-%m-%d'))
                 session.add(new_date)
+                suma += 1
             session.commit()
         except Exception as ex:
             raise Exception(ex)
