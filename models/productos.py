@@ -46,6 +46,16 @@ class Product(Base):
     suppliers = relationship('Supplier', secondary=product_supplier_association, back_populates='products')
 
     @classmethod
+    def product_filter_by_id(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                return product
+            except Exception as ex:
+                print(ex)
+                raise
+
+    @classmethod
     def product_filter_by_sku(cls, sku):
         with AppSession() as session:
             try:
@@ -359,8 +369,40 @@ class Product(Base):
                     document = document_detail.document
                     sales = document.sales
                     if sales != []:
-                        for sale in sales:
-                            sale_model = sale.sale
+                        data_ventas.append({
+                            "fecha": document.date,
+                            "documento": document.document_type + " " + document.document_number,
+                            "tipo_de_documento": document.document_type,
+                            "numero_de_documento": document.document_number,
+                            "oficina": document.office,
+                            "cantidad": document_detail.quantity,
+                            "valor_unitario": document_detail.net_unit_value,
+                            "valor_unitario_formated": format_number(document_detail.net_total_value),
+                            "valor_total": document_detail.net_total_value * document_detail.quantity,
+                            "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
+                        })
+
+                df_ventas = pd.DataFrame(data_ventas)
+                if df_ventas.empty:
+                    sales_list = []
+                else:
+                    sales_list = df_ventas.sort_values('fecha').to_dict('records')
+
+                return sales_list, df_ventas
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def get_product_filtered_sales(cls, variant_id, start_date, end_date):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data_ventas = []
+                for document_detail in product.document_details:
+                    document = document_detail.document
+                    if document.date >= start_date and document.date <= end_date:
+                        sales = document.sales
+                        if sales != []:
                             data_ventas.append({
                                 "fecha": document.date,
                                 "documento": document.document_type + " " + document.document_number,
@@ -373,14 +415,7 @@ class Product(Base):
                                 "valor_total": document_detail.net_total_value * document_detail.quantity,
                                 "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
                             })
-
-                df_ventas = pd.DataFrame(data_ventas)
-                if df_ventas.empty:
-                    sales_list = []
-                else:
-                    sales_list = df_ventas.drop_duplicates().sort_values('fecha').to_dict('records')
-
-                return sales_list, df_ventas
+                return data_ventas
             except Exception as ex:
                 raise
 

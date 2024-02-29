@@ -1,7 +1,7 @@
 import warnings
 import pandas as pd
 
-from math import ceil
+from math import ceil, floor
 from scipy.stats import norm
 
 from services.stock_manager.parameters_service import CERTAINTY, DAYS_OF_ANTICIPATION, DAYS_TO_LAST, ONE_DATA_POINT_PONDERATOR
@@ -38,27 +38,28 @@ def should_buy(product_data: pd.DataFrame, days_of_anticipation: int, certainty:
     prob_of_running_out = 1 - norm.cdf(stock_left, loc=mean * days_of_anticipation, 
                                        scale=std * days_of_anticipation)
 
-    return prob_of_running_out > certainty or int(stock_left) <= ceil(historic_mean)
+    return prob_of_running_out > certainty or int(stock_left) <= ceil(historic_mean) or int(stock_left) == 0
 
 
 def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> Dict[str, int | np.ndarray[int]]:
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
     mean, std, historic_mean, _, lower_bound_ci, upper_bound_ci, days_considered = get_sales_current_distribution(product_data)
+    print(historic_mean)
 
     if mean * std == 0 and days_considered <= 6:
         return {
-            'without_confidence': ceil((historic_mean * days_to_last - product_data.iloc[-1]["Close"]) * ONE_DATA_POINT_PONDERATOR),
+            'without_confidence': max(0, floor((historic_mean * days_to_last - product_data.iloc[-1]["Close"]) * ONE_DATA_POINT_PONDERATOR)),
         }
     elif mean * std == 0:
         return {
-            'without_confidence': historic_mean * days_to_last - product_data.iloc[-1]["Close"],
+            'without_confidence': max(0, floor(historic_mean * days_to_last - product_data.iloc[-1]["Close"])),
         }
     return {
-        'without_confidence': max(0, mean * days_to_last - product_data.iloc[-1]["Close"]),
+        'without_confidence': max(0, floor(mean * days_to_last - product_data.iloc[-1]["Close"])),
         'with_confidence': np.array([
-            max(0, lower_bound_ci * days_to_last - product_data.iloc[-1]["Close"]), 
-            upper_bound_ci * days_to_last - product_data.iloc[-1]["Close"],
+            max(0, int(lower_bound_ci * days_to_last - product_data.iloc[-1]["Close"])), 
+            floor(upper_bound_ci * days_to_last - product_data.iloc[-1]["Close"]),
         ]),
     }
 

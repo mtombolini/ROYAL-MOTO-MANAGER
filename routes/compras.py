@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from html import unescape
 from app.config import TOKEN
 import os
@@ -20,6 +21,7 @@ from models.productos import Product
 from models.pay_dates import PayDates
 from models.model_cart import ModelCart
 from models.cart import BuyCart, BuyCartDetail
+from services.analysis.buys_analisys import BuysAnalysis
 
 compras_blueprint = Blueprint('compras', __name__)
 
@@ -395,3 +397,24 @@ def generar_pdf():
     buffer.seek(0)
 
     return send_file(buffer, as_attachment=True, download_name='archivo.pdf', mimetype='application/pdf')
+
+@compras_blueprint.route('/rendimiento_compra/<int:cart_id>')
+def rendimiento_compra(cart_id):
+    try:
+        buys_analysis = BuysAnalysis(cart_id)
+        buys_analysis.create_info()
+
+        purchase_margin = buys_analysis.calculate_net_margin_per_purchase()
+        margin_product_info = buys_analysis.calculate_net_margin_per_product()
+        sales_evaluation = buys_analysis.evaluate_sales_by_payment_term()
+
+        json_barras = buys_analysis.create_barras_apiladas(purchase_margin[cart_id])
+        json_barra_progreso = buys_analysis.barra_progreso(sales_evaluation[cart_id])
+        json_roi_por_productos = buys_analysis.roi_por_productos(margin_product_info)
+        json_breakeven_de_compra = buys_analysis.breakeven_de_compra(purchase_margin[cart_id], margin_product_info, sales_evaluation[cart_id])
+        json_dist_cantidad, json_dist_costo, json_dist_venta_max, json_dist_venta_hoy = buys_analysis.distribuciones_productos(margin_product_info)
+
+        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy)
+    
+    except Exception as e:
+        return render_template('error.html'), 500

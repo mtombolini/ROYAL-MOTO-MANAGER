@@ -160,15 +160,9 @@
                         }
                         return response.json();
                     })
-                    .then(data => {
-                        if (data.error) {
-                            // Display error message without needing a page refresh
-                            displayFlashMessage(data.error, "error");
-                            jQuery('#editUserModal').modal('hide');
-                        } else {
-                            // Handle success, close modal, etc.
-                            displayFlashMessage(data.message, "success")
-                            jQuery('#editUserModal').modal('hide');
+                    .then(response => {
+                        if (response.redirect) {
+                            window.location.href = response.redirect;
                         }
                     })
                     .catch((error) => {

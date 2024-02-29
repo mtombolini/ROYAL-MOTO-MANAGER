@@ -24,7 +24,7 @@ def get_sales_current_distribution(data: pd.DataFrame) -> Tuple[float]:
     days_considered = len(last_30_days)
     
     # last_30_days = last_30_days[last_30_days["Close"] != 0]
-    all_days = data[data["Close"] != 0]
+    all_days = data[data["Open"] + data["Close"] != 0]
 
     # Calculate mean and standard deviation
     mean_sales = last_30_days['Sales'].mean()
