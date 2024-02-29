@@ -47,7 +47,6 @@ def units_to_buy(product_data: pd.DataFrame, days_to_last: int) -> Dict[str, int
     # Get the current sales mean and std from the last 30 recorded days 
     # or as many days as there are available if it's less than 30
     mean, std, historic_mean, _, lower_bound_ci, upper_bound_ci, days_considered = get_sales_current_distribution(product_data)
-    print(historic_mean)
 
     if mean * std == 0:
         return {
