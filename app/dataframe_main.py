@@ -78,7 +78,8 @@ class DataFrameMain():
                 shipping_date = row['Shipping Date'],
                 shipping_number = str(row['Shipping Number']),
                 shipping_type = row['Shipping Type'],
-                document_type = row['Document Type']
+                document_type = row['Document Type'],
+                state = row['State']
             )
             session.add(shipping)
 

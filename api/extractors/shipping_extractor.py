@@ -43,6 +43,7 @@ class ShippingExtractor(DataExtractor):
 
     def create_main_dataframe(self, shipping):
         shipping_date = self.convert_to_date(shipping['shippingDate'])
+        state = shipping['state']
         shipping_number = shipping.get('guide', {}).get('number')
         document_type = shipping.get('guide', {}).get('document_type', {}).get('name')
         shipping_type = shipping['shipping_type']['name']
@@ -52,7 +53,8 @@ class ShippingExtractor(DataExtractor):
             'Shipping Date': shipping_date,
             'Shipping Number': shipping_number,
             'Shipping Type': shipping_type,
-            'Document Type': document_type
+            'Document Type': document_type,
+            'State': state
         })
 
     def write_logs(self):
