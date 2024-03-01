@@ -401,6 +401,14 @@ def generar_pdf():
 @compras_blueprint.route('/rendimiento_compra/<int:cart_id>')
 def rendimiento_compra(cart_id):
     try:
+        data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
+        data_cart_general = {
+            "fecha_recepcion": data_general.fecha_recepcion,
+            "proveedor": data_general.proveedor,
+            "rut": data_general.rut,
+            "cantidad_productos": data_general.cantidad_productos,
+            "monto_neto": data_general.monto_neto
+        }
         buys_analysis = BuysAnalysis(cart_id)
         buys_analysis.create_info()
 
@@ -415,7 +423,7 @@ def rendimiento_compra(cart_id):
         json_breakeven_de_compra = buys_analysis.breakeven_de_compra(purchase_margin[cart_id], margin_product_info, sales_evaluation[cart_id])
         json_dist_cantidad, json_dist_costo, json_dist_venta_max, json_dist_venta_hoy = buys_analysis.distribuciones_productos(margin_product_info)
 
-        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy, json_productos_barras_progreso=json_productos_barras_progreso)
+        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy, json_productos_barras_progreso=json_productos_barras_progreso, data_cart_general=data_cart_general)
     
     except Exception as e:
         return render_template('error.html'), 500

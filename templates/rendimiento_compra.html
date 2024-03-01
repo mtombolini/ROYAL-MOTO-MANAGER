@@ -9,9 +9,42 @@
     .container-fluid {
         max-width: 90%;
     }
+
+    .single-line {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 </style>
 
 <div class="container-fluid mt-3">
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col">
+                <div class="card w-100 shadow">
+                    <div class="card-body">
+                        <p class="single-line m-0"><span class="fw-bold">Rut:</span> {{ data_cart_general.rut }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card w-100 shadow">
+                    <div class="card-body">
+                        <p class="single-line m-0"><span class="fw-bold">Proveedor:</span> {{ data_cart_general.proveedor }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card w-100 shadow">
+                    <div class="card-body">
+                        <p class="single-line m-0"><span class="fw-bold">Fecha de Recepción:</span> {{ data_cart_general.fecha_recepcion }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      
+
     <div class="card w-100 shadow">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
