@@ -42,6 +42,9 @@ def product_detail(variant_id):
         data_supplier[supplier.id] = supplier.trading_name
     data_supplier_json = dumps(data_supplier)
 
+    if product['stock']['stock_lira'] + product['stock']['stock_sobrexistencia'] != product['kardex'][-1]['stock_actual']:
+        flash("CUIDADO: El stock actual no coincide con el último registro del kardex", "warning")
+
     return render_template("tables/product_detail.html", product=product, variant_id=variant_id, prediction=prediction, page_title=f"{product['description']}", all_suppliers=data_supplier_json)
 
 @tables_blueprint.route("/productos/<variant_id>/cambio_proveedor", methods=["POST"])

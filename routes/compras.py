@@ -210,7 +210,7 @@ def agregar_producto_recepcion(cart_id):
     try:
         search_query = request.args.get('search', '')
         product, rut, last_net_cost = Product.product_filter_by_sku(search_query)
-        
+
         if last_net_cost == None:
             last_net_cost = 1.0
 
