@@ -252,7 +252,7 @@ class BuysAnalysis:
                 mean_cost = product_margin_info[product_variant_id, cart_id]['product_cost'] + product_cost / (product_margin_info[product_variant_id, cart_id]['product_quantity'] + product_quantity)
                 product_margin_info[product_variant_id, cart_id]['product_cost'] = mean_cost
                 product_margin_info[product_variant_id, cart_id]['product_quantity'] += product_quantity
-
+        
         return product_margin_info
 
     def create_barras_apiladas(self, margin_info):
@@ -277,7 +277,7 @@ class BuysAnalysis:
 
         # Adding traces for each category
         # Cost
-        fig.add_trace(go.Bar(name='Costo Total', x=categories, y=[costs, costs], marker_color='#ffc107'))
+        fig.add_trace(go.Bar(name='Costo Total', x=categories, y=[costs, costs_today], marker_color='#ffc107'))
 
         # Tax
         fig.add_trace(go.Bar(name='IVA', x=categories, y=[taxes_estimated, taxes_today], marker_color='#dc3545'))
@@ -297,18 +297,44 @@ class BuysAnalysis:
         return fig.to_json()
     
     def distribuciones_productos(self, margin_product_info):
+        max_items = 17
         labels_generales = []
-        quantities = []
-        total_costs = []
-        estimados = []
-        hoy = []
+        quantities = {}
+        total_costs = {}
+        estimados = {}
+        hoy = {}
         for key, info in margin_product_info.items():
             sku = Product.product_filter_by_id(key[0]).sku
             labels_generales.append(str(sku))
-            quantities.append(info['product_quantity'])
-            total_costs.append(info['total_cost'])
-            estimados.append(info['estimated_revenue'])
-            hoy.append(info['total_revenue_today'])
+            quantities[str(sku)] = info['product_quantity']
+            total_costs[str(sku)] = info['total_cost']
+            estimados[str(sku)] = info['estimated_revenue']
+            hoy[str(sku)] = info['total_revenue_today']
+
+        if len(labels_generales) > max_items:
+            top_products = sorted(hoy.items(), key=lambda x: x[1], reverse=True)[:max_items]
+            top_labels = [product[0] for product in top_products]
+
+            # Calcular "Otros" para cada categoría
+            other_quantities = sum(quantities[sku] for sku in labels_generales if sku not in top_labels)
+            other_total_costs = sum(total_costs[sku] for sku in labels_generales if sku not in top_labels)
+            other_estimados = sum(estimados[sku] for sku in labels_generales if sku not in top_labels)
+            other_hoy = sum(hoy[sku] for sku in labels_generales if sku not in top_labels)
+
+            # Crear listas de valores para los gráficos
+            quantities_values = [quantities[sku] for sku in top_labels] + [other_quantities]
+            total_costs_values = [total_costs[sku] for sku in top_labels] + [other_total_costs]
+            estimados_values = [estimados[sku] for sku in top_labels] + [other_estimados]
+            hoy_values = [hoy[sku] for sku in top_labels] + [other_hoy]
+
+            labels_generales_top = top_labels + ["Otros"]
+
+            # Actualizar las listas originales
+            labels_generales = labels_generales_top
+            quantities = quantities_values
+            total_costs = total_costs_values
+            estimados = estimados_values
+            hoy = hoy_values
 
         labels_hoy = labels_generales.copy()
         labels_hoy.append('Faltante')
@@ -356,6 +382,18 @@ class BuysAnalysis:
         
         return {'total_sold': total_sold, 'max_quantity': max_quantity, 'percentage': round(total_sold / max_quantity * 100, 2)}
     
+    def productos_barras_progreso(self, sales_evaluation):
+        latest_term = max(sales_evaluation['pay_terms'].keys())
+        products_info = sales_evaluation['pay_terms'][latest_term]['detail']
+        products_progress = []
+        for product_info in products_info:
+            sku = Product.product_filter_by_id(product_info['product_id']).sku
+            total_sold = product_info['total_products_sold_up_to_date']
+            max_quantity = product_info['max_product_quantity']
+            percentage = round(total_sold / max_quantity * 100, 2)
+            products_progress.append({'product_sku': sku, 'total_sold': total_sold, 'max_quantity': max_quantity, 'percentage': percentage})
+        return products_progress
+    
     def roi_por_productos(self, margin_product_info):
         product_ids = [f"{Product.product_filter_by_id(prod[0]).sku}" for prod in margin_product_info.keys()]
         roi_today = [round(margin_product_info[prod]['net_margin_percentage_today'] / 100, 2) for prod in margin_product_info.keys()]
@@ -389,11 +427,35 @@ class BuysAnalysis:
                     'producto_id': product_key[0],
                     'fecha': sale['fecha'],
                     'cantidad': sale['cantidad'],
+                    'cantidad_maxima': margin_product_info[(product_key[0], product_key[1])]['product_quantity'],
                     'valor_unitario': sale['valor_unitario'],
                 })
 
+        cantidad_vendida_acumulada = {}
+        ventas_ajustadas_list = []
+
+        for venta in ventas_list:
+            producto_id = venta['producto_id']
+            cantidad_maxima = venta['cantidad_maxima']
+
+            if producto_id not in cantidad_vendida_acumulada:
+                cantidad_vendida_acumulada[producto_id] = 0
+            
+            cantidad_disponible = cantidad_maxima - cantidad_vendida_acumulada[producto_id]
+            cantidad_ajustada = min(venta['cantidad'], cantidad_disponible)
+            cantidad_vendida_acumulada[producto_id] += cantidad_ajustada
+            
+            if cantidad_ajustada > 0:
+                ventas_ajustadas_list.append({
+                    'producto_id': producto_id,
+                    'fecha': venta['fecha'],
+                    'cantidad': cantidad_ajustada,
+                    'cantidad_maxima': cantidad_maxima,
+                    'valor_unitario': venta['valor_unitario'],
+                })
+
         sales_data = []
-        for sale in ventas_list:
+        for sale in ventas_ajustadas_list:
             sales_data.append((sale['fecha'], sale['cantidad'] * sale['valor_unitario']))
 
         sales_data_df = pd.DataFrame(sales_data, columns=['Date', 'TotalSales'])
@@ -402,10 +464,14 @@ class BuysAnalysis:
         # Generar rango de fechas desde la fecha de recepción hasta la última fecha de venta
         start_date = sales_evaluation['reception_date']
         end_date = sales_data_df['Date'].max()
+        
+        if pd.isna(end_date):
+            end_date = start_date + pd.Timedelta(days=30)
         date_range = pd.date_range(start=start_date, end=end_date)
-
+        date_range_normalized = date_range.normalize()
+        
         # Asegurar que todas las fechas estén en el DataFrame, rellenando con 0 donde no haya ventas
-        sales_data_grouped = sales_data_df.groupby(sales_data_df['Date'].dt.date).agg({'TotalSales': 'sum'}).reindex(date_range, fill_value=0).reset_index().rename(columns={'index': 'Date'})
+        sales_data_grouped = sales_data_df.groupby(sales_data_df['Date'].dt.date).agg({'TotalSales': 'sum'}).reindex(date_range_normalized, fill_value=0).reset_index().rename(columns={'index': 'Date'})
         sales_data_grouped['CumulativeTotalSales'] = sales_data_grouped['TotalSales'].cumsum()
 
         # Fechas de los plazos de pago para líneas verticales
@@ -426,9 +492,13 @@ class BuysAnalysis:
 
         dates_numeric = np.array([mdates.date2num(date) for date in sales_data_grouped['Date']])
         sales = sales_data_grouped['CumulativeTotalSales'].values
-
-        # Calcular los coeficientes de la regresión lineal
-        slope, intercept = np.polyfit(dates_numeric, sales, 1)
+        
+        if np.all(sales == 0):
+            slope = 0
+            intercept = 0
+        else:
+            # Calcular los coeficientes de la regresión lineal
+            slope, intercept = np.polyfit(dates_numeric, sales, 1)
 
         # Calcular los valores de la línea de tendencia
         trend_line = slope * dates_numeric + intercept

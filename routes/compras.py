@@ -410,11 +410,12 @@ def rendimiento_compra(cart_id):
 
         json_barras = buys_analysis.create_barras_apiladas(purchase_margin[cart_id])
         json_barra_progreso = buys_analysis.barra_progreso(sales_evaluation[cart_id])
+        json_productos_barras_progreso = buys_analysis.productos_barras_progreso(sales_evaluation[cart_id])
         json_roi_por_productos = buys_analysis.roi_por_productos(margin_product_info)
         json_breakeven_de_compra = buys_analysis.breakeven_de_compra(purchase_margin[cart_id], margin_product_info, sales_evaluation[cart_id])
         json_dist_cantidad, json_dist_costo, json_dist_venta_max, json_dist_venta_hoy = buys_analysis.distribuciones_productos(margin_product_info)
 
-        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy)
+        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy, json_productos_barras_progreso=json_productos_barras_progreso)
     
     except Exception as e:
         return render_template('error.html'), 500
