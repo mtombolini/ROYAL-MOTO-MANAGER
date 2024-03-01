@@ -128,6 +128,10 @@
                 <button class="btn btn-warning border-2 custom_btn mx-2 shadow" data-bs-toggle="modal" data-bs-target="#consumptionHistoryModal">Historial de Consumos</button>
 
                 <button class="btn btn-warning border-2 custom_btn mx-2 shadow" data-bs-toggle="modal" data-bs-target="#receptionHistoryModal">Historial de Recepciones</button>
+
+                <button class="btn btn-warning border-2 custom_btn mx-2 shadow" data-bs-toggle="modal" data-bs-target="#shippingsHistoryModal">Historial de Despachos</button>
+
+                <button class="btn btn-warning border-2 custom_btn mx-2 shadow" data-bs-toggle="modal" data-bs-target="#debitHistoryModal">Historial de Notas de Débito</button>
             </div>
         </div>
     </div>
@@ -375,6 +379,92 @@
                         {% else %}
                         <tr>
                             <td colspan="6">No se encontró ningún registro de recepciones.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shippingsHistoryModal" tabindex="-1" aria-labelledby="shippingsHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shippingsHistoryLabel">Historial de Despachos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark text-light">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Documento</th>
+                            <th>Oficina</th>
+                            <th>Cantidad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if product.shippings_list %}
+                        {% for shipping_detail_list in product.shippings_list %}
+                        <tr>
+                            <td>{{ shipping_detail_list.fecha }}</td>
+                            <td>{{ shipping_detail_list.documento }}</td>
+                            <td>{{ shipping_detail_list.oficina }}</td>
+                            <td>{{ shipping_detail_list.cantidad }}</td>
+                            <td>
+                                {% if shipping_detail_list.state == 0 %}
+                                    Continúa
+                                {% else %}
+                                    Anulado
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No se encontró ningún registro de recepciones.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="debitHistoryModal" tabindex="-1" aria-labelledby="debitHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="debitHistoryLabel">Historial de Notas de Débito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark text-light">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Documento</th>
+                            <th>Oficina</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if product.debit_list %}
+                        {% for debit_detail_list in product.debit_list %}
+                        <tr>
+                            <td>{{ debit_detail_list.fecha }}</td>
+                            <td>{{ debit_detail_list.documento }}</td>
+                            <td>{{ debit_detail_list.oficina }}</td>
+                            <td>{{ debit_detail_list.cantidad }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No se encontró ningún registro de notas de débito.</td>
                         </tr>
                         {% endif %}
                     </tbody>

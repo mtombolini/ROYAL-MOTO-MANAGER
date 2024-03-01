@@ -1,4 +1,5 @@
 import json
+import warnings
 import pandas as pd
 
 from datetime import datetime, timedelta
@@ -21,6 +22,8 @@ from models.last_net_cost import LastNetCost
 from models.consumption import ConsumptionDetail
 from models.day_recommendation import DayRecommendation
 from models.associations import product_supplier_association
+
+warnings.simplefilter("ignore", category=FutureWarning)
 
 def format_number(number):
     return "${:,.2f}".format(number).replace(",", "X").replace(".", ",").replace("X", ".")
@@ -144,29 +147,51 @@ class Product(Base):
                 product = session.query(cls).filter(cls.variant_id == variant_id).first()  # Retrieve a single product
 
                 stock = cls.get_product_stock(variant_id)
-                last_net_cost, reception_details_list, df = cls.get_product_reception(variant_id)
+                debit_list, df_debit = cls.get_product_debit(variant_id)
+                last_net_cost, reception_details_list, df_recepciones = cls.get_product_reception(variant_id, len(debit_list))
                 consumption_details_list, df_consumos = cls.get_product_comsumptions(variant_id)
                 sales_list, df_ventas = cls.get_product_sales(variant_id)
                 price_list, df_precios = cls.get_product_price_list(variant_id, last_net_cost)
-
-                if not df_ventas.empty:
-                    df_ventas = df_ventas.drop_duplicates()
-
+                shippings_list, df_shippings = cls.get_product_shipping(variant_id)
+                
                 def create_empty_dataframe(columns):
                     return pd.DataFrame(columns=columns)
 
                 # Comprobar si los DataFrames están vacíos y crear DataFrames vacíos si es necesario
-                if df.empty:
+                if df_recepciones.empty:
                     df_entradas = create_empty_dataframe(['fecha', 'entrada'])
                 else:
-                    df_entradas = df[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
+                    df_filtrado = df_recepciones[~df_recepciones['tipo_de_documento'].str.contains('interno', na=False)]
+                    df_recepciones_grouped = df_filtrado.groupby('fecha', as_index=False).agg({'cantidad': 'sum'})
+                    df_entradas = df_recepciones_grouped[['fecha', 'cantidad']].rename(columns={'cantidad': 'entrada'})
 
-                if df_consumos.empty and df_ventas.empty:
+                if df_consumos.empty and df_ventas.empty and df_shippings.empty and df_debit.empty:
                     df_salidas = create_empty_dataframe(['fecha', 'salida', 'tipo_salida'])
                 else:
-                    df_consumos['tipo_salida'] = 'consumo'
-                    df_ventas['tipo_salida'] = 'venta'
-                    df_salidas = pd.concat([df_consumos, df_ventas])[['fecha', 'cantidad', 'tipo_salida']].rename(columns={'cantidad': 'salida'})
+                    if df_ventas.empty:
+                        df_ventas_filtrado = create_empty_dataframe(['fecha', 'cantidad', 'tipo_salida'])
+                    else:
+                        df_ventas_filtrado = df_ventas[~df_ventas['documento'].str.contains('NOTA DE DÉBITO', na=False)].copy()
+
+                    if df_shippings.empty:
+                        df_shippings_filtrado = create_empty_dataframe(['fecha', 'cantidad', 'tipo_salida'])
+                    else:
+                        df_shippings_filtrado = df_shippings[df_shippings['state'] != 1].copy()
+
+                    if df_consumos.empty:
+                        df_consumos_grouped = create_empty_dataframe(['fecha', 'cantidad', 'tipo_salida'])
+                    else:
+                        df_consumos_grouped = df_consumos.groupby('fecha', as_index=False).agg({'cantidad': 'sum'})
+
+                    if df_debit.empty:
+                        df_debit = create_empty_dataframe(['fecha', 'cantidad', 'tipo_salida'])
+                    
+                    df_consumos_grouped['tipo_salida'] = 'consumo'
+                    df_ventas_filtrado['tipo_salida'] = 'venta'
+                    df_shippings_filtrado['tipo_salida'] = 'despacho'
+                    df_debit['tipo_salida'] = 'debito'
+
+                    df_salidas = pd.concat([df_consumos_grouped, df_ventas_filtrado, df_shippings_filtrado, df_debit])[['fecha', 'cantidad', 'tipo_salida']].rename(columns={'cantidad': 'salida'})
 
                 df_unificado = pd.merge(df_entradas, df_salidas, on='fecha', how='outer').fillna(0)
 
@@ -222,6 +247,8 @@ class Product(Base):
                     "stock": stock,
                     "reception_details_list": reception_details_list,
                     "consumption_details_list": consumption_details_list,
+                    "shippings_list": shippings_list,
+                    "debit_list": debit_list,
                     "sales_list": sales_list,
                     "last_net_cost": last_net_cost,
                     "price_list": price_list,
@@ -248,7 +275,7 @@ class Product(Base):
                 raise
 
     @classmethod
-    def get_product_reception(cls, variant_id, normal_search=True):
+    def get_product_reception(cls, variant_id, len_dedit, normal_search=True):
         with AppSession() as session:
             try:
                 product = session.query(cls).filter(cls.variant_id == variant_id).first()
@@ -260,21 +287,20 @@ class Product(Base):
                         num = reception_detail.reception_id
                     else:
                         num = reception.document_number
-
                     if "GUÍA" in reception.document_type:
                         shipping = Shipping.seach_shipping_guide_by_number(f"{num}.0")
-                        if shipping is not None and shipping["shipping_type"] != "Traslados internos (no constituye venta)":
+                        if (shipping is not None):
                             data.append({
-                            "fecha": reception.date,
-                            "documento": reception.document_type + " " + str(num),
-                            "tipo_de_documento": reception.document_type,
-                            "numero_de_documento": num,
-                            "oficina": reception.office,
-                            "nota": reception.note,
-                            "cantidad": reception_detail.quantity,
-                            "costo_neto": reception_detail.net_cost,
-                            "costo_neto_formated": format_number(reception_detail.net_cost)
-                        })
+                                "fecha": reception.date,
+                                "documento": reception.document_type + " " + str(num),
+                                "tipo_de_documento": reception.document_type + " " + shipping["shipping_type"],
+                                "numero_de_documento": num,
+                                "oficina": reception.office,
+                                "nota": reception.note,
+                                "cantidad": reception_detail.quantity ,
+                                "costo_neto": reception_detail.net_cost,
+                                "costo_neto_formated": format_number(reception_detail.net_cost)
+                            })
                             
                     else:
                         data.append({
@@ -288,6 +314,27 @@ class Product(Base):
                             "costo_neto": reception_detail.net_cost,
                             "costo_neto_formated": format_number(reception_detail.net_cost)
                         })
+                if len_dedit > 0:
+                    data_creditos = []
+                    for document_detail in product.document_details:
+                        document = document_detail.document
+                        if "NOTA DE CRÉDITO" in document.document_type:
+                            data_creditos.append({
+                                "fecha": document.date,
+                                "documento": document.document_type + " " + document.document_number,
+                                "tipo_de_documento": document.document_type,
+                                "numero_de_documento": document.document_number,
+                                "oficina": document.office,
+                                "nota": document.document_number,
+                                "cantidad": document_detail.quantity,
+                                "costo_neto": document_detail.net_unit_value,
+                                "costo_neto_formated": format_number(document_detail.net_unit_value)
+                            })
+                
+                    lista_notas_recepcion = [recepcion['numero_de_documento'] for recepcion in data]
+                    for nota in data_creditos:
+                        if nota['numero_de_documento'] not in lista_notas_recepcion:
+                            data.append(nota)
 
                 df = pd.DataFrame(data)
                 if df.empty:
@@ -333,6 +380,77 @@ class Product(Base):
                 raise
 
     @classmethod
+    def get_product_shipping(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data_shippings = []
+                for document_detail in product.document_details:
+                    document = document_detail.document
+                    if "GUÍA" in document.document_type:
+                        shipping = Shipping.seach_shipping_guide_by_number(f"{document.document_number}.0")
+                        if (shipping is not None) and (shipping["shipping_type"] == "Otros traslados no venta" or shipping["shipping_type"] == "Guía de devolución"):
+                            data_shippings.append({
+                                "fecha": document.date,
+                                "documento": document.document_type + " " + document.document_number,
+                                "tipo_de_documento": document.document_type + " " + shipping["shipping_type"],
+                                "numero_de_documento": document.document_number,
+                                "oficina": document.office,
+                                "cantidad": document_detail.quantity,
+                                "valor_unitario": document_detail.net_unit_value,
+                                "valor_unitario_formated": format_number(document_detail.net_total_value),
+                                "valor_total": document_detail.net_total_value * document_detail.quantity,
+                                "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity),
+                                "shipping_type": shipping["shipping_type"],
+                                "shipping_document": shipping["document_type"],
+                                "state": shipping["state"]
+                            })
+
+                df_shippings = pd.DataFrame(data_shippings)
+                if df_shippings.empty:
+                    shippings_list = []
+                else:
+                    shippings_list = df_shippings.sort_values('fecha').to_dict('records')
+
+                return shippings_list, df_shippings
+
+            except Exception as ex:
+                raise
+
+    @classmethod
+    def get_product_debit(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter(cls.variant_id == variant_id).first()
+                data_debitos = []
+                for document_detail in product.document_details:
+                    document = document_detail.document
+                    if "NOTA DE DÉBITO" in document.document_type:
+                        data_debitos.append({
+                            "fecha": document.date,
+                            "documento": document.document_type + " " + document.document_number,
+                            "tipo_de_documento": document.document_type,
+                            "numero_de_documento": document.document_number,
+                            "oficina": document.office,
+                            "cantidad": document_detail.quantity,
+                            "valor_unitario": document_detail.net_unit_value,
+                            "valor_unitario_formated": format_number(document_detail.net_total_value),
+                            "valor_total": document_detail.net_total_value * document_detail.quantity,
+                            "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
+                        })
+
+                df_debitos = pd.DataFrame(data_debitos)
+                if df_debitos.empty:
+                    debitos_list = []
+                else:
+                    debitos_list = df_debitos.sort_values('fecha').to_dict('records')
+
+                return debitos_list, df_debitos
+
+            except Exception as ex:
+                raise
+
+    @classmethod
     def get_product_comsumptions(cls, variant_id):
         with AppSession() as session:
             try:
@@ -369,6 +487,20 @@ class Product(Base):
                     document = document_detail.document
                     sales = document.sales
                     if sales != []:
+                        data_ventas.append({
+                            "fecha": document.date,
+                            "documento": document.document_type + " " + document.document_number,
+                            "tipo_de_documento": document.document_type,
+                            "numero_de_documento": document.document_number,
+                            "oficina": document.office,
+                            "cantidad": document_detail.quantity,
+                            "valor_unitario": document_detail.net_unit_value,
+                            "valor_unitario_formated": format_number(document_detail.net_total_value),
+                            "valor_total": document_detail.net_total_value * document_detail.quantity,
+                            "valor_total_formated": format_number(document_detail.net_total_value * document_detail.quantity)
+                        })
+
+                    elif "CANJE ROYAL PUNTOS" in document.document_type:
                         data_ventas.append({
                             "fecha": document.date,
                             "documento": document.document_type + " " + document.document_number,

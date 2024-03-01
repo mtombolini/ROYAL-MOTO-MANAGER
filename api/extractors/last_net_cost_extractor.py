@@ -6,7 +6,7 @@ class LastNetCostExtractor:
 
     def last_net_cost_creation(self):
         for variant_id in self.ids:
-            Product.get_product_reception(variant_id, False)
+            Product.get_product_reception(variant_id, 0, False)
 
     def main_extraction(self):
         self.last_net_cost_creation()
