@@ -252,7 +252,7 @@ class BuysAnalysis:
                 mean_cost = product_margin_info[product_variant_id, cart_id]['product_cost'] + product_cost / (product_margin_info[product_variant_id, cart_id]['product_quantity'] + product_quantity)
                 product_margin_info[product_variant_id, cart_id]['product_cost'] = mean_cost
                 product_margin_info[product_variant_id, cart_id]['product_quantity'] += product_quantity
-        
+                
         return product_margin_info
 
     def create_barras_apiladas(self, margin_info):
@@ -297,53 +297,36 @@ class BuysAnalysis:
         return fig.to_json()
     
     def distribuciones_productos(self, margin_product_info):
-        max_items = 17
         labels_generales = []
-        quantities = {}
-        total_costs = {}
-        estimados = {}
-        hoy = {}
+        quantities = []
+        total_costs = []
+        estimados = []
+        hoy = []
         for key, info in margin_product_info.items():
             sku = Product.product_filter_by_id(key[0]).sku
             labels_generales.append(str(sku))
-            quantities[str(sku)] = info['product_quantity']
-            total_costs[str(sku)] = info['total_cost']
-            estimados[str(sku)] = info['estimated_revenue']
-            hoy[str(sku)] = info['total_revenue_today']
+            quantities.append(info['product_quantity'])
+            total_costs.append(info['total_cost'])
+            estimados.append(info['estimated_revenue'])
+            hoy.append(info['total_revenue_today'])
 
-        if len(labels_generales) > max_items:
-            top_products = sorted(hoy.items(), key=lambda x: x[1], reverse=True)[:max_items]
-            top_labels = [product[0] for product in top_products]
+        # Solo aplicar la lógica de "Otros" si hay más de 17 productos
+        if len(labels_generales) > 17:
+            # Ordenar hoy junto con sus etiquetas basado en hoy de mayor a menor
+            hoy_sorted, labels_generales_sorted = zip(*sorted(zip(hoy, labels_generales), reverse=True))
 
-            # Calcular "Otros" para cada categoría
-            other_quantities = sum(quantities[sku] for sku in labels_generales if sku not in top_labels)
-            other_total_costs = sum(total_costs[sku] for sku in labels_generales if sku not in top_labels)
-            other_estimados = sum(estimados[sku] for sku in labels_generales if sku not in top_labels)
-            other_hoy = sum(hoy[sku] for sku in labels_generales if sku not in top_labels)
-
-            # Crear listas de valores para los gráficos
-            quantities_values = [quantities[sku] for sku in top_labels] + [other_quantities]
-            total_costs_values = [total_costs[sku] for sku in top_labels] + [other_total_costs]
-            estimados_values = [estimados[sku] for sku in top_labels] + [other_estimados]
-            hoy_values = [hoy[sku] for sku in top_labels] + [other_hoy]
-
-            labels_generales_top = top_labels + ["Otros"]
-
-            # Actualizar las listas originales
-            labels_generales = labels_generales_top
-            quantities = quantities_values
-            total_costs = total_costs_values
-            estimados = estimados_values
-            hoy = hoy_values
+            # Seleccionar los 17 mayores y acumular el resto en "Otros"
+            hoy = list(hoy_sorted[:17]) + [sum(hoy_sorted[17:])]
+            labels_generales = list(labels_generales_sorted[:17]) + ['Otros']
 
         labels_hoy = labels_generales.copy()
-        labels_hoy.append('Faltante')
-
         faltante = sum(estimados) - sum(hoy)
         hoy.append(faltante)
+        labels_hoy.append('Faltante')
 
         colores_generales = self.generar_colores_amarillo_rojo(len(labels_generales))
-        colores_hoy = colores_generales + ['lightgrey']
+        # Asegurarse de tener colores para "Otros" y "Faltante" si es necesario
+        colores_hoy = colores_generales + ['lightgrey'] * (len(labels_hoy) - len(labels_generales))
 
         # Crear las figuras con los colores específicos
         fig1 = go.Figure(data=[go.Pie(labels=labels_generales, values=quantities, hole=.4, marker=dict(colors=colores_generales))])
@@ -351,14 +334,13 @@ class BuysAnalysis:
         fig3 = go.Figure(data=[go.Pie(labels=labels_generales, values=estimados, hole=.4, marker=dict(colors=colores_generales))])
         fig4 = go.Figure(data=[go.Pie(labels=labels_hoy, values=hoy, hole=.4, marker=dict(colors=colores_hoy))])
 
-
         fig1.update_layout(title_text='Distribución de Productos por Cantidad')
         fig2.update_layout(title_text='Distribución de Productos por Costo Total')
         fig3.update_layout(title_text='Distribución de Productos por Venta Maxima')
         fig4.update_layout(title_text='Distribución de Productos por Venta hasta Hoy')
         
-        # fig2.show()
         return fig1.to_json(), fig2.to_json(), fig3.to_json(), fig4.to_json()
+
 
     def generar_colores_amarillo_rojo(self, n):
         colores_hex = []
