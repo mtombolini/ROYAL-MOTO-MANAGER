@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        @page {
+            size: 8.5in 11in;
+            margin: 1in;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .mod-h1 {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <div class="container">
+        <header class="mb-4">
+            <table class="bg-dark mod-h1 table table-borderless">
+                <tr>
+                    <td class="text-start pe-3 border-0"><img src="data:image/png;base64,{{ image_base64 }}" alt="Logo" width="95" height="54" class="m-0 p-0 text-start"></td>
+                    <td class="border-0"><h1 class="bg-dark text-white fw-bolder text-center py-2 mod-h1 m-0 p-0">ROYAL MOTO SERVICE</h1></td>
+                    <td class="text-end pe-3 border-0"><div style="width: 95px; height: 54px;" class="m-0 p-0 text-start"></div></td>
+                </tr>
+            </table>
+        </header>
+
+        <h2 class="text-dark fw-bolder text-start p-0 m-0 mod-h1">Orden de Compra</h2>
+        <hr>
+
+        <table width="100%" class="table table-bordered border-white">
+            <thead>
+            <tr>
+                <th colspan="2" class="text-start p-0 pb-2">
+                    <p class="fw-bolder bg-danger mod-h1 ps-3 pt-1 fs-5 text-start m-0 text-white">Información General:</p>
+                </th>
+                <th></th>
+                <th colspan="2" class="text-start p-0 pb-2">
+                    <p class="fw-bolder bg-danger mod-h1 ps-3 pt-1 fs-5 text-start m-0 text-white">Resumen de la Compra:</p>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="fw-bold p-0 ps-2" width="175px">ID de la Compra:</td>
+                <td class="p-0 ps-2" width="250px">{{ general_data.id }}</td>
+                <td></td>
+                <td class="fw-bold p-0 ps-2" width="180px">Cantidad de Items:</td>
+                <td class="p-0 ps-2">{{ resume_data.cantidad_items }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bold p-0 ps-2">Descripción:</td>
+                <td class="p-0 ps-2">{{ general_data.descripcion }}</td>
+                <td></td>
+                <td class="fw-bold p-0 ps-2">Cantidad de Detalles:</td>
+                <td class="p-0 ps-2">{{ resume_data.cantidad_detalles }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bold p-0 ps-2">Proveedor:</td>
+                <td class="p-0 ps-2">{{ general_data.proveedor }}</td>
+                <td></td>
+                <td class="fw-bold p-0 ps-2">Subtotal:</td>
+                <td class="p-0 ps-2">{{ resume_data.subtotal }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bold p-0 ps-2">Fecha de Creación:</td>
+                <td class="p-0 ps-2">{{ general_data.fecha_creacion }}</td>
+                <td></td>
+                <td class="fw-bold p-0 ps-2">Impuestos:</td>
+                <td class="p-0 ps-2">{{ resume_data.impuestos }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bold p-0 ps-2">Estado:</td>
+                <td class="p-0 ps-2">{{ general_data.estado }}</td>
+                <td></td>
+                <td class="fw-bold p-0 ps-2">Total:</td>
+                <td class="p-0 ps-2">{{ resume_data.total }}</td>
+            </tr>
+            <tr style="margin-top: 10px;"> <!-- Aumenta la separación con la parte superior -->
+                <td class="fw-bold p-0 ps-2">Folio (s) de Factura:</td>
+                <td class="p-0" style="border: 1px solid black; min-width: 100px; height: 20px; margin-left: 2px;"></td> <!-- Asegura visibilidad del rectángulo -->
+            </tr>
+            </tbody>
+        </table>
+        <h2 class="text-dark fw-bolder text-start p-0 m-0 mod-h1">Detalles de la Compra</h2>
+        <hr>
+        <div class="mt-2">
+            <table class="table table-bordered border-dark">
+                <thead class="bg-dark text-light">
+                    <tr>
+                        <th width="150px">SKU</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in detail_data %}
+                    <tr>
+                        <td>{{ detail[1] }}</td>
+                        <td>{{ detail[2] }}</td>
+                        <td class="text-center">{{ detail[3] }}</td>
+                        <td class="text-center">{{ detail[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+  
+        <footer class="mt-4 text-center">
+            <p>© 2024 Royal Moto Service</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

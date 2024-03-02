@@ -1,17 +1,23 @@
 from databases.base import Base
 from databases.session import app_engine, AppSession
 
+from models.office import Office
 from models.returns import Return
 from models.user import User, Role
 from models.supplier import Supplier
 from models.shipping import Shipping
+from models.employee import Employee
+from models.pay_dates import PayDates
 from models.price_list import PriceList
 from models.sales import Sale, SaleDocument
+from models.last_net_cost import LastNetCost
 from models.cart import BuyCart, BuyCartDetail
+from models.overtime_hours import OvertimeRecord
 from models.productos import Product, ProductStock
 from models.document import Document, DocumentDetail
 from models.day_recommendation import DayRecommendation
 from models.reception import Reception, ReceptionDetail
+from models.associations import product_supplier_association
 from models.consumption import Consumption, ConsumptionDetail
 
 from sqlalchemy import func

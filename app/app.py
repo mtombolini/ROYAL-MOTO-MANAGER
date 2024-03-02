@@ -6,12 +6,12 @@ from enum import Enum
 
 from routes.auth import auth_blueprint
 from routes.home import home_blueprint
+from routes.tables import tables_blueprint
 from routes.compras import compras_blueprint
 from routes.reportes import reportes_blueprint
-from routes.api_routes import api_blueprint, api_actualizacion
 from routes.configuraciones import configuraciones_blueprint
 from routes.human_resources import human_resources_blueprint
-from routes.tables import tables_blueprint
+from routes.api_routes import api_blueprint, api_actualizacion
 
 from models.model_user import ModelUser
 

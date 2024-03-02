@@ -1,3 +1,4 @@
+from models.office import Office
 from models.returns import Return
 from models.shipping import Shipping
 from models.price_list import PriceList
@@ -6,9 +7,10 @@ from models.supplier import Supplier, CreditTerm
 from models.productos import Product, ProductStock
 from models.document import Document, DocumentDetail
 from models.reception import Reception, ReceptionDetail
+from models.associations import product_supplier_association
 from models.consumption import Consumption, ConsumptionDetail
 
-from api.extractors.supplier_extractor import df_suppliers
+from api.extractors.supplier_extractor import df_suppliers, df_connections
 
 from random import randint
 
@@ -34,9 +36,12 @@ class DataFrameMain():
         self.df_price_list = None
 
         self.df_suppliers = df_suppliers
+        self.df_connections = df_connections
         self.suppliers_id = []
 
         self.df_shippings = None
+
+        self.df_offices = None
 
     def correct_products(self):
         self.df_products = self.df_products.dropna()
@@ -73,14 +78,14 @@ class DataFrameMain():
                 shipping_date = row['Shipping Date'],
                 shipping_number = str(row['Shipping Number']),
                 shipping_type = row['Shipping Type'],
-                document_type = row['Document Type']
+                document_type = row['Document Type'],
+                state = row['State']
             )
             session.add(shipping)
 
     def create_suppliers(self, session):
         for index, row in self.df_suppliers.iterrows():
             supplier = Supplier(
-                id = int(row['id']),
                 rut = row['rut'],
                 business_name = row['business_name'],
                 trading_name = row['trading_name'],
@@ -95,10 +100,31 @@ class DataFrameMain():
                 variant_id=int(row['Variant ID']),
                 type=row['Product Type'],
                 description=row['Product Description'],
-                sku=row['SKU'],
-                supplier_id=int(randint(1, 20))
+                sku=row['SKU']
             )
             session.add(product)
+
+    def create_products_suppliers(self, session):
+        for index, row in self.df_connections.iterrows():
+            product = session.query(Product).filter_by(sku=row['sku']).one_or_none()
+            supplier = session.query(Supplier).filter_by(rut=row['rut']).one_or_none()
+            
+            if product and supplier:
+                association = product_supplier_association.insert().values(
+                    product_sku=product.sku,
+                    supplier_rut=supplier.rut
+                )
+                session.execute(association)
+        session.commit()
+    
+    def associate_unlinked_products_to_generic_supplier(self, session):
+        generic_supplier = session.query(Supplier).filter_by(rut='00.000.000-0').one_or_none()
+        all_products = session.query(Product).all()
+        for product in all_products:
+            if not product.suppliers:
+                product.suppliers.append(generic_supplier)
+        session.commit()
+
 
     def create_stocks(self, session):
         for index, row in self.df_stocks.iterrows():
@@ -225,6 +251,21 @@ class DataFrameMain():
                 variant_id=int(row['Variant ID'])
             )
             session.add(price_list)
+
+    def create_offices(self, session):
+        for index, row in self.df_offices.iterrows():
+            office = Office(
+                id=int(row['ID']),
+                name=row['Nombre'],
+                address=row['Dirección'],
+                municipality=row['Comuna'],
+                city=row['Ciudad'],
+                country=row['Pais'],
+                active_state=row['Estado'],
+                latitude=row['Latitud'],
+                longitude=row['Longitud']
+            )
+            session.add(office)
     
     def create_data_base(self, session):
         self.correct_documents()
@@ -232,10 +273,15 @@ class DataFrameMain():
         self.correct_consumos()
         self.correct_recetions()
         self.correct_price_list()
-
         self.create_shippings(session)
         self.create_suppliers(session)
+        self.create_offices(session)
         self.create_products(session)
+
+        session.commit()
+
+        self.create_products_suppliers(session)
+        self.associate_unlinked_products_to_generic_supplier(session)
         self.create_stocks(session)
         self.create_consumptions(session)
         self.create_consumptions_details(session)

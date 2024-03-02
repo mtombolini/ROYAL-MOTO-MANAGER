@@ -1,3 +1,16 @@
+<style>
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+  
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+</style>
+
 <form action="{{ url_for('configuraciones.create_supplier') }}" method="post">
     {{ form.csrf_token }}
 
@@ -31,5 +44,5 @@
         {{ form.delivery_period(class="form-control", id="createSupplierModalDeliveryPeriod") }}
     </div>
 
-    <button type="submit" class="btn btn-primary">Crear Proveedor</button>
+    <button type="submit" class="btn btn-warning custom_btn">Crear Proveedor</button>
 </form>

@@ -1,10 +1,12 @@
-from sqlalchemy import Column, Integer, String, Select
+from sqlalchemy import Column, Integer, String, Select, text, ForeignKey
 from sqlalchemy.types import Enum
 from sqlalchemy.orm import relationship
 from databases.base import Base
 from databases.session import AppSession
 from typing import List, Dict
 import enum
+from models.associations import product_supplier_association
+
 
 class SupplierNotFoundError(ValueError):
     """Exception raised when a supplier is not found."""
@@ -21,14 +23,42 @@ class CreditTerm(enum.Enum):
 class Supplier(Base):
     __tablename__ = "suppliers"
     
-    id = Column(Integer, primary_key=True)
-    rut = Column(String(12))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    rut = Column(String(12), unique=True)
     business_name = Column(String(255))
     trading_name = Column(String(255))
     credit_term = Column(Enum(CreditTerm))
     delivery_period = Column(Integer)
 
-    products = relationship("Product", back_populates="supplier")
+    products = relationship('Product', secondary=product_supplier_association, back_populates='suppliers')
+
+    @classmethod
+    def create_from_df(cls, supplier_df):
+        with AppSession() as session:
+            try:
+                for index, row in supplier_df.iterrows():
+                    existing_supplier = session.query(cls).filter_by(rut=row['rut']).first()
+                    if existing_supplier:
+                        existing_supplier.business_name = row['business_name']
+                        existing_supplier.trading_name = row['trading_name']
+                        existing_supplier.credit_term = row['credit_term']
+                        existing_supplier.delivery_period = row['delivery_period']
+                    else:
+                        result = session.execute(text("SELECT MAX(id) FROM suppliers"))
+                        max_id = result.scalar()
+                        new_supplier = cls(
+                            id=max_id + 1,
+                            rut=row['rut'],
+                            business_name=row['business_name'],
+                            trading_name=row['trading_name'],
+                            credit_term=row['credit_term'],
+                            delivery_period=row['delivery_period']
+                        )
+                        session.add(new_supplier)
+                session.commit()
+            except Exception as ex:
+                session.rollback()
+                raise
 
     @classmethod
     def get_all(cls) -> List[Dict]:
@@ -151,4 +181,16 @@ class Supplier(Base):
             except Exception as ex:
                 # Undo any changes made to session
                 session.rollback()
-                raise           
+                raise
+
+    @classmethod
+    def get_all_class(cls) -> List[Dict]:
+        session = AppSession()
+        try:
+            suppliers = session.query(cls).all()
+            return suppliers
+        except Exception as ex:
+            # Undo any changes made to session
+            raise
+        finally:
+            session.close()

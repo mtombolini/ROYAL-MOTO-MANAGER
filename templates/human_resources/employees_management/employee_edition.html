@@ -1,5 +1,16 @@
-<form method="POST" action="{{ url_for('human_resources.edit_employee', employee_id=1) }}">
+<style>
+  .custom_btn {
+    margin: 0 0 0 0;
+    border-color: #ffc107;
+    color: black;
+  }
 
+  .custom_btn:hover {
+      border-color: #dc3545;
+      color: white;
+  }
+</style>
+<form method="POST" action="{{ url_for('human_resources.edit_employee', employee_id=1) }}">
     {{ form.csrf_token }}
 
     <!-- Hidden Field for Supplier ID -->
@@ -35,6 +46,6 @@
       {{ form.lunch_break(class="form-control", id="editEmployeeModalLunchBreak") }}
     </div>
     
-    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <button type="submit" class="btn btn-warning custom_btn">Guardar cambios</button>
   </form>
   

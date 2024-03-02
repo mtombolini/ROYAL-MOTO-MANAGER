@@ -13,7 +13,25 @@
     }
     .new-user-button {
         text-align: left;
+        margin-left: 0;
+        margin-right: 0;
         margin-bottom: 10px;
+        padding: 0 0 0 0;
+    }
+
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .container-fluid {
+        max-width: 90%;
     }
     
     .flash-message {
@@ -32,15 +50,15 @@
     
 </style>
 
-<div class="container-fluid mt-3 ms-3">
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 new-user-button">
             <!-- Botón para abrir un modal de creación de usuario (si es necesario) -->
-            <button class="btn btn-secondary">Nuevo Usuario</button>
+            <button class="btn btn-warning m-0 border-2 custom_btn shadow">Nuevo Usuario</button>
         </div>
-        <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+        <div class="col-12 p-0">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
@@ -62,7 +80,7 @@
                         <td>{{ user.apellido }}</td>
                         <td>{{ user.id_role }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditModal({{user.id}})">Editar</button>
+                            <button type="button" class="btn btn-sm btn-warning ms-2 border-2 custom_btn edit-btn" onclick="openEditModal({{user.id}})">Editar</button>
                             <a href="{{ url_for('configuraciones.eliminar_usuario', id_user=user.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este usuario?')">Eliminar</a>
                         </td>
                     </tr>
@@ -142,15 +160,9 @@
                         }
                         return response.json();
                     })
-                    .then(data => {
-                        if (data.error) {
-                            // Display error message without needing a page refresh
-                            displayFlashMessage(data.error, "error");
-                            jQuery('#editUserModal').modal('hide');
-                        } else {
-                            // Handle success, close modal, etc.
-                            displayFlashMessage(data.message, "success")
-                            jQuery('#editUserModal').modal('hide');
+                    .then(response => {
+                        if (response.redirect) {
+                            window.location.href = response.redirect;
                         }
                     })
                     .catch((error) => {

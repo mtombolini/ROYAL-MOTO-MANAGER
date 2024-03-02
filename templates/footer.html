@@ -1,14 +1,5 @@
 <!-- footer.html -->
 <style>
-    .custom-footer {
-        background-color:  #dc3545; /* Color de fondo */
-        color: white; /* Color del texto */
-        font-size: 0.9em; /* Tamaño de fuente más pequeño, ajusta según sea necesario */
-        display: flex;
-        justify-content: space-between; /* Alinea los elementos a los extremos */
-        align-items: center;
-    }
-
     .info-button {
         cursor: pointer;
         border: none;
@@ -18,9 +9,9 @@
     }
 </style>
 
-<div class="custom-footer">
-    By Maximiliano Tombolini, Franco Anfossi & Diego Navarro
-    <button class="info-button" onclick="showInfoPopup()">
+<div class="d-flex justify-content-between align-items-center bg-danger text-white">
+    <div class="ms-2">By Maximiliano Tombolini, Franco Anfossi & Diego Navarro</div>
+    <button class="info-button me-2" onclick="showInfoPopup()">
         <i class="fas fa-info-circle"></i> <!-- Icono de información -->
     </button>
 </div>

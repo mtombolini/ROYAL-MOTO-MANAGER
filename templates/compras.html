@@ -11,13 +11,29 @@
         text-align: center;
         font-size: 13px;
     }
+
+    .container-fluid {
+        max-width: 90%;
+    }
+
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+    
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+
 </style>
 
-<div class="container-fluid mt-3 ms-3">
+<div class="container-fluid mt-3">
     <div class="row">
-        <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+        <div class="col-12 p-0">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>ID</th>
                         <th>Descripción</th>
@@ -42,23 +58,23 @@
                         <td>{{ cart_item.estado }}</td>
                         <td>{{ cart_item.rendimiento }}</td>
                         <td>
-                            {% if cart_item.estado == 'Creado' %}
-                            <button class="btn btn-sm btn-primary check-btn" data-id="{{ cart_item.cart_id }}">Revisar</button>
-                            {% elif cart_item.estado == 'Revisado' %}
-                            <button class="btn btn-sm btn-success action-btn" data-id="{{ cart_item.id }}">Emitir</button>
-                            {% elif cart_item.estado == 'Emitido' %}
-                            <button class="btn btn-sm btn-warning action-btn" data-id="{{ cart_item.id }}">Recepcionar</button>
+                            {% if cart_item.estado == 'Recepcionada' %}
+                                <a class="btn btn-sm btn-warning rendimiento-btn custom_btn"
+                                href="{{ url_for('compras.rendimiento_compra', cart_id=cart_item.cart_id) }}">Analisis</a>
                             {% endif %}
-                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}">Eliminar</button>
+                            {% if cart_item.estado != 'Recepcionada' %}
+                                <a class="btn btn-sm btn-danger delete-btn" data-id="{{ cart_item.cart_id }}"
+                                href="{{ url_for('compras.eliminar_carro', cart_id=cart_item.cart_id) }}" onclick="return confirm('¿Estas seguro que deseas eliminar este carro?')" >Eliminar</a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% else %}
                         <tr>
-                            <td colspan="8">No hay compras disponibles.</td>
+                            <td colspan="9">No hay compras disponibles.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
-            <table>
+            </table>
         </div>
     </div>
 </div>
@@ -68,48 +84,11 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    // Selecciona todas las filas de la tabla y agrega un controlador de eventos de clic
-    document.querySelectorAll('tr[id^="cart-item-"]').forEach(row => {
-        row.addEventListener('click', function(event) {
-            // Evita que el clic se propague si se hizo clic en un botón
-            if(event.target.tagName !== 'BUTTON') {
-                // Obtén el cartId de la primera celda de la fila
-                const cartId = this.cells[0].textContent.trim();
-                window.location.href = '/carro/' + cartId; // Redirige a la ruta de la función carro en Flask
-            }
-        });
-    });
-
-        // Controlador para botones de eliminar
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function (event) {
-                event.stopPropagation(); // Evita que el evento de clic se propague a la fila
-
-                const cartId = this.dataset.id;
-                console.log("ID", cartId);
-                const url = '/eliminar_carro/' + cartId;
-                console.log('Intentando eliminar el carro con ID:', cartId);
-                console.log('URL de la solicitud:', url);
-
-                if (confirm('¿Estás seguro de que deseas eliminar este carro?')) {
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }).then(response => {
-                        console.log('Respuesta del servidor:', response);
-                        if (response.ok) {
-                            const rowToDelete = document.getElementById('cart-item-' + cartId);
-                            if (rowToDelete) {
-                                rowToDelete.remove();
-                            }
-                        } else {
-                            alert('Error al eliminar el carro');
-                        }
-                    }).catch(error => {
-                        console.error('Error al realizar la solicitud:', error);
-                    });
+        document.querySelectorAll('tr[id^="cart-item-"]').forEach(row => {
+            row.addEventListener('click', function(event) {
+                if(event.target.tagName !== 'BUTTON') {
+                    const cartId = this.cells[0].textContent.trim();
+                    window.location.href = '/carro/' + cartId;
                 }
             });
         });

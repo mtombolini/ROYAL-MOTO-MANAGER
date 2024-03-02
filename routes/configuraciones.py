@@ -1,5 +1,5 @@
 from __future__ import annotations
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, Response
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, Response, send_file
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectField, HiddenField, Field
 from wtforms.validators import DataRequired, Length, Email, ValidationError
@@ -8,12 +8,15 @@ from decorators.roles import requires_roles
 from models.model_user import ModelUser
 from models.supplier import Supplier, CreditTerm
 from enum import Enum
+from io import BytesIO
+import pandas as pd
 from typing import List, Dict, Tuple
 import re
 
 
 configuraciones_blueprint = Blueprint('configuraciones', __name__)
 
+# ------------------------- FORMATTING FUNCTIONS ------------------------- #
 def format_rut(rut: str) -> str:        
     rut = rut.replace('.', '').replace('-', '')  # Remove existing formatting
     body, verifier = rut[:-1], rut[-1]  # Split into body and verifier
@@ -32,8 +35,7 @@ def format_suppliers_data_for_render(suppliers_data: List[Dict | None]) -> List[
     for supplier in suppliers_data:
         supplier['credit_term'] = supplier['credit_term'].value
     return suppliers_data
-        
-        
+
 class NoRUTDuplicateValidator:
     def __call__(self, form: FlaskForm, field: Field) -> None:
         print(Supplier.get_all())
@@ -41,11 +43,10 @@ class NoRUTDuplicateValidator:
             if format_rut(field.data) == supplier['rut'] and form.id.data != supplier['id']:
                 raise ValidationError("There is already a supplier with this RUT.")
 
-
+# ------------------------- FORMS ------------------------- #
 class RoleForm(FlaskForm):
     description = StringField('Descripcion', validators=[DataRequired()])
-    
-    
+
 class UserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
@@ -53,8 +54,7 @@ class UserForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired()])
     apellido = StringField('Apellido', validators=[DataRequired()])
     id_role = SelectField('Role', coerce=int, validators=[DataRequired()])
-    
-    
+
 class SupplierForm(FlaskForm):
     id = HiddenField('ID de proveedor')
     rut = StringField('RUT', validators=[DataRequired(), NoRUTDuplicateValidator()])
@@ -67,6 +67,7 @@ class SupplierForm(FlaskForm):
     )
     delivery_period = StringField('Tiempo de entrega', validators=[DataRequired()])
 
+# ------------------------- ROLE ROUTES ------------------------- #
 @configuraciones_blueprint.route('/administracion_de_roles')
 @requires_roles('desarrollador')
 def administracion_de_roles():
@@ -156,15 +157,15 @@ def editar_rol(id_role):
         session.close()
 
         if success:
-            return jsonify({'status': 'success', 'message': 'Rol actualizado con éxito.'})
+            flash('Rol actualizado con éxito.', 'success')
+            return jsonify({'status': 'success', 'message': 'Rol actualizado con éxito.', 'redirect': url_for('configuraciones.administracion_de_roles')})
         else:
-            return jsonify({'status': 'error', 'message': 'Error al actualizar el rol.'}), 400
+            flash('Error al actualizar el rol.', 'error')
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el rol.', 'redirect': url_for('configuraciones.administracion_de_roles')}), 400
 
-    return jsonify({'status': 'error', 'message': 'Descripción inválida.'}), 400
+    return jsonify({'status': 'error', 'message': 'Descripción inválida.', 'redirect': url_for('configuraciones.administracion_de_roles')}), 400
 
-
-
-# <----- Configuracion de Usuarios -----> #
+# ------------------------- USER ROUTES ------------------------- #
 @configuraciones_blueprint.route('/administracion_de_usuarios')
 @requires_roles('desarrollador')
 def administracion_de_usuarios():
@@ -216,12 +217,8 @@ def get_user(user_id):
 @requires_roles('desarrollador')
 def editar_usuario(user_id):
     data = request.get_json()
-    
-    print(data)
     username = data.get('username')
-    print(username)
     correo = data.get('email')
-    print(correo)
     nombre = data.get('first_name')
     apellido = data.get('last_name')
     id_role = data.get('id_role')
@@ -235,11 +232,13 @@ def editar_usuario(user_id):
         session.close()
 
         if success:
-            return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.'})
+            flash('Usuario actualizado con éxito.', 'success')
+            return jsonify({'status': 'success', 'message': 'Usuario actualizado con éxito.', 'redirect': url_for('configuraciones.administracion_de_usuarios')})
         else:
-            return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.'}), 400
+            flash('Error al actualizar el usuario.', 'error')
+            return jsonify({'status': 'error', 'message': 'Error al actualizar el usuario.', 'redirect': url_for('configuraciones.administracion_de_usuarios')}), 400
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return jsonify({'status': 'error', 'message': str(e), 'redirect': url_for('configuraciones.administracion_de_usuarios')}), 500
 
 
 @configuraciones_blueprint.route('/eliminar_usuario/<int:id_user>')
@@ -262,14 +261,13 @@ def eliminar_usuario(id_user):
     return redirect(url_for('configuraciones.administracion_de_usuarios')) 
 
 
-# <----- Suppliers' Configuration -----> #
+# ------------------------- SUPPLIER ROUTES ------------------------- #
 @configuraciones_blueprint.route('/suppliers_management')
 @requires_roles('desarrollador')
 def suppliers_management() -> str:
     form = SupplierForm()
     try:
         data: List[Dict] = Supplier.get_all()
-        print(data)
         data = format_suppliers_data_for_render(data)
         return render_template('configuraciones/suppliers_management/suppliers_management.html', 
                                page_title="Administración de Proveedores", 
@@ -319,8 +317,7 @@ def create_supplier() -> str:
         flash(F'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
         return redirect(url_for('configuraciones.suppliers_management'))
-       
-    
+
 @configuraciones_blueprint.route('/edit_supplier/<int:supplier_id>', methods=['POST'])
 @requires_roles('desarrollador')
 def edit_supplier(supplier_id: int) -> str:
@@ -335,7 +332,7 @@ def edit_supplier(supplier_id: int) -> str:
                           trading_name=trading_name,
                           credit_term=credit_term,
                           delivery_period=delivery_period)
-            flash('Cambios guardados con éxito', 'success')    
+            flash('Cambios guardados con éxito', 'success')
         else:
             # Form validation failed
             errors = {field.name: field.errors for field in form if field.errors}
@@ -348,8 +345,7 @@ def edit_supplier(supplier_id: int) -> str:
         flash(F'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally: 
         return redirect(url_for('configuraciones.suppliers_management'))
-   
-        
+
 @configuraciones_blueprint.route('/delete_supplier/<int:supplier_id>')
 @requires_roles('desarrollador')
 def delete_supplier(supplier_id: int) -> Response:
@@ -360,57 +356,60 @@ def delete_supplier(supplier_id: int) -> Response:
         flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
     finally:
         return redirect(url_for('configuraciones.suppliers_management'))
-        
-
-
-# @compras_blueprint.route('/carro/<int:cart_id>', methods=['GET', 'POST'])
-# @requires_roles('desarrollador')
-# def carro(cart_id):
-#     try:
-        
-#         data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
-#         data_detail = ModelCart.get_cart_detail_by_id(cart_id)[1]
-#         data_resume = resumen_compra(data_detail)
-#         print(data_resume['total'])
-
-#         return render_template('carro.html', page_title=f"Carro de Compras", data_detail=data_detail, data_general=data_general, data_resume=data_resume)
-#     except Exception as e:
-#         print(e)
-#         return render_template('error.html'), 500
     
-# def resumen_compra(data_detail):
-#     cantidad_articulos = len(data_detail)
-#     subtotal = sum(item.costo_neto for item in data_detail)
-#     impuestos = subtotal * 0.19  # Asumiendo un 19% de impuesto
-#     total = subtotal + impuestos
+@configuraciones_blueprint.route('/exportar_proveedores')
+@requires_roles('desarrollador')
+def export_suppliers():
+    try:
+        suppliers_data: List[Dict] = Supplier.get_all()
+        suppliers_data = format_suppliers_data_for_render(suppliers_data)
 
-#     return {
-#         'cantidad_articulos': cantidad_articulos,
-#         'subtotal': subtotal,
-#         'impuestos': impuestos,
-#         'total': total
-#     }
+        column_order = ['rut', 'business_name', 'trading_name', 'credit_term', 'delivery_period']
+        df = pd.DataFrame(suppliers_data).reindex(columns=column_order)
 
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Proveedores')
+
+        output.seek(0)
+
+        return send_file(output, as_attachment=True, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', download_name='proveedores.xlsx')
     
-# @compras_blueprint.route('/compras')
-# @requires_roles('desarrollador')
-# def compras():
-#     try:
-#         data = ModelCart.get_all_carts()
-#         return render_template('compras.html', page_title="Compras", data=data)
-#     except Exception as e:
-#         print(e)
-#         return render_template('error.html'), 500
-    
-    
-# @compras_blueprint.route('/eliminar_carro/<int:cart_id>', methods=['POST'])
-# @requires_roles('desarrollador')
-# def eliminar_carro(cart_id):
-#     try:
-#         if ModelCart.delete_cart_by_id(cart_id):
-#             return jsonify({'success': True}), 200
-#         else:
-#             return jsonify({'error': 'Carro no encontrado'}), 404
-#     except Exception as e:
-#         print(e)
-#         return jsonify({'error': str(e)}), 500
+    except Exception as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
+        return redirect(url_for('configuraciones.suppliers_management'))
+
+@configuraciones_blueprint.route('/importar_proveedores', methods=['POST'])
+@requires_roles('desarrollador')
+def import_suppliers():
+    try:
+        required_columns = ['rut', 'business_name', 'trading_name', 'credit_term', 'delivery_period']
+        file = request.files['file']
+        if file.filename.endswith('.xlsx') or file.filename.endswith('xls'):
+            df = pd.read_excel(file)
+            if not all(column in df.columns for column in required_columns):
+                flash('El archivo Excel no tiene todas las columnas requeridas', 'error')
+                return redirect(url_for('configuraciones.suppliers_management'))
+            
+            if df[required_columns].isnull().any().any():
+                # df.dropna(subset=required_columns, inplace=True)
+                flash('Todos los datos deben estar llenos en el archivo Excel', 'error')
+                return redirect(url_for('configuraciones.suppliers_management'))
+
+            suppliers_data = df.to_dict(orient='records')
+
+            for supplier in suppliers_data:
+                supplier['rut'] = format_rut(supplier['rut'])
+                supplier['credit_term'] = CreditTerm(supplier['credit_term'])
+
+            new_df = pd.DataFrame(suppliers_data)
+
+            Supplier.create_from_df(new_df)
+
+            flash('Proveedores importados con éxito', 'success')
+        else:
+            flash('ERROR 400 (BAD REQUEST): El archivo debe estar en formato .xlsx', 'error')
+    except Exception as ex:
+        flash(f'ERROR 500 (INTERNAL SERVER ERROR): {str(ex)}', 'error')
+    finally:
+        return redirect(url_for('configuraciones.suppliers_management'))

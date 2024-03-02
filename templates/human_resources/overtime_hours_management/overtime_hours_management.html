@@ -1,0 +1,253 @@
+{% extends './layout.html' %}
+
+{% block title %}RMM | Horas Extra{% endblock %}
+
+{% block body %}
+{% include 'header.html' %}
+
+<style>
+    .is_late, .leaves_early {
+        background-color: rgba(255, 0, 0, 0.2) !important;
+    }
+    .btn-sm {
+        min-width: 95px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .new-record-button {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    .empty-row {
+        background-color: red;
+    }
+    .summary-box {
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    #overtimeForm {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    #overtimeForm input, #overtimeForm button {
+        margin-bottom: 0;
+    }
+</style>
+
+<div class="container-fluid mt-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="overtimeForm" onsubmit="updateFormAction()" method="get" class="d-flex align-items-center gap-2">
+                    <label for="employeeIdSelect" class="form-label-bold">Empleado</label>
+                        <select id="employeeIdSelect" name="employee_id" class="form-control">
+                            {% for id, name in form.employee_id.choices %}
+                                <option value="{{ id }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    <label for="monthSelect" class="form-label-bold">Periodo</label>
+                        <select id="monthSelect" name="month" class="form-control">
+                            {% for month_value in form.month.choices %}
+                                <option value="{{ month_value }}">{{ month_value }}</option>
+                            {% endfor %}
+                        </select>
+                
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr style="height: 2px; background-color: black;">
+
+    {% if show_table %}
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- Column for Summary -->
+            <div class="col-md-12">
+                <div class="bg-warning text-dark p-1 rounded mt-2">
+                    <h4 class="mb-1">Resumen de Jornada Mensual</h4>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Empleado</strong>
+                                <span>{{ data.0.employee_name }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Periodo</strong>
+                                <span>{{ month }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Estado</strong>
+                                <span>None</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total de horas de atraso</strong>
+                                <span>{{ summary_data.monthly_late_check_ins}}</span>
+                            </li><li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total de horas perdidas por retiro temprano</strong>
+                                <span>{{ summary_data.monthly_early_check_outs }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total de horas Jornada</strong>
+                                <span>{{ summary_data.monthly_standard_total_hours_worked }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total de horas trabajadas</strong>
+                                <span>{{ summary_data.monthly_total_hours_worked }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total bruto de horas extras</strong>
+                                <span>{{ summary_data.monthly_gross_overtime_hours }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total neto de horas extras</strong>
+                                <span>{{ summary_data.monthly_net_overtime_hours }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr style="height: 2px; background-color: black;">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark text-light">
+                        <tr>
+                            <th>Día</th>
+                            <th>Hora de Entrada</th>
+                            <th>Hora de Salida</th>
+                            <th>Inicio Colación</th>
+                            <th>Fin Colación</th>
+                            <th>Confirmado</th>
+                            <th colspan="2">Acciones</th>
+                            <th>Horas trabajadas</th>
+                            <th>Horas de atraso</th>
+                            <th>Horas de retiro temprano</th>
+                            <th>Horas extra brutas</th>
+                            <th>Horas extra netas</th>
+                            <th>Horas estándar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set ns = namespace(current_week_number=0) %}
+                        {% for overtime_record in data %}
+                            <tr>
+                                <td>{{ overtime_record.readable_date }}</td>
+                                {% if (overtime_record.check_in or overtime_record.check_out or overtime_record.lunch_break_start or overtime_record.lunch_break_end) %}
+                                    <td class="{{ 'is_late' if overtime_record.is_late else '' }}">
+                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
+                                            <input type="text" name="check_in" value="{{ overtime_record.check_in }}" class="edit-input" onblur="this.form.submit()">
+                                        </form>
+                                        {% if overtime_record.is_late %}
+                                            ATRASO DE {{ overtime_record.hours_late }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="{{ 'leaves_early' if overtime_record.leaves_early else '' }}">
+                                        <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
+                                            <input type="text" name="check_out" value="{{ overtime_record.check_out }}" class="edit-input" onblur="this.form.submit()">
+                                        </form>
+                                        {% if overtime_record.leaves_early %}
+                                            {{ overtime_record.hours_early }} PERDIDOS POR RETIRO TEMPRANO
+                                        {% endif %}                                        
+                                    </td>
+                                    {% if (overtime_record.lunch_break_start or overtime_record.lunch_break_end) %}
+                                        <td>
+                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
+                                                <input type="text" name="lunch_break_start" value="{{ overtime_record.lunch_break_start }}" class="edit-input" onblur="this.form.submit()">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="{{ url_for('human_resources.update_overtime_record', date=overtime_record.date, employee_id=overtime_record.employee_id, month=month) }}" method="post" class="edit-form">
+                                                <input type="text" name="lunch_break_end" value="{{ overtime_record.lunch_break_end }}" class="edit-input" onblur="this.form.submit()">
+                                            </form>
+                                        </td>
+                                    {% else %}
+                                        <td colspan="2">NO HAY COLACIÓN</td>
+                                    {% endif %}
+                                {% else %}
+                                    {% if overtime_record.is_on_vacation %}
+                                        <td colspan="4" class="empty-row">VACACIONES</td>
+                                    {% elif overtime_record.is_holiday %}
+                                        <td colspan="4" class="empty-row">FERIADO</td>
+                                    {% elif overtime_record.absence %}
+                                        <td colspan="4" class="empty-row">AUSENCIA (PERMISO NO PAGADO)</td>
+                                    {% else %}
+                                        <td colspan="4" class="empty-row">DOMINGO</td>
+                                    {% endif %}
+                                {% endif %}
+                                <td>
+                                    {% if overtime_record.confirmed %}
+                                        ✅
+                                    {% else %}
+                                        ❌
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('human_resources.confirm', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-danger">Confirmar</button>
+                                    </form>
+                                    <form action="{{ url_for('human_resources.assign_holiday_day', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-primary">Marcar como Feriado</button>
+                                    </form>  
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('human_resources.mark_as_vacation', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-primary">Marcar como Vacaciones</button>
+                                    </form> 
+                                    <form action="{{ url_for('human_resources.mark_as_absence', employee_id=overtime_record.employee_id, date=overtime_record.date, month=month) }}" method="post" class="edit-form">
+                                        <button type="submit" class="btn btn-primary">Marcar como Ausencia</button>
+                                    </form> 
+                                </td>
+                                {% if weekly_data[ns.current_week_number].week_start == overtime_record.date %}
+                                    {% set week_summary = weekly_data[ns.current_week_number] %}
+                                    <!-- Weekly Summary Columns with Rowspan -->
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.total_hours_worked }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.total_hours_late }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.total_hours_early }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.gross_overtime_hours }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.net_overtime_hours }}</td>
+                                        <td rowspan="{{ week_summary.days_in_week }}">{{ week_summary.standard_hours }}</td>
+                                    {% if weekly_data|length - 1 > ns.current_week_number %}
+                                        {% set ns.current_week_number = ns.current_week_number + 1 %}
+                                    {% endif %}
+                                {% endif %}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="X">No hay registros disponibles.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>             
+        </div>
+    {% endif %}
+</div>
+
+{% block scripts %}
+<script>
+    function updateFormAction() {
+        var employeeId = document.getElementById('employeeIdSelect').value;
+        var month = document.getElementById('monthSelect').value;
+        var form = document.getElementById('overtimeForm');
+        form.action = '/overtime_hours_management/' + employeeId + '/' + month;
+    
+        // Restablecer los valores de los selectores a su estado inicial
+        document.getElementById('employeeIdSelect').value = '';
+        document.getElementById('monthSelect').value = '';
+    }
+    
+</script>
+{% endblock %}
+
+{% endblock %}

@@ -11,21 +11,46 @@
         text-align: center;
         font-size: 13px;
     }
-    .new-user-button {
+    .new-supplier-button {
         text-align: left;
+        margin-left: 0;
+        margin-right: 0;
         margin-bottom: 10px;
+        padding: 0 0 0 0;
+    }
+
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .container-fluid {
+        max-width: 90%;
     }
 </style>
 
-<div class="container-fluid mt-3 ms-3">
+<div class="container-fluid mt-3">
     <div class="row">
-        <div class="col-12 new-user-button">
-            <!-- Button to open a new supplier modal, if necessary -->
-            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createSupplierModal">Nuevo Proveedor</button>
+        <div class="col-12 new-supplier-button d-flex justify-content-between">
+            <button class="btn btn-warning m-0 border-2 custom_btn shadow" data-bs-toggle="modal" data-bs-target="#createSupplierModal">Nuevo Proveedor</button>
+
+            <div class="d-flex btn-group shadow">
+                <a class="btn btn-warning m-0 border-2 custom_btn" href="{{ url_for('configuraciones.export_suppliers') }}">Decargar Excel</a>
+                <form class="btn btn-warning m-0 border-2 custom_btn" method="post" action="{{ url_for('configuraciones.import_suppliers') }}" enctype="multipart/form-data">
+                    <label for="fileUpload">Cargar Excel</label>
+                    <input type="file" name="file" id="fileUpload" style="display: none;" onchange="form.submit()">
+                </form>
+            </div>
         </div>
-        <div class="col-12">
-            <table class="table table-hover">
-                <thead>
+        <div class="col-12 p-0">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark text-light">
                     <tr>
                         <th>ID</th>
                         <th>RUT</th>
@@ -33,6 +58,7 @@
                         <th>Nombre de Fantasía</th>
                         <th>Plazo de Pago</th>
                         <th>Tiempo de Entrega</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +71,7 @@
                         <td>{{ supplier.credit_term}}</td>
                         <td>{{ supplier.delivery_period }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-primary edit-btn" onclick="openEditSupplierModal({{ supplier }})">Editar</button>
+                            <button type="button" class="btn btn-sm btn-warning ms-2 border-2 custom_btn edit-btn" onclick="openEditSupplierModal({{ supplier }})">Editar</button>
                             <a href="{{ url_for('configuraciones.delete_supplier', supplier_id=supplier.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar a este proveedor?')">Eliminar</a>
                         </td>
                     </tr>
@@ -55,12 +81,11 @@
                         </tr>
                     {% endfor %}
                 </tbody>
-            </table>                                                                                                 
+            </table>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap Modal to create suppliers -->
 <div class="modal fade" id="createSupplierModal" tabindex="-1" aria-labelledby="createSupplierModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

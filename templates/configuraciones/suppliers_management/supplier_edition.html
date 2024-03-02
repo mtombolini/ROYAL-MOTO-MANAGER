@@ -1,3 +1,16 @@
+<style>
+    .custom_btn {
+        margin: 0 0 0 0;
+        border-color: #ffc107;
+        color: black;
+    }
+  
+    .custom_btn:hover {
+        border-color: #dc3545;
+        color: white;
+    }
+</style>
+
 <form action="{{ url_for('configuraciones.edit_supplier', supplier_id=1) }}" method="post" id="editSupplierForm">
     {{ form.csrf_token }}
 
@@ -34,5 +47,5 @@
         {{ form.delivery_period(class="form-control", id="editSupplierModalDeliveryPeriod") }}
     </div>
 
-    <button type="submit" class="btn btn-primary">Editar Proveedor</button>
+    <button type="submit" class="btn btn-warning custom_btn">Editar Proveedor</button>
 </form>
