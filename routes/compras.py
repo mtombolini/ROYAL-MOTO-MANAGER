@@ -358,8 +358,8 @@ def procesar_datos_recepcion():
 @compras_blueprint.route('/generar-pdf-recepcion', methods=['POST'])
 def generar_pdf():
     data = request.json
-    logo_path = os.path.join(current_app.root_path, 'static\\img\\logo_invert.png')
-    logo_path = logo_path.replace('\\app\\', '\\')
+    logo_path = os.path.join(current_app.root_path, 'static/img/logo_invert.png')
+    logo_path = logo_path.replace('/app/', '/')
 
     with open(logo_path, "rb") as image_file:
         image_base64 = base64.b64encode(image_file.read()).decode()
