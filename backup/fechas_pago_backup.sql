@@ -16,3 +16,4 @@ INSERT INTO fechas_pago (id, cart_id, fecha_pago) VALUES (15, 15, '2024-03-26 00
 INSERT INTO fechas_pago (id, cart_id, fecha_pago) VALUES (16, 18, '2024-04-07 00:00:00');
 INSERT INTO fechas_pago (id, cart_id, fecha_pago) VALUES (17, 18, '2024-04-22 00:00:00');
 INSERT INTO fechas_pago (id, cart_id, fecha_pago) VALUES (18, 19, '2024-05-04 00:00:00');
+INSERT INTO fechas_pago (id, cart_id, fecha_pago) VALUES (19, 21, '2024-03-22 00:00:00');
