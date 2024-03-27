@@ -106,8 +106,8 @@ class DataFrameMain():
 
     def create_products_suppliers(self, session):
         for index, row in self.df_connections.iterrows():
-            product = session.query(Product).filter_by(sku=row['sku']).one_or_none()
-            supplier = session.query(Supplier).filter_by(rut=row['rut']).one_or_none()
+            product = session.query(Product).filter_by(sku=row['product_sku']).one_or_none()
+            supplier = session.query(Supplier).filter_by(rut=row['supplier_rut']).one_or_none()
             
             if product and supplier:
                 association = product_supplier_association.insert().values(
