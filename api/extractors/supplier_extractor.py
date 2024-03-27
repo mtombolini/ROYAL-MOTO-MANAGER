@@ -2,7 +2,7 @@ import requests
 import json
 import pandas as pd
 
-SUPPLIERS = "https://gist.githubusercontent.com/franco-anfossi/fe52edd6684e3bed679ba68ca4850fe8/raw/3d45b0332ee9de41d2f0e0a215ec40ffbe232e9b/suppliers"
+SUPPLIERS = "https://gist.githubusercontent.com/franco-anfossi/fe52edd6684e3bed679ba68ca4850fe8/raw/be810c3c0fa90ed47b5821042cd4c14204da3aa5/suppliers"
 
 CONNECTIONS = "https://gist.githubusercontent.com/franco-anfossi/4bea704c796a6a2a36429b56b9ad3767/raw/109f23cb65b2a4add7582c8af374e0d9c95c29b9/conections-suppliers"
 
