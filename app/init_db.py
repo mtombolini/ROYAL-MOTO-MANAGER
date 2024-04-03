@@ -17,6 +17,7 @@ from models.productos import Product, ProductStock
 from models.document import Document, DocumentDetail
 from models.day_recommendation import DayRecommendation
 from models.reception import Reception, ReceptionDetail
+from models.product_activation import ProductActivation
 from models.associations import product_supplier_association
 from models.consumption import Consumption, ConsumptionDetail
 

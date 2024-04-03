@@ -22,6 +22,7 @@ from models.last_net_cost import LastNetCost
 from models.consumption import ConsumptionDetail
 from models.day_recommendation import DayRecommendation
 from models.associations import product_supplier_association
+from models.product_activation import ProductActivation
 
 warnings.simplefilter("ignore", category=FutureWarning)
 
@@ -68,6 +69,23 @@ class Product(Base):
                 return product, product.suppliers[0].rut, product.last_net_cost.net_cost
             except Exception as ex:
                 print(ex)
+                raise
+
+    @classmethod
+    def update_product_activation(cls, variant_id):
+        with AppSession() as session:
+            try:
+                product = session.query(cls).filter_by(variant_id=variant_id).first()
+                product_activation = ProductActivation.get_product_activation_state(product.sku)
+                if product_activation:
+                    is_active = False
+                else:
+                    is_active = True
+                
+                ProductActivation.update_activation_state(product.sku, is_active)
+                session.commit()
+            except Exception as ex:
+                session.rollback()
                 raise
 
     @classmethod
@@ -153,7 +171,8 @@ class Product(Base):
                 sales_list, df_ventas = cls.get_product_sales(variant_id)
                 price_list, df_precios = cls.get_product_price_list(variant_id, last_net_cost)
                 shippings_list, df_shippings = cls.get_product_shipping(variant_id)
-                
+                is_active = ProductActivation.get_product_activation_state(product.sku)
+
                 def create_empty_dataframe(columns):
                     return pd.DataFrame(columns=columns)
 
@@ -257,7 +276,8 @@ class Product(Base):
                     "prediction": prediction,
                     "disponibilidad": fecha_disponibilidad,
                     "recommendation": recommendation,
-                    "days_to_recommendation": fecha_days_to_recommendation
+                    "days_to_recommendation": fecha_days_to_recommendation,
+                    "is_active": is_active
                 }
 
                 return product_data, prediction  # Return the product's attributes directly

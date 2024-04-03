@@ -60,3 +60,13 @@ def change_supplier(variant_id):
         return jsonify({'success': True, 'message': 'Proveedor actualizado correctamente.', 'redirect': url_for('tables.product_detail', variant_id=variant_id)})
     except Exception as e:
         return jsonify({'success': False, 'message': 'Error al actualizar el proveedor.'}), 500
+    
+@tables_blueprint.route("/actualizar_estado_activacion/<variant_id>", methods=["POST"])
+def change_activation_state(variant_id):
+    try:
+        Product.update_product_activation(variant_id)
+
+        return redirect(url_for('tables.product_detail', variant_id=variant_id))
+    except Exception as e:
+        flash("Error al actualizar el estado de activación", "danger")
+        return redirect(url_for('tables.product_detail', variant_id=variant_id))
