@@ -29,8 +29,9 @@ def get_json_data(table_name):
                 row_data['credit_term'] = transform_credit_term(row_data['credit_term'])
             data.append(row_data)
     
-    with open(f"backup/{table_name}.json", 'w', encoding='latin-1') as f:
-        f.write(json.dumps(data, indent=4))
+    with open(f"backup/{table_name}.json", 'w', encoding='utf-8') as f:
+        f.write(json.dumps(data, indent=4, ensure_ascii=False))
+
 
 get_json_data('product_supplier_association')
 get_json_data('suppliers')

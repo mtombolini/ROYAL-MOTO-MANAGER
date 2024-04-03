@@ -11156,7 +11156,7 @@
         "supplier_rut": "76.024.961-0"
     },
     {
-        "product_sku": "0400-NI\u00d1O",
+        "product_sku": "0400-NIÑO",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -15980,7 +15980,7 @@
         "supplier_rut": "76.553.045-8"
     },
     {
-        "product_sku": "PI\u00d1ON-BICIMOTO14",
+        "product_sku": "PIÑON-BICIMOTO14",
         "supplier_rut": "76.896.730-K"
     },
     {
@@ -21952,10 +21952,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "909018TLBL327",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "481",
         "supplier_rut": "00.000.000-0"
     },
@@ -22016,10 +22012,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "0001234",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "00012345",
         "supplier_rut": "00.000.000-0"
     },
@@ -22070,5 +22062,37 @@
     {
         "product_sku": "90/90-21TLSR",
         "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136472",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12229",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "110/90-16TLCST",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "10000025115",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3032234",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3032241",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3105603",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "909018TLBL327",
+        "supplier_rut": "76.334.036-8"
     }
 ]
