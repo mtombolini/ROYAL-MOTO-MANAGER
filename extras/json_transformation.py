@@ -4,9 +4,9 @@ from sqlalchemy import text
 
 def transform_credit_term(credit_term):
     mapping = {
-        'THIRTY_DAYS': '30 días',
-        'SIXTY_DAYS': '60 días',
-        'ONE_TWENTY_DAYS': '120 días',
+        'THIRTY_DAYS': '30 Días',
+        'SIXTY_DAYS': '60 Días',
+        'ONE_TWENTY_DAYS': '120 Días',
         'RETURN': 'Devolución'
     }
     return mapping.get(credit_term, credit_term)
