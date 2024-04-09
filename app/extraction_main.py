@@ -4,6 +4,7 @@ from app.api_main import ApiMain
 from databases.session import AppSession
 from services.analysis.analysis_main import Analyser
 from api.extractors.last_net_cost_extractor import LastNetCostExtractor
+from extras.init_product_activation import init_product_activation
 
 class ExtractionMain:
     def run_extraction(self):
@@ -12,6 +13,8 @@ class ExtractionMain:
 
         last_net_cost_extractor = LastNetCostExtractor()
         last_net_cost_extractor.main_extraction()
+
+        init_product_activation()
 
         session = AppSession()
         analyser = Analyser()

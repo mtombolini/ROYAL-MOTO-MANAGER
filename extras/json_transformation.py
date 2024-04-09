@@ -34,4 +34,6 @@ def get_json_data(table_name):
 
 
 get_json_data('product_supplier_association')
+print('product_supplier_association guardado')
 get_json_data('suppliers')
+print('suppliers guardado')

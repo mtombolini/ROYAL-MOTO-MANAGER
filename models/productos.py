@@ -172,7 +172,7 @@ class Product(Base):
                 price_list, df_precios = cls.get_product_price_list(variant_id, last_net_cost)
                 shippings_list, df_shippings = cls.get_product_shipping(variant_id)
                 is_active = ProductActivation.get_product_activation_state(product.sku)
-
+                
                 def create_empty_dataframe(columns):
                     return pd.DataFrame(columns=columns)
 

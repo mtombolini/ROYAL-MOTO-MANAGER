@@ -2288,10 +2288,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "C7HSA-BR",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "CR6HS",
         "supplier_rut": "85.891.400-0"
     },
@@ -2310,10 +2306,6 @@
     {
         "product_sku": "D8EAJP",
         "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "DPR8EA-9BR",
-        "supplier_rut": "85.891.400-0"
     },
     {
         "product_sku": "LKAR8A-9",
@@ -21720,10 +21712,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "GC-134",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "GC-133",
         "supplier_rut": "00.000.000-0"
     },
@@ -22012,10 +22000,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "00012345",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "H6049",
         "supplier_rut": "00.000.000-0"
     },
@@ -22094,5 +22078,137 @@
     {
         "product_sku": "909018TLBL327",
         "supplier_rut": "76.334.036-8"
+    },
+    {
+        "product_sku": "DPR8EA-9JP",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "YTX7A-BSHB",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "C7HSAJP",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136473",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "B8HSJP",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "7005",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "275X18CST",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "H6275",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12455",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136455",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140366",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140395",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136484",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136486",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136492",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136494",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136497",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140372",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140374",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140450",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "130635",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "130636",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "130637",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "130648",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "130646",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "113169",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "125735",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "132053",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "132055",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "132052",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GC-126-1",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GC-126-2",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "H6270",
+        "supplier_rut": "00.000.000-0"
     }
 ]
