@@ -22274,5 +22274,33 @@
     {
         "product_sku": "412H-150JP",
         "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LMP192ORR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "CPR8EA-9",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1980",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "22113",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "DPR8EA-9BR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "RPP2067THC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13260",
+        "supplier_rut": "00.000.000-0"
     }
 ]
