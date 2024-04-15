@@ -22302,5 +22302,41 @@
     {
         "product_sku": "13260",
         "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GUANTES-SPORTS",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GUANTES-CUERINA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GUANTES-XRZ",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GUANTES-JUVENIL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "GUANTES-SJKR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "49CC27-1",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13054",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KIT-CIL-KTM-DUKE-200",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "CA350/400X17",
+        "supplier_rut": "00.000.000-0"
     }
 ]
