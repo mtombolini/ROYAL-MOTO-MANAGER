@@ -21108,10 +21108,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "0045",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "1120G",
         "supplier_rut": "00.000.000-0"
     },
@@ -21265,10 +21261,6 @@
     },
     {
         "product_sku": "0295",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "0318",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21457,10 +21449,6 @@
     },
     {
         "product_sku": "QA015",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "14502",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21761,10 +21749,6 @@
     },
     {
         "product_sku": "FB032",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "14504",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22489,6 +22473,242 @@
     },
     {
         "product_sku": "27518MOZUKI",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0045-ROJO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "C076",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1000000M190",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "888414",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "530VX3-120JP",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3619-ROJO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3619-AZUL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3619-DORADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3619-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3619-PLATEADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0045-AZUL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0045-DORADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0045-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0045-PLATEADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "4326-AZUL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "4326-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0284-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0284-ROJO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0284-VERDE",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0284-AZUL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0284-DORADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0252",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1002",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "5255-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "5255-AZUL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "5255-GRAFITO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0006P",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0035A-AZULMH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0035A-ROJOMH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0035A-PLATEADOMH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0120A",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "44800-KYA-620ZCCM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2810-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2810-ROJO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2810-DORADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2810-AZUL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2810-PLATEADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3664-NARANJA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3664-PLATEADO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3664-NEGRO",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3664-VERDE",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0211P",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8260M-AZUL-MH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8260M-NARANJA-MH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8260M-VERDE-MH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8260M-FLUOR-MH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8260M-ROJO-MH",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1107G-NEGRO-XL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-FLUOR-M",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-FLUOR-XL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-GRIS-M",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-GRIS-L",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-NARANJA-L",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-NARANJA-XL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2421-FUCSIA-L",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "14502",
+        "supplier_rut": "77.027.986-0"
+    },
+    {
+        "product_sku": "0318",
+        "supplier_rut": "77.002.605-9"
+    },
+    {
+        "product_sku": "14504",
+        "supplier_rut": "77.027.986-0"
+    },
+    {
+        "product_sku": "16001BC",
         "supplier_rut": "00.000.000-0"
     }
 ]
