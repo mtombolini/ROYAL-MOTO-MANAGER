@@ -3,5 +3,5 @@ cd /home/franco/Documentos/ROYAL-MOTO-MANAGER
 
 git checkout cambios_produccion
 git add .
-git commit -m "add: backup"
+git commit -m "add: backup $(date +'%Y-%m-%d %H:%M:%S')"
 git push
