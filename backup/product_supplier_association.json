@@ -21580,10 +21580,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "101302",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "101304",
         "supplier_rut": "00.000.000-0"
     },
@@ -21608,23 +21604,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "125442",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "79446",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "79447",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "79448",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "140367",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21660,10 +21640,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "136479",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "136480",
         "supplier_rut": "00.000.000-0"
     },
@@ -21676,35 +21652,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "140378",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "140379",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "125378",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "76030",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "114582",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "114583",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "110738",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "110739",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21717,10 +21665,6 @@
     },
     {
         "product_sku": "115227",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "115250",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21952,23 +21896,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "136455",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "140366",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "140395",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "136484",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "136486",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21985,14 +21913,6 @@
     },
     {
         "product_sku": "140372",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "140374",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "140450",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22704,10 +22624,6 @@
         "supplier_rut": "77.027.986-0"
     },
     {
-        "product_sku": "16001BC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "3506BC",
         "supplier_rut": "00.000.000-0"
     },
@@ -22730,5 +22646,269 @@
     {
         "product_sku": "2919",
         "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16001",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3529",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3530",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "7007",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "7045",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8502",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8503",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8527",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8542",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8551",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "9005",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "9009",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "9502",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "10516",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "10517",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "10522",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11005",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11006",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11007",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11008",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11015",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11020",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11017",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11022",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11026",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11027",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "15017",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "15016",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16006",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16011",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20203",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20208",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23007",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23008",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23307",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23309",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "MP00243",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "MP00130",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8507",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "26606",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "21602",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "22220",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "22221",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23001",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23002",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23003",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140367",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "140395",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "136455",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "125378",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "79447",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "136479",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "79448",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "125442",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "140379",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "101302",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "140374",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "136484",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "136486",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "140450",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "114583",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "114582",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "110738",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "115250",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "110739",
+        "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "140378",
+        "supplier_rut": "76.224.568-K"
     }
 ]

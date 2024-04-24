@@ -278,5 +278,12 @@
         "trading_name": "Sin Proveedor",
         "credit_term": "30 Días",
         "delivery_period": 0
+    },
+    {
+        "rut": "76.224.568-K",
+        "business_name": "IMPORTADORA OXS LIMITADA",
+        "trading_name": "OXS",
+        "credit_term": "30 Días",
+        "delivery_period": 2
     }
 ]
