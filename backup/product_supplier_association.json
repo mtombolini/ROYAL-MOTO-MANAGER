@@ -8236,10 +8236,6 @@
         "supplier_rut": "76.553.045-8"
     },
     {
-        "product_sku": "6515",
-        "supplier_rut": "77.027.986-0"
-    },
-    {
         "product_sku": "KA058",
         "supplier_rut": "76.553.045-8"
     },
@@ -22709,6 +22705,30 @@
     },
     {
         "product_sku": "16001BC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "3506BC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "14501BC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "0690-verde",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "N050",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "DAMPER-CG",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2919",
         "supplier_rut": "00.000.000-0"
     }
 ]
