@@ -22624,10 +22624,6 @@
         "supplier_rut": "77.027.986-0"
     },
     {
-        "product_sku": "3506BC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "14501BC",
         "supplier_rut": "00.000.000-0"
     },
@@ -22910,5 +22906,49 @@
     {
         "product_sku": "140378",
         "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "3506",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23004",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "23005",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20504",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20509",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2923",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20523",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20802",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20803",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "21112",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "ST-1430",
+        "supplier_rut": "00.000.000-0"
     }
 ]

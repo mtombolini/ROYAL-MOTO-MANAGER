@@ -15,9 +15,3 @@ python3 -m app.init_db
 python3 -m extras.print_archive
 
 python3 -m app.extraction_main
-python3 -m extras.print_archive
-
-git checkout cambios_produccion
-git add .
-git commit -m "add: backup $(date +'%Y-%m-%d %H:%M:%S')"
-git push
