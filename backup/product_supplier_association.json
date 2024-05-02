@@ -23014,5 +23014,13 @@
     {
         "product_sku": "132052",
         "supplier_rut": "76.224.568-K"
+    },
+    {
+        "product_sku": "S4F06700001B",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LMP248ORR",
+        "supplier_rut": "00.000.000-0"
     }
 ]
