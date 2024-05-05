@@ -2040,10 +2040,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "21650-33G80-000",
-        "supplier_rut": "77.231.094-3"
-    },
-    {
         "product_sku": "CC003",
         "supplier_rut": "76.553.045-8"
     },
@@ -3278,10 +3274,6 @@
     {
         "product_sku": "B04-F6335-00HB",
         "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "58200H40101H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "22870-KSM-900HB",
@@ -5848,10 +5840,6 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "27601-21J10-000",
-        "supplier_rut": "77.231.094-3"
-    },
-    {
         "product_sku": "400754",
         "supplier_rut": "77.060.758-2"
     },
@@ -6418,10 +6406,6 @@
     {
         "product_sku": "NE-12000-000JP",
         "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "59211H2C000H504",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "291420165-0001JP",
@@ -9168,10 +9152,6 @@
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "13781H2C001H000",
-        "supplier_rut": "77.231.094-3"
-    },
-    {
         "product_sku": "11993",
         "supplier_rut": "76.086.791-8"
     },
@@ -9230,10 +9210,6 @@
     {
         "product_sku": "EMHJ52407",
         "supplier_rut": "77.027.986-0"
-    },
-    {
-        "product_sku": "13781H40100H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "12893",
@@ -9366,10 +9342,6 @@
     {
         "product_sku": "1658",
         "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "13780H7A001H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "12894",
@@ -9946,10 +9918,6 @@
     {
         "product_sku": "P085",
         "supplier_rut": "76.553.045-8"
-    },
-    {
-        "product_sku": "35100H2C000H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "P081-NEGRO",
@@ -12038,10 +12006,6 @@
     {
         "product_sku": "41201-KVE-915KIT",
         "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "27600H40Y00H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "10000071848",
@@ -17264,10 +17228,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "32800H51001H000",
-        "supplier_rut": "77.231.094-3"
-    },
-    {
         "product_sku": "02137",
         "supplier_rut": "00.000.000-0"
     },
@@ -21784,10 +21744,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "H6270",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "12987",
         "supplier_rut": "00.000.000-0"
     },
@@ -22624,22 +22580,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "12140-34J10-000",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "16400-34J00-000",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "16331-34J00",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "2GS-E6150-10",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "2526",
         "supplier_rut": "86.868.900-5"
     },
@@ -23021,6 +22961,138 @@
     },
     {
         "product_sku": "LMP248ORR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "58200H40101H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "27601-21J10-000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13780H7A001H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "21650-33G80-000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "27600H40Y00H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "32800H51001H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "35100H2C000H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13781H2C001H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13781H40100H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "59211H2C000H504-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "H6270-VM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12140-34J10-000CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16400-34J00-000CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16331-34J00CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2GS-E6150-10CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "20603",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "B9X-E6150-000CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1CK-E6150-000CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "36JF0116-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JY351206-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JP161202-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JP161200-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JG161015-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JU561401-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JU561400-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "6432-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "21501-BC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JP561402-KTM-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "51600H40100H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "H6094-VM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "H6048-VM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12900H3J030H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12840H3J001H000-CM",
         "supplier_rut": "00.000.000-0"
     }
 ]
