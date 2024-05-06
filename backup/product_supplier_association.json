@@ -6816,10 +6816,6 @@
         "supplier_rut": "77.060.758-2"
     },
     {
-        "product_sku": "12710H3D021H000",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "DE015",
         "supplier_rut": "76.553.045-8"
     },
@@ -23008,31 +23004,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "12140-34J10-000CM",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "16400-34J00-000CM",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "16331-34J00CM",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "2GS-E6150-10CM",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "20603",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "B9X-E6150-000CM",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "1CK-E6150-000CM",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -23093,6 +23065,122 @@
     },
     {
         "product_sku": "12840H3J001H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12710H3D021H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12140-34J10-000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16400-34J00-000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16331-34J00-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2GS-E6150-10-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "B9X-E6150-000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1CK-E6150-000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140390034-0001",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12780H3J000H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12830H3JY00H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520HN03775-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "53100-KRH-900ZA-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "91015-KRH-901K-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "41200-KPN-A70K-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "50301-KCS-W60K-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "44800-KYA-620ZC-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "50661-K14-960-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "44830-KYY-F21-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "16400H05201H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2SB-E2231/E2241-00-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2905102675-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM01880-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM01662-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM00678-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM01009-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM01007-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM00109-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "SEY0198-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520AM01500-CM",
         "supplier_rut": "00.000.000-0"
     }
 ]
