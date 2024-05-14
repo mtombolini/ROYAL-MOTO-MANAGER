@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/franco/Documentos/ROYAL-MOTO-MANAGER
+cd /home/nebula/ROYAL-MOTO-MANAGER
 source venv/bin/activate
 
 git checkout cambios_produccion
