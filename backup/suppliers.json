@@ -285,5 +285,12 @@
         "trading_name": "OXS",
         "credit_term": "30 Días",
         "delivery_period": 2
+    },
+    {
+        "rut": "12.345.678-9",
+        "business_name": "TOMBOLINI SPA",
+        "trading_name": "Tombolini Spa",
+        "credit_term": "30 Días",
+        "delivery_period": 0
     }
 ]

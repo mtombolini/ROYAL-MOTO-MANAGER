@@ -12476,10 +12476,6 @@
         "supplier_rut": "86.868.900-5"
     },
     {
-        "product_sku": "1592",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "RPP9004BPB",
         "supplier_rut": "76.460.853-4"
     },
@@ -12634,10 +12630,6 @@
     {
         "product_sku": "46092-0007",
         "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "57621H2J000H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "401033",
@@ -12814,10 +12806,6 @@
     {
         "product_sku": "13509",
         "supplier_rut": "77.027.986-0"
-    },
-    {
-        "product_sku": "57421H40100H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "83173",
@@ -13170,10 +13158,6 @@
     {
         "product_sku": "GF003",
         "supplier_rut": "76.553.045-8"
-    },
-    {
-        "product_sku": "56111H2C000H000",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "83185",
@@ -14398,10 +14382,6 @@
     {
         "product_sku": "O-MBA-COMB",
         "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "753",
-        "supplier_rut": "86.868.900-5"
     },
     {
         "product_sku": "B124",
@@ -17238,10 +17218,6 @@
     {
         "product_sku": "83639",
         "supplier_rut": "85.390.800-2"
-    },
-    {
-        "product_sku": "32800H51001H0",
-        "supplier_rut": "77.231.094-3"
     },
     {
         "product_sku": "V008",
@@ -21904,22 +21880,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "KIT-CG-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOC-TR-REX-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "TAB-YBR-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "TAB-BICI-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "CA275/300X16XC",
         "supplier_rut": "00.000.000-0"
     },
@@ -21936,46 +21896,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "CHA-LUC-IZQ-BC-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHA-LUC-DER-BC-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHA-LUC-DER-FZ-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHA-LUC-IZQ-FZ-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "REF-ROJO-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "BUJ-SCOOTER-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "TAP-NIV-CG-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHA-PAR-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "EMP-ESC-SC-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "AHO-AUT-SC-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "1000000M231",
         "supplier_rut": "00.000.000-0"
     },
@@ -21984,15 +21904,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "CA410X17XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "CA225/250X17XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CDI-5PIN-XC",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22000,27 +21912,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "RES-PAT-LAT-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "RES-PED-FRE-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "RES-PAT-CEN-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "RES-SWITCH-FRENO-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "4011402010",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "SPRAY-MUL-XC",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22028,39 +21920,7 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "CDI-SCOOTER-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "EST-CG8-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "TAPA-EST-BEN-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "BOM-FRE-FZ-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "CA275/300X19XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOCO-DEL-LED-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOCO-DEL-GN-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHA-LUC-DER-UNIV-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHA-LUC-IZQ-UNI-XC",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22077,50 +21937,6 @@
     },
     {
         "product_sku": "350-16TLSR",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "VAR-FRENO-CG-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "835-20-30XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "SWITCH-FRE-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "ESP-KA-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "CHAPA-CONT-GN-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "AMP-SEÑ-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOCO-SE-CHO-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOC-SEÑ-UNIV-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOCO-SEÑ-LED1-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOC-SEÑ-LED2-XC",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "FOC-SEÑ-LED3-XC",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22288,10 +22104,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "44800-KYA-620ZCCM",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "2810-NEGRO",
         "supplier_rut": "00.000.000-0"
     },
@@ -22394,10 +22206,6 @@
     {
         "product_sku": "14504",
         "supplier_rut": "77.027.986-0"
-    },
-    {
-        "product_sku": "14501BC",
-        "supplier_rut": "00.000.000-0"
     },
     {
         "product_sku": "0690-verde",
@@ -23182,5 +22990,265 @@
     {
         "product_sku": "520AM01500-CM",
         "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "56111H2C000H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "57421H40100H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "57621H2J000H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "14501-BC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "9007",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12710H3J053H000-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13510",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "12845",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "EMHJ53052",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "F800603307-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "550HN00575-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "550HN01675-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520HN00375-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "UF161206-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1042-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "S4C063500010-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JF161206-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JL161200-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "DT171814-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "S410485006171-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "S410485001169-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "520VO-130JP-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11428-562-889-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "753",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1592",
+        "supplier_rut": "86.868.900-5"
+    },
+    {
+        "product_sku": "CDI-5PIN-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "KIT-CG-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOC-TR-REX-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "TAB-YBR-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOC-SEÑ-LED3-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOC-SEÑ-LED2-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "TAB-BICI-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOCO-SEÑ-LED1-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "SPRAY-MUL-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-LUC-IZQ-BC-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOC-SEÑ-UNIV-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-LUC-DER-BC-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOCO-SE-CHO-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-LUC-DER-FZ-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CDI-SCOOTER-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-LUC-IZQ-FZ-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "REF-ROJO-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOCO-DEL-LED-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "EST-CG8-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "BUJ-SCOOTER-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "TAP-NIV-CG-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "RES-SWITCH-FRENO-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "ESP-KA-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-PAR-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "EMP-ESC-SC-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-LUC-IZQ-UNI-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "AHO-AUT-SC-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHA-LUC-DER-UNIV-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "RES-PAT-LAT-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "RES-PAT-CEN-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "RES-PED-FRE-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "BOM-FRE-FZ-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CHAPA-CONT-GN-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "AMP-SEÑ-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "FOCO-DEL-GN-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "TAPA-EST-BEN-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "VAR-FRENO-CG-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "SWITCH-FRE-XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "CA410X17XC",
+        "supplier_rut": "76.896.730-K"
+    },
+    {
+        "product_sku": "835-20-30XC",
+        "supplier_rut": "76.896.730-K"
     }
 ]
