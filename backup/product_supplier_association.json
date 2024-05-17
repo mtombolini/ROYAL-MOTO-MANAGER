@@ -584,10 +584,6 @@
         "supplier_rut": "76.553.045-8"
     },
     {
-        "product_sku": "2046",
-        "supplier_rut": "77.751.990-5"
-    },
-    {
         "product_sku": "134881",
         "supplier_rut": "77.751.990-5"
     },
@@ -8608,10 +8604,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "386",
-        "supplier_rut": "76.086.791-8"
-    },
-    {
         "product_sku": "H152",
         "supplier_rut": "76.553.045-8"
     },
@@ -12200,10 +12192,6 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "1WD-F5443-00KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "100814",
         "supplier_rut": "77.751.990-5"
     },
@@ -14404,10 +14392,6 @@
         "supplier_rut": "77.060.758-2"
     },
     {
-        "product_sku": "GC-120",
-        "supplier_rut": "77.047.847-2"
-    },
-    {
         "product_sku": "49CC78",
         "supplier_rut": "00.000.000-0"
     },
@@ -14628,10 +14612,6 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "69100-15810JP",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "3503",
         "supplier_rut": "77.027.986-0"
     },
@@ -14676,20 +14656,8 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "DJ-1510-71",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "U003",
         "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "LMP274",
-        "supplier_rut": "85.891.400-0"
-    },
-    {
-        "product_sku": "LMP274SR",
-        "supplier_rut": "85.891.400-0"
     },
     {
         "product_sku": "11424",
@@ -14698,10 +14666,6 @@
     {
         "product_sku": "400286",
         "supplier_rut": "77.060.758-2"
-    },
-    {
-        "product_sku": "LMP275SR",
-        "supplier_rut": "85.891.400-0"
     },
     {
         "product_sku": "400287",
@@ -14928,10 +14892,6 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "LMP500SF",
-        "supplier_rut": "85.891.400-0"
-    },
-    {
         "product_sku": "FA630HH",
         "supplier_rut": "00.000.000-0"
     },
@@ -14945,10 +14905,6 @@
     },
     {
         "product_sku": "59100-34880CM",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "06455-KCC-841SEMI",
         "supplier_rut": "76.104.182-7"
     },
     {
@@ -18752,10 +18708,6 @@
         "supplier_rut": "7.343.974-4"
     },
     {
-        "product_sku": "GC-124",
-        "supplier_rut": "77.047.847-2"
-    },
-    {
         "product_sku": "NB006",
         "supplier_rut": "76.553.045-8"
     },
@@ -19390,10 +19342,6 @@
     {
         "product_sku": "Y241",
         "supplier_rut": "76.553.045-8"
-    },
-    {
-        "product_sku": "146046",
-        "supplier_rut": "77.751.990-5"
     },
     {
         "product_sku": "169111",
@@ -21048,14 +20996,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "GC-129",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "GC-130",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "1557",
         "supplier_rut": "00.000.000-0"
     },
@@ -21244,10 +21184,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "FS-GN125",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "REFLEC-C-AMARILLO",
         "supplier_rut": "00.000.000-0"
     },
@@ -21288,10 +21224,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "PEDALINES-FZ16",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "TAB-CG125",
         "supplier_rut": "00.000.000-0"
     },
@@ -21321,10 +21253,6 @@
     },
     {
         "product_sku": "YTX7L-BS/MF",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "UTZ14S-BS",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -21708,14 +21636,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "GC-126-1",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "GC-126-2",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "12987",
         "supplier_rut": "00.000.000-0"
     },
@@ -21857,10 +21777,6 @@
     },
     {
         "product_sku": "151898",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "144616",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -22260,23 +22176,7 @@
         "supplier_rut": "76.224.568-K"
     },
     {
-        "product_sku": "125378",
-        "supplier_rut": "76.224.568-K"
-    },
-    {
-        "product_sku": "79447",
-        "supplier_rut": "76.224.568-K"
-    },
-    {
         "product_sku": "136479",
-        "supplier_rut": "76.224.568-K"
-    },
-    {
-        "product_sku": "79448",
-        "supplier_rut": "76.224.568-K"
-    },
-    {
-        "product_sku": "125442",
         "supplier_rut": "76.224.568-K"
     },
     {
@@ -22660,10 +22560,6 @@
         "supplier_rut": "76.224.568-K"
     },
     {
-        "product_sku": "76030",
-        "supplier_rut": "76.224.568-K"
-    },
-    {
         "product_sku": "101303",
         "supplier_rut": "76.224.568-K"
     },
@@ -22845,10 +22741,6 @@
     },
     {
         "product_sku": "6432-IV",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
-        "product_sku": "21501-BC",
         "supplier_rut": "00.000.000-0"
     },
     {
@@ -23244,11 +23136,307 @@
         "supplier_rut": "76.896.730-K"
     },
     {
-        "product_sku": "CA410X17XC",
+        "product_sku": "835-20-30XC",
         "supplier_rut": "76.896.730-K"
     },
     {
-        "product_sku": "835-20-30XC",
-        "supplier_rut": "76.896.730-K"
+        "product_sku": "227050-SA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "191358-SA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "191341-SA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LMP275SR-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "191161-SA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LMP500SF-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LMP274SR-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "386-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "2046-KL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "146046-KL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "FS-GN125-XC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "CA400/410X17-XC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "PED-FZ16-XC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "UTZ14S-BS-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140388",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "122335",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "122336",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136458",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "122322",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "144616-KL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "Y380",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "DA066",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13718556564-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LMP477SF-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "143637-KL",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11955-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "350-10TL-XC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "CA275/300X21-XC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "FIL-ACE-GN-XC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "SA018-QM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "183123-SA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "192174-SA",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "D003-QM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JG161015-COMP-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "100/80*17",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "JG351005",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "FFP001-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "S4V0068200008BR-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "630-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "130647",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "122323",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "122324",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "140365",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153101",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153102",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153103",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153104",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153105",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153106",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153107",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153108",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153109",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153110",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153111",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153112",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153114",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153113",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153115",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153116",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "153117",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "110798",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "110800",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "7524",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "648-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1000091261-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "136485",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LX250GY3-F20-1-MT",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "13475-IV",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8512-BC",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LEO200-1",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "LEO200-0",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "FLASHER200-0",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "DUSTER200-0",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "PAINE125-0",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "21501-BC",
+        "supplier_rut": "77.027.986-0"
     }
 ]
