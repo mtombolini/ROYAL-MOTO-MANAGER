@@ -1,11 +1,11 @@
 from __future__ import annotations
 from sqlalchemy import Column, Integer, ForeignKey, Date, Time, Boolean, and_
 from parameters import (
-    STANDARD_CHECK_IN_WEEKDAY, STANDARD_CHECK_OUT_WEEKDAY,
-    STANDARD_CHECK_IN_SATURDAY, STANDARD_CHECK_OUT_SATURDAY,
+    STANDARD_CHECK_IN_TUESDAY_TO_FRIDAY, STANDARD_CHECK_OUT_WEEKDAY,
+    STANDARD_CHECK_IN_MONDAY_AND_SATURDAY, STANDARD_CHECK_OUT_SATURDAY,
     STANDARD_LUNCH_BREAK_DURATION, STANDARD_LUNCH_BREAK_START,
-    SCHEDULE_RECORDS_DATE_FORMAT, STANDARD_TOTAL_HOURS_WORKED_WEEKDAY,
-    STANDARD_TOTAL_HOURS_WORKED_SATURDAY,
+    SCHEDULE_RECORDS_DATE_FORMAT, STANDARD_TOTAL_HOURS_WORKED_MONDAY,
+    STANDARD_TOTAL_HOURS_WORKED_TUESDAY_TO_FRIDAY, STANDARD_TOTAL_HOURS_WORKED_SATURDAY,
     MONTH_CUT,
 )
 from sqlalchemy.orm import relationship
@@ -148,10 +148,10 @@ class OvertimeRecord(Base):
     def check_in(self) -> time:
         if not self.was_worked():
             return None
-        elif self.is_saturday():
-            return self._check_in or STANDARD_CHECK_IN_SATURDAY
+        elif self.is_monday() or self.is_saturday():
+            return self._check_in or STANDARD_CHECK_IN_MONDAY_AND_SATURDAY
         else:
-            return self._check_in or STANDARD_CHECK_IN_WEEKDAY
+            return self._check_in or STANDARD_CHECK_IN_TUESDAY_TO_FRIDAY
     
     @check_in.setter
     def check_in(self, value: time) -> None:
@@ -236,16 +236,20 @@ class OvertimeRecord(Base):
     @property
     def overtime_hours(self) -> timedelta:
         if self.was_worked():
-            if self.is_saturday():
+            if self.is_monday():
+                return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_MONDAY
+            elif self.is_saturday():
                 return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_SATURDAY
             else:
-                return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
+                return self.total_hours_worked - STANDARD_TOTAL_HOURS_WORKED_TUESDAY_TO_FRIDAY
         else:
             if self.is_working_day():
-                if self.is_saturday():
+                if self.is_monday():
+                    return -STANDARD_TOTAL_HOURS_WORKED_MONDAY
+                elif self.is_saturday():
                     return -STANDARD_TOTAL_HOURS_WORKED_SATURDAY
                 else:
-                    return -STANDARD_TOTAL_HOURS_WORKED_WEEKDAY
+                    return -STANDARD_TOTAL_HOURS_WORKED_TUESDAY_TO_FRIDAY
             else:
                 return timedelta(0)
             
@@ -253,7 +257,10 @@ class OvertimeRecord(Base):
     @property        
     def is_late(self) -> bool:
         if self.was_worked():
-            return (not self.is_saturday() and self.check_in > STANDARD_CHECK_IN_WEEKDAY) or (self.is_saturday and self.check_in > STANDARD_CHECK_IN_SATURDAY)
+            return (
+                (not self.is_saturday() and not self.is_monday() and self.check_in > STANDARD_CHECK_IN_TUESDAY_TO_FRIDAY) 
+                or ((self.is_saturday or self.is_monday()) and self.check_in > STANDARD_CHECK_IN_MONDAY_AND_SATURDAY)
+            )
         else:
             return False
         
@@ -269,10 +276,10 @@ class OvertimeRecord(Base):
     @property
     def hours_late(self) -> timedelta:
         if self.is_late:
-            if self.is_saturday():
-                return datetime.combine(self.date, self.check_in) - datetime.combine(self.date, STANDARD_CHECK_IN_SATURDAY)
+            if self.is_monday() or self.is_saturday():
+                return datetime.combine(self.date, self.check_in) - datetime.combine(self.date, STANDARD_CHECK_IN_MONDAY_AND_SATURDAY)
             else:
-                return datetime.combine(self.date, self.check_in) - datetime.combine(self.date, STANDARD_CHECK_IN_WEEKDAY)
+                return datetime.combine(self.date, self.check_in) - datetime.combine(self.date, STANDARD_CHECK_IN_TUESDAY_TO_FRIDAY)
         return timedelta()
     
     @property
@@ -294,6 +301,10 @@ class OvertimeRecord(Base):
     
     def is_payable(self) -> bool:
         return self.is_working_day() or self.is_on_vacation
+    
+    
+    def is_monday(self) -> bool:
+        return self.date.weekday() == 0
         
         
     def is_saturday(self) -> bool:
