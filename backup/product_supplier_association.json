@@ -5792,10 +5792,6 @@
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "23100-KEC4-900JP",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "5S9-E7641-00JP",
         "supplier_rut": "76.104.182-7"
     },
@@ -5806,10 +5802,6 @@
     {
         "product_sku": "400035",
         "supplier_rut": "77.060.758-2"
-    },
-    {
-        "product_sku": "835-20-30JPNPC",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "400036",
@@ -11732,10 +11724,6 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "41200-K70-600KIT",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "10000091459",
         "supplier_rut": "76.086.791-8"
     },
@@ -11748,23 +11736,11 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "41200-KVX-900-KI",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "41200-KPN-A00KIT",
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "41200-KSP-B00-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "41201-KVE-900KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "41201-KYJ-900-KITH",
         "supplier_rut": "76.104.182-7"
     },
     {
@@ -11828,10 +11804,6 @@
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "41201-KRF-B40-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "10000091476",
         "supplier_rut": "76.086.791-8"
     },
@@ -11880,14 +11852,6 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "64511-0534-115-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "64511-05338-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "64511-05310-15-K",
         "supplier_rut": "76.104.182-7"
     },
@@ -11920,16 +11884,8 @@
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "64511-48048-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "10000091505",
         "supplier_rut": "76.086.791-8"
-    },
-    {
-        "product_sku": "64511-25H00-000-KITH",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "EVO-20400-000KH",
@@ -11976,16 +11932,8 @@
         "supplier_rut": "76.086.791-8"
     },
     {
-        "product_sku": "JU-1410-02-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "10000091471",
         "supplier_rut": "76.086.791-8"
-    },
-    {
-        "product_sku": "50002058-KITH",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "41201-383-0040-K",
@@ -12005,10 +11953,6 @@
     },
     {
         "product_sku": "64511-05310-16-KITH",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "JL-1312-28-KITH",
         "supplier_rut": "76.104.182-7"
     },
     {
@@ -12112,16 +12056,8 @@
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "41201-KPE-900KIT",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "10000091051",
         "supplier_rut": "76.086.791-8"
-    },
-    {
-        "product_sku": "41202-KWT-900-KITH",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "4VW-F5445-11-KIT",
@@ -12134,10 +12070,6 @@
     {
         "product_sku": "10000071817",
         "supplier_rut": "76.086.791-8"
-    },
-    {
-        "product_sku": "3B2-F5450-20-KITH",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "12297",
@@ -12160,10 +12092,6 @@
         "supplier_rut": "76.104.182-7"
     },
     {
-        "product_sku": "5VL-F5445-00KIT",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "10000071907",
         "supplier_rut": "76.086.791-8"
     },
@@ -12182,10 +12110,6 @@
     {
         "product_sku": "10000091310",
         "supplier_rut": "76.086.791-8"
-    },
-    {
-        "product_sku": "BK7-F5448-00-KITH",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "10000091188",
@@ -23438,5 +23362,117 @@
     {
         "product_sku": "21501-BC",
         "supplier_rut": "77.027.986-0"
+    },
+    {
+        "product_sku": "168719-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "203263-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "226945-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "190219-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "193989-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "191995-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "227745-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "180068-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "191587-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "171915-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "214739-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "212360-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "214741-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "194974-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "214744-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "203015-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "314935-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "227744-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "227751-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "313237-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "310637-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "318860-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "310603-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "314482-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "310605-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "314936-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "227750-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "314483-SR",
+        "supplier_rut": "00.000.000-0"
     }
 ]
