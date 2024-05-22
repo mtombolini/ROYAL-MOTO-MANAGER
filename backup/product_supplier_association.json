@@ -23344,10 +23344,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "171924-SR",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "160386-SR",
         "supplier_rut": "00.000.000-0"
     },
@@ -23501,6 +23497,10 @@
     },
     {
         "product_sku": "191993-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "171925-SR",
         "supplier_rut": "00.000.000-0"
     }
 ]
