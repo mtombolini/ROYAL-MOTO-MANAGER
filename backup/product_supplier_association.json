@@ -21644,10 +21644,6 @@
         "supplier_rut": "00.000.000-0"
     },
     {
-        "product_sku": "MA155",
-        "supplier_rut": "00.000.000-0"
-    },
-    {
         "product_sku": "90/90-17C918",
         "supplier_rut": "00.000.000-0"
     },
@@ -23501,6 +23497,118 @@
     },
     {
         "product_sku": "171925-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1008017TLSYMO19",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "EMHJ51739",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "8515",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1009017TLSYM062",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1109016TLBL215",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1109017TLSYM052",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1207012TLSYS018",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1208017TLSYM019",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1307017TLSYM075",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1407017TLSYM019",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "1507017TLBL703",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "27517TLSYM067",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "27518TLSYM084",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "35010TLSYS002",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "41018TTSYM052",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "909017TLSYM019",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "909018TLSYM085",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "909019TTSYM052",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "909021TTSYM052",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTGIXXER150",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTNS200",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTNK150",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTCB190R",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTKA150",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTCB1",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "KTFZ16",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "MB728",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "MB731",
         "supplier_rut": "00.000.000-0"
     }
 ]
