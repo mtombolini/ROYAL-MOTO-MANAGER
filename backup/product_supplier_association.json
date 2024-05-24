@@ -23610,5 +23610,17 @@
     {
         "product_sku": "MB731",
         "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "11724",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "171887-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "193992-SR",
+        "supplier_rut": "00.000.000-0"
     }
 ]
