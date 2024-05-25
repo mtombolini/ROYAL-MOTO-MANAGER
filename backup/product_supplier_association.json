@@ -944,15 +944,7 @@
         "supplier_rut": "76.553.045-8"
     },
     {
-        "product_sku": "GTX7E-BSHB",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "YB7-AHB",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
-        "product_sku": "YTX7DL-BSHB",
         "supplier_rut": "76.104.182-7"
     },
     {
@@ -1318,10 +1310,6 @@
     {
         "product_sku": "12N9-3B-BSQS",
         "supplier_rut": "77.294.514-0"
-    },
-    {
-        "product_sku": "YTX9A-BS/MF",
-        "supplier_rut": "76.086.791-8"
     },
     {
         "product_sku": "6N4-2A-4-F",
@@ -8904,10 +8892,6 @@
         "supplier_rut": "85.390.800-2"
     },
     {
-        "product_sku": "1S7-E3440-00HB",
-        "supplier_rut": "76.104.182-7"
-    },
-    {
         "product_sku": "HA-2511",
         "supplier_rut": "00.000.000-0"
     },
@@ -9386,10 +9370,6 @@
     {
         "product_sku": "S010",
         "supplier_rut": "76.553.045-8"
-    },
-    {
-        "product_sku": "5VL-E4450-00HB",
-        "supplier_rut": "76.104.182-7"
     },
     {
         "product_sku": "5KA-E4450-00",
@@ -23621,6 +23601,42 @@
     },
     {
         "product_sku": "193992-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "185454",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "200652",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "400282",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "200658",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "185455",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "190007",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "E010136-CM",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "171866-SR",
+        "supplier_rut": "00.000.000-0"
+    },
+    {
+        "product_sku": "185503",
         "supplier_rut": "00.000.000-0"
     }
 ]
