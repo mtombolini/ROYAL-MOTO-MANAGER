@@ -2,9 +2,6 @@
 cd /home/franco/Documentos/ROYAL-MOTO-MANAGER
 source venv/bin/activate
 
-python3 -m extras.json_transformation
-python3 -m extras.print_archive
-
 python3 -m extras.backup_table
 python3 -m extras.print_archive
 

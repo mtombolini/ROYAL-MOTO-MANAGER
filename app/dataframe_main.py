@@ -51,6 +51,11 @@ class DataFrameMain():
             self.df_documents_details['Variant ID'].isin(self.df_products['Variant ID'])
         ]
 
+    def correct_ventas(self):
+        self.df_sales_documents = self.df_sales_documents[
+            self.df_sales_documents['Document ID'].isin(self.df_documents['Document ID'])
+        ]
+
     def correct_returns(self):
         self.df_returns = self.df_returns[
             self.df_returns['Document ID'].isin(self.df_documents['Document ID'])
