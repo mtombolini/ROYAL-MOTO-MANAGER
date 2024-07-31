@@ -6,6 +6,7 @@ from services.analysis.analysis_main import Analyser
 from api.extractors.last_net_cost_extractor import LastNetCostExtractor
 from extras.init_product_activation import init_product_activation
 
+
 class ExtractionMain:
     def run_extraction(self):
         api_main = ApiMain()
@@ -20,6 +21,7 @@ class ExtractionMain:
         analyser = Analyser()
         analyser.main(session)
         session.close()
+
 
 if __name__ == '__main__':
     initial = time.time()

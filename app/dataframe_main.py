@@ -12,7 +12,6 @@ from models.consumption import Consumption, ConsumptionDetail
 
 from api.extractors.supplier_extractor import df_suppliers, df_connections
 
-from random import randint
 
 class DataFrameMain():
     def __init__(self):
@@ -282,12 +281,13 @@ class DataFrameMain():
         self.create_suppliers(session)
         self.create_offices(session)
         self.create_products(session)
-
+        print("Productos creados")
         session.commit()
 
         self.create_products_suppliers(session)
         self.associate_unlinked_products_to_generic_supplier(session)
         self.create_stocks(session)
+        print("Stocks creados")
         self.create_consumptions(session)
         self.create_consumptions_details(session)
         self.create_receptions(session)
@@ -296,6 +296,7 @@ class DataFrameMain():
         self.create_documents_details(session)
         self.create_sales(session)
         self.create_sales_documents(session)
+        print("Ventas creadas")
         self.create_returns(session)
         self.create_price_list(session)
 

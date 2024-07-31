@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class PriceListExtractor(DataExtractor):
     def __init__(self, token):
@@ -25,13 +25,16 @@ class PriceListExtractor(DataExtractor):
         self.num = 0
 
     def get_data(self):
-        while self.num != 3 and not stop_signal_is_set():
-            endpoint = f"price_lists/{self.id_list[self.num]}/details.json?limit={self.limit}&offset={self.offset}"
+        while self.num != 3 and True:
+            endpoint = (
+                f"price_lists/{self.id_list[self.num]}/"
+                f"details.json?limit={self.limit}&offset={self.offset}"
+            )
             response = self.make_request(endpoint)
             if response is None or len(response['items']) == 0:
                 self.offset = 0
                 self.num += 1
-                
+
             else:
                 self.main_extraction(response)
 
@@ -44,9 +47,6 @@ class PriceListExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for price_list in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.price_id = price_list['id']
 
             self.create_main_dataframe(price_list)
@@ -65,19 +65,26 @@ class PriceListExtractor(DataExtractor):
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "listas_precio", "mensaje": f"{self.name_list[self.num]}: {self.offset} precios obtenidos"})
+            message = json.dumps({
+                "tipo": "listas_precio",
+                "mensaje": f"{self.name_list[self.num]}:\
+                     {self.offset} precios obtenidos"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Listas de Precios...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "lista_precios-listo", "mensaje": f"Lista de Precios ✅"})
-                log_file.write(message + "\n")
-                
-            dataframe_main.df_price_list = self.df_price_list
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "lista_precios-listo",
+                "mensaje": "Lista de Precios ✅"
+            })
+            log_file.write(message + "\n")
+
+        dataframe_main.df_price_list = self.df_price_list
+
 
 if __name__ == "__main__":
     extractor = PriceListExtractor(token=TOKEN)
