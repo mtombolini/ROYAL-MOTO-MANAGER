@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class SalesExtractor(DataExtractor):
     def __init__(self, token):
@@ -19,9 +19,20 @@ class SalesExtractor(DataExtractor):
         self.sale_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"payments.json?limit={self.limit}&offset={self.offset}&expand=[payment_type]"
-            response = self.make_request(endpoint)
+        endpoint = (
+            f"payments.json?limit={0}"
+            f"&offset={self.offset}"
+            f"&expand=[payment_type]"
+        )
+        response = self.make_request(endpoint)
+        cuenta = int(response['count'])
+        while self.offset < cuenta:
+            endpoint = (
+                f"payments.json?limit={self.limit}"
+                f"&offset={self.offset}"
+                f"&expand=[payment_type]"
+            )
+            response = self.make_request_with_retries(endpoint)
             if response is None or len(response['items']) == 0:
                 break
             else:
@@ -34,11 +45,19 @@ class SalesExtractor(DataExtractor):
 
         self.df_sales = pd.DataFrame(self.sales)
 
+    def make_request_with_retries(self, endpoint, retries=3, wait_time=60):
+        for attempt in range(retries):
+            response = self.make_request(endpoint)
+            if response is None or len(response['items']) < 50:
+                print(f"Attempt {attempt + 1} failed. {wait_time} seconds...")
+                time.sleep(wait_time)
+            else:
+                return response
+        print("Max retries reached. Skipping this batch.")
+        return response
+
     def main_extraction(self, response):
         for sale in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.sale_id = sale['id']
 
             self.create_main_dataframe(sale)
@@ -50,7 +69,10 @@ class SalesExtractor(DataExtractor):
         if 'document' in sale:
             sale_document_id = [sale['document']['id']]
         elif 'documents' in sale:
-            sale_document_id = [especific_document['id'] for especific_document in sale['documents']]
+            sale_document_id = [
+                especific_document['id']
+                for especific_document in sale['documents']
+            ]
         else:
             sale_document_id = None
 
@@ -67,31 +89,45 @@ class SalesExtractor(DataExtractor):
             document_ids = row['Document ID']
             if document_ids is not None:
                 for doc_id in document_ids:
-                    self.relations.append({'Sales ID': sales_id, 'Document ID': doc_id})
+                    self.relations.append({
+                        'Sales ID': sales_id,
+                        'Document ID': doc_id
+                    })
             else:
-                self.relations.append({'Sales ID': sales_id, 'Document ID': None})
+                self.relations.append({
+                    'Sales ID': sales_id,
+                    'Document ID': None
+                })
 
         self.df_relations = pd.DataFrame(self.relations)
-        self.df_relations.insert(0, 'ID Support', range(1, 1 + len(self.df_relations)))
+        self.df_relations.insert(
+            0, 'ID Support', range(1, 1 + len(self.df_relations))
+        )
         self.df_sales.drop('Document ID', axis=1, inplace=True)
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "ventas", "mensaje": f"{self.offset} ventas obtenidas"})
+            message = json.dumps({
+                "tipo": "ventas",
+                "mensaje": f"{self.offset} ventas obtenidas"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Ventas...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "ventas-listo", "mensaje": f"Ventas ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "ventas-listo",
+                "mensaje": "Ventas ✅"
+            })
+            log_file.write(message + "\n")
 
-            self.correction()
-            dataframe_main.df_sales = self.df_sales
-            dataframe_main.df_sales_documents = self.df_relations
+        self.correction()
+        dataframe_main.df_sales = self.df_sales
+        dataframe_main.df_sales_documents = self.df_relations
+
 
 if __name__ == "__main__":
     extractor = SalesExtractor(token=TOKEN)

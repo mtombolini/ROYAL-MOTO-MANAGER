@@ -1,11 +1,9 @@
 import time
-import threading
 
 from databases.session import AppSession
 
 from app.config import TOKEN
 from app.dataframe_main import DataFrameMain
-from app.flags import stop_flag, stop, stop_signal_is_set, clear_stop_signal
 
 from api.extractors.sales_extractor import SalesExtractor
 from api.extractors.office_extractor import OfficeExtractor
@@ -27,51 +25,22 @@ reception_ext = ReceptionExtractor(token=TOKEN)
 price_list_ext = PriceListExtractor(token=TOKEN)
 consumption_ext = ConsumptionExtractor(token=TOKEN)
 
+
 class ApiMain:
-    def run_threads(self, dataframe_main, threads):
-        for thread in threads:
-            thread.start()
-
-        for thread in threads:
-            thread.join()
-
-        #while any(thread.is_alive() for thread in threads):
-        #    if stop_signal_is_set():
-        #        print("Señal de detención detectada. Esperando a que las threads terminen.")
-        #        break
-        #    time.sleep(0.1)
-
     def main(self):
-        dataframe_main = DataFrameMain()
-        clear_stop_signal()
-        try:
-            threads = [
-                threading.Thread(target=product_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=reception_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=consumption_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=returns_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=document_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=price_list_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=shipping_ext.run, args=(dataframe_main,)),
-                threading.Thread(target=office_ext.run, args=(dataframe_main,)),
-                # threading.Thread(target=sales_ext.run, args=(dataframe_main,))
-            ]
+        while True:
+            dataframe_main = DataFrameMain()
+            try:
+                document_ext.run(dataframe_main)
+                sales_ext.run(dataframe_main)
+                product_ext.run(dataframe_main)
+                reception_ext.run(dataframe_main)
+                consumption_ext.run(dataframe_main)
+                returns_ext.run(dataframe_main)
+                price_list_ext.run(dataframe_main)
+                shipping_ext.run(dataframe_main)
+                office_ext.run(dataframe_main)
 
-            sales_thread = threading.Thread(target=sales_ext.run, args=(dataframe_main,))
-
-            while True:
-                stop_flag.clear()
-                print("Inicializando threads.")
-                self.run_threads(dataframe_main, threads)
-
-                print("Thread sales")
-
-                self.run_threads(dataframe_main, [sales_thread])
-
-                if stop_signal_is_set():
-                    print("Proceso de detención en curso.")
-                    raise KeyboardInterrupt
-                
                 print("Todos los threads han terminado. Reiniciando ciclo.")
                 session = AppSession()
                 try:
@@ -80,12 +49,12 @@ class ApiMain:
                     session.close()
                     time.sleep(10)
                     break
-
-        except KeyboardInterrupt:
-            print("Interrupción detectada, enviando señal de detención a los threads...")
-            stop()
+            except Exception as e:
+                print(f"Error en la ejecución: {e}")
+                break
 
         print("Limpieza y salida del programa.")
+
 
 if __name__ == "__main__":
     inicial = time.time()

@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class DocumentExtractor(DataExtractor):
     def __init__(self, token):
@@ -19,9 +19,21 @@ class DocumentExtractor(DataExtractor):
         self.document_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"documents.json?limit={self.limit}&offset={self.offset}&expand=[details, document_type, office]"
-            response = self.make_request(endpoint)
+        print("Obteniendo Cuenta...")
+        endpoint = (
+                f"documents.json?limit={0}"
+                f"&offset={self.offset}"
+                f"&expand=[details, document_type, office]"
+            )
+        response = self.make_request(endpoint)
+        cuenta = int(response['count'])
+        while self.offset < cuenta:
+            endpoint = (
+                f"documents.json?limit={self.limit}"
+                f"&offset={self.offset}"
+                f"&expand=[details, document_type, office]"
+            )
+            response = self.make_request_with_retries(endpoint)
             if response is None or len(response['items']) == 0:
                 break
             else:
@@ -32,14 +44,26 @@ class DocumentExtractor(DataExtractor):
 
             self.write_logs()
 
-        self.df_documents = pd.DataFrame(self.documents).drop_duplicates(subset='Document ID', keep='first')
-        self.df_documents_details = pd.DataFrame(self.documents_details).drop_duplicates(subset='Detail ID', keep='first')
+        self.df_documents = pd.DataFrame(self.documents).drop_duplicates(
+            subset='Document ID', keep='first'
+        )
+        self.df_documents_details = pd.DataFrame(
+            self.documents_details
+        ).drop_duplicates(subset='Detail ID', keep='first')
+
+    def make_request_with_retries(self, endpoint, retries=3, wait_time=60):
+        for attempt in range(retries):
+            response = self.make_request(endpoint)
+            if response is None or len(response['items']) < 50:
+                print(f"Attempt {attempt + 1} failed. {wait_time} seconds...")
+                time.sleep(wait_time)
+            else:
+                return response
+        print("Max retries reached. Skipping this batch.")
+        return response
 
     def main_extraction(self, response):
         for document in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.document_id = document['id']
 
             self.create_main_dataframe(document)
@@ -94,7 +118,10 @@ class DocumentExtractor(DataExtractor):
         details_limit = 50
         details_offset = 0
         while True:
-            endpoint = f"{details_link}?limit={details_limit}&offset={details_offset}"
+            endpoint = (
+                f"{details_link}?limit={details_limit}"
+                f"&offset={details_offset}"
+            )
             details = self.make_request(endpoint)
             if details is None or len(details['items']) == 0:
                 break
@@ -105,20 +132,26 @@ class DocumentExtractor(DataExtractor):
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "documentos", "mensaje": f"{self.offset} documentos obtenidos"})
+            message = json.dumps({
+                "tipo": "documentos",
+                "mensaje": f"{self.offset} documentos obtenidos"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Documentos...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "documentos-listo", "mensaje": f"Documentos ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "documentos-listo",
+                "mensaje": "Documentos ✅"
+            })
+            log_file.write(message + "\n")
 
-            dataframe_main.df_documents = self.df_documents
-            dataframe_main.df_documents_details = self.df_documents_details
+        dataframe_main.df_documents = self.df_documents
+        dataframe_main.df_documents_details = self.df_documents_details
+
 
 if __name__ == "__main__":
     extractor = DocumentExtractor(token=TOKEN)
@@ -129,7 +162,10 @@ if __name__ == "__main__":
 
     print("Guardando datos en Excel...")
     extractor.save_to_excel(extractor.df_documents, "document_data.xlsx")
-    extractor.save_to_excel(extractor.df_documents_details, "document_details_data.xlsx")
+    extractor.save_to_excel(
+        extractor.df_documents_details,
+        "document_details_data.xlsx"
+    )
 
     print("¡Proceso finalizado!")
     print(f"Tiempo total: {time.time() - time_start} segundos")
