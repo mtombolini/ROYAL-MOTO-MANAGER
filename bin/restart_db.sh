@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/franco/Documentos/ROYAL-MOTO-MANAGER
+cd /home/nebula/ROYAL-MOTO-MANAGER
 source venv/bin/activate
 
 python3 -m extras.backup_table
