@@ -1,0 +1,39 @@
+import json
+from databases.session import AppSession
+from sqlalchemy import text
+
+def transform_credit_term(credit_term):
+    mapping = {
+        'THIRTY_DAYS': '30 Días',
+        'SIXTY_DAYS': '60 Días',
+        'ONE_TWENTY_DAYS': '120 Días',
+        'RETURN': 'Devolución'
+    }
+    return mapping.get(credit_term, credit_term)
+
+def get_json_data(table_name):
+    with AppSession() as session:
+        result = session.execute(text(f"SELECT * FROM {table_name}"))
+        # ALL COLUMNS EXCEPT ID IF IT EXISTS
+        columns = list(result.keys())
+
+        if 'id' in columns:
+            id_index = columns.index('id')
+        else:
+            id_index = None
+
+        data = []
+        for row in result.fetchall():
+            row_data = dict((col, row[i]) for i, col in enumerate(columns) if i != id_index)
+            if 'credit_term' in row_data:
+                row_data['credit_term'] = transform_credit_term(row_data['credit_term'])
+            data.append(row_data)
+    
+    with open(f"backup/{table_name}.json", 'w', encoding='utf-8') as f:
+        f.write(json.dumps(data, indent=4, ensure_ascii=False))
+
+
+get_json_data('product_supplier_association')
+print('product_supplier_association guardado')
+get_json_data('suppliers')
+print('suppliers guardado')

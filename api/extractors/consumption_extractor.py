@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class ConsumptionExtractor(DataExtractor):
     def __init__(self, token):
@@ -19,8 +19,12 @@ class ConsumptionExtractor(DataExtractor):
         self.consumption_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"stocks/consumptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]"
+        while True:
+            endpoint = (
+                f"stocks/consumptions.json?limit={self.limit}"
+                f"&offset={self.offset}"
+                f"&expand=[details, office]"
+            )
             response = self.make_request(endpoint)
             if response is None or len(response['items']) == 0:
                 break
@@ -37,9 +41,6 @@ class ConsumptionExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for consumption in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.consumption_id = consumption['id']
 
             self.create_main_dataframe(consumption)
@@ -86,7 +87,10 @@ class ConsumptionExtractor(DataExtractor):
         details_limit = 50
         details_offset = 0
         while True:
-            endpoint = f"{details_link}?limit={details_limit}&offset={details_offset}"
+            endpoint = (
+                f"{details_link}?limit={details_limit}"
+                f"&offset={details_offset}"
+            )
             details = self.make_request(endpoint)
             if details is None or len(details['items']) == 0:
                 break
@@ -97,20 +101,26 @@ class ConsumptionExtractor(DataExtractor):
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "consumos", "mensaje": f"{self.offset} consumos obtenidos"})
+            message = json.dumps({
+                "tipo": "consumos",
+                "mensaje": f"{self.offset} consumos obtenidos"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Consumos...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "consumos-listo", "mensaje": f"Consumos ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "consumos-listo",
+                "mensaje": "Consumos ✅"
+            })
+            log_file.write(message + "\n")
 
-            dataframe_main.df_consumptions = self.df_consumptions
-            dataframe_main.df_consumptions_details = self.df_consumptions_details
+        dataframe_main.df_consumptions = self.df_consumptions
+        dataframe_main.df_consumptions_details = self.df_consumptions_details
+
 
 if __name__ == "__main__":
     extractor = ConsumptionExtractor(token=TOKEN)
@@ -121,7 +131,9 @@ if __name__ == "__main__":
 
     print("Guardando datos en Excel...")
     extractor.save_to_excel(extractor.df_consumptions, "consumption_data.xlsx")
-    extractor.save_to_excel(extractor.df_consumptions_details, "consumption_details_data.xlsx")
+    extractor.save_to_excel(
+        extractor.df_consumptions_details,
+        "consumption_details_data.xlsx")
 
     print("¡Proceso finalizado!")
     print(f"Tiempo total: {time.time() - time_start} segundos")

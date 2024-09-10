@@ -41,6 +41,9 @@ def product_detail(variant_id):
     for supplier in suppliers:
         data_supplier[supplier.id] = supplier.trading_name
     data_supplier_json = dumps(data_supplier)
+    if len(product['kardex']) > 1:
+        if product['stock']['stock_lira'] + product['stock']['stock_sobrexistencia'] != product['kardex'][-1]['stock_actual']:
+            flash("CUIDADO: El stock actual no coincide con el último registro del kardex", "warning")
 
     return render_template("tables/product_detail.html", product=product, variant_id=variant_id, prediction=prediction, page_title=f"{product['description']}", all_suppliers=data_supplier_json)
 
@@ -57,3 +60,13 @@ def change_supplier(variant_id):
         return jsonify({'success': True, 'message': 'Proveedor actualizado correctamente.', 'redirect': url_for('tables.product_detail', variant_id=variant_id)})
     except Exception as e:
         return jsonify({'success': False, 'message': 'Error al actualizar el proveedor.'}), 500
+    
+@tables_blueprint.route("/actualizar_estado_activacion/<variant_id>", methods=["POST"])
+def change_activation_state(variant_id):
+    try:
+        Product.update_product_activation(variant_id)
+
+        return redirect(url_for('tables.product_detail', variant_id=variant_id))
+    except Exception as e:
+        flash("Error al actualizar el estado de activación", "danger")
+        return redirect(url_for('tables.product_detail', variant_id=variant_id))

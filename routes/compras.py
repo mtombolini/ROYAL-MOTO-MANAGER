@@ -210,7 +210,7 @@ def agregar_producto_recepcion(cart_id):
     try:
         search_query = request.args.get('search', '')
         product, rut, last_net_cost = Product.product_filter_by_sku(search_query)
-        
+
         if last_net_cost == None:
             last_net_cost = 1.0
 
@@ -358,8 +358,8 @@ def procesar_datos_recepcion():
 @compras_blueprint.route('/generar-pdf-recepcion', methods=['POST'])
 def generar_pdf():
     data = request.json
-    logo_path = os.path.join(current_app.root_path, 'static\\img\\logo_invert.png')
-    logo_path = logo_path.replace('\\app\\', '\\')
+    logo_path = os.path.join(current_app.root_path, 'static/img/logo_invert.png')
+    logo_path = logo_path.replace('/app/', '/')
 
     with open(logo_path, "rb") as image_file:
         image_base64 = base64.b64encode(image_file.read()).decode()
@@ -401,6 +401,14 @@ def generar_pdf():
 @compras_blueprint.route('/rendimiento_compra/<int:cart_id>')
 def rendimiento_compra(cart_id):
     try:
+        data_general = ModelCart.get_cart_detail_by_id(cart_id)[0]
+        data_cart_general = {
+            "fecha_recepcion": data_general.fecha_recepcion,
+            "proveedor": data_general.proveedor,
+            "rut": data_general.rut,
+            "cantidad_productos": data_general.cantidad_productos,
+            "monto_neto": data_general.monto_neto
+        }
         buys_analysis = BuysAnalysis(cart_id)
         buys_analysis.create_info()
 
@@ -410,11 +418,12 @@ def rendimiento_compra(cart_id):
 
         json_barras = buys_analysis.create_barras_apiladas(purchase_margin[cart_id])
         json_barra_progreso = buys_analysis.barra_progreso(sales_evaluation[cart_id])
+        json_productos_barras_progreso = buys_analysis.productos_barras_progreso(sales_evaluation[cart_id])
         json_roi_por_productos = buys_analysis.roi_por_productos(margin_product_info)
         json_breakeven_de_compra = buys_analysis.breakeven_de_compra(purchase_margin[cart_id], margin_product_info, sales_evaluation[cart_id])
         json_dist_cantidad, json_dist_costo, json_dist_venta_max, json_dist_venta_hoy = buys_analysis.distribuciones_productos(margin_product_info)
 
-        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy)
+        return render_template('rendimiento_compra.html', page_title="Rendimiento de Compra", cart_id=cart_id, json_barras=json_barras, json_barra_progreso=json_barra_progreso, json_roi_por_productos=json_roi_por_productos, json_breakeven_de_compra=json_breakeven_de_compra, json_dist_cantidad=json_dist_cantidad, json_dist_costo=json_dist_costo, json_dist_venta_max=json_dist_venta_max, json_dist_venta_hoy=json_dist_venta_hoy, json_productos_barras_progreso=json_productos_barras_progreso, data_cart_general=data_cart_general)
     
     except Exception as e:
         return render_template('error.html'), 500

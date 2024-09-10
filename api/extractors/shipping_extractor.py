@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class ShippingExtractor(DataExtractor):
     def __init__(self, token):
@@ -17,8 +17,12 @@ class ShippingExtractor(DataExtractor):
         self.shipping_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"shippings.json?limit={self.limit}&offset={self.offset}&expand=[shipping_type, guide, document_type]"
+        while True:
+            endpoint = (
+                f"shippings.json?limit={self.limit}"
+                f"&offset={self.offset}"
+                f"&expand=[shipping_type, guide, document_type]"
+            )
             response = self.make_request(endpoint)
             if response is None or len(response['items']) == 0:
                 break
@@ -34,17 +38,17 @@ class ShippingExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for shipping in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.shipping_id = shipping['id']
 
             self.create_main_dataframe(shipping)
 
     def create_main_dataframe(self, shipping):
         shipping_date = self.convert_to_date(shipping['shippingDate'])
+        state = shipping['state']
         shipping_number = shipping.get('guide', {}).get('number')
-        document_type = shipping.get('guide', {}).get('document_type', {}).get('name')
+        document_type = shipping.get(
+            'guide', {}
+        ).get('document_type', {}).get('name')
         shipping_type = shipping['shipping_type']['name']
 
         self.shippings.append({
@@ -52,24 +56,31 @@ class ShippingExtractor(DataExtractor):
             'Shipping Date': shipping_date,
             'Shipping Number': shipping_number,
             'Shipping Type': shipping_type,
-            'Document Type': document_type
+            'Document Type': document_type,
+            'State': state
         })
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "despachos", "mensaje": f"{self.offset} despachos obtenidos"})
+            message = json.dumps({
+                "tipo": "despachos",
+                "mensaje": f"{self.offset} despachos obtenidos"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Despachos...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "despachos-listo", "mensaje": f"Despachos ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "despachos-listo",
+                "mensaje": "Despachos ✅"
+            })
+            log_file.write(message + "\n")
 
-            dataframe_main.df_shippings = self.df_shippings
+        dataframe_main.df_shippings = self.df_shippings
+
 
 if __name__ == "__main__":
     extractor = ShippingExtractor(token=TOKEN)

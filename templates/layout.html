@@ -67,9 +67,23 @@
                 const messageContent = msg.getAttribute('data-message');
           
                 // SweetAlert2 para mostrar los mensajes
+                // success, error, warning, info, question
+                var title = NaN
+                if (messageType === 'success') {
+                    title = 'Éxito'
+                } else if (messageType === 'error') {
+                    title = 'Error'
+                } else if (messageType === 'warning') {
+                    title = 'Advertencia'
+                } else if (messageType === 'info') {
+                    title = 'Información'
+                } else if (messageType === 'question') {
+                    title = 'Pregunta'
+                }
+
                 Swal.fire({
                     icon: messageType,
-                    title: messageType === 'success' ? 'Éxito' : 'Error',
+                    title: title,
                     text: messageContent,
                     timer: 3000
                 });

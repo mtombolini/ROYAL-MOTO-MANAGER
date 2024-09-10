@@ -11,6 +11,7 @@ class Shipping(Base):
     shipping_number = Column(String(255))
     shipping_type = Column(String(255))
     document_type = Column(String(255))
+    state = Column(Integer)
 
     @classmethod
     def get_all_shippings(cls):

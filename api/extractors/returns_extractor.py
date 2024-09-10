@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class ReturnsExtractor(DataExtractor):
     def __init__(self, token):
@@ -17,8 +17,11 @@ class ReturnsExtractor(DataExtractor):
         self.return_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"returns.json?&limit={self.limit}&offset={self.offset}"
+        while True:
+            endpoint = (
+                f"returns.json?limit={self.limit}"
+                f"&offset={self.offset}"
+            )
             response = self.make_request(endpoint)
             if response is None or len(response['items']) == 0:
                 break
@@ -34,9 +37,6 @@ class ReturnsExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for devolucion in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.return_id = devolucion['id']
 
             self.create_main_dataframe(devolucion)
@@ -57,19 +57,25 @@ class ReturnsExtractor(DataExtractor):
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "devoluciones", "mensaje": f"{self.offset} devoluciones obtenidas"})
+            message = json.dumps({
+                "tipo": "devoluciones",
+                "mensaje": f"{self.offset} devoluciones obtenidas"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Devoluciones...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "devoluciones-listo", "mensaje": f"Devoluciones ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "devoluciones-listo",
+                "mensaje": "Devoluciones ✅"
+            })
+            log_file.write(message + "\n")
 
-            dataframe_main.df_returns = self.df_returns
+        dataframe_main.df_returns = self.df_returns
+
 
 if __name__ == "__main__":
     extractor = ReturnsExtractor(token=TOKEN)

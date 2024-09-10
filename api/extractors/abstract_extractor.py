@@ -5,6 +5,7 @@ import pandas as pd
 
 from abc import ABC, abstractmethod
 
+
 class DataExtractor(ABC):
     def __init__(self, token):
         self.headers = {
@@ -23,18 +24,21 @@ class DataExtractor(ABC):
     def make_request(self, endpoint, method="GET", data=None):
         url = self.base_url + endpoint
         try:
-            response = requests.request(method, url, headers=self.headers, json=data)
+            response = requests.request(
+                method,
+                url,
+                headers=self.headers,
+                json=data)
             response.raise_for_status()
             return response.json()
-        except requests.RequestException as e:
-            # para hacer funcionar los get_first descomentar las lineas de abajo
-            # print(f"Error: {e}.")
-            # raise
+        except requests.RequestException:
             return None
 
     @staticmethod
     def convert_to_date(timestamp_unix):
-        return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
+        return datetime.datetime.utcfromtimestamp(timestamp_unix).strftime(
+            '%Y-%m-%d %H:%M:%S'
+        )
 
     def save_to_excel(self, df, file_name):
         mode = 'a' if os.path.exists(file_name) else 'w'
@@ -44,4 +48,3 @@ class DataExtractor(ABC):
     @abstractmethod
     def run(self, dataframe_main):
         pass
-

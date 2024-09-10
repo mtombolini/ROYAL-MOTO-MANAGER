@@ -3,8 +3,8 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
+
 
 class ReceptionExtractor(DataExtractor):
     def __init__(self, token):
@@ -19,8 +19,12 @@ class ReceptionExtractor(DataExtractor):
         self.reception_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"stocks/receptions.json?limit={self.limit}&offset={self.offset}&expand=[details, office]"
+        while True:
+            endpoint = (
+                f"stocks/receptions.json?limit={self.limit}"
+                f"&offset={self.offset}"
+                f"&expand=[details, office]"
+            )
             response = self.make_request(endpoint)
             if response is None or len(response['items']) == 0:
                 break
@@ -37,9 +41,6 @@ class ReceptionExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for reception in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.reception_id = reception['id']
 
             self.create_main_dataframe(reception)
@@ -76,7 +77,7 @@ class ReceptionExtractor(DataExtractor):
             variant_id = int(detail['variant']['id'])
             quantity = int(detail['quantity'])
             cost = float(detail['cost'])
-            
+
             self.receptions_details.append({
                 'Detail ID': detail_id,
                 'Reception ID': int(self.reception_id),
@@ -90,7 +91,10 @@ class ReceptionExtractor(DataExtractor):
         details_limit = 50
         details_offset = 0
         while True:
-            endpoint = f"{details_link}?limit={details_limit}&offset={details_offset}"
+            endpoint = (
+                f"{details_link}?limit={details_limit}"
+                f"&offset={details_offset}"
+            )
             details = self.make_request(endpoint)
             if details is None or len(details['items']) == 0:
                 break
@@ -101,20 +105,26 @@ class ReceptionExtractor(DataExtractor):
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "recepciones", "mensaje": f"{self.offset} recepciones obtenidas"})
+            message = json.dumps({
+                "tipo": "recepciones",
+                "mensaje": f"{self.offset} recepciones obtenidas"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Recepciones...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "recepciones-listo", "mensaje": f"Recepciones ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "recepciones-listo",
+                "mensaje": "Recepciones ✅"
+            })
+            log_file.write(message + "\n")
 
-            dataframe_main.df_receptions = self.df_receptions
-            dataframe_main.df_receptions_details = self.df_receptions_details
+        dataframe_main.df_receptions = self.df_receptions
+        dataframe_main.df_receptions_details = self.df_receptions_details
+
 
 if __name__ == "__main__":
     extractor = ReceptionExtractor(token=TOKEN)
@@ -125,7 +135,10 @@ if __name__ == "__main__":
 
     print("Guardando datos en Excel...")
     extractor.save_to_excel(extractor.df_receptions, "reception_data.xlsx")
-    extractor.save_to_excel(extractor.df_receptions_details, "reception_details_data.xlsx")
+    extractor.save_to_excel(
+        extractor.df_receptions_details,
+        "reception_details_data.xlsx"
+    )
 
     print("¡Proceso finalizado!")
     print(f"Tiempo total: {time.time() - time_start} segundos")

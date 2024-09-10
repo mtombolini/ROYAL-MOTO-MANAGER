@@ -3,11 +3,11 @@ import json
 import pandas as pd
 
 from app.config import TOKEN
-from app.flags import stop_signal_is_set
 from api.extractors.abstract_extractor import DataExtractor
 
 from models.office import Office
 from databases.session import AppSession
+
 
 class OfficeExtractor(DataExtractor):
     def __init__(self, token):
@@ -20,8 +20,11 @@ class OfficeExtractor(DataExtractor):
         self.office_id = None
 
     def get_data(self):
-        while not stop_signal_is_set():
-            endpoint = f"offices.json?limit={self.limit}&offset={self.offset}"
+        while True:
+            endpoint = (
+                f"offices.json?limit={self.limit}"
+                f"&offset={self.offset}"
+            )
             response = self.make_request(endpoint)
 
             if response is None or len(response['items']) == 0:
@@ -38,9 +41,6 @@ class OfficeExtractor(DataExtractor):
 
     def main_extraction(self, response):
         for office in response['items']:
-            if stop_signal_is_set():
-                return
-            
             self.office_id = office['id']
 
             self.create_main_dataframe(office)
@@ -69,19 +69,25 @@ class OfficeExtractor(DataExtractor):
 
     def write_logs(self):
         with open("logs/api_status.log", "a") as log_file:
-            message = json.dumps({"tipo": "sucursales", "mensaje": f"{self.offset} sucursales obtenidas"})
+            message = json.dumps({
+                "tipo": "sucursales",
+                "mensaje": f"{self.offset} sucursales obtenidas"
+            })
             log_file.write(message + "\n")
 
     def run(self, dataframe_main):
         print("Obteniendo Sucursales...")
         self.get_data()
 
-        if not stop_signal_is_set():
-            with open("logs/api_status.log", "a") as log_file:
-                message = json.dumps({"tipo": "sucursales-listo", "mensaje": f"Sucursales ✅"})
-                log_file.write(message + "\n")
+        with open("logs/api_status.log", "a") as log_file:
+            message = json.dumps({
+                "tipo": "sucursales-listo",
+                "mensaje": "Sucursales ✅"
+            })
+            log_file.write(message + "\n")
 
-            dataframe_main.df_offices = self.df_offices
+        dataframe_main.df_offices = self.df_offices
+
 
 if __name__ == "__main__":
     extractor = OfficeExtractor(token=TOKEN)

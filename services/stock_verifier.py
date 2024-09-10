@@ -3,21 +3,13 @@ from models.supplier import Supplier
 
 class StockVerifier:
     def __init__(self):
-        self.ids = []
-        self.products = self.get_all()
+        self.ids = Product.get_all_products_ids()
         self.bad_skus = []
         self.sin_kardex = []
 
-    def get_all(self):
-        return Product.get_all_products()
-    
-    def get_ids(self):
-        for product in self.products:
-            self.ids.append(product['variant_id'])
-    
     def verify(self):
         for id in self.ids:
-            product_data, _ = Product.filter_product(id, True)
+            product_data, _ = Product.filter_product(id, False)
 
             if len(product_data['kardex']) == 0:
                 self.sin_kardex.append(product_data['sku'])
@@ -26,6 +18,6 @@ class StockVerifier:
 
 if __name__ == '__main__':
     verifier = StockVerifier()
-    verifier.get_ids()
     verifier.verify()
     print(verifier.bad_skus)
+    print(len(verifier.bad_skus))

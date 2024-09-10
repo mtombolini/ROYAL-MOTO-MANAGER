@@ -12,7 +12,6 @@ from models.consumption import Consumption, ConsumptionDetail
 
 from api.extractors.supplier_extractor import df_suppliers, df_connections
 
-from random import randint
 
 class DataFrameMain():
     def __init__(self):
@@ -51,6 +50,11 @@ class DataFrameMain():
             self.df_documents_details['Variant ID'].isin(self.df_products['Variant ID'])
         ]
 
+    def correct_ventas(self):
+        self.df_sales_documents = self.df_sales_documents[
+            self.df_sales_documents['Document ID'].isin(self.df_documents['Document ID'])
+        ]
+
     def correct_returns(self):
         self.df_returns = self.df_returns[
             self.df_returns['Document ID'].isin(self.df_documents['Document ID'])
@@ -78,7 +82,8 @@ class DataFrameMain():
                 shipping_date = row['Shipping Date'],
                 shipping_number = str(row['Shipping Number']),
                 shipping_type = row['Shipping Type'],
-                document_type = row['Document Type']
+                document_type = row['Document Type'],
+                state = row['State']
             )
             session.add(shipping)
 
@@ -105,8 +110,8 @@ class DataFrameMain():
 
     def create_products_suppliers(self, session):
         for index, row in self.df_connections.iterrows():
-            product = session.query(Product).filter_by(sku=row['sku']).one_or_none()
-            supplier = session.query(Supplier).filter_by(rut=row['rut']).one_or_none()
+            product = session.query(Product).filter_by(sku=row['product_sku']).one_or_none()
+            supplier = session.query(Supplier).filter_by(rut=row['supplier_rut']).one_or_none()
             
             if product and supplier:
                 association = product_supplier_association.insert().values(
@@ -276,12 +281,13 @@ class DataFrameMain():
         self.create_suppliers(session)
         self.create_offices(session)
         self.create_products(session)
-
+        print("Productos creados")
         session.commit()
 
         self.create_products_suppliers(session)
         self.associate_unlinked_products_to_generic_supplier(session)
         self.create_stocks(session)
+        print("Stocks creados")
         self.create_consumptions(session)
         self.create_consumptions_details(session)
         self.create_receptions(session)
@@ -290,6 +296,7 @@ class DataFrameMain():
         self.create_documents_details(session)
         self.create_sales(session)
         self.create_sales_documents(session)
+        print("Ventas creadas")
         self.create_returns(session)
         self.create_price_list(session)
 
